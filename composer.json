@@ -13,7 +13,8 @@
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
-        "laravel/tinker": "^2.0"
+        "laravel/tinker": "^2.0",
+        "tcg/voyager": "^1.4"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.7",
@@ -66,5 +67,11 @@
             "@php artisan ide-helper:generate",
             "@php artisan ide-helper:meta"
         ]
+    },
+    "repositories": {
+        "hooks": {
+            "type": "composer",
+            "url": "https://larapack.io"
+        }
     }
 }
