@@ -1,7 +1,8 @@
 {
-    "name": "laravel/laravel",
+    "name": "gng/gng-backend",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "The GNG portal.",
+    "version": "0.0.1",
     "keywords": [
         "framework",
         "laravel"
