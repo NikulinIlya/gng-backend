@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use TCG\Voyager\Traits\Translatable;
 
 
 class Cognac extends Model
 {
-    
+    use Translatable;
+    protected $translatable = ['name', 'aging', 'cheese', 'recommendations'];
 }
