@@ -9,5 +9,5 @@ use TCG\Voyager\Traits\Translatable;
 class Offer extends Model
 {
     use Translatable;
-    protected $translatable = ['name'];
+    protected $translatable = ['name', 'description'];
 }
