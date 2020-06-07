@@ -9,4 +9,11 @@ class Whiskey extends Model
 {
     use Translatable;
     protected $translatable = ['name', 'type', 'aging', 'taste', 'cheese', 'recommendations'];
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'whiskey';
 }
