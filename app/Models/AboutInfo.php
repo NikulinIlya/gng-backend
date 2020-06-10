@@ -9,4 +9,11 @@ class AboutInfo extends Model
 {
     use Translatable;
     protected $translatable = ['name', 'text'];
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'about_info';
 }
