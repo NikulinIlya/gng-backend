@@ -23,7 +23,7 @@ class DatabaseCartService implements CartManager
         $this->userId = $userId;
     }
 
-    function getCart()
+    public function getCart()
     {
         return Cart::firstOrCreate(['user_id' => $this->userId]);
     }
@@ -32,7 +32,7 @@ class DatabaseCartService implements CartManager
     {
         $product = Product::find($productId);
 
-        if (!$this->isInCart($productId)) {
+        if (! $this->isInCart($productId)) {
             $cart = $this->getCart();
 
             $cart->items()->create([
@@ -50,8 +50,9 @@ class DatabaseCartService implements CartManager
 
         $cartItem = $cart->items()->whereProductId($productId)->first();
 
-        if ($cartItem)
+        if ($cartItem) {
             $cartItem->delete();
+        }
 
         return true;
     }
@@ -64,6 +65,7 @@ class DatabaseCartService implements CartManager
     public function isInCart($productId): bool
     {
         $cart = $this->getCart();
+
         return CartItem::whereCartId($cart->id)->whereProductId($productId)->count() > 0;
     }
 

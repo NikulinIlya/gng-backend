@@ -7,15 +7,16 @@ use Illuminate\Support\Collection;
 
 class SessionCartService implements CartManager
 {
-    public const CART_KEY = "cart_session";
+    public const CART_KEY = 'cart_session';
 
-    function getCart()
+    public function getCart()
     {
         if (session()->has(self::CART_KEY)) {
             return session(self::CART_KEY);
         } else {
             $newCart = collect();
             session([self::CART_KEY => $newCart]);
+
             return $newCart;
         }
     }
@@ -30,12 +31,12 @@ class SessionCartService implements CartManager
             'product_id' => $productId,
             'price' => $price == null ? $product->price : $price,
             'product' => $product,
-            'image_url' => $product->image
+            'image_url' => $product->image,
         ]);
 
         $a = collect($item);
 
-        if (!$this->isInCart($productId)) {
+        if (! $this->isInCart($productId)) {
             $cart = $cart->push(collect($item));
             session([self::CART_KEY => $cart]);
         }

@@ -25,5 +25,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::prefix('{language}')->group(function () {
     Route::get('phrases', 'Api\MainPhraseController@index');
     Route::get('phrases/{id}', 'Api\MainPhraseController@show');
-
 });
