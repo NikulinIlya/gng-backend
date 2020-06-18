@@ -14,6 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/login', 'AuthController@login');
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+});
+
+Route::prefix('{language}')->group(function () {
+    Route::get('phrases', 'Api\MainPhraseController@index');
+    Route::get('phrases/{id}', 'Api\MainPhraseController@show');
+
 });
