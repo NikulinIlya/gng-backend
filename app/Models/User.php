@@ -37,4 +37,14 @@ class User extends \TCG\Voyager\Models\User
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the user info associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function userInfo()
+    {
+        return $this->hasOne('App\Models\UserInfo');
+    }
 }
