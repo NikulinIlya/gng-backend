@@ -6,7 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- AboutInfo, Accessory, Assistant, AssistantPhrase, Brand, Champagne, ChampagneGrape, Cognac, DrinkType, EmployeeOffer, Event, EventOrder, Favorite, GrapeSort, Liquor, Location, MainPhrase, Offer, OfferCategory, Order, OrderProduct, OrderStatus, Product, Promotion, UserInfo, Vine, VineColour, VinesGrape, Vodka, Whiskey models
+- AboutInfo, Accessory, Assistant, AssistantPhrase, Brand, Champagne, ChampagneGrape, Cognac, DrinkType, 
+EmployeeOffer, Event, EventOrder, Favorite, GrapeSort, Liquor, Location, MainPhrase, Offer, OfferCategory, Order, 
+OrderProduct, OrderStatus, Product, Promotion, UserInfo, Vine, VineColour, VinesGrape, Vodka, Whiskey models
+- Http/Services/ApiControllerService, index, show methods
+- Controllers/AuthController, Api/MainPhraseController, Api/CartController
+- Services/Cart/CartManager, DatabaseCartService, SessionCartService
+- Cart, CartItem models
+- login, user, phrases api routes
 
 ### Changed
 - Move User model to app/Models
