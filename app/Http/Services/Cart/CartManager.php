@@ -1,15 +1,13 @@
 <?php
 
-
 namespace App\Http\Services\Cart;
-
 
 use App\Models\Product;
 use Illuminate\Support\Collection;
 
 interface CartManager
 {
-    function getCart();
+    public function getCart();
 
     public function addToCart($productId): Product;
 
@@ -21,5 +19,5 @@ interface CartManager
 
     public function clearCartItems(): bool;
 
-    public function isCartEmpty():bool;
+    public function isCartEmpty(): bool;
 }
