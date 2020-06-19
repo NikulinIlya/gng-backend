@@ -30,6 +30,7 @@ class DrinkTypeController
     public function index(Request $request)
     {
         $service = new ApiControllerService($request->language, new DrinkType());
+
         return $service->index();
     }
 
