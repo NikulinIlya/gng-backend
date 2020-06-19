@@ -10,10 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 EmployeeOffer, Event, EventOrder, Favorite, GrapeSort, Liquor, Location, MainPhrase, Offer, OfferCategory, Order, 
 OrderProduct, OrderStatus, Product, Promotion, UserInfo, Vine, VineColour, VinesGrape, Vodka, Whiskey models
 - Http/Services/ApiControllerService, index, show methods
-- Controllers/AuthController, Api/MainPhraseController, Api/CartController
+- Controllers/AuthController
+- Api/ MainPhraseController, CartController, AboutInfoController, LocationController, AccessoryController, 
+AssistantController, AssistantPhraseController, DrinkTypeController
 - Services/Cart/CartManager, DatabaseCartService, SessionCartService
 - Cart, CartItem models
-- login, user, phrases api routes
+- login, user, phrases, about-info api routes
 
 ### Changed
 - Move User model to app/Models
