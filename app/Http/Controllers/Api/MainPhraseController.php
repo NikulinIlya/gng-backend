@@ -8,8 +8,15 @@ use Illuminate\Http\Request;
 
 class MainPhraseController
 {
+    /**
+     * @var ApiControllerService
+     */
     private $service;
 
+    /**
+     * MainPhraseController constructor.
+     * @param Request $request
+     */
     public function __construct(Request $request)
     {
         $this->service = new ApiControllerService($request->language, new MainPhrase());
@@ -28,10 +35,11 @@ class MainPhraseController
     /**
      * Display the specified phrase.
      *
+     * @param string $language
      * @param int $id
      * @return mixed
      */
-    public function show($id)
+    public function show($language, $id)
     {
         return $this->service->show($id);
     }
