@@ -47,4 +47,9 @@ class User extends \TCG\Voyager\Models\User
     {
         return $this->hasOne('App\Models\UserInfo');
     }
+
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order');
+    }
 }
