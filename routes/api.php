@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 Route::post('/login', 'AuthController@login');
 
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -25,4 +24,23 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::prefix('{language}')->group(function () {
     Route::get('phrases', 'Api\MainPhraseController@index');
     Route::get('phrases/{id}', 'Api\MainPhraseController@show');
+
+    Route::get('about-info', 'Api\AboutInfoController@index');
+    Route::get('about-info/{id}', 'Api\AboutInfoController@show');
+
+    Route::get('drink-types', 'Api\AboutInfoController@index');
+    Route::get('drink-types/{slug}', 'Api\AboutInfoController@show');
+
+    Route::get('locations', 'Api\AboutInfoController@index');
+    Route::get('locations/{id}', 'Api\AboutInfoController@show');
+
+    Route::get('accessories', 'Api\AboutInfoController@index');
+    Route::get('accessories/{id}', 'Api\AboutInfoController@show');
+
+    Route::get('assistants', 'Api\AboutInfoController@index');
+    Route::get('assistants/{id}', 'Api\AboutInfoController@show');
+
+    Route::get('assistant-phrases', 'Api\AboutInfoController@index');
+    Route::get('assistant-phrases/{id}', 'Api\AboutInfoController@show');
+    Route::get('assistant-phrases-specified/{assistantId}', 'Api\AboutInfoController@getByAssistant');
 });
