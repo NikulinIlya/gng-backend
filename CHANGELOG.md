@@ -6,16 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- AboutInfo, Accessory, Assistant, AssistantPhrase, Brand, Champagne, ChampagneGrape, Cognac, DrinkType, 
+- AboutInfo, Accessory, Assistant, AssistantPhrase, Brand, Champagne, ChampagneGrape, Cognac, 
 EmployeeOffer, Event, EventOrder, Favorite, GrapeSort, Liquor, Location, MainPhrase, Offer, OfferCategory, Order, 
 OrderProduct, OrderStatus, Product, Promotion, UserInfo, Vine, VineColour, VinesGrape, Vodka, Whiskey models
 - Http/Services/ApiControllerService, index, show methods
 - Controllers/AuthController
 - Api/ MainPhraseController, CartController, AboutInfoController, LocationController, AccessoryController, 
-AssistantController, AssistantPhraseController, DrinkTypeController
+AssistantController, AssistantPhraseController
 - Services/Cart/CartManager, DatabaseCartService, SessionCartService
-- Cart, CartItem models
+- Cart, CartItem, ProductCategory models
 - login, user, phrases, about-info api routes
+- install barryvdh/laravel-debugbar dev dependency
 
 ### Changed
 - Move User model to app/Models
