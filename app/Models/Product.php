@@ -9,4 +9,12 @@ class Product extends Model
 {
     use Translatable;
     protected $translatable = ['name'];
+
+    /**
+     * Get the product category.
+     */
+    public function productCategory()
+    {
+        return $this->belongsTo('App\Models\ProductCategory');
+    }
 }
