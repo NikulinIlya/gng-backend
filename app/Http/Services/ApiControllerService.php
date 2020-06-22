@@ -36,7 +36,13 @@ class ApiControllerService
     {
         $entities = $this->model::withTranslations($this->language)->get();
 
-        return $entities;
+        $resultCollection = collect();
+        foreach ($entities as $entity) {
+            $translationsArray = $this->getTranslatedFields($entity);
+            $collection = [$entity['id'], $entity['slug'], $translationsArray];
+            $resultCollection = $resultCollection->concat([$collection]);
+        }
+        return $resultCollection;
     }
 
     /**
@@ -48,5 +54,23 @@ class ApiControllerService
     public function show($id)
     {
         return $this->model::withTranslations($this->language)->findOrFail($id);
+    }
+
+    /**
+     * Get only translated values from entity.
+     *
+     * @param Model $entity
+     * @return array
+     */
+    public function getTranslatedFields($entity)
+    {
+        dd(get_class($entity), gettype($entity));
+        $resultArray = [];
+
+        foreach ($entity['translations'] as $translation) {
+            $resultArray[$translation['column_name']] = $translation['value'];
+        }
+
+        return $resultArray;
     }
 }
