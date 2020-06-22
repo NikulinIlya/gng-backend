@@ -9,7 +9,7 @@ class Champagne extends Model
 {
     use Translatable;
 
-    protected $translatable = ['name', 'aging', 'cheese', 'recommendations'];
+    protected $translatable = ['aging', 'cheese', 'recommendations'];
 
     /**
      * The table associated with the model.

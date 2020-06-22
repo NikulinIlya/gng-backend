@@ -8,7 +8,7 @@ use TCG\Voyager\Traits\Translatable;
 class Vodka extends Model
 {
     use Translatable;
-    protected $translatable = ['name', 'raw', 'taste', 'cheese', 'recommendations'];
+    protected $translatable = ['raw', 'taste', 'cheese', 'recommendations'];
 
     /**
      * The table associated with the model.

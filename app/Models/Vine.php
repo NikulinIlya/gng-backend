@@ -8,5 +8,5 @@ use TCG\Voyager\Traits\Translatable;
 class Vine extends Model
 {
     use Translatable;
-    protected $translatable = ['name', 'cheese', 'recommendations'];
+    protected $translatable = ['cheese', 'recommendations'];
 }
