@@ -42,6 +42,7 @@ class ApiControllerService
             $collection = [$entity['id'], $entity['slug'], $translationsArray];
             $resultCollection = $resultCollection->concat([$collection]);
         }
+
         return $resultCollection;
     }
 
