@@ -43,4 +43,7 @@ Route::prefix('{language}')->group(function () {
     Route::get('assistant-phrases', 'Api\AboutInfoController@index');
     Route::get('assistant-phrases/{id}', 'Api\AboutInfoController@show');
     Route::get('assistant-phrases-specified/{assistantId}', 'Api\AboutInfoController@getByAssistant');
+
+    Route::get('product-categories', 'Api\ProductCategoryController@index');
+    Route::get('product-categories/{id}', 'Api\ProductCategoryController@show');
 });
