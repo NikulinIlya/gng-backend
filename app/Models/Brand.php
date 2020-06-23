@@ -8,5 +8,13 @@ use TCG\Voyager\Traits\Translatable;
 class Brand extends Model
 {
     use Translatable;
-    protected $translatable = ['name', 'description'];
+    protected $translatable = ['description'];
+
+    /**
+     * Get the location where from the brand is.
+     */
+    public function location()
+    {
+        return $this->belongsTo('App\Models\Location');
+    }
 }

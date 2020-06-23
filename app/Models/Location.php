@@ -9,4 +9,12 @@ class Location extends Model
 {
     use Translatable;
     protected $translatable = ['country', 'region'];
+
+    /**
+     * Get the brands for the location.
+     */
+    public function brands()
+    {
+        return $this->hasMany('App\Models\Brand');
+    }
 }
