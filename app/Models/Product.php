@@ -11,7 +11,7 @@ class Product extends Model
     protected $translatable = ['name'];
 
     /**
-     * Get the product category
+     * Get the product category.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
