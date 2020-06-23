@@ -34,15 +34,11 @@ class ApiControllerService
      */
     public function index()
     {
-        $entities = $this->model::withTranslations($this->language)->get();
+        $entities = ($this->language === 'ru')
+            ? $this->model::all()
+            : $this->model::withTranslations($this->language)->get();
 
-        $resultCollection = collect();
-        foreach ($entities as $entity) {
-            $translationsArray = $this->getTranslatedFields($entity);
-            $collection = [$entity['id'], $entity['slug'], $translationsArray];
-            $resultCollection = $resultCollection->concat([$collection]);
-        }
-        return $resultCollection;
+        return $this->makeEntityCollection($entities);
     }
 
     /**
@@ -53,7 +49,11 @@ class ApiControllerService
      */
     public function show($id)
     {
-        return $this->model::withTranslations($this->language)->findOrFail($id);
+        $entity = ($this->language === 'ru')
+            ? $this->model::findOrFail($id)
+            : $this->model::withTranslations($this->language)->findOrFail($id);
+
+        return $this->makeEntityCollection([$entity]);
     }
 
     /**
@@ -64,7 +64,6 @@ class ApiControllerService
      */
     public function getTranslatedFields($entity)
     {
-        dd(get_class($entity), gettype($entity));
         $resultArray = [];
 
         foreach ($entity['translations'] as $translation) {
@@ -72,5 +71,30 @@ class ApiControllerService
         }
 
         return $resultArray;
+    }
+
+    /**
+     * Make return entities collection to a special format.
+     *
+     * @param Model[] $entities
+     * @return \Illuminate\Support\Collection
+     */
+    public function makeEntityCollection($entities)
+    {
+        $resultCollection = collect();
+
+        foreach ($entities as $entity) {
+            $collection = $entity->toArray();
+            unset($collection['created_at'], $collection['updated_at']);
+
+            if ($this->language !== 'ru') {
+                unset($collection['translations']);
+                $collection = array_merge($collection, $this->getTranslatedFields($entity));
+            }
+
+            $resultCollection = $resultCollection->concat([$collection]);
+        }
+
+        return $resultCollection;
     }
 }
