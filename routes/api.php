@@ -44,6 +44,15 @@ Route::prefix('{language}')->group(function () {
     Route::get('assistant-phrases/{id}', 'Api\AboutInfoController@show');
     Route::get('assistant-phrases-specified/{assistantId}', 'Api\AboutInfoController@getByAssistant');
 
+    Route::get('products', 'Api\ProductController@index');
+    Route::get('products/{id}', 'Api\ProductController@show');
+
     Route::get('product-categories', 'Api\ProductCategoryController@index');
     Route::get('product-categories/{id}', 'Api\ProductCategoryController@show');
+
+    Route::get('brands', 'Api\BrandController@index');
+    Route::get('brands/{id}', 'Api\BrandController@show');
+
+    Route::get('vines', 'Api\VineController@index');
+    Route::get('vines/{id}', 'Api\VineController@show');
 });
