@@ -12,10 +12,10 @@ OrderProduct, OrderStatus, Product, Promotion, UserInfo, Vine, Colour, VinesGrap
 - Http/Services/ApiControllerService, index, show methods
 - Controllers/AuthController
 - Api/ MainPhraseController, CartController, AboutInfoController, LocationController, AccessoryController, 
-AssistantController, AssistantPhraseController, ProductCategoryController
+AssistantController, AssistantPhraseController, ProductCategoryController, BrandController, ProductController, VineController
 - Services/Cart/CartManager, DatabaseCartService, SessionCartService
 - Cart, CartItem, ProductCategory models
-- login, user, phrases, about-info, assistant-phrases, product-categories api routes
+- login, user, phrases, about-info, assistant-phrases, product-categories, products, brands, vines api routes
 - install barryvdh/laravel-debugbar dev dependency
 
 ### Changed
