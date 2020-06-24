@@ -33,7 +33,6 @@ class VineController
         $vines = $this->service->index();
 
         $brand = Brand::find($vines[0]['brand_id'])->name;
-
     }
 
     /**
