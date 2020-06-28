@@ -17,6 +17,9 @@ AssistantController, AssistantPhraseController, ProductCategoryController, Brand
 - Cart, CartItem, ProductCategory models
 - login, user, phrases, about-info, assistant-phrases, product-categories, products, brands, vines api routes
 - install barryvdh/laravel-debugbar dev dependency
+- Localization middleware
+- default web route
+- lang/{locale?} api route
 
 ### Changed
 - Move User model to app/Models
