@@ -17,3 +17,6 @@ yarn-error.log
 /public/css/app.css
 /public/js/app.js
 /public/mix-manifest.json
+/resources/views/index.blade.php
+/resources/js
+/resources/sass

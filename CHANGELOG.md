@@ -20,6 +20,7 @@ AssistantController, AssistantPhraseController, ProductCategoryController, Brand
 - Localization middleware
 - default web route
 - lang/{locale?} api route
+- install react ui
 
 ### Changed
 - Move User model to app/Models
