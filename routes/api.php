@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('lang/{locale?}', function (Request $request, $locale = 'ru') {
-    if (!in_array($locale, ['ru', 'en'])) {
+    if (! in_array($locale, ['ru', 'en'])) {
         abort(404);
     }
 
