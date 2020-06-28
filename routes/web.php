@@ -18,5 +18,5 @@ Route::group(['prefix' => 'admin-panel'], function () {
 });
 
 Route::get('/{uri?}', function () {
-    return view('welcome');
+    return view('index');
 })->where('uri', '(.*)');
