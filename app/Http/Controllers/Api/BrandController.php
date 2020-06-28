@@ -15,11 +15,10 @@ class BrandController
 
     /**
      * BrandController constructor.
-     * @param Request $request
      */
-    public function __construct(Request $request)
+    public function __construct()
     {
-        $this->service = new ApiControllerService($request->language, new Brand());
+        $this->service = new ApiControllerService(new Brand());
     }
 
     /**
@@ -35,11 +34,10 @@ class BrandController
     /**
      * Display the specified brand.
      *
-     * @param string $language
      * @param int $id
      * @return mixed
      */
-    public function show($language, $id)
+    public function show($id)
     {
         return $this->service->show($id);
     }

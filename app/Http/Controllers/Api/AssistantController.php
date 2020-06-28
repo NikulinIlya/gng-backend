@@ -14,12 +14,11 @@ class AssistantController
     private $service;
 
     /**
-     * MainPhraseController constructor.
-     * @param Request $request
+     * AssistantController constructor.
      */
-    public function __construct(Request $request)
+    public function __construct()
     {
-        $this->service = new ApiControllerService($request->language, new Assistant());
+        $this->service = new ApiControllerService(new Assistant());
     }
 
     /**
@@ -35,11 +34,10 @@ class AssistantController
     /**
      * Display the specified assistant.
      *
-     * @param string $language
      * @param int $id
      * @return mixed
      */
-    public function show($language, $id)
+    public function show($id)
     {
         return $this->service->show($id);
     }

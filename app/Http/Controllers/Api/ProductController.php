@@ -15,11 +15,10 @@ class ProductController
 
     /**
      * ProductController constructor.
-     * @param Request $request
      */
-    public function __construct(Request $request)
+    public function __construct()
     {
-        $this->service = new ApiControllerService($request->language, new Product());
+        $this->service = new ApiControllerService(new Product());
     }
 
     /**
@@ -35,11 +34,10 @@ class ProductController
     /**
      * Display the specified product.
      *
-     * @param string $language
      * @param int $id
      * @return mixed
      */
-    public function show($language, $id)
+    public function show($id)
     {
         return $this->service->show($id);
     }

@@ -14,12 +14,11 @@ class AssistantPhraseController
     private $service;
 
     /**
-     * MainPhraseController constructor.
-     * @param Request $request
+     * AssistantPhraseController constructor.
      */
-    public function __construct(Request $request)
+    public function __construct()
     {
-        $this->service = new ApiControllerService($request->language, new AssistantPhrase());
+        $this->service = new ApiControllerService(new AssistantPhrase());
     }
 
     /**
@@ -35,11 +34,10 @@ class AssistantPhraseController
     /**
      * Display the specified assistant phrase.
      *
-     * @param string $language
      * @param int $id
      * @return mixed
      */
-    public function show($language, $id)
+    public function show($id)
     {
         return $this->service->show($id);
     }
@@ -47,12 +45,11 @@ class AssistantPhraseController
     /**
      * Display the specified assistant phrase by its assistant.
      *
-     * @param string $language
      * @param int $assistantId
      * @return mixed
      */
-    public function getByAssistant($language, $assistantId)
+    public function getByAssistant($assistantId)
     {
-        return \App\Models\Assistant::withTranslations($language)->find($assistantId)->assistantPhrases;
+        return \App\Models\Assistant::withTranslations(app()->getLocale())->find($assistantId)->assistantPhrases;
     }
 }

@@ -14,12 +14,11 @@ class AccessoryController
     private $service;
 
     /**
-     * MainPhraseController constructor.
-     * @param Request $request
+     * AccessoryController constructor.
      */
-    public function __construct(Request $request)
+    public function __construct()
     {
-        $this->service = new ApiControllerService($request->language, new Accessory());
+        $this->service = new ApiControllerService(new Accessory());
     }
 
     /**
@@ -35,11 +34,10 @@ class AccessoryController
     /**
      * Display the specified accessory.
      *
-     * @param string $language
      * @param int $id
      * @return mixed
      */
-    public function show($language, $id)
+    public function show($id)
     {
         return $this->service->show($id);
     }

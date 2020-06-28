@@ -16,11 +16,10 @@ class VineController
 
     /**
      * VineController constructor.
-     * @param Request $request
      */
-    public function __construct(Request $request)
+    public function __construct()
     {
-        $this->service = new ApiControllerService($request->language, new Vine());
+        $this->service = new ApiControllerService(new Vine());
     }
 
     /**
@@ -38,14 +37,13 @@ class VineController
     /**
      * Display the specified vine.
      *
-     * @param string $language
      * @param int $id
      * @return mixed
      */
-    public function show($language, $id)
+    public function show($id)
     {
         $vine = $this->service->show($id);
+
         $brand = Brand::find($vine[0]['brand_id'])->name;
-        dd($brand);
     }
 }

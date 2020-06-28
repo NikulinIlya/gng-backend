@@ -14,12 +14,11 @@ class LocationController
     private $service;
 
     /**
-     * MainPhraseController constructor.
-     * @param Request $request
+     * LocationController constructor.
      */
-    public function __construct(Request $request)
+    public function __construct()
     {
-        $this->service = new ApiControllerService($request->language, new Location());
+        $this->service = new ApiControllerService(new Location());
     }
 
     /**
@@ -35,11 +34,10 @@ class LocationController
     /**
      * Display the specified location.
      *
-     * @param string $language
      * @param int $id
      * @return mixed
      */
-    public function show($language, $id)
+    public function show($id)
     {
         return $this->service->show($id);
     }

@@ -12,18 +12,11 @@ class ApiControllerService
     private $model;
 
     /**
-     * @var string
-     */
-    private $language;
-
-    /**
      * ApiControllerService constructor.
-     * @param string $language
      * @param Model|null $model
      */
-    public function __construct($language, $model = null)
+    public function __construct($model = null)
     {
-        $this->language = $language;
         $this->model = $model;
     }
 
@@ -34,11 +27,13 @@ class ApiControllerService
      */
     public function index()
     {
-        $entities = ($this->language === 'ru')
-            ? $this->model::all()
-            : $this->model::withTranslations($this->language)->get();
+        $locale = app()->getLocale();
 
-        return $this->makeEntityCollection($entities);
+        $entities = ($locale == 'ru')
+            ? $this->model::all()
+            : $this->model::withTranslations($locale)->get();
+
+        return $this->makeEntityCollection($entities, $locale);
     }
 
     /**
@@ -49,11 +44,13 @@ class ApiControllerService
      */
     public function show($id)
     {
+        $locale = app()->getLocale();
+
         $entity = ($this->language === 'ru')
             ? $this->model::findOrFail($id)
-            : $this->model::withTranslations($this->language)->findOrFail($id);
+            : $this->model::withTranslations($locale)->findOrFail($id);
 
-        return $this->makeEntityCollection([$entity]);
+        return $this->makeEntityCollection([$entity], $locale);
     }
 
     /**
@@ -77,9 +74,10 @@ class ApiControllerService
      * Make return entities collection to a special format.
      *
      * @param Model[] $entities
+     * @param string $locale
      * @return \Illuminate\Support\Collection
      */
-    public function makeEntityCollection($entities)
+    public function makeEntityCollection($entities, $locale)
     {
         $resultCollection = collect();
 
@@ -87,7 +85,7 @@ class ApiControllerService
             $collection = $entity->toArray();
             unset($collection['created_at'], $collection['updated_at']);
 
-            if ($this->language !== 'ru') {
+            if ($locale !== 'ru') {
                 unset($collection['translations']);
                 $collection = array_merge($collection, $this->getTranslatedFields($entity));
             }
