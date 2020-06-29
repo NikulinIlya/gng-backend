@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Services\ApiControllerService;
 use App\Models\MainPhrase;
-use Illuminate\Http\Request;
 
 class MainPhraseController
 {

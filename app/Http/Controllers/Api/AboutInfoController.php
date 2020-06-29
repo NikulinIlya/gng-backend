@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Services\ApiControllerService;
 use App\Models\AboutInfo;
-use Illuminate\Http\Request;
 
 class AboutInfoController
 {

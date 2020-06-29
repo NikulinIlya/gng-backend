@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Services\ApiControllerService;
 use App\Models\Location;
-use Illuminate\Http\Request;
 
 class LocationController
 {

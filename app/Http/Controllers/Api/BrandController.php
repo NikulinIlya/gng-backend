@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Services\ApiControllerService;
 use App\Models\Brand;
-use Illuminate\Http\Request;
 
 class BrandController
 {
