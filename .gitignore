@@ -1,6 +1,9 @@
 /node_modules
 /public/hot
 /public/storage
+/public/css/app.css
+/public/js/app.js
+/public/mix-manifest.json
 /storage/*.key
 /vendor
 .env
@@ -14,9 +17,3 @@ yarn-error.log
 /_ide_helper.php
 /.phpstorm.meta.php
 /package-lock.json
-/public/css/app.css
-/public/js/app.js
-/public/mix-manifest.json
-/resources/views/index.blade.php
-/resources/js
-/resources/sass
