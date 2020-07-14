@@ -38,9 +38,6 @@ Route::get('phrases/{id}', 'Api\MainPhraseController@show');
 Route::get('about-info', 'Api\AboutInfoController@index');
 Route::get('about-info/{id}', 'Api\AboutInfoController@show');
 
-Route::get('drink-types', 'Api\AboutInfoController@index');
-Route::get('drink-types/{slug}', 'Api\AboutInfoController@show');
-
 Route::get('locations', 'Api\AboutInfoController@index');
 Route::get('locations/{id}', 'Api\AboutInfoController@show');
 
