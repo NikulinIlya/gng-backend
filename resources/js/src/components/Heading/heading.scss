@@ -1,0 +1,37 @@
+.heading {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  &:after {
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 2px;
+    width: 100%;
+    background-color: var(--defaultGold);
+  }
+}
+
+.text-content {
+  background-color: white;
+  padding: 0 56px;
+  z-index: 1;
+
+  font-family: var(--morePro);
+  font-size: 42px;
+  font-weight: 400;
+  line-height: 42px;
+
+  color: var(--defaultGold);
+}
+
+@media screen and (max-width: 768px) {
+  .text-content {
+    padding: 0 11px;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 24px;
+  }
+}

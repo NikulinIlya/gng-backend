@@ -1,0 +1,92 @@
+.filters {
+  background-color: var(--green);
+  &__head {
+    display: flex;
+    justify-content: center;
+    background-color: #186759;
+  }
+  &__hide {
+    @include reset-default-button;
+    color: white;
+    font-family: var(--proxima);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 18px;
+    position: relative;
+    padding-right: 22px;
+    &:after {
+      content: "";
+      width: 15px;
+      height: 15px;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background: url("../../../../assets/images/icons/close-icon-white.svg")
+        no-repeat center / contain;
+    }
+  }
+  &__footer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    button {
+      @include reset-default-button;
+      color: white;
+      font-family: var(--morePro);
+      text-align: center;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 16px;
+      padding: 17px;
+      box-sizing: border-box;
+      &.filters__submit{
+        background-color: var(--defaultGold);
+      }
+      &.filters__reset{
+        background-color: #186759;
+      }
+    }
+  }
+
+  &__body {
+    padding: 27px 25px;
+    box-sizing: border-box;
+  }
+  &-criteria {
+    padding: 19px 0px;
+    border-bottom: 1px solid rgba(228, 234, 238, 0.15);
+    &:first-child {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    &:last-child {
+      padding-bottom: 0;
+      border: none;
+    }
+    &__name {
+      color: var(--lightGold);
+      font-family: var(--morePro);
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 22px;
+      margin-bottom: 13px;
+    }
+    &__fields {
+      & > * {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px){
+  .filters{
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow: scroll;
+  }
+}

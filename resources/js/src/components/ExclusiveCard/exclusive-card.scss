@@ -1,0 +1,68 @@
+.exclusive-card {
+  @include card-styles;
+  width: 100%;
+  max-width: 100%;
+  height: 370px;
+  box-sizing: border-box;
+  &:hover {
+    &:after {
+      background-color: transparent;
+    }
+  }
+  &__content {
+    position: relative;
+    padding: 81px 60px;
+    color: white;
+    overflow: hidden;
+  }
+  &__backdrop {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: -1;
+    // ?
+    max-height: 348px;
+  }
+  &__name {
+    color: inherit;
+    font-family: var(--morePro);
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #fae0c2;
+    margin-bottom: 18px;
+  }
+  &__description {
+    font-family: var(--proxima);
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 25.2px;
+    margin-bottom: 22px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .exclusive-card {
+    height: 293px;
+    margin-bottom: 20px;
+    &__content {
+      padding: 21px;
+    }
+    &__name {
+      font-size: 20px;
+      line-height: 20px;
+    }
+    &__description {
+      font-size: 16px;
+      line-height: 19.2px;
+    }
+    button{
+      width: 100%;
+    }
+  }
+}

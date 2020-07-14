@@ -1,0 +1,61 @@
+.field {
+  display: block;
+  &__label {
+    display: block;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 21.6px;
+    font-family: var(--proxima);
+    margin-bottom: 5px;
+  }
+  &__input {
+    width: 100%;
+    max-width: 570px;
+    @mixin input-styles {
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      border: none;
+      background-color: #f8f8f8;
+      padding: 13px 14px;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 24px;
+      border-bottom: 2px solid var(--defaultGold);
+      font-family: var(--proxima);
+      display: block;
+      &::placeholder {
+        color: #e2d9cf;
+      }
+      &:focus {
+        &:not(:disabled) {
+          border-bottom: 3px solid var(--defaultGold);
+        }
+        outline: none;
+      }
+      @media screen and (max-width: 768px) {
+        font-size: 18px;
+        line-height: 21.6px;
+      }
+    }
+    input {
+      @include input-styles;
+      height: 50px;
+    }
+    textarea {
+      @include input-styles;
+      min-width: 100%;
+      min-height: 50px;
+      height: 170px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .field {
+    &__label {
+      font-size: 16px;
+      line-height: 19.2px;
+    }
+  }
+}

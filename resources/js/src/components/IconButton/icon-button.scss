@@ -1,0 +1,10 @@
+.icon-button{
+  @include reset-default-button;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img, svg{
+    max-width: 100%;
+    max-height: 100%;
+  }
+}

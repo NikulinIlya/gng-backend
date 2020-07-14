@@ -1,0 +1,13 @@
+.orders{
+  width: 830px;
+  margin: 0 auto;
+  .order-card{
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (max-width: 768px){
+  .orders{
+    width: 100%;
+  }
+}

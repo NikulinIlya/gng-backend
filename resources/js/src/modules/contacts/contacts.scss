@@ -1,0 +1,130 @@
+.contacts-page {
+  padding-bottom: 120px;
+  color: var(--darkText);
+  &__card {
+    display: grid;
+    grid-template-columns: 589px 1fr;
+    grid-template-areas:
+      "map title"
+      "map content";
+  }
+  &__map {
+    grid-area: map;
+    height: 100%;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  &__content {
+    grid-area: content;
+    padding: 47px 60px;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  &__title {
+    padding: 47px 60px 0;
+    grid-area: title;
+    font-size: 42px;
+    font-weight: 400;
+    line-height: 42px;
+    font-family: var(--morePro);
+  }
+  &__disclaimer {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 22.4px;
+    font-family: var(--proxima);
+  }
+  &__info {
+    list-style: none;
+    &-item {
+      &.info-item {
+        display: grid;
+        grid-template-columns: 30px 1fr;
+        column-gap: 11px;
+        align-items: center;
+        padding: 18px 0px;
+        border-bottom: 1px solid #e2d9cf;
+        grid-template-areas:
+          "icon key"
+          "icon value";
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+      .info-item {
+        &__icon {
+          grid-area: icon;
+        }
+        &__key {
+          color: var(--defaultGold);
+          font-size: 18px;
+          font-weight: 400;
+          font-style: italic;
+          font-family: var(--morePro);
+          line-height: 18px;
+          margin-bottom: 8px;
+          grid-area: key;
+        }
+        &__value {
+          font-size: 18px;
+          font-weight: 300;
+          font-family: var(--proxima);
+          line-height: 25.2px;
+          grid-area: value;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .contacts-page {
+    &__card {
+      @include card-styles;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .contacts-page {
+    padding-bottom: 50px;
+    &__card {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "title"
+        "map"
+        "content";
+    }
+    &__title {
+      padding: 0;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 28.8px;
+      margin-bottom: 20px;
+    }
+    &__content {
+      padding: 0;
+    }
+    &__info {
+      list-style: none;
+      &-item {
+        &.info-item {
+          &__key,
+          &__value {
+            font-size: 16px;
+            line-height: 16px;
+          }
+        }
+      }
+    }
+    &__disclaimer {
+      line-height: 19.2px;
+    }
+  }
+}

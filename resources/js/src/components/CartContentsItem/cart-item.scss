@@ -1,0 +1,124 @@
+.cart-item {
+  border: 1px solid #e2d9cf;
+  padding: 23px;
+  &__remove {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+  }
+  &__product {
+    position: relative;
+    display: flex;
+  }
+  &__thumb {
+    flex-basis: 154px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 23px;
+  }
+  &__info {
+    flex: 1;
+    display: flex;
+    flex-flow: column nowrap;
+
+    min-height: 100%;
+  }
+  &__name {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 24px;
+    font-family: var(--morePro);
+    margin-bottom: 8px;
+  }
+  &__descr {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    font-family: var(--proxima);
+    margin-bottom: 8px;
+  }
+  &__vendor-code {
+    font-family: var(--proxima);
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 21.6px;
+  }
+  &__footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__sum {
+    &-label {
+      color: #bcbcbc;
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 21.6px;
+      font-family: var(--proxima);
+      margin-bottom: 5px;
+    }
+    &-value {
+      color: var(--darkText);
+      font-size: 24px;
+
+      line-height: 24px;
+      font-family: var(--morePro);
+      span {
+        font-weight: 700;
+        font-family: var(--proxima);
+      }
+    }
+  }
+  &__counter-nav {
+    display: grid;
+    background-color: rgba(200, 200, 200, 0.25);
+    grid-template-columns: 52px 1fr 52px;
+    align-items: center;
+    button {
+      @include reset-default-button;
+      color: #9f9f9f;
+      font-size: 36px;
+      font-weight: 300;
+    }
+    span {
+      color: var(--darkText);
+      font-family: var(--morePro);
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 22px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .cart-item {
+    &__name {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 20px;
+    }
+    &__descr {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 19.2px;
+    }
+    &__vendor-code {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 16.8px;
+    }
+    &__thumb {
+      flex-basis: unset;
+      padding: 0;
+    }
+    &__footer {
+      flex-flow: column nowrap;
+    }
+    &__counter-nav {
+      width: 120px;
+    }
+  }
+}

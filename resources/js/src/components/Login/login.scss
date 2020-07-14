@@ -1,0 +1,109 @@
+.login {
+  width: 742px;
+  padding: 40px;
+  box-sizing: border-box;
+  background-color: white;
+  position: relative;
+  &:after {
+    --offset: 14px;
+    position: absolute;
+    content: "";
+    top: calc(var(--offset) * -1);
+    left: calc(var(--offset) * -1);
+    width: calc(100% + calc(var(--offset) * 2));
+    height: calc(100% + calc(var(--offset) * 2));
+    border: 1px solid #e2d9cf;
+    z-index: -1;
+  }
+  &__close {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+  }
+  &__title {
+    text-align: center;
+    font-size: 42px;
+    font-weight: 400;
+    line-height: 42px;
+    color: var(--defaultGold);
+    font-family: var(--morePro);
+    margin-bottom: 16px;
+  }
+  &__prediction {
+    text-align: center;
+    font-family: var(--proxima);
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 20px;
+    margin-bottom: 17px;
+    a {
+      color: var(--defaultGold);
+      font-weight: 600;
+      font-family: var(--proxima);
+    }
+  }
+  &__form {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    max-width: 570px;
+    .field,
+    .checkbox {
+      &:not(:last-child) {
+        margin-bottom: 24px;
+      }
+    }
+    .checkbox {
+      align-items: center;
+      &__label {
+        color: black;
+      }
+    }
+    .btn {
+      width: 100%;
+    }
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 30px;
+    }
+  }
+  &__forgot {
+    display: block;
+    text-align: center;
+    color: var(--defaultGold);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 20px;
+    font-family: var(--proxima);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .login {
+    width: 100%;
+    padding: 18px;
+    &:after {
+      display: none;
+    }
+    &__title {
+      font-size: 24px;
+      line-height: 28.8px;
+    }
+    &__prediction {
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 18px;
+    }
+    &__form {
+      .field-grid {
+        grid-template-columns: 1fr;
+        margin-bottom: 24px;
+      }
+    }
+    &__forgot {
+      font-size: 18px;
+      line-height: 18px;
+    }
+  }
+}

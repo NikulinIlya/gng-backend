@@ -1,0 +1,8 @@
+.popup-content {
+  position: fixed;
+  background-color: white;
+  z-index: 4;
+  width: 100%;
+  box-shadow: 0 100vh 0 100vh rgba(0, 0, 0, 0.6);
+  overflow: auto;
+}
