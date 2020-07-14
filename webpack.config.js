@@ -1,4 +1,5 @@
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = env => ({
@@ -26,7 +27,16 @@ module.exports = env => ({
         compress: true,
         historyApiFallback: true
     },
-    plugins: [new CleanWebpackPlugin()],
+    plugins: [
+        new CleanWebpackPlugin(),
+        (_ =>
+            env.prod
+                ? () => {}
+                : new HtmlWebpackPlugin({
+                      title: "Dev Grapes & Grains",
+                      template: "resources/js/template.html"
+                  }))()
+    ],
     module: {
         rules: [
             {
