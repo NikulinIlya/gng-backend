@@ -17,6 +17,6 @@ Route::group(['prefix' => 'admin-panel'], function () {
     Voyager::routes();
 });
 
-Route::get('/{uri?}', function () {
+Route::get('/visit/{uri?}', function () {
     return view('index');
 })->where('uri', '(.*)');
