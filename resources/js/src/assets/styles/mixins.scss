@@ -1,0 +1,188 @@
+@mixin visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+@mixin ux-style-fix {
+  line-height: 44px;
+  min-height: 44px;
+}
+
+@mixin reset-default-button {
+  @include ux-style-fix;
+  appearance: none;
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  &:disabled {
+    cursor: default;
+  }
+}
+
+@mixin card-styles {
+  --cardPadding: 11px;
+  --cardEdge: 1px solid #e2d9cf;
+  padding: var(--cardPadding);
+  position: relative;
+  // ?
+  // max-width: 33vw;
+
+  &:after,
+  &:before {
+    border: var(--cardEdge);
+    position: absolute;
+    content: "";
+    z-index: -1;
+  }
+  &:before {
+    height: 100%;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: calc(100% - var(--cardPadding) * 2);
+  }
+  &:after {
+    width: 100%;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: calc(100% - var(--cardPadding) * 2);
+  }
+  &:hover {
+    &:before {
+      width: 100%;
+      background-color: #f3f0ec;
+    }
+    &:after {
+      left: var(--cardPadding);
+      width: calc(100% - var(--cardPadding) * 2);
+      background-color: white;
+    }
+  }
+}
+
+@mixin logo {
+  .logo {
+    display: inline-flex;
+    position: relative;
+    align-items: center;
+    &__image {
+      width: 92px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    &__text {
+      color: white;
+    }
+    a {
+      text-decoration: none;
+      &:after {
+        position: absolute;
+        content: "";
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+      }
+    }
+  }
+  @media screen and (max-width: 1024px) {
+    .logo {
+      &__image {
+        width: 70px;
+        height: 34px;
+      }
+    }
+  }
+}
+
+@mixin default-input-styles {
+  background-color: var(--defaultGrey);
+  color: var(--defaultBlack);
+  border-radius: var(--inputBorderRadius);
+
+  border: none;
+  max-width: 287px;
+  min-height: 37px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 400;
+
+  transition: box-shadow 0.2s linear;
+  @media screen and (max-width: 1024px) {
+    font-size: 11px;
+  }
+  @media screen and (max-width: 768px) {
+    max-width: none;
+  }
+}
+
+@mixin full-width-input-styles {
+  width: 100%;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+@mixin active-input-styles {
+  @include default-input-styles;
+  background-color: var(--defaultOrange);
+  color: white;
+}
+
+@mixin focused-input-styles {
+  outline: none;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.25);
+  transition: box-shadow 0.2s linear;
+}
+
+@mixin button-styles {
+  @include active-input-styles;
+  border: none;
+  border-radius: 25px;
+  padding: 0px 24px;
+  max-width: 256px;
+  box-sizing: border-box;
+  font-size: 20px;
+  &:active,
+  &:focus {
+    outline: none;
+  }
+  &:hover,
+  &:focus {
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.25);
+  }
+  &:active {
+    background-color: var(--button-activeColor);
+  }
+  &.full-width {
+    width: 100%;
+    max-width: 100%;
+  }
+  &.secondary {
+    background-color: #9d9b9b;
+  }
+}
+
+
+@mixin contained-link-styles {
+  &:after {
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+}

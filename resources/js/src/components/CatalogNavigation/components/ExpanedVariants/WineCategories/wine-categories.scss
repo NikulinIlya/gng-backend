@@ -1,0 +1,55 @@
+.wine-categories {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding-bottom: 30px;
+  padding-top: 25px;
+  border-bottom: 1px solid #e2d9cf;
+  &__col {
+    &--multirow {
+      & > * {
+        &:first-child {
+          margin-bottom: 30px;
+          padding-bottom: 30px;
+          border-bottom: 1px solid #e2d9cf;
+        }
+      }
+    }
+  }
+  &__all{
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+}
+
+.wine-category {
+  &__name {
+    font-family: var(--morePro);
+    color: var(--defaultGold);
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 20px;
+    padding-bottom: 20px;
+  }
+  &__item {
+    font-family: var(--proxima);
+    list-style: none;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 18px;
+    margin-bottom: 30px;
+    a {
+      all: inherit;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+        cursor: default;
+      }
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

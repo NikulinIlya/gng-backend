@@ -1,0 +1,15 @@
+.expanded-inline {
+  list-style: none;
+  &__item {
+    font-family: var(--morePro);
+    color: var(--defaultGold);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 20px;
+    padding: 26px 0 33px 0;
+    border-bottom: 1px solid #e2d9cf;
+    a {
+      text-decoration: none;
+    }
+  }
+}

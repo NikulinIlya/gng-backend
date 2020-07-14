@@ -1,0 +1,25 @@
+.progress {
+  &__label {
+    color: var(--darkText);
+    font-family: var(--morePro);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 18px;
+    font-style: italic;
+    margin-bottom: 13px;
+  }
+  &__value{
+    progress{
+      width: 100%;
+      -webkit-appearance: none;
+      &::-webkit-progress-bar{
+        background-color: #e3e3e3;
+        height: 4px;
+      }
+      &::-webkit-progress-value{
+        background-color: var(--defaultGold);
+        height: 4px;
+      }
+    }
+  }
+}

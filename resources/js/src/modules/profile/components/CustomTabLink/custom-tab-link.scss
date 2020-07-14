@@ -1,0 +1,49 @@
+.tab {
+  margin: 0 30px;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  a {
+    text-decoration: none;
+    @include contained-link-styles;
+    &.active-tab {
+      & ~ .tab__icon {
+        svg path {
+          fill: var(--defaultGold);
+        }
+      }
+      & ~ .tab__label {
+        color: var(--defaultGold);
+      }
+    }
+  }
+  &__icon {
+    width: 23px;
+    height: 23px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+  }
+  &__label {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    font-family: var(--proxima);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tab {
+    margin: 0px 13px;
+    &:first-child {
+      margin-left: 0;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+    &__label {
+      font-size: 14px;
+      line-height: 16.8px;
+    }
+  }
+}

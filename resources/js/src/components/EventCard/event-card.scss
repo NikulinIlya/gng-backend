@@ -1,0 +1,181 @@
+.event-card {
+  display: grid;
+  width: 100%;
+  // grid-template-areas: date thumb info;
+  grid-template-columns: minmax(0, 70px) minmax(0, 450px) minmax(0, 500px);
+  // grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
+  padding: 24px 30px;
+  &:hover {
+    background-color: #f8f8f8;
+  }
+  &__date {
+    // grid-area: date;
+    &.date {
+      text-align: center;
+    }
+    .date {
+      &__day {
+        color: var(--darkText);
+        font-family: var(--morePro);
+        font-size: 64px;
+        font-style: italic;
+        font-weight: 500;
+        line-height: 76.8px;
+      }
+      &__month {
+        color: var(--darkText);
+        font-family: var(--proxima);
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 24px;
+      }
+    }
+  }
+  &__thumb {
+    @include card-styles;
+    &:before,
+    &:after {
+      z-index: 1;
+    }
+    &:hover {
+      &:before,
+      &:after {
+        background-color: transparent;
+      }
+    }
+    height: 309px;
+    max-width: unset;
+    // grid-area: thumb;
+
+    &-image {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+  }
+  
+  &__name {
+    color: var(--darkText);
+    font-family: var(--morePro);
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 24px;
+    margin-bottom: 17px;
+  }
+  &__common {
+    margin-bottom: 17px;
+    position: relative;
+    color: var(--darkText);
+    font-family: var(--proxima);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    padding-bottom: 24px;
+    &:after {
+      position: absolute;
+      content: "";
+      left: 0;
+      bottom: 0;
+      width: 137px;
+      height: 1px;
+      background-color: #e2d9cf;
+    }
+  }
+  &__description {
+    margin-bottom: 23px;
+    color: #000000;
+    font-family: var(--proxima);
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 21.6px;
+  }
+  &__price {
+    margin-bottom: 19px;
+    &.price {
+      color: var(--defaultGold);
+      font-family: var(--morePro);
+      font-size: 28px;
+      line-height: 28px;
+      line-height: 28px;
+    }
+    .price {
+      &__val {
+        font-weight: 700;
+      }
+      &__cur {
+        font-weight: 400;
+      }
+    }
+  }
+  &__details {
+    color: var(--defaultGold);
+    font-family: var(--proxima);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 18px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .event-card {
+    padding: 0;
+    grid-template-columns: 1fr;
+    position: relative;
+    &__date {
+      top: 11px;
+      left: 11px;
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.9);
+      z-index: 2;
+      padding: 9px;
+      .date {
+        &__day {
+          font-size: 42px;
+          font-weight: 500;
+          line-height: 50.4px;
+        }
+        &__month {
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 19.2px;
+        }
+      }
+    }
+    &__thumb {
+      height: 280px;
+    }
+    &__name {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 20px;
+    }
+    &__common {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 19.2px;
+      padding-bottom: 12px;
+    }
+    &__description {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 19.2px;
+    }
+    &__price {
+      &.price {
+        font-size: 24px;
+      }
+    }
+    &__details {
+      font-size: 16px;
+      line-height: 16px;
+    }
+  }
+}

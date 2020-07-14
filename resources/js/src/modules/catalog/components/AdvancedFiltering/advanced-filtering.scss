@@ -1,0 +1,120 @@
+.advanced-filters {
+  border: 1px solid #e2d9cf;
+  padding: 30px 34px 27px;
+  padding-left: 154px;
+  position: relative;
+  overflow: hidden;
+  .backdrop {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 20.7%;
+    object-fit: cover;
+    z-index: -1;
+  }
+  &__form {
+    display: grid;
+    
+    grid-template-areas:
+      "title fields"
+      "submit fields";
+
+    column-gap: 75px;
+  }
+  &__title {
+    grid-area: title;
+    font-family: var(--morePro);
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 22px;
+    color: var(--defaultGold);
+  }
+  &__submit {
+    grid-area: submit;
+    align-self: end;
+  }
+  &__fields-set {
+    grid-area: fields;
+  }
+  &__item {
+    &.filter-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 219px 1fr;
+      align-items: center;
+      column-gap: 19px;
+      margin-bottom: 19px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    .filter-item {
+      &__min,
+      &__max {
+        color: var(--darkText);
+        font-family: var(--proxima);
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 18px;
+      }
+      &__max {
+        text-align: right;
+      }
+      &__range {
+        display: flex;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .advanced-filters {
+    padding: 22px 28px;
+    .backdrop {
+      display: none;
+    }
+    &__title{
+      margin-bottom: 25px;
+    }
+    &__form {
+      grid-template-areas:
+        "title"
+        "fields"
+        "submit";
+    }
+    &__fields-set {
+      grid-area: unset;
+      margin-bottom: 20px;
+    }
+    &__submit{
+      .btn{
+        width: 100%;
+      }
+    }
+    &__item {
+      &.filter-item {
+        grid-template-areas:
+          "min max"
+          "range range";
+
+        grid-template-columns: 1fr;
+        &:not(:last-child){
+          margin-bottom: 20px;
+        }
+      }
+      .filter-item {
+        &__min {
+          grid-area: min;
+        }
+        &__max {
+          grid-area: max;
+        }
+        &__range {
+          // display: flex;
+          grid-area: range;
+        }
+      }
+    }
+  }
+}

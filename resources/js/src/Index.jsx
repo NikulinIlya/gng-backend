@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Link, Route, Switch} from 'react-router-dom';
-import Main from './Router';class Index extends Component {
+import Home from './modules/home/index';
+
+class Index extends Component {
     render() {
         return (
-            <BrowserRouter>
-                <Route component={Main} />
-            </BrowserRouter>
+            <h1>hello</h1>
         );
     }
 }

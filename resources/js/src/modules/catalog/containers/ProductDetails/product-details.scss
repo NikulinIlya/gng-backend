@@ -1,0 +1,234 @@
+.product-details {
+  display: grid;
+  grid-template-areas:
+    "thumb content"
+    "about about";
+  grid-template-columns: repeat(2, 1fr);
+  padding: 60px 0;
+  &__thumb {
+    position: relative;
+    text-align: center;
+    height: 582px;
+    .backdrop {
+      width: 370px;
+      height: 370px;
+      border-radius: 50%;
+      margin: 0 auto;
+      overflow: hidden;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+  &__bottle-img {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 154px;
+    height: 100%;
+    img {
+      max-width: 154px;
+      height: 100%;
+    }
+  }
+  &__name {
+    font-family: var(--morePro);
+    font-size: 42px;
+    font-weight: 400;
+    line-height: 42px;
+    margin-bottom: 13px;
+  }
+  &__descr {
+    font-family: var(--proxima);
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 28.8px;
+    margin-bottom: 9px;
+  }
+  &__vendor-code {
+    font-family: var(--proxima);
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 24px;
+  }
+  &__features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 30px;
+  }
+  &__about {
+    grid-area: about;
+    margin-top: 52px;
+
+    &-title {
+      position: relative;
+      color: var(--defaultGold);
+      font-family: var(--morePro);
+      font-size: 42px;
+      font-weight: 400;
+      line-height: 42px;
+      text-align: center;
+      display: flex;
+      margin: 0 auto;
+      justify-content: center;
+
+      &:before {
+        position: absolute;
+        content: "";
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        height: 2px;
+        background-color: var(--defaultGold);
+      }
+      span {
+        background-color: white;
+        position: relative;
+        z-index: 2;
+        padding-left: 46px;
+        padding-right: 46px;
+      }
+    }
+  }
+  &__criterias {
+    display: flex;
+    justify-content: space-around;
+    padding: 56px 0;
+    & > * {
+      flex-basis: 245px;
+      flex-shrink: 0;
+    }
+  }
+  &__relative {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-bottom: 50px;
+    .relative-card {
+      display: flex;
+      padding: 25px 30px;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid #e2d9cf;
+      &__icon {
+        flex-basis: 90px;
+        flex-shrink: 0;
+        height: 90px;
+        margin-left: 33px;
+      }
+      &__content {
+        flex: 1;
+      }
+      &__title {
+        color: var(--defaultGold);
+        font-family: var(--morePro);
+        font-style: italic;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 18px;
+        margin-bottom: 14px;
+      }
+      &__descr {
+        font-family: var(--proxima);
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 21.6px;
+      }
+    }
+  }
+  &__more-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 30px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .product-details {
+    grid-template-areas:
+      "thumb"
+      "content"
+      "about";
+    grid-template-columns: 1fr;
+    border: none;
+    padding-top: 0;
+    &__name {
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 24px;
+    }
+    &__descr {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 21.6px;
+    }
+    &__vendor-code {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 19.2px;
+    }
+    &__about {
+      &-title {
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 24px;
+        span{
+          padding-left: 11px;
+          padding-right: 11px;
+        }
+      }
+    }
+    &__features {
+      grid-template-columns: 1fr;
+    }
+    &__thumb {
+      height: 292px;
+      margin-bottom: 24px;
+      .backdrop {
+        width: 186px;
+        height: 186px;
+      }
+    }
+    &__relative {
+      grid-template-columns: 1fr;
+      .relative-card {
+        flex-flow: column nowrap;
+        align-items: flex-start;
+        &__title {
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 19.2px;
+        }
+        &__content {
+          margin-bottom: 13px;
+        }
+        &__descr {
+          font-size: 16px;
+          font-weight: 300;
+          line-height: 19.2px;
+        }
+        &__icon {
+          flex-basis: 51px;
+          margin: 0;
+        }
+      }
+    }
+    &__criterias {
+      flex-flow: column nowrap;
+      padding: 24px 0;
+      & > * {
+        flex-basis: unset;
+      }
+    }
+    &__more-info {
+      grid-template-columns: 1fr;
+      row-gap: 30px;
+      .details-card {
+        max-width: unset;
+      }
+    }
+  }
+}

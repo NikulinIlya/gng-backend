@@ -1,0 +1,88 @@
+.account {
+  width: 630px;
+  margin: 0 auto;
+  &-section {
+    margin-bottom: 70px;
+    &-heading {
+      margin-bottom: 27px;
+      .text-content {
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 24px;
+      }
+    }
+    .field {
+      margin-bottom: 24px;
+      max-width: 100%;
+      width: 100%;
+      &__input {
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+    .checkbox {
+      margin-bottom: 24px;
+      &__label {
+        color: black;
+        align-self: center;
+      }
+    }
+    .btn {
+      width: 100%;
+      margin-top: 34px;
+    }
+    .fields-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 30px;
+      row-gap: 24px;
+      .field {
+        margin-bottom: 0;
+      }
+    }
+    .date {
+      &__title {
+        font-family: var(--proxima);
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 21.6px;
+      }
+      &__body {
+        display: grid;
+        grid-template-columns: 65px 1fr 84px;
+        column-gap: 12px;
+      }
+    }
+    .fields-flex {
+      display: flex;
+      flex-flow: column nowrap;
+      .checkbox {
+        margin-bottom: 0;
+        flex: 1;
+      }
+      &__title {
+        font-family: var(--proxima);
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 21.6px;
+      }
+      &__body {
+        margin-top: auto;
+        margin-bottom: auto;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px){
+  .account{
+    width: 100%;
+    &-section{
+      .fields-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}

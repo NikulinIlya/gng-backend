@@ -1,0 +1,24 @@
+:root {
+  // Measures
+  --containerWidth: 1200px;
+  // --mobileBreakpoint: 480px;
+  //
+  // Colors
+  --green: #26524a;
+  --darkGreen: #0b4339;
+  --lightGold: #fae0c2;
+  --darkGold: #775632;
+  --defaultGold: #b99977;
+  --darkText: #4a4a4a;
+  //
+  // Fonts
+  --proxima: "proxima-nova",sans-serif;
+  --morePro: "ff-more-web-pro-wide",serif;
+  // 
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    --containerWidth: 100%;
+  }
+}

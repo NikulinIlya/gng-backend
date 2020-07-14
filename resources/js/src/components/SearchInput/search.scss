@@ -1,0 +1,35 @@
+.search {
+  border: 1px solid #0b4339;
+  background-color: var(--darkGreen);
+  display: flex;
+  padding: 11px 17px;
+  &.focus{
+    border-color: var(--lightGold);
+  }
+  &__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 20px;
+    width: 20px;
+    height: 20px;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+  input {
+    border: none;
+    outline: none;
+    background: transparent;
+    appearance: none;
+    color: white;
+    text-align: center;
+    font-family: var(--proxima);
+    font-size: 16px;
+    font-weight: 400;
+    flex: 1;
+    &::placeholder{
+      color: white;
+      font-size: 16px;
+    }
+  }
+}

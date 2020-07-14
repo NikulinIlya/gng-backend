@@ -1,0 +1,144 @@
+.event-page {
+  &__details {
+    display: flex;
+    padding: 70px 0;
+  }
+  &__image {
+    flex-basis: 50%;
+    flex-shrink: 0;
+    flex-grow: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__info {
+    .event-calc {
+      &__label {
+        display: block;
+        padding-bottom: 16px;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 21.6px;
+        font-family: var(--proxima);
+        color: var(--defaultGold);
+      }
+    }
+    .event-info {
+      .event-calc {
+        &__label {
+          padding-bottom: 16px;
+        }
+      }
+      &__name {
+        font-size: 42px;
+        font-weight: 400;
+        line-height: 42px;
+        font-family: var(--morePro);
+        margin-bottom: 10px;
+      }
+      &__place {
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 28.8px;
+        font-family: var(--proxima);
+        margin-bottom: 24px;
+      }
+      &__date {
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 24px;
+        color: var(--defaultGold);
+        margin-bottom: 10px;
+      }
+      &__description {
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 21.6px;
+        font-family: var(--proxima);
+        margin-bottom: 30px;
+      }
+    }
+  }
+  &__char-list {
+    padding: 47px 0;
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+    border-bottom: 1px solid #f0f0f3;
+  }
+  &__char-item {
+    flex: 1;
+  }
+  &__thumbs {
+    display: flex;
+    padding: 47px 0;
+    border-bottom: 1px solid #f0f0f3;
+    &-item {
+      flex: 1;
+      margin-right: 30px;
+      &:last-child {
+        margin-right: 0;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .event-page {
+    &__details {
+      display: flex;
+      flex-flow: column;
+      padding: 15px 0;
+    }
+    &__image {
+      margin-bottom: 15px;
+    }
+    &__info {
+      .event-calc {
+        &__label{
+          text-align: center;
+        }
+      }
+      .event-info {
+        &__name {
+          font-size: 24px;
+          font-weight: 400;
+          line-height: 24px;
+        }
+        &__place {
+          font-size: 18px;
+          font-weight: 400;
+          line-height: 21.6px;
+          margin-bottom: 15px;
+        }
+        &__date {
+          font-size: 18px;
+          font-weight: 400;
+          line-height: 18px;
+        }
+        &__description {
+          font-size: 16px;
+          font-weight: 300;
+          line-height: 19.2px;
+          margin-bottom: 29px;
+        }
+      }
+    }
+    &__char-list,
+    &__thumbs{
+      flex-flow: column nowrap;
+    }
+    &__thumbs{
+      &-item{
+        margin-right: 0;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

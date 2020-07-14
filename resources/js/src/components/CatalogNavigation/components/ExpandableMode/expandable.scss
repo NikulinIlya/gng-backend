@@ -1,0 +1,39 @@
+.catalog-expandable {
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid #e2d9cf;
+  }
+  &__title {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 20px;
+    color: var(--defaultGold);
+    line-height: 1;
+  }
+  &__set {
+    li {
+      list-style: none;
+      color: var(--defaultGold);
+      padding: 18px 0;
+
+      &:not(:last-child) {
+        border-bottom: 1px solid #f3ede5;
+      }
+
+      a {
+        text-decoration: none;
+        font-family: var(--morePro);
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 18px;
+      }
+    }
+  }
+  &.expanded{
+    .catalog-expandable__body{
+      display: block;
+    }
+  }
+}
