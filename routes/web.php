@@ -19,7 +19,13 @@ Route::group(['prefix' => 'admin-panel'], function () {
 });
 
 Route::get('/{uri?}', function (Request $request) {
+    if (isset($_COOKIE['vi'])) {
+        return view('index');
+    }
+
     if ($request->query('visit') == '37693cfc748049e45') {
+        setcookie('vi', '1', time() + 86400 * 7, '/', $_SERVER['HTTP_HOST'], false, false);
+
         return view('index');
     } else {
         return abort(404);
