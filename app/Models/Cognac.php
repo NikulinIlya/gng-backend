@@ -16,4 +16,12 @@ class Cognac extends Model
      * @var string
      */
     protected $table = 'cognac';
+
+    /**
+     * Get the product.
+     */
+    public function product()
+    {
+        return $this->belongsTo('App\Models\Product');
+    }
 }

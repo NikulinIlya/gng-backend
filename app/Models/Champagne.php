@@ -17,4 +17,12 @@ class Champagne extends Model
      * @var string
      */
     protected $table = 'champagne';
+
+    /**
+     * Get the product.
+     */
+    public function product()
+    {
+        return $this->belongsTo('App\Models\Product');
+    }
 }

@@ -16,4 +16,12 @@ class Whiskey extends Model
      * @var string
      */
     protected $table = 'whiskey';
+
+    /**
+     * Get the product.
+     */
+    public function product()
+    {
+        return $this->belongsTo('App\Models\Product');
+    }
 }

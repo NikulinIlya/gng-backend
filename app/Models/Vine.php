@@ -19,7 +19,7 @@ class Vine extends Model
     }
 
     /**
-     * Get the product that the vine has.
+     * Get the product.
      */
     public function product()
     {

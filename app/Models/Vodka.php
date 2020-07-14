@@ -16,4 +16,12 @@ class Vodka extends Model
      * @var string
      */
     protected $table = 'vodka';
+
+    /**
+     * Get the product.
+     */
+    public function product()
+    {
+        return $this->belongsTo('App\Models\Product');
+    }
 }
