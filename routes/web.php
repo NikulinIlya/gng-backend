@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,10 @@ Route::group(['prefix' => 'admin-panel'], function () {
     Voyager::routes();
 });
 
-Route::get('/visit/{uri?}', function () {
-    return view('index');
+Route::get('/{uri?}', function (Request $request) {
+    if ($request->query('visit') == '37693cfc748049e45') {
+        return view('index');
+    } else {
+        return abort(404);
+    }
 })->where('uri', '(.*)');
