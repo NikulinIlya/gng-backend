@@ -27,6 +27,7 @@ import Modal from "@/components/Modal";
 
 import { HeaderContext } from "@/context/header";
 import useMeasures from "@/utils/useMeasures";
+import redaxios from "@/utils/fetch";
 
 import "@/index.scss";
 
@@ -43,7 +44,7 @@ const App = () => {
     const [isLoginModalVisible, setIsLoginModalVisible] = useState({});
     const { search } = useLocation();
     const { isMobile } = useMeasures();
-
+  
     useEffect(
         _ => {
             if (search) {
