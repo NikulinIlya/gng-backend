@@ -1,14 +1,13 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
-module.exports = {
+module.exports = env => ({
     entry: path.resolve(__dirname, "resources/js/src/index.js"),
     output: {
         path: path.join(__dirname, "public/build"),
         filename: "bundles/[name].bundle.js",
         chunkFilename: "chunks/[name].chunk.js",
-        publicPath: "/"
+        publicPath: env.prod ? "/build/" : "/"
     },
     optimization: {
         splitChunks: {
@@ -27,13 +26,7 @@ module.exports = {
         compress: true,
         historyApiFallback: true
     },
-    plugins: [
-        new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin({
-            title: 'Grapes & Grains',
-            template: "resources/views/index.blade.php"
-        })
-    ],
+    plugins: [new CleanWebpackPlugin()],
     module: {
         rules: [
             {
@@ -92,4 +85,4 @@ module.exports = {
             }
         ]
     }
-};
+});

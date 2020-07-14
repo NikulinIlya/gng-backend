@@ -16,7 +16,7 @@ import Cart from "@/modules/cart";
 import Order from "@/modules/cart/containers/Order";
 import StaticPage from "@/modules/text-page";
 import About from "@/modules/about";
-import Profile from "@/modules/profile"
+import Profile from "@/modules/profile";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -33,94 +33,98 @@ import "@/index.scss";
 export const history = createBrowserHistory();
 
 const LoginVariants = {
-  "sign-in": SignIn,
-  "sign-up": SignUp,
+    "sign-in": SignIn,
+    "sign-up": SignUp
 };
 
 const App = () => {
-  const [isProtectedVisit, setIsProtectedVisit] = useState((_) =>
-    localStorage.getItem("is-protected")
-  );
-  const [renderingComponent, setComponent] = useState(null);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isLoginModalVisible, setIsLoginModalVisible] = useState({});
-  const { search } = useLocation();
-  const { isMobile } = useMeasures();
+    const [renderingComponent, setComponent] = useState(null);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isLoginModalVisible, setIsLoginModalVisible] = useState({});
+    const { search } = useLocation();
+    const { isMobile } = useMeasures();
 
-  useEffect(
-    (_) => {
-      if (search) {
-        const params = new URLSearchParams(search);
+    useEffect(
+        _ => {
+            if (search) {
+                const params = new URLSearchParams(search);
 
-        params.has("login") &&
-          LoginVariants[params.get("login")] &&
-          setIsLoginModalVisible({ state: true, variant: params.get("login") });
+                params.has("login") &&
+                    LoginVariants[params.get("login")] &&
+                    setIsLoginModalVisible({
+                        state: true,
+                        variant: params.get("login")
+                    });
+            } else {
+                setIsLoginModalVisible({});
+            }
+        },
+        [search]
+    );
 
-        if (
-          params.has("visit") &&
-          params.get("visit") === "37693cfc748049e45"
-        ) {
-          localStorage.setItem("is-protected", true);
-          setIsProtectedVisit(true);
-        }
-      } else {
-        setIsLoginModalVisible({});
-      }
-    },
-    [search]
-  );
+    return (
+        <>
+            <main className="app-view">
+                <HeaderContext.Provider
+                    value={{ renderingComponent, setComponent }}
+                >
+                    <Header />
+                    <CatalogNavigation />
+                    <Switch>
+                        <Route path="/brands" exact component={Brands} />
+                        <Route path="/contacts" component={Contacts} />
+                        <Route path="/about" component={About} />
+                        <Route exact path="/profile" component={Profile} />
+                        <Route exact path="/cart" component={Cart} />
+                        <Route path="/cart/order" component={Order} />
+                        <Route path="/static" component={StaticPage} />
+                        <Route exact path="/events" exact component={Events} />
+                        <Route
+                            path="/events/:eventId"
+                            exact
+                            component={EventPage}
+                        />
+                        <Route path="/news" exact component={News} />
+                        <Route path="/exclusive" exact component={Exclusive} />
+                        <Route path="/catalog" exact component={Catalog} />
+                        <Route path="/:productId" component={ProductDetails} />
+                        <Route path="/" exact component={Home} />
+                    </Switch>
 
-  if (!isProtectedVisit) return null;
+                    {isLoginModalVisible.state && (
+                        <Modal
+                            closable={isMobile}
+                            onClose={_ =>
+                                history.push(window.location.pathname)
+                            }
+                        >
+                            {createElement(
+                                LoginVariants[isLoginModalVisible.variant],
+                                {
+                                    onClose: _ =>
+                                        history.push(window.location.pathname)
+                                }
+                            )}
+                        </Modal>
+                    )}
 
-  return (
-    <>
-      <main className="app-view">
-        <HeaderContext.Provider value={{ renderingComponent, setComponent }}>
-          <Header />
-          <CatalogNavigation />
-          <Switch>
-            <Route path="/brands" exact component={Brands} />
-            <Route path="/contacts" component={Contacts} />
-            <Route path="/about" component={About} />
-            <Route exact path="/profile" component={Profile} />
-            <Route exact path="/cart" component={Cart} />
-            <Route path="/cart/order" component={Order} />
-            <Route path="/static" component={StaticPage} />
-            <Route exact path="/events" exact component={Events} />
-            <Route path="/events/:eventId" exact component={EventPage} />
-            <Route path="/news" exact component={News} />
-            <Route path="/exclusive" exact component={Exclusive} />
-            <Route path="/catalog" exact component={Catalog} />
-            <Route path="/:productId" component={ProductDetails} />
-            <Route path="/" exact component={Home} />
-          </Switch>
-
-          {isLoginModalVisible.state && (
-            <Modal
-              closable={isMobile}
-              onClose={(_) => history.push(window.location.pathname)}
-            >
-              {createElement(LoginVariants[isLoginModalVisible.variant], {
-                onClose: (_) => history.push(window.location.pathname),
-              })}
-            </Modal>
-          )}
-
-          {isModalVisible && (
-            <Modal closable={false}>
-              <AgeLimitation onPositive={(_) => setIsModalVisible(false)} />
-            </Modal>
-          )}
-        </HeaderContext.Provider>
-        <Footer />
-      </main>
-    </>
-  );
+                    {isModalVisible && (
+                        <Modal closable={false}>
+                            <AgeLimitation
+                                onPositive={_ => setIsModalVisible(false)}
+                            />
+                        </Modal>
+                    )}
+                </HeaderContext.Provider>
+                <Footer />
+            </main>
+        </>
+    );
 };
 
 ReactDOM.render(
-  <Router history={history}>
-    <App />
-  </Router>,
-  document.querySelector("#root")
+    <Router history={history}>
+        <App />
+    </Router>,
+    document.querySelector("#root")
 );
