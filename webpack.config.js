@@ -2,6 +2,8 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
+const targetUrl = "http://gng.wine";
+
 module.exports = env => ({
     entry: path.resolve(__dirname, "resources/js/src/index.js"),
     output: {
@@ -9,6 +11,11 @@ module.exports = env => ({
         filename: "bundles/[name].bundle.js",
         chunkFilename: "chunks/[name].chunk.js",
         publicPath: env.prod ? "/build/" : "/"
+    },
+    watch: true,
+    watchOptions: {
+        aggregateTimeout: 200,
+        ignored: /node_modules/
     },
     optimization: {
         splitChunks: {
@@ -22,10 +29,19 @@ module.exports = env => ({
         }
     },
     devServer: {
+        proxy: [
+            {
+                context: ["/api", "/storage"],
+                target: targetUrl,
+                changeOrigin: true
+            }
+        ],
         contentBase: path.resolve(__dirname, "public/build"),
         host: "0.0.0.0",
+        port: 8085,
         compress: true,
         historyApiFallback: true
+        // https: true
     },
     plugins: [
         new CleanWebpackPlugin(),
@@ -44,7 +60,15 @@ module.exports = env => ({
                 loader: "babel-loader",
                 include: path.resolve(__dirname, "resources/js/src"),
                 query: {
-                    presets: ["@babel/env", "@babel/react"]
+                    presets: ["@babel/env", "@babel/react"],
+                    plugins: [
+                        [
+                            "@babel/plugin-transform-runtime",
+                            {
+                                corejs: false
+                            }
+                        ]
+                    ]
                 }
             },
             {

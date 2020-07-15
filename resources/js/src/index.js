@@ -2,6 +2,8 @@ import React, { useState, useEffect, createElement } from "react";
 import ReactDOM from "react-dom";
 import { Router, Switch, Route, useLocation } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import { StoreContext } from "storeon/react";
+import { useStoreon } from "storeon/react";
 
 import Home from "@/modules/home";
 import Catalog from "@/modules/catalog";
@@ -29,6 +31,8 @@ import { HeaderContext } from "@/context/header";
 import useMeasures from "@/utils/useMeasures";
 import redaxios from "@/utils/fetch";
 
+import { store } from "@/store";
+
 import "@/index.scss";
 
 export const history = createBrowserHistory();
@@ -44,10 +48,18 @@ const App = () => {
     const [isLoginModalVisible, setIsLoginModalVisible] = useState({});
     const { search } = useLocation();
     const { isMobile } = useMeasures();
-  
+    const { dispatch } = useStoreon();
+
+    useEffect(_ => {
+        dispatch("dictionary/get");
+        // redaxios('/api/phrases/').then(r => console.log('r',r.data))
+        // redaxios("/api/lang/ru").then(r => console.log("r", r.data));
+    }, []);
     useEffect(
         _ => {
             if (search) {
+                // document.body.style.backgroundColor= 'red'
+
                 const params = new URLSearchParams(search);
 
                 params.has("login") &&
@@ -125,7 +137,9 @@ const App = () => {
 
 ReactDOM.render(
     <Router history={history}>
-        <App />
+        <StoreContext.Provider value={store}>
+            <App />
+        </StoreContext.Provider>
     </Router>,
     document.querySelector("#root")
 );
