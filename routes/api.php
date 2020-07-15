@@ -38,18 +38,18 @@ Route::get('phrases/{id}', 'Api\MainPhraseController@show');
 Route::get('about-info', 'Api\AboutInfoController@index');
 Route::get('about-info/{id}', 'Api\AboutInfoController@show');
 
-Route::get('locations', 'Api\AboutInfoController@index');
-Route::get('locations/{id}', 'Api\AboutInfoController@show');
+Route::get('locations', 'Api\LocationController@index');
+Route::get('locations/{id}', 'Api\LocationController@show');
 
-Route::get('accessories', 'Api\AboutInfoController@index');
-Route::get('accessories/{id}', 'Api\AboutInfoController@show');
+Route::get('accessories', 'Api\AccessoryController@index');
+Route::get('accessories/{id}', 'Api\AccessoryController@show');
 
-Route::get('assistants', 'Api\AboutInfoController@index');
-Route::get('assistants/{id}', 'Api\AboutInfoController@show');
+Route::get('assistants', 'Api\AssistantController@index');
+Route::get('assistants/{id}', 'Api\AssistantController@show');
 
-Route::get('assistant-phrases', 'Api\AboutInfoController@index');
-Route::get('assistant-phrases/{id}', 'Api\AboutInfoController@show');
-Route::get('assistant-phrases-specified/{assistantId}', 'Api\AboutInfoController@getByAssistant');
+Route::get('assistant-phrases', 'Api\AssistantPhraseController@index');
+Route::get('assistant-phrases/{id}', 'Api\AssistantPhraseController@show');
+Route::get('assistant-phrases-specified/{assistantId}', 'Api\AssistantPhraseController@getByAssistant');
 
 Route::get('products', 'Api\ProductController@index');
 Route::get('products/{id}', 'Api\ProductController@show');
