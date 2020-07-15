@@ -29,7 +29,7 @@ class ApiControllerService
     {
         $locale = app()->getLocale();
 
-        $entities = ($locale == 'ru')
+        $entities = ($locale === 'ru')
             ? $this->model::all()
             : $this->model::withTranslations($locale)->get();
 
@@ -46,7 +46,7 @@ class ApiControllerService
     {
         $locale = app()->getLocale();
 
-        $entity = ($this->language === 'ru')
+        $entity = ($locale === 'ru')
             ? $this->model::findOrFail($id)
             : $this->model::withTranslations($locale)->findOrFail($id);
 
