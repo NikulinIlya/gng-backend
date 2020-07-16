@@ -51,6 +51,9 @@ Route::get('assistant-phrases', 'Api\AssistantPhraseController@index');
 Route::get('assistant-phrases/{id}', 'Api\AssistantPhraseController@show');
 Route::get('assistant-phrases-specified/{assistantId}', 'Api\AssistantPhraseController@getByAssistant');
 
+Route::get('promotions', 'Api\PromotionController@index');
+Route::get('promotions/{id}', 'Api\PromotionController@show');
+
 Route::get('products', 'Api\ProductController@index');
 Route::get('products/{id}', 'Api\ProductController@show');
 
@@ -68,3 +71,48 @@ Route::get('champagnes/{id}', 'Api\ChampagneController@show');
 
 Route::get('cognac', 'Api\CognacController@index');
 Route::get('cognac/{id}', 'Api\CognacController@show');
+
+Route::get('colours', 'Api\ColourController@index');
+Route::get('colours/{id}', 'Api\ColourController@show');
+
+Route::get('employee-offers', 'Api\EmployeeOfferController@index');
+Route::get('employee-offers/{id}', 'Api\EmployeeOfferController@show');
+
+Route::get('events', 'Api\EventController@index');
+Route::get('events/{id}', 'Api\EventController@show');
+
+Route::get('event-orders', 'Api\EventOrderController@index');
+Route::get('event-orders/{id}', 'Api\EventOrderController@show');
+
+Route::get('favorites', 'Api\FavoritesController@index');
+Route::get('favorites/{id}', 'Api\FavoritesController@show');
+
+Route::get('gift-ideas', 'Api\GiftIdeaController@index');
+Route::get('gift-ideas/{id}', 'Api\GiftIdeaController@show');
+
+Route::get('grape-sorts', 'Api\GrapeSortController@index');
+Route::get('grape-sorts/{id}', 'Api\GrapeSortController@show');
+
+Route::get('kits', 'Api\KitController@index');
+Route::get('kits/{id}', 'Api\KitController@show');
+
+Route::get('liquors', 'Api\KitController@index');
+Route::get('liquors/{id}', 'Api\KitController@show');
+
+Route::get('offers', 'Api\OfferController@index');
+Route::get('offers/{id}', 'Api\OfferController@show');
+
+Route::get('offer-categories', 'Api\OfferCategoryController@index');
+Route::get('offer-categories/{id}', 'Api\OfferCategoryController@show');
+
+Route::get('rares', 'Api\RareController@index');
+Route::get('rares/{id}', 'Api\RareController@show');
+
+Route::get('vintages', 'Api\RareController@index');
+Route::get('vintages/{id}', 'Api\RareController@show');
+
+Route::get('vodka', 'Api\VodkaController@index');
+Route::get('vodka/{id}', 'Api\VodkaController@show');
+
+Route::get('whiskey', 'Api\WhiskeyController@index');
+Route::get('whiskey/{id}', 'Api\WhiskeyController@show');
