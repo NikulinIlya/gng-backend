@@ -8,7 +8,14 @@ export default store => {
                 const [err, dictionaryResponse] = await to(
                     redaxios("/api/phrases")
                 );
-                store.dispatch("dictionary/set", dictionaryResponse.data);
+
+                store.dispatch(
+                    "dictionary/set",
+                    dictionaryResponse.data.reduce((acc, cur) => {
+                        acc[cur.id] = cur.phrase;
+                        return acc;
+                    }, {})
+                );
             }
         } catch {
             store.dispatch("dictionary/set", null);

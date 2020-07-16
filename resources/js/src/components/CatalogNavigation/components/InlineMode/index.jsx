@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useStoreon } from "storeon/react";
 
 import Burger from "../BurgerButton";
+
+import twf from "@/utils/translate"
 
 import "./inline.scss";
 
@@ -11,6 +14,7 @@ function InlineMode({
   onChangeState,
   onChangeVariant,
 }) {
+  const { dictionary } = useStoreon("dictionary");
   const onSelect = (e, path) => {
     if (path === "/wine") {
       e.preventDefault();
@@ -32,10 +36,10 @@ function InlineMode({
         <Burger onClick={onBurgerClick} state={isExpanded} />
       </div>
       <nav className="catalog-nav__set">
-        {items.map(({ name, path }, i) => (
+        {items.map(({ tId, name, path }, i) => (
           <li className="catalog-nav__item" key={i}>
             <Link to={path} onClick={(e) => onSelect(e, path)}>
-              {name}
+              {twf(dictionary,tId,name)}
             </Link>
           </li>
         ))}
