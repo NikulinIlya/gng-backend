@@ -28,6 +28,6 @@ Route::get('/{uri?}', function (Request $request) {
 
         return view('index');
     } else {
-        return abort(404);
+        abort(404);
     }
 })->where('uri', '(.*)');
