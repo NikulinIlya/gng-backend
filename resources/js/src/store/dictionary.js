@@ -11,10 +11,7 @@ export default store => {
 
                 store.dispatch(
                     "dictionary/set",
-                    dictionaryResponse.data.reduce((acc, cur) => {
-                        acc[cur.id] = cur.phrase;
-                        return acc;
-                    }, {})
+                    parseDictionary(dictionaryResponse.data)
                 );
             }
         } catch {
@@ -26,7 +23,10 @@ export default store => {
             const [err, dictionaryResponse] = await to(
                 redaxios("/api/phrases")
             );
-            store.dispatch("dictionary/set", dictionaryResponse.data);
+            store.dispatch(
+                "dictionary/set",
+                parseDictionary(dictionaryResponse.data)
+            );
         } catch {
             store.dispatch("dictionary/set", null);
         }
@@ -35,3 +35,10 @@ export default store => {
         dictionary: newDictionary
     }));
 };
+
+function parseDictionary(dictionary) {
+    return dictionary.reduce((acc, cur) => {
+        acc[cur.id] = cur.phrase;
+        return acc;
+    }, {});
+}
