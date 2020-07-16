@@ -9,11 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - AboutInfo, Accessory, Assistant, AssistantPhrase, Brand, Champagne, ChampagneGrape, Cognac, 
 EmployeeOffer, Event, EventOrder, Favorite, GrapeSort, Liquor, Location, MainPhrase, Offer, OfferCategory, Order, 
 OrderProduct, OrderStatus, Product, Promotion, UserInfo, Vine, Colour, VinesGrape, Vodka, Whiskey models
-- Http/Services/ApiControllerService, index, show methods
+- Http/Services/ApiControllerService, index, show, setImageField methods
 - Controllers/AuthController
 - Api/ MainPhraseController, CartController, AboutInfoController, LocationController, AccessoryController, 
 AssistantController, AssistantPhraseController, ProductCategoryController, BrandController, ProductController, VineController,
-ChampagneController, CognacController
+ChampagneController, CognacController, PromotionController, ColourController
 - Services/Cart/CartManager, DatabaseCartService, SessionCartService
 - Cart, CartItem, ProductCategory models
 - login, user, phrases, about-info, assistant-phrases, product-categories, products, brands, vines, champagnes, cognac api routes
@@ -21,7 +21,7 @@ ChampagneController, CognacController
 - Localization middleware
 - default web route
 - lang/{locale?} api route
-- install react ui
+- GiftIdea, Kit, Rare, Vintage models
 
 ### Changed
 - Move User model to app/Models
