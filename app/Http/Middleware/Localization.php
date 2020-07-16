@@ -15,8 +15,8 @@ class Localization
      */
     public function handle($request, Closure $next)
     {
-        if ($request->session()->has('locale')) {
-            app()->setLocale($request->session()->get('locale'));
+        if (isset($_COOKIE['locale'])) {
+            app()->setLocale($_COOKIE['locale']);
         }
 
         return $next($request);

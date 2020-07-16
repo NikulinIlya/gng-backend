@@ -23,6 +23,8 @@ Route::get('lang/{locale?}', function (Request $request, $locale = 'ru') {
 
     $request->session()->put('locale', $locale);
 
+    setcookie('locale', $locale, time() + 86400 * 365, '/', $_SERVER['HTTP_HOST'], false, false);
+
     return response()->json($locale, 200);
 });
 
