@@ -16,12 +16,13 @@ class SecuredHttp
      */
     public function handle($request, Closure $next)
     {
-        if(env('APP_ENV') === 'production') {
+        if (env('APP_ENV') === 'production') {
             $request->setTrustedProxies([$request->getClientIp()], Request::HEADER_X_FORWARDED_ALL);
-            if (!$request->secure()) {
+            if (! $request->secure()) {
                 return redirect()->secure($request->getRequestUri());
             }
         }
+
         return $next($request);
     }
 }
