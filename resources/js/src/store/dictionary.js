@@ -38,7 +38,7 @@ export default store => {
 
 function parseDictionary(dictionary) {
     return dictionary.reduce((acc, cur) => {
-        acc[cur.id] = cur.phrase;
+        acc[cur.slug] = cur.phrase;
         return acc;
     }, {});
 }

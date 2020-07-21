@@ -1,42 +1,42 @@
 export const navigationItems = [
-  {
-    name: "Наши бренды",
-    tId: 3,
-    path: "/brands",
-  },
-  {
-    name: "Вино",
-    tId: 4,
-    path: "/wine",
-  },
-  {
-    name: `Шампанское и Игристое`,
-    tId: 5,
-    path: "/catalog",
-  },
-  {
-    name: "Крепкие напитки",
-    tId: 6,
-    path: "/catalog",
-  },
-  {
-    name: "Аксессуары",
-    tId: 7,
-    path: "/catalog",
-  },
-  {
-    name: "Акции",
-    tId: 8,
-    path: "/news",
-  },
-  {
-    name: "Эксклюзивные предложения",
-    tId: 9,
-    path: "/exclusive",
-  },
-  {
-    name: "Частные мероприятия",
-    tId: 10,
-    path: "/events",
-  },
+    {
+        name: "Наши бренды",
+        slug: "our-brands",
+        path: "/brands"
+    },
+    {
+        name: "Вино",
+        slug: "vine",
+        path: "/wine"
+    },
+    {
+        name: `Шампанское и Игристое!`,
+        slug: "champagne-and-sparkling",
+        path: "/catalog"
+    },
+    {
+        name: "Крепкие напитки",
+        slug: "strong-alcohol",
+        path: "/catalog"
+    },
+    {
+        name: "Аксессуары",
+        slug: "accessories",
+        path: "/catalog"
+    },
+    {
+        name: "Акции",
+        slug: "promotions",
+        path: "/news"
+    },
+    {
+        name: "Эксклюзивные предложения",
+        slug: "exclusive-offers",
+        path: "/exclusive"
+    },
+    {
+        name: "Частные мероприятия",
+        slug: "private-events",
+        path: "/events"
+    }
 ];

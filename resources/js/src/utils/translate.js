@@ -1,6 +1,6 @@
-const translatePhrase = (dictionary = {}, id, fallback) => {
+const translatePhrase = (dictionary = {}, slug, fallback) => {
     if (!dictionary) return fallback;
-    return dictionary[id] ? dictionary[id] : fallback;
+    return dictionary[slug] ? dictionary[slug] : fallback;
 };
 
 export default translatePhrase;
