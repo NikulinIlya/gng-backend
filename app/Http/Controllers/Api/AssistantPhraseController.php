@@ -49,6 +49,6 @@ class AssistantPhraseController
      */
     public function getByAssistant($assistantId)
     {
-        return \App\Models\Assistant::withTranslations(app()->getLocale())->find($assistantId)->assistantPhrases;
+        return $this->service->index()->where('assistant_id', $assistantId);
     }
 }
