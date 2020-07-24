@@ -22,6 +22,7 @@ ChampagneController, CognacController, PromotionController, ColourController
 - default web route
 - lang/{locale?} api route
 - GiftIdea, Kit, Rare, Vintage models
+- App/Widgets/ProductDimmer, PhraseDimmer
 
 ### Changed
 - Move User model to app/Models
