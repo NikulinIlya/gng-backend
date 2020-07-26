@@ -103,6 +103,7 @@
     border: var(--cardEdge);
     padding: 20px 28px;
     min-height: unset;
+    height: auto;
     &:after,
     &:before {
       display: none;
