@@ -20,6 +20,8 @@ function InlineMode({
             e.preventDefault();
             onChangeState(true);
             onChangeVariant("wine");
+        } else {
+            onChangeState(false);
         }
     };
     const onBurgerClick = _ => {

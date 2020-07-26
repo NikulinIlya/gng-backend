@@ -44,7 +44,7 @@ const LoginVariants = {
 
 const App = () => {
     const [renderingComponent, setComponent] = useState(null);
-    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isAgeDisclaimerVisible, setIsAgeDisclaimerVisible] = useState(false);
     const [isLoginModalVisible, setIsLoginModalVisible] = useState({});
     const { search } = useLocation();
     const { isMobile } = useMeasures();
@@ -52,10 +52,7 @@ const App = () => {
 
     useEffect(_ => {
         dispatch("dictionary/get");
-        const [err, response] = to(redaxios('/api/products'))
-        console.log('response',response)
-        // redaxios('/api/phrases/').then(r => console.log('r',r.data))
-        // redaxios("/api/lang/ru").then(r => console.log("r", r.data));
+        dispatch("showcase/get-brands");
     }, []);
     useEffect(
         _ => {
@@ -123,10 +120,12 @@ const App = () => {
                         </Modal>
                     )}
 
-                    {isModalVisible && (
+                    {isAgeDisclaimerVisible && (
                         <Modal closable={false}>
                             <AgeLimitation
-                                onPositive={_ => setIsModalVisible(false)}
+                                onPositive={_ =>
+                                    setIsAgeDisclaimerVisible(false)
+                                }
                             />
                         </Modal>
                     )}

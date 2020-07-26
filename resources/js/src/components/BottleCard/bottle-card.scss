@@ -1,5 +1,8 @@
 .bottle-card {
   @include card-styles;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
   &:hover {
     .bottle-card__bottle {
       transform: translateX(30px);
@@ -13,6 +16,9 @@
   &__content {
     padding: 15px 25px;
     padding-top: 0;
+    flex: 1;
+    display: flex;
+  flex-flow: column nowrap;
   }
   &__main {
     position: relative;
@@ -43,6 +49,7 @@
   &__info {
     text-align: center;
     color: black;
+    margin-bottom: 24px;
     & * {
       color: inherit;
     }
@@ -72,7 +79,7 @@
   &__footer {
     position: relative;
     z-index: 3;
-    margin-top: 24px;
+    margin-top: auto;
     border-top: var(--cardEdge);
     display: flex;
     justify-content: space-between;
@@ -95,6 +102,7 @@
     max-width: 100%;
     border: var(--cardEdge);
     padding: 20px 28px;
+    min-height: unset;
     &:after,
     &:before {
       display: none;

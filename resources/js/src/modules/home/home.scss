@@ -88,6 +88,9 @@
       height: 100%;
       overflow: auto;
       width: 100%;
+      &::-webkit-scrollbar{
+        display: none;
+      }
     }
     &__item {
       display: flex;
