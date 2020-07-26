@@ -6,8 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- AboutInfo, Accessory, Assistant, AssistantPhrase, Brand, Champagne, ChampagneGrape, Cognac, 
-EmployeeOffer, Event, EventOrder, Favorite, GrapeSort, Liquor, Location, MainPhrase, Offer, OfferCategory, Order, 
+- AboutInfo, Accessory, AssistantPhrase, Brand, Champagne, ChampagneGrape, Cognac, 
+EmployeeOffer, Event, EventOrder, Favorite, GrapeSort, Liquor, Location, MainPhrase, Order, 
 OrderProduct, OrderStatus, Product, Promotion, UserInfo, Vine, Colour, VinesGrape, Vodka, Whiskey models
 - Http/Services/ApiControllerService, index, show, setImageField methods
 - Controllers/AuthController
@@ -22,6 +22,7 @@ ChampagneController, CognacController, PromotionController, ColourController
 - default web route
 - lang/{locale?} api route
 - GiftIdea, Kit, Rare, Vintage models
+- App/Widgets/ProductDimmer, PhraseDimmer
 
 ### Changed
 - Move User model to app/Models

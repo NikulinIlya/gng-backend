@@ -51,7 +51,7 @@ Route::get('assistants/{id}', 'Api\AssistantController@show');
 
 Route::get('assistant-phrases', 'Api\AssistantPhraseController@index');
 Route::get('assistant-phrases/{id}', 'Api\AssistantPhraseController@show');
-Route::get('assistant-phrases-specified/{assistantId}', 'Api\AssistantPhraseController@getByAssistant');
+Route::get('assistant-phrases-specified/{brandId}', 'Api\AssistantPhraseController@getByBrand');
 
 Route::get('promotions', 'Api\PromotionController@index');
 Route::get('promotions/{id}', 'Api\PromotionController@show');

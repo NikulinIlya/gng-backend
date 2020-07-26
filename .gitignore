@@ -3,6 +3,7 @@
 /public/storage
 /public/css/app.css
 /public/js/app.js
+/public/build
 /public/build/
 /public/mix-manifest.json
 /storage/*.key
@@ -11,7 +12,6 @@
 .env.backup
 .DS_Store
 .phpunit.result.cache
-.DS_Store
 Homestead.json
 Homestead.yaml
 npm-debug.log

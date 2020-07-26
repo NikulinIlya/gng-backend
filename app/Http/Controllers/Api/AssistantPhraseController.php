@@ -42,13 +42,13 @@ class AssistantPhraseController
     }
 
     /**
-     * Display the specified assistant phrase by its assistant.
+     * Display the specified assistant phrase by its brand.
      *
-     * @param int $assistantId
+     * @param int $brandId
      * @return mixed
      */
-    public function getByAssistant($assistantId)
+    public function getByBrand($brandId)
     {
-        return \App\Models\Assistant::withTranslations(app()->getLocale())->find($assistantId)->assistantPhrases;
+        return $this->service->index()->where('brand_id', $brandId);
     }
 }
