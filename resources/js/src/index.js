@@ -29,7 +29,7 @@ import Modal from "@/components/Modal";
 
 import { HeaderContext } from "@/context/header";
 import useMeasures from "@/utils/useMeasures";
-import redaxios from "@/utils/fetch";
+import redaxios, { to } from "@/utils/fetch";
 
 import { store } from "@/store";
 
@@ -52,6 +52,8 @@ const App = () => {
 
     useEffect(_ => {
         dispatch("dictionary/get");
+        const [err, response] = to(redaxios('/api/products'))
+        console.log('response',response)
         // redaxios('/api/phrases/').then(r => console.log('r',r.data))
         // redaxios("/api/lang/ru").then(r => console.log("r", r.data));
     }, []);
