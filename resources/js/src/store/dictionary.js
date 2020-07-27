@@ -31,9 +31,7 @@ export default store => {
             store.dispatch("dictionary/set", null);
         }
     });
-    store.on("dictionary/set", (_, newDictionary) => ({
-        dictionary: newDictionary
-    }));
+    store.on("dictionary/set", (_, dictionary) => ({ dictionary }));
 };
 
 function parseDictionary(dictionary) {

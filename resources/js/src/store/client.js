@@ -20,13 +20,13 @@ export default store => {
         lang: memoizedLang || DEFAULT_LANG
     }));
     store.on("client/set-lang", async (_, lang) => {
-        if (!existingLangs[lang]) return DEFAULT_LANG;
+        if (!existingLangs[lang]) return { lang: DEFAULT_LANG };
 
         try {
             const [err, langResponse] = await to(redaxios(`/api/lang/${lang}`));
             store.dispatch("dictionary/force-load");
             localStorage.setItem("lang", lang);
-            return { ..._, lang };
+            return { lang };
         } catch {
             return _;
         }

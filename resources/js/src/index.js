@@ -52,7 +52,6 @@ const App = () => {
 
     useEffect(_ => {
         dispatch("dictionary/get");
-        dispatch("showcase/get-brands");
     }, []);
     useEffect(
         _ => {
