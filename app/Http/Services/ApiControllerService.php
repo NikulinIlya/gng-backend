@@ -117,6 +117,10 @@ class ApiControllerService
             $entity['glass_image'] = str_replace('\\', '/', '/storage/'.$entity['glass_image']);
         }
 
+        if (isset($entity['map_image'])) {
+            $entity['map_image'] = str_replace('\\', '/', '/storage/'.$entity['map_image']);
+        }
+
         if (isset($entity['images'])) {
             $images = explode(',', str_replace('\\\\', '/', str_replace(['[', ']', '"'], '', $entity['images'])));
 
