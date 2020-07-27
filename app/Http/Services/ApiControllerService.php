@@ -72,6 +72,7 @@ class ApiControllerService
 
         return $newEntities;
     }
+
     /**
      * Display the specified entity with set content fields.
      *
