@@ -30,8 +30,10 @@ class VineController
     public function index()
     {
         $vines = $this->service->index();
+        /*$brand = Brand::find($vines[0]['brand_id'])->name;
 
-        $brand = Brand::find($vines[0]['brand_id'])->name;
+        dd($vines, $brand);*/
+        return $vines;
     }
 
     /**
