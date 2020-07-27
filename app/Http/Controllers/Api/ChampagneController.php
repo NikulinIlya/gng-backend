@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Services\ApiControllerService;
-use App\Models\Brand;
 use App\Models\Champagne;
+use App\Models\ChampagneGrape;
 
 class ChampagneController
 {
@@ -28,7 +28,7 @@ class ChampagneController
      */
     public function index()
     {
-        $champs = $this->service->index();
+        return $this->service->getWithGrapeSorts(new ChampagneGrape(), 'champagne_id');
     }
 
     /**
@@ -39,6 +39,6 @@ class ChampagneController
      */
     public function show($id)
     {
-        $champ = $this->service->show($id);
+        return $this->service->getWithGrapeSorts(new ChampagneGrape(), 'champagne_id', $id);
     }
 }

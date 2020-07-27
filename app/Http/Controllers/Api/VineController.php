@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Services\ApiControllerService;
-use App\Models\Brand;
 use App\Models\Vine;
-use Illuminate\Http\Request;
+use App\Models\VinesGrape;
 
 class VineController
 {
@@ -29,11 +28,7 @@ class VineController
      */
     public function index()
     {
-        $vines = $this->service->index();
-        /*$brand = Brand::find($vines[0]['brand_id'])->name;
-
-        dd($vines, $brand);*/
-        return $vines;
+        return $this->service->getWithGrapeSorts(new VinesGrape(), 'vine_id');
     }
 
     /**
@@ -44,8 +39,6 @@ class VineController
      */
     public function show($id)
     {
-        $vine = $this->service->show($id);
-
-        $brand = Brand::find($vine[0]['brand_id'])->name;
+        return$this->service->getWithGrapeSorts(new VinesGrape(), 'vine_id', $id);
     }
 }
