@@ -46,9 +46,6 @@ Route::get('locations/{id}', 'Api\LocationController@show');
 Route::get('accessories', 'Api\AccessoryController@index');
 Route::get('accessories/{id}', 'Api\AccessoryController@show');
 
-Route::get('assistants', 'Api\AssistantController@index');
-Route::get('assistants/{id}', 'Api\AssistantController@show');
-
 Route::get('assistant-phrases', 'Api\AssistantPhraseController@index');
 Route::get('assistant-phrases/{id}', 'Api\AssistantPhraseController@show');
 Route::get('assistant-phrases-specified/{brandId}', 'Api\AssistantPhraseController@getByBrand');
@@ -100,12 +97,6 @@ Route::get('kits/{id}', 'Api\KitController@show');
 
 Route::get('liquors', 'Api\KitController@index');
 Route::get('liquors/{id}', 'Api\KitController@show');
-
-Route::get('offers', 'Api\OfferController@index');
-Route::get('offers/{id}', 'Api\OfferController@show');
-
-Route::get('offer-categories', 'Api\OfferCategoryController@index');
-Route::get('offer-categories/{id}', 'Api\OfferCategoryController@show');
 
 Route::get('rares', 'Api\RareController@index');
 Route::get('rares/{id}', 'Api\RareController@show');
