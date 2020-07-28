@@ -23,9 +23,13 @@ ChampagneController, CognacController, PromotionController, ColourController
 - lang/{locale?} api route
 - GiftIdea, Kit, Rare, Vintage models
 - App/Widgets/ProductDimmer, PhraseDimmer
+- install laravel/scout, teamtnt/laravel-scout-tntsearch-driver
+- add Searchable to Models/Product
+- search-products api route, ProductController search method
 
 ### Changed
 - Move User model to app/Models
+- readme
 
 ## [0.0.1] - 2020-05-11
 ### Added
