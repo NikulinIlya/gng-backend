@@ -3,11 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 use TCG\Voyager\Traits\Translatable;
 
 class Product extends Model
 {
-    use Translatable;
+    use Translatable, Searchable;
+
+    public $asYouType = true;
+
     protected $translatable = ['name'];
 
     /**
@@ -28,5 +32,18 @@ class Product extends Model
     public function vine()
     {
         return $this->hasOne('App\Models\UserInfo');
+    }
+
+    /**
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        return [
+            'id' => $array['id'],
+            'name' => $array['name'],
+        ];
     }
 }
