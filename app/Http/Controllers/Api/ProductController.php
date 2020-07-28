@@ -51,7 +51,7 @@ class ProductController
     public function search(Request $request)
     {
         $request->validate([
-            'query' => 'required|min:1'
+            'query' => 'required|min:1',
         ]);
 
         $query = $request->input('query');
