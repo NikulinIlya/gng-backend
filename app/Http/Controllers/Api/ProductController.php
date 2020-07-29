@@ -60,7 +60,7 @@ class ProductController
             return $this->service->index();
         }
 
-        $products = Product::search($query)->get()->toArray();
+        $products = Product::search($query)->get();
 
         return $this->service->makeEntityCollection($products, app()->getLocale());
     }
