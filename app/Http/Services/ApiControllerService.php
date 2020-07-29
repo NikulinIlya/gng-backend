@@ -119,7 +119,7 @@ class ApiControllerService
     /**
      * Make return entities collection to a special format.
      *
-     * @param Model[] $entities
+     * @param \Illuminate\Support\Collection $entities
      * @param string $locale
      * @return \Illuminate\Support\Collection
      */
