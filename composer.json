@@ -17,6 +17,7 @@
         "laravel/sanctum": "^2.2",
         "laravel/scout": "^8.1",
         "laravel/tinker": "^2.0",
+        "laravel/ui": "^2.1",
         "tcg/voyager": "^1.4",
         "teamtnt/laravel-scout-tntsearch-driver": "^9.0"
     },
