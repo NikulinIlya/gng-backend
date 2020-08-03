@@ -8,7 +8,7 @@ use TCG\Voyager\Traits\Translatable;
 class Bag extends Model
 {
     use Translatable;
-    protected $translatable = ['name', 'description'];
+    protected $translatable = ['description'];
 
     /**
      * Get the product.
