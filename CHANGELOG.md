@@ -11,13 +11,12 @@ EmployeeOffer, Event, EventOrder, Favorite, GrapeSort, Liquor, Location, MainPhr
 OrderProduct, OrderStatus, Product, Promotion, UserInfo, Vine, Colour, VinesGrape, Vodka, Whiskey, Bag, Glass models
 - Http/Services/ApiControllerService, index, show, setImageField methods
 - Controllers/AuthController
-- Api/ MainPhraseController, CartController, AboutInfoController, LocationController, AccessoryController, 
+- Api/ MainPhraseController, CartController, AboutInfoController, LocationController, 
 AssistantController, AssistantPhraseController, ProductCategoryController, BrandController, ProductController, VineController,
 ChampagneController, CognacController, PromotionController, ColourController, BagController, GlassController
 - Services/Cart/CartManager, DatabaseCartService, SessionCartService
 - Cart, CartItem, ProductCategory models
 - login, user, phrases, about-info, assistant-phrases, product-categories, products, brands, vines, champagnes, cognac api routes
-- install barryvdh/laravel-debugbar dev dependency
 - Localization middleware
 - default web route
 - lang/{locale?} api route
