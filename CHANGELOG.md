@@ -8,12 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - AboutInfo, Accessory, AssistantPhrase, Brand, Champagne, ChampagneGrape, Cognac, 
 EmployeeOffer, Event, EventOrder, Favorite, GrapeSort, Liquor, Location, MainPhrase, Order, 
-OrderProduct, OrderStatus, Product, Promotion, UserInfo, Vine, Colour, VinesGrape, Vodka, Whiskey models
+OrderProduct, OrderStatus, Product, Promotion, UserInfo, Vine, Colour, VinesGrape, Vodka, Whiskey, Bag, Glass models
 - Http/Services/ApiControllerService, index, show, setImageField methods
 - Controllers/AuthController
 - Api/ MainPhraseController, CartController, AboutInfoController, LocationController, AccessoryController, 
 AssistantController, AssistantPhraseController, ProductCategoryController, BrandController, ProductController, VineController,
-ChampagneController, CognacController, PromotionController, ColourController
+ChampagneController, CognacController, PromotionController, ColourController, BagController, GlassController
 - Services/Cart/CartManager, DatabaseCartService, SessionCartService
 - Cart, CartItem, ProductCategory models
 - login, user, phrases, about-info, assistant-phrases, product-categories, products, brands, vines, champagnes, cognac api routes
