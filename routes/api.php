@@ -43,9 +43,6 @@ Route::get('about-info/{id}', 'Api\AboutInfoController@show');
 Route::get('locations', 'Api\LocationController@index');
 Route::get('locations/{id}', 'Api\LocationController@show');
 
-Route::get('accessories', 'Api\AccessoryController@index');
-Route::get('accessories/{id}', 'Api\AccessoryController@show');
-
 Route::get('assistant-phrases', 'Api\AssistantPhraseController@index');
 Route::get('assistant-phrases/{id}', 'Api\AssistantPhraseController@show');
 Route::get('assistant-phrases-specified/{brandId}', 'Api\AssistantPhraseController@getByBrand');

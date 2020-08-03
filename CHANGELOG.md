@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- AboutInfo, Accessory, AssistantPhrase, Brand, Champagne, ChampagneGrape, Cognac, 
+- AboutInfo, AssistantPhrase, Brand, Champagne, ChampagneGrape, Cognac, 
 EmployeeOffer, Event, EventOrder, Favorite, GrapeSort, Liquor, Location, MainPhrase, Order, 
 OrderProduct, OrderStatus, Product, Promotion, UserInfo, Vine, Colour, VinesGrape, Vodka, Whiskey, Bag, Glass models
 - Http/Services/ApiControllerService, index, show, setImageField methods
