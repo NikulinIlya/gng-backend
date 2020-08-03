@@ -27,7 +27,7 @@ class CognacController
      */
     public function index()
     {
-        $cognac = $this->service->index();
+        return $this->service->index();
     }
 
     /**
@@ -38,6 +38,6 @@ class CognacController
      */
     public function show($id)
     {
-        $cognac = $this->service->show($id);
+        return $this->service->show($id);
     }
 }
