@@ -43,12 +43,6 @@ Route::get('about-info/{id}', 'Api\AboutInfoController@show');
 Route::get('locations', 'Api\LocationController@index');
 Route::get('locations/{id}', 'Api\LocationController@show');
 
-Route::get('accessories', 'Api\AccessoryController@index');
-Route::get('accessories/{id}', 'Api\AccessoryController@show');
-
-Route::get('assistants', 'Api\AssistantController@index');
-Route::get('assistants/{id}', 'Api\AssistantController@show');
-
 Route::get('assistant-phrases', 'Api\AssistantPhraseController@index');
 Route::get('assistant-phrases/{id}', 'Api\AssistantPhraseController@show');
 Route::get('assistant-phrases-specified/{brandId}', 'Api\AssistantPhraseController@getByBrand');
@@ -58,6 +52,7 @@ Route::get('promotions/{id}', 'Api\PromotionController@show');
 
 Route::get('products', 'Api\ProductController@index');
 Route::get('products/{id}', 'Api\ProductController@show');
+Route::get('search-products', 'Api\ProductController@search');
 
 Route::get('product-categories', 'Api\ProductCategoryController@index');
 Route::get('product-categories/{id}', 'Api\ProductCategoryController@show');
@@ -101,12 +96,6 @@ Route::get('kits/{id}', 'Api\KitController@show');
 Route::get('liquors', 'Api\KitController@index');
 Route::get('liquors/{id}', 'Api\KitController@show');
 
-Route::get('offers', 'Api\OfferController@index');
-Route::get('offers/{id}', 'Api\OfferController@show');
-
-Route::get('offer-categories', 'Api\OfferCategoryController@index');
-Route::get('offer-categories/{id}', 'Api\OfferCategoryController@show');
-
 Route::get('rares', 'Api\RareController@index');
 Route::get('rares/{id}', 'Api\RareController@show');
 
@@ -118,3 +107,9 @@ Route::get('vodka/{id}', 'Api\VodkaController@show');
 
 Route::get('whiskey', 'Api\WhiskeyController@index');
 Route::get('whiskey/{id}', 'Api\WhiskeyController@show');
+
+Route::get('bags', 'Api\BagController@index');
+Route::get('bags/{id}', 'Api\BagController@show');
+
+Route::get('glasses', 'Api\Glassontroller@index');
+Route::get('glasses/{id}', 'Api\GlassController@show');

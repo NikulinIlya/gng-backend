@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class ChampagneGrape extends Model
+class ChampagneGrape extends Pivot
 {
+    protected $table = 'champagne_grapes';
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Services\ApiControllerService;
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 class ProductController
 {
@@ -39,5 +40,28 @@ class ProductController
     public function show($id)
     {
         return $this->service->show($id);
+    }
+
+    /**
+     * Display a listing of products searched by query.
+     *
+     * @param Request $request
+     * @return \Illuminate\Support\Collection|mixed
+     */
+    public function search(Request $request)
+    {
+        $request->validate([
+            'query' => 'required|min:1',
+        ]);
+
+        $query = $request->input('query');
+
+        if (strlen($query) < 3) {
+            return $this->service->index();
+        }
+
+        $products = Product::search($query)->get();
+
+        return $this->service->makeEntityCollection($products, app()->getLocale());
     }
 }

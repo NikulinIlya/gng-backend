@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Services\ApiControllerService;
-use App\Models\Vine;
-use App\Models\VinesGrape;
+use App\Models\Glass;
 
-class VineController
+class GlassController
 {
     /**
      * @var ApiControllerService
@@ -14,31 +13,31 @@ class VineController
     private $service;
 
     /**
-     * VineController constructor.
+     * GlassController constructor.
      */
     public function __construct()
     {
-        $this->service = new ApiControllerService(new Vine());
+        $this->service = new ApiControllerService(new Glass());
     }
 
     /**
-     * Display a listing of vines.
+     * Display a listing of glasses.
      *
      * @return mixed
      */
     public function index()
     {
-        return $this->service->getWithGrapeSorts(new VinesGrape(), 'vine_id');
+        return $this->service->index();
     }
 
     /**
-     * Display the specified vine.
+     * Display the specified glasses.
      *
      * @param int $id
      * @return mixed
      */
     public function show($id)
     {
-        return$this->service->getWithGrapeSorts(new VinesGrape(), 'vine_id', $id);
+        return $this->service->show($id);
     }
 }

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Services\ApiControllerService;
-use App\Models\Accessory;
+use App\Models\Bag;
 
-class AccessoryController
+class BagController
 {
     /**
      * @var ApiControllerService
@@ -13,15 +13,15 @@ class AccessoryController
     private $service;
 
     /**
-     * AccessoryController constructor.
+     * BagController constructor.
      */
     public function __construct()
     {
-        $this->service = new ApiControllerService(new Accessory());
+        $this->service = new ApiControllerService(new Bag());
     }
 
     /**
-     * Display a listing of accessories.
+     * Display a listing of bags.
      *
      * @return mixed
      */
@@ -31,7 +31,7 @@ class AccessoryController
     }
 
     /**
-     * Display the specified accessory.
+     * Display the specified bags.
      *
      * @param int $id
      * @return mixed

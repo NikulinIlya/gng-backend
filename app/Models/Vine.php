@@ -25,4 +25,15 @@ class Vine extends Model
     {
         return $this->belongsTo('App\Models\Product');
     }
+
+    /**
+     * Get grape sorts for vines.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function grapeSorts()
+    {
+        return $this->belongsToMany('App\Models\GrapeSort', 'vines_grapes')
+            ->using('App\Models\VinesGrape');
+    }
 }

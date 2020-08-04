@@ -5,17 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use TCG\Voyager\Traits\Translatable;
 
-class Cognac extends Model
+class Glass extends Model
 {
     use Translatable;
-    protected $translatable = ['aging', 'cheese', 'recommendations', 'taste'];
-
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'cognac';
+    protected $translatable = ['description'];
 
     /**
      * Get the product.
