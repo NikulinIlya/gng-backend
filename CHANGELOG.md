@@ -20,7 +20,7 @@ ChampagneController, CognacController, PromotionController, ColourController, Ba
 - Localization middleware
 - default web route
 - lang/{locale?} api route
-- GiftIdea, Kit, Rare, Vintage models
+- GiftIdea, Kit, Rare, Vintage, Translation models
 - App/Widgets/ProductDimmer, PhraseDimmer
 - install laravel/scout, teamtnt/laravel-scout-tntsearch-driver
 - add Searchable to Models/Product
