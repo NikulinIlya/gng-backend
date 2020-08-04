@@ -16,7 +16,7 @@ class Translation extends \TCG\Voyager\Models\Translation
 
         return [
             'id' => $array['id'],
-            'value' => $array['value']
+            'value' => $array['value'],
         ];
     }
 }
