@@ -6,19 +6,20 @@ import useMeasures from "@/utils/useMeasures";
 
 import bottle from "@/assets/images/templates/template-bottle.png";
 import wineglass from "@/assets/images/wineglass-template.png";
-import backdrop from "@/assets/images/bottle-card-backdrop.svg";
+import grain from "@/assets/images/bg_spica.svg";
+import grape from "@/assets/images/bg_grape.svg";
 
 import cartGold from "@/assets/images/icons/cart-gold.svg";
 
 import "./bottle-card.scss";
 
-function BottleCard({ name, brand = "Cloudy Bay", price }) {
+function BottleCard({ name, brand = "Cloudy Bay", price, useBackdrop = '' }) {
     const { isMobile } = useMeasures();
     return (
         <article className="bottle-card">
             <div className="bottle-card__content">
                 <div className="bottle-card__main">
-                    <img src={backdrop} alt="" className="backdrop" />
+                    {useBackdrop && <img src={grape} alt="" className="backdrop" />}
                     {!isMobile && (
                         <div className="bottle-card__wineglass">
                             <img src={wineglass} alt="" />
