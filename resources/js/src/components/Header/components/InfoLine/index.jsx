@@ -3,11 +3,14 @@ import React from "react";
 import phoneIcon from "@/assets/images/icons/phone.svg";
 import markerIcon from "@/assets/images/icons/marker.svg";
 
+import useTranslate from "@/utils/useTranslate";
+
 import Langs from "../Langs";
 
 import "./info.scss";
 
 const InfoLine = _ => {
+    const { t } = useTranslate();
     return (
         <div className="info">
             <div className="container">
@@ -29,8 +32,10 @@ const InfoLine = _ => {
                                 <img src={markerIcon} alt="" />
                             </div>
                             <span className="info-item__text">
-                                335 E Sandy Lake Rd undefined New Orleans,
-                                Georgia
+                                {t(
+                                    "g-moskva-ul-seleznevskaya-dom-19-2",
+                                    "г. Москва,  ул. Селезневская , дом 19/2"
+                                )}
                             </span>
                         </div>
                     </div>
