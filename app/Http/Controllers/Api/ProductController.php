@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Services\ApiControllerService;
 use App\Models\Product;
+use App\Models\ProductCategory;
+use App\Support\Collection;
 use Illuminate\Http\Request;
 
 class ProductController
@@ -63,5 +65,23 @@ class ProductController
         $products = Product::search($query)->get();
 
         return $this->service->makeEntityCollection($products, app()->getLocale());
+    }
+
+    /**
+     * Display a listing of products sorted by category.
+     *
+     * @param $categorySlug
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function getProductsByCategory($categorySlug)
+    {
+        $products = ProductCategory::where('slug', $categorySlug)->firstOrFail()->products;
+
+        $products = $this->service->makeEntityCollection($products, app()->getLocale());
+
+        $productsCollection = new Collection();
+        $productsCollection->push($products);
+
+        return $productsCollection->paginate(10);
     }
 }

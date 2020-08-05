@@ -2,7 +2,7 @@
     "name": "gng/gng-backend",
     "type": "project",
     "description": "The GNG portal.",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "keywords": [
         "framework",
         "laravel"

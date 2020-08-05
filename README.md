@@ -22,8 +22,12 @@
 10. Запустить команды для настройки поиска:
 
         php artisan scout:flush "App\Models\Product"
+        php artisan scout:flush "App\Models\Translation"
         
         php artisan scout:import "App\Models\Product"
+        php artisan scout:import "App\Models\Translation"
+        
+Change their rights to writable.
 
 ### Документация по зависимостям
 
