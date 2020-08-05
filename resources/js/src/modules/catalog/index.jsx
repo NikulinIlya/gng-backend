@@ -1,57 +1,33 @@
 import React, { useState, useEffect, useContext } from "react";
-import SearchInput from "@/components/SearchInput";
 
-import { HeaderContext } from "@/context/header";
 import BottleCard from "@/components/BottleCard";
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
+import AsideLayout from "@/components/Layouts/AsideLayout";
+
 import AdvancedFilters from "./components/AdvancedFiltering";
 import Filtering from "./components/Filtering";
-import useMeasures from "@/utils/useMeasures";
 
-import redaxios, { to } from "@/utils/fetch";
+import withApi from "./hoc/withWineApi";
+import withLogic from "./hoc/withWineLogic";
+
+import compose from "@/utils/compose";
 
 import "./catalog.scss";
 
-const CatalogPage = _ => {
-    const { isMobile } = useMeasures();
-    const { setComponent } = useContext(HeaderContext);
-    const [filtersVisibility, setFiltersVisibility] = useState(false);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [products, setProducts] = useState([]);
-
-    const onInputChange = _ => console.log(_.target.value);
-
-    useEffect(_ => {
-        setComponent(_ => <SearchInput onChange={onInputChange} />);
-        (async _ => {
-            const [err, response] = await to(redaxios("/api/products"));
-            setProducts(response.data);
-            setIsLoaded(true);
-            console.log("response", response.data);
-        })();
-    }, []);
-
-    useEffect(
-        _ => {
-            setFiltersVisibility(!isMobile);
-        },
-        [isMobile]
-    );
-    useEffect(
-        _ => {
-            document.body.style.position =
-                filtersVisibility && isMobile ? "fixed" : "static";
-        },
-        [filtersVisibility, isMobile]
-    );
-
+const CatalogPage = ({
+    isLoaded,
+    isMobile,
+    products,
+    filtersVisibility,
+    handleFiltersVisibility
+}) => {
     return (
         <div className="catalog">
             <div className="container">
                 {isMobile && (
                     <div className="catalog-filters-handler">
-                        <Button onClick={_ => setFiltersVisibility(true)}>
+                        <Button onClick={handleFiltersVisibility(true)}>
                             Фильтры
                         </Button>
                     </div>
@@ -59,7 +35,7 @@ const CatalogPage = _ => {
                 <AdvancedFilters />
                 <div className="container-grid">
                     <aside hidden={!filtersVisibility}>
-                        <Filtering onClose={_ => setFiltersVisibility(false)} />
+                        <Filtering onClose={handleFiltersVisibility(false)} />
                     </aside>
                     {isLoaded ? (
                         <div className="catalog-grid">
@@ -81,4 +57,4 @@ const CatalogPage = _ => {
     );
 };
 
-export default CatalogPage;
+export default compose(withApi, withLogic)(CatalogPage);

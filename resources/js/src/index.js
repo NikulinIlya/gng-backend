@@ -53,7 +53,7 @@ const App = () => {
     useEffect(_ => {
         dispatch("dictionary/get");
         (async _ => {
-          const [err, resp] = await to(redaxios('/api/champagnes'))
+          const [err, resp] = await to(redaxios('/api/product-categories'))
           console.log('resp',resp)
         })()
     }, []);
