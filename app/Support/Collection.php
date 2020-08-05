@@ -7,6 +7,15 @@ use Illuminate\Support\Collection as BaseCollection;
 
 class Collection extends BaseCollection
 {
+    /**
+     * Generates the pagination of items in an array or collection.
+     *
+     * @param int $perPage
+     * @param int|null $total
+     * @param int|null $page
+     * @param string $pageName
+     * @return LengthAwarePaginator
+     */
     public function paginate($perPage, $total = null, $page = null, $pageName = 'page')
     {
         $page = $page ?: LengthAwarePaginator::resolveCurrentPage($pageName);
