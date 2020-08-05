@@ -53,6 +53,7 @@ Route::get('promotions/{id}', 'Api\PromotionController@show');
 Route::get('products', 'Api\ProductController@index');
 Route::get('products/{id}', 'Api\ProductController@show');
 Route::get('search-products', 'Api\ProductController@search');
+Route::get('products-by-category/{categorySlug}', 'Api\ProductController@getProductsByCategory');
 
 Route::get('product-categories', 'Api\ProductCategoryController@index');
 Route::get('product-categories/{id}', 'Api\ProductCategoryController@show');
