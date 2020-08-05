@@ -6,10 +6,11 @@ export default store => {
         store.dispatch("showcase/get-colors");
         store.dispatch("showcase/get-regions");
         store.dispatch("showcase/get-grape-sorts");
-        return { brands: null, colors: null, sorts: null };
+        return { brands: null, flatBrands: null, colors: null, sorts: null };
     });
 
     store.on("showcase/set-brands", (_, brands) => ({ brands }));
+    store.on("showcase/set-flat-brands", (_, flatBrands) => ({ flatBrands }));
     store.on("showcase/set-colors", (_, colors) => ({ colors }));
     store.on("showcase/set-regions", (_, regions) => ({ regions }));
     store.on("showcase/set-grape-sorts", (_, sorts) => ({ sorts }));
@@ -20,6 +21,14 @@ export default store => {
         try {
             const [err, brandsResponse] = await to(redaxios(`/api/brands`));
             store.dispatch("showcase/set-brands", brandsResponse.data);
+
+            store.dispatch(
+                "showcase/set-flat-brands",
+                brandsResponse.data.reduce(
+                    (acc, { id, name }) => ((acc[id] = name), acc),
+                    {}
+                )
+            );
         } catch {
             return _;
         }

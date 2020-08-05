@@ -7,10 +7,11 @@ export default WrappedComponent => props => {
     const [products, setProducts] = useState([]);
     useEffect(_ => {
         (async _ => {
-            const [err, response] = await to(redaxios("/api/products"));
-            setProducts(response.data);
+            const [err, response] = await to(
+                redaxios("/api/products-by-category/wines")
+            );
+            setProducts(response.data.data[0]);
             setIsLoaded(true);
-            console.log("response", response.data);
         })();
     }, []);
     return <WrappedComponent {...props} {...{ isLoaded, products }} />;

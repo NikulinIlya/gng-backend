@@ -1,5 +1,7 @@
 import React, { useState, useEffect, createElement } from "react";
 
+import './aside-layout.scss'
+
 export default function AsideLayout({
     title,
     titleAs = "h1",
@@ -7,7 +9,7 @@ export default function AsideLayout({
     children
 }) {
     return (
-        <section className="layout container">
+        <section className="layout">
             {title &&
                 createElement(titleAs, {
                     className: "layout__title",

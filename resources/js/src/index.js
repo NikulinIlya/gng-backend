@@ -1,24 +1,14 @@
-import React, { useState, useEffect, createElement } from "react";
+import React, {
+    useState,
+    useEffect,
+    createElement,
+    Suspense,
+    lazy
+} from "react";
 import ReactDOM from "react-dom";
 import { Router, Switch, Route, useLocation } from "react-router-dom";
 import { createBrowserHistory } from "history";
-import { StoreContext } from "storeon/react";
-import { useStoreon } from "storeon/react";
-
-import Home from "@/modules/home";
-import Catalog from "@/modules/catalog";
-import ProductDetails from "@/modules/catalog/containers/ProductDetails";
-import Events from "@/modules/events";
-import EventPage from "@/modules/events/containers/EventPage";
-import Exclusive from "@/modules/exclusive";
-import News from "@/modules/news";
-import Brands from "@/modules/brands";
-import Contacts from "@/modules/contacts";
-import Cart from "@/modules/cart";
-import Order from "@/modules/cart/containers/Order";
-import StaticPage from "@/modules/text-page";
-import About from "@/modules/about";
-import Profile from "@/modules/profile";
+import { StoreContext, useStoreon } from "storeon/react";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -37,6 +27,23 @@ import "@/index.scss";
 
 export const history = createBrowserHistory();
 
+const Home = lazy(_ => import("@/modules/home"));
+const Wines = lazy(_ => import("@/modules/wines"));
+const ProductDetails = lazy(_ =>
+    import("@/modules/wines/containers/ProductDetails")
+);
+const Events = lazy(_ => import("@/modules/events"));
+const EventPage = lazy(_ => import("@/modules/events/containers/EventPage"));
+const Exclusive = lazy(_ => import("@/modules/exclusive"));
+const News = lazy(_ => import("@/modules/news"));
+const Brands = lazy(_ => import("@/modules/brands"));
+const Contacts = lazy(_ => import("@/modules/contacts"));
+const Cart = lazy(_ => import("@/modules/cart"));
+const Order = lazy(_ => import("@/modules/cart/containers/Order"));
+const StaticPage = lazy(_ => import("@/modules/text-page"));
+const About = lazy(_ => import("@/modules/about"));
+const Profile = lazy(_ => import("@/modules/profile"));
+
 const LoginVariants = {
     "sign-in": SignIn,
     "sign-up": SignUp
@@ -53,15 +60,13 @@ const App = () => {
     useEffect(_ => {
         dispatch("dictionary/get");
         (async _ => {
-          const [err, resp] = await to(redaxios('/api/product-categories'))
-          console.log('resp',resp)
-        })()
+            const [err, resp] = await to(redaxios("/api/product-categories"));
+            console.log("resp", resp);
+        })();
     }, []);
     useEffect(
         _ => {
             if (search) {
-                // document.body.style.backgroundColor= 'red'
-
                 const params = new URLSearchParams(search);
 
                 params.has("login") &&
@@ -85,26 +90,40 @@ const App = () => {
                 >
                     <Header />
                     <CatalogNavigation />
-                    <Switch>
-                        <Route path="/brands" exact component={Brands} />
-                        <Route path="/contacts" component={Contacts} />
-                        <Route path="/about" component={About} />
-                        <Route exact path="/profile" component={Profile} />
-                        <Route exact path="/cart" component={Cart} />
-                        <Route path="/cart/order" component={Order} />
-                        <Route path="/static" component={StaticPage} />
-                        <Route exact path="/events" exact component={Events} />
-                        <Route
-                            path="/events/:eventId"
-                            exact
-                            component={EventPage}
-                        />
-                        <Route path="/news" exact component={News} />
-                        <Route path="/exclusive" exact component={Exclusive} />
-                        <Route path="/catalog" exact component={Catalog} />
-                        <Route path="/:productId" component={ProductDetails} />
-                        <Route path="/" exact component={Home} />
-                    </Switch>
+                    <Suspense fallback="Loading...">
+                        <Switch>
+                            <Route path="/brands" exact component={Brands} />
+                            <Route path="/contacts" component={Contacts} />
+                            <Route path="/about" component={About} />
+                            <Route exact path="/profile" component={Profile} />
+                            <Route exact path="/cart" component={Cart} />
+                            <Route path="/cart/order" component={Order} />
+                            <Route path="/static" component={StaticPage} />
+                            <Route
+                                exact
+                                path="/events"
+                                exact
+                                component={Events}
+                            />
+                            <Route
+                                path="/events/:eventId"
+                                exact
+                                component={EventPage}
+                            />
+                            <Route path="/news" exact component={News} />
+                            <Route
+                                path="/exclusive"
+                                exact
+                                component={Exclusive}
+                            />
+                            <Route path="/wines" exact component={Wines} />
+                            <Route
+                                path="/:productId"
+                                component={ProductDetails}
+                            />
+                            <Route path="/" exact component={Home} />
+                        </Switch>
+                    </Suspense>
 
                     {isLoginModalVisible.state && (
                         <Modal

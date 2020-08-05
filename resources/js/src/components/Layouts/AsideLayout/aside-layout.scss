@@ -1,0 +1,16 @@
+.layout{
+  display: grid;
+  grid-template-columns: 270px 1fr;
+  
+  gap: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+@media screen and (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}

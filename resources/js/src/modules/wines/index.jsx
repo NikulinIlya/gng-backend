@@ -13,7 +13,7 @@ import withLogic from "./hoc/withWineLogic";
 
 import compose from "@/utils/compose";
 
-import "./catalog.scss";
+import "./wines.scss";
 
 const CatalogPage = ({
     isLoaded,
@@ -33,7 +33,31 @@ const CatalogPage = ({
                     </div>
                 )}
                 <AdvancedFilters />
-                <div className="container-grid">
+                <AsideLayout
+                    renderAside={_ => (
+                        <aside hidden={!filtersVisibility}>
+                            <Filtering
+                                onClose={handleFiltersVisibility(false)}
+                            />
+                        </aside>
+                    )}
+                >
+                    {isLoaded ? (
+                        <div className="catalog-grid">
+                            {products.map(({ name, price, brand }, i) => (
+                                <BottleCard
+                                    name={name}
+                                    price={price}
+                                    brand={brand}
+                                    key={i}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <Loading />
+                    )}
+                </AsideLayout>
+                {/* <div className="container-grid">
                     <aside hidden={!filtersVisibility}>
                         <Filtering onClose={handleFiltersVisibility(false)} />
                     </aside>
@@ -51,7 +75,7 @@ const CatalogPage = ({
                     ) : (
                         <Loading />
                     )}
-                </div>
+                </div> */}
             </div>
         </div>
     );
