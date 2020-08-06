@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Services\ApiControllerService;
 use App\Models\Product;
 use App\Models\ProductCategory;
-use App\Support\Collection;
 use Illuminate\Http\Request;
 
 class ProductController
@@ -79,9 +78,6 @@ class ProductController
 
         $products = $this->service->makeEntityCollection($products, app()->getLocale());
 
-        $productsCollection = new Collection();
-        $productsCollection->push($products);
-
-        return $productsCollection->paginate(10);
+        return $this->service->paginate($products, 10);
     }
 }
