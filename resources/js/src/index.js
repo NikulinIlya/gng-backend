@@ -29,6 +29,7 @@ export const history = createBrowserHistory();
 
 const Home = lazy(_ => import("@/modules/home"));
 const Wines = lazy(_ => import("@/modules/wines"));
+const Strong = lazy(_ => import("@/modules/strong"));
 const ProductDetails = lazy(_ =>
     import("@/modules/wines/containers/ProductDetails")
 );
@@ -60,7 +61,7 @@ const App = () => {
     useEffect(_ => {
         dispatch("dictionary/get");
         (async _ => {
-            const [err, resp] = await to(redaxios("/api/product-categories"));
+            const [err, resp] = await to(redaxios("/api/locations"));
             console.log("resp", resp);
         })();
     }, []);
@@ -117,6 +118,7 @@ const App = () => {
                                 component={Exclusive}
                             />
                             <Route path="/wines" exact component={Wines} />
+                            <Route path="/strong" exact component={Strong} />
                             <Route
                                 path="/:productId"
                                 component={ProductDetails}

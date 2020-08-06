@@ -1,6 +1,8 @@
 import React, { useState, useEffect, createElement } from "react";
 
-import './aside-layout.scss'
+import Heading from "@/components/Heading";
+
+import "./aside-layout.scss";
 
 export default function AsideLayout({
     title,
@@ -11,8 +13,9 @@ export default function AsideLayout({
     return (
         <section className="layout">
             {title &&
-                createElement(titleAs, {
+                createElement(Heading, {
                     className: "layout__title",
+                    as: titleAs,
                     children: title
                 })}
             <aside className="layout__aside">

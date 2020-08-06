@@ -1,16 +1,32 @@
-.layout{
-  display: grid;
-  grid-template-columns: 270px 1fr;
-  
-  gap: 30px;
-  padding-top: 30px;
-  padding-bottom: 30px;
+.layout {
+    display: grid;
+    grid-template-areas:
+        "title title"
+        "aside layout-content";
+    grid-template-columns: 270px 1fr;
+
+    gap: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    &__title {
+        grid-area: title;
+    }
+    &__aside {
+        grid-area: aside;
+    }
+    &__content {
+        grid-area: layout-content;
+    }
 }
 
 @media screen and (max-width: 768px) {
-  .layout {
-    grid-template-columns: 1fr;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
+    .layout {
+        grid-template-areas:
+            "title"
+            "aside"
+            "layout-content";
+        grid-template-columns: 1fr;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
 }

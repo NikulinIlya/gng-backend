@@ -17,7 +17,7 @@ export const navigationItems = [
     {
         name: "Крепкие напитки",
         slug: "strong-alcohol",
-        path: "/catalog"
+        path: "/strong"
     },
     {
         name: "Аксессуары",

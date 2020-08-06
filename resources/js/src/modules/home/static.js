@@ -28,7 +28,9 @@ export const contacts = [
   {
     icon: marker,
     name: "Адрес",
-    value: "121087, Москва, Береговой проезд, д. 4/6, стр.3",
+    nameSlug: "",
+    valueSlug: '',
+    value: "г. Москва, ул. Селезневская , дом 19/2",
   },
   {
     icon: phone,

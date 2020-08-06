@@ -9,17 +9,18 @@ import BottleCard from "@/components/BottleCard";
 import DetailsCard from "@/components/DetailsPageCard";
 
 import useMeasures from "@/utils/useMeasures";
+import useTranslate from "@/utils/useTranslate";
 
 import { discounts, contacts } from "./static";
 
-
-import map from "@/assets/images/contacts-map.png";
-import mobileMap from "@/assets/images/contacts-mobile-map.png";
+import map from "@/assets/images/map_lg.jpg";
+import mobileMap from "@/assets/images/contacts-map.jpg";
 
 import "./home.scss";
 
 export default function HomePage() {
     const { isMobile } = useMeasures();
+    const { t } = useTranslate()
     return (
         <div className="home-page">
             <div className="home-page__slider">

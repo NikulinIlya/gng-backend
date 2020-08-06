@@ -1,0 +1,20 @@
+.strong {
+    &__filters {
+        background-color: var(--green);
+    }
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 50px 30px;
+        padding-bottom: 30px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .strong {
+        &__grid {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+    }
+}

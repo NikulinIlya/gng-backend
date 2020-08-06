@@ -6,13 +6,30 @@ export default store => {
         store.dispatch("showcase/get-colors");
         store.dispatch("showcase/get-regions");
         store.dispatch("showcase/get-grape-sorts");
-        return { brands: null, flatBrands: null, colors: null, sorts: null };
+        return {
+            brands: null,
+            colors: null,
+            regions: null,
+            sorts: null,
+
+            flatBrandNames: null,
+            flatRegionMapImages: null,
+            flatRegionNames: null
+        };
     });
 
     store.on("showcase/set-brands", (_, brands) => ({ brands }));
-    store.on("showcase/set-flat-brands", (_, flatBrands) => ({ flatBrands }));
+    store.on("showcase/set-flat-brands", (_, flatBrandNames) => ({
+        flatBrandNames
+    }));
     store.on("showcase/set-colors", (_, colors) => ({ colors }));
     store.on("showcase/set-regions", (_, regions) => ({ regions }));
+    store.on("showcase/set-flat-region-images", (_, flatRegionMapImages) => ({
+        flatRegionMapImages
+    }));
+    store.on("showcase/set-flat-region-names", (_, flatRegionNames) => ({
+        flatRegionNames
+    }));
     store.on("showcase/set-grape-sorts", (_, sorts) => ({ sorts }));
 
     store.on("showcase/get-brands", async ({ brands }) => {
@@ -20,7 +37,12 @@ export default store => {
 
         try {
             const [err, brandsResponse] = await to(redaxios(`/api/brands`));
-            store.dispatch("showcase/set-brands", brandsResponse.data);
+            store.dispatch("showcase/set-brands", [
+                ...brandsResponse.data
+                    .filter(b => b.position)
+                    .sort((a, b) => a.position - b.position),
+                ...brandsResponse.data.filter(b => !b.position)
+            ]);
 
             store.dispatch(
                 "showcase/set-flat-brands",
@@ -51,6 +73,20 @@ export default store => {
         try {
             const [err, regionsResponse] = await to(redaxios(`/api/locations`));
             store.dispatch("showcase/set-regions", regionsResponse.data);
+            store.dispatch(
+                "showcase/set-flat-region-images",
+                regionsResponse.data.reduce(
+                    (acc, { id, map_image }) => ((acc[id] = map_image), acc),
+                    {}
+                )
+            );
+            store.dispatch(
+                "showcase/set-flat-region-names",
+                regionsResponse.data.reduce(
+                    (acc, { id, country }) => ((acc[id] = country), acc),
+                    {}
+                )
+            );
         } catch {
             return _;
         }

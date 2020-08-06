@@ -17,15 +17,15 @@ const footerGridData = [
         links: [
             {
                 label: "О компании",
-                path: ""
+                path: "/about"
             },
             {
                 label: "Наши бренды",
-                path: ""
+                path: "/brands"
             },
             {
                 label: "Ответственное потребление",
-                path: ""
+                path: "/static"
             }
         ]
     },
@@ -34,19 +34,19 @@ const footerGridData = [
         links: [
             {
                 label: "Правовая информация",
-                path: ""
+                path: "/static"
             },
             {
                 label: "Заказ, получение и оплата",
-                path: ""
+                path: "/static"
             },
             {
                 label: "Наши мероприятия",
-                path: ""
+                path: "/events"
             },
             {
                 label: "Винотека G&G",
-                path: ""
+                path: "/static"
             }
         ]
     },
@@ -55,11 +55,11 @@ const footerGridData = [
         links: [
             {
                 label: "Наши контакты",
-                path: ""
+                path: "/contacts"
             },
             {
                 label: "Гарантии",
-                path: ""
+                path: "/static"
             }
         ]
     }

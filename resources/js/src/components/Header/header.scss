@@ -27,6 +27,7 @@
     display: flex;
     flex-shrink: none;
     a {
+      white-space: nowrap;
       color: inherit;
       font-family: var(--proxima);
     }
