@@ -130,6 +130,11 @@ class ApiControllerService
         foreach ($entities as $entity) {
             $this->setImageField($entity);
 
+            // добавляется доп поле quantity пока нет данных
+            if (get_class($this->model) == 'App\Models\Product') {
+                $entity['quantity'] = 10;
+            }
+
             $collection = $entity->toArray();
             unset($collection['created_at'], $collection['updated_at']);
 
