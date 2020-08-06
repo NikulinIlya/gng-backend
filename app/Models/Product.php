@@ -31,7 +31,7 @@ class Product extends Model
      */
     public function vine()
     {
-        return $this->hasOne('App\Models\UserInfo');
+        return $this->hasOne('App\Models\Vine');
     }
 
     /**
