@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - vines-with-products api route
 - ApiControllerService getWithProducts, paginate methods
 - VineController getWithProducts method
+- GrapeSortDimmer, BrandDimmer, LocationDimmer, AssistantPhraseDimmer
 
 ## [0.0.2] - 2020-08-05
 ### Added

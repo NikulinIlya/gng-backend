@@ -145,7 +145,11 @@ return [
 
         'widgets' => [
             'App\\Widgets\\ProductDimmer',
+            'App\\Widgets\\GrapeSortDimmer',
+            'App\\Widgets\\BrandDimmer',
+            'App\\Widgets\\LocationDimmer',
             'App\\Widgets\\PhraseDimmer',
+            'App\\Widgets\\AssistantPhraseDimmer',
         ],
     ],
 
