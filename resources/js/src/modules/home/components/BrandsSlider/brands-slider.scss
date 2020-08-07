@@ -1,0 +1,18 @@
+.brands-slider {
+    position: relative;
+    .nav-side {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.2);
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        &.nav-side--next{
+          right: 0;
+        }
+        &.nav-side--prev{
+          left: 0;
+        }
+    }
+}

@@ -11,7 +11,7 @@ export default WrappedComponent => props => {
     const [extendedProducts, setExtendedProducts] = useState([]);
     const { isMobile } = useMeasures();
     const { setComponent } = useContext(HeaderContext);
-    const { flatBrands } = useStoreon("flatBrands");
+    const { flatBrandNames } = useStoreon("flatBrandNames");
     const [filtersVisibility, setFiltersVisibility] = useState(false);
 
     const onInputChange = _ => console.log(_.target.value);
@@ -29,10 +29,10 @@ export default WrappedComponent => props => {
     useEffect(
         _ => {
             setExtendedProducts(
-                decorateProductsWithBrands(products, flatBrands)
+                decorateProductsWithBrands(products, flatBrandNames)
             );
         },
-        [flatBrands, products]
+        [flatBrandNames, products]
     );
 
     useEffect(

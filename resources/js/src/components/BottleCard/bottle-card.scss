@@ -40,9 +40,11 @@
   }
   &__bottle {
     transition: transform 0.3s ease-in-out;
+    width: 73px;
   }
   &__wineglass {
     position: absolute;
+    max-width: 67px;
     z-index: -1;
     transition: transform 0.3s ease-in-out;
   }

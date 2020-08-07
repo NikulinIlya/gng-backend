@@ -8,9 +8,10 @@ export default WrappedComponent => props => {
     useEffect(_ => {
         (async _ => {
             const [err, response] = await to(
-                redaxios("/api/products-by-category/wines")
+                redaxios("/api/vines-with-products")
             );
-            setProducts(response.data.data[0]);
+            console.log('response',response.data.data[0])
+            setProducts(response.data.data[0]); 
             setIsLoaded(true);
         })();
     }, []);
