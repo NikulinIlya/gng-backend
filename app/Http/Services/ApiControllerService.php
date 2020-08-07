@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\GrapeSort;
+use App\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class ApiControllerService
@@ -100,6 +101,26 @@ class ApiControllerService
     }
 
     /**
+     * Unite drink entities with related products.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getWithProducts()
+    {
+        $drinks = $this->model::all();
+
+        $locale = app()->getLocale();
+
+        foreach ($drinks as &$drink) {
+            $product = $drink->product()->get();
+            $drink['product'] = $this->makeEntityCollection($product, $locale)[0];
+            unset($drink['product_id']);
+        }
+
+        return $this->makeEntityCollection($drinks, $locale);
+    }
+
+    /**
      * Get only translated values from entity.
      *
      * @param Model $entity
@@ -129,6 +150,11 @@ class ApiControllerService
 
         foreach ($entities as $entity) {
             $this->setImageField($entity);
+
+            // добавляется доп поле quantity пока нет данных
+            if (get_class($this->model) == 'App\Models\Product') {
+                $entity['quantity'] = 10;
+            }
 
             $collection = $entity->toArray();
             unset($collection['created_at'], $collection['updated_at']);
@@ -176,5 +202,21 @@ class ApiControllerService
 
             $entity['images'] = $images;
         }
+    }
+
+    /**
+     * Paginate entities.
+     *
+     * @param \Illuminate\Support\Collection $entities
+     * @param int $perPage
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function paginate($entities, $perPage)
+    {
+        $productsCollection = new Collection();
+
+        $productsCollection->push($entities);
+
+        return $productsCollection->paginate($perPage);
     }
 }

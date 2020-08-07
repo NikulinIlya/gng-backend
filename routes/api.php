@@ -63,6 +63,7 @@ Route::get('brands/{id}', 'Api\BrandController@show');
 
 Route::get('vines', 'Api\VineController@index');
 Route::get('vines/{id}', 'Api\VineController@show');
+Route::get('vines-with-products', 'Api\VineController@getWithProducts');
 
 Route::get('champagnes', 'Api\ChampagneController@index');
 Route::get('champagnes/{id}', 'Api\ChampagneController@show');

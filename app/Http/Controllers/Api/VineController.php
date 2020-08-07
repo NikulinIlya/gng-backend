@@ -39,6 +39,18 @@ class VineController
      */
     public function show($id)
     {
-        return$this->service->getWithGrapeSorts(new VinesGrape(), 'vine_id', $id);
+        return $this->service->getWithGrapeSorts(new VinesGrape(), 'vine_id', $id);
+    }
+
+    /**
+     * Display a listing of vines united with related products.
+     *
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function getWithProducts()
+    {
+        $vines = $this->service->getWithProducts();
+
+        return $this->service->paginate($vines, 10);
     }
 }
