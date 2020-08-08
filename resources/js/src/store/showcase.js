@@ -6,11 +6,13 @@ export default store => {
         store.dispatch("showcase/get-colors");
         store.dispatch("showcase/get-regions");
         store.dispatch("showcase/get-grape-sorts");
+        store.dispatch("showcase/get-product-categories");
         return {
             brands: null,
             colors: null,
             regions: null,
             sorts: null,
+            productCategories: null,
 
             flatBrandNames: null,
             flatRegionMapImages: null,
@@ -19,6 +21,9 @@ export default store => {
     });
 
     store.on("showcase/set-brands", (_, brands) => ({ brands }));
+    store.on("showcase/set-product-categories", (_, productCategories) => ({
+        productCategories
+    }));
     store.on("showcase/set-flat-brands", (_, flatBrandNames) => ({
         flatBrandNames
     }));
@@ -55,6 +60,25 @@ export default store => {
             return _;
         }
     });
+
+    store.on(
+        "showcase/get-product-categories",
+        async ({ productCategories }) => {
+            if (productCategories) return productCategories;
+
+            try {
+                const [err, categoriesResponse] = await to(
+                    redaxios(`/api/product-categories`)
+                );
+                store.dispatch(
+                    "showcase/set-product-categories",
+                    categoriesResponse.data
+                );
+            } catch {
+                return _;
+            }
+        }
+    );
 
     store.on("showcase/get-colors", async ({ colors }) => {
         if (colors) return colors;

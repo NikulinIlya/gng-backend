@@ -1,0 +1,17 @@
+.champagne {
+    padding-bottom: 30px;
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 50px 30px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .champagne {
+        &__grid {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+    }
+}

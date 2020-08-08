@@ -17,6 +17,12 @@
     &__content {
         grid-area: layout-content;
     }
+    &.layout--simplified {
+        grid-template-areas:
+            "title title"
+            "layout-content layout-content";
+        grid-template-columns: 1fr;
+    }
 }
 
 @media screen and (max-width: 768px) {

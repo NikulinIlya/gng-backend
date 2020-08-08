@@ -12,7 +12,7 @@ export const navigationItems = [
     {
         name: `Шампанское и Игристое!`,
         slug: "champagne-and-sparkling",
-        path: "/catalog"
+        path: "/champagne"
     },
     {
         name: "Крепкие напитки",

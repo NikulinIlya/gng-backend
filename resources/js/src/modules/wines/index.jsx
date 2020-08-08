@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useStoreon } from "storeon/react";
 
 import BottleCard from "@/components/BottleCard";
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
+import Filtering from "@/components/Filtering";
 import AsideLayout from "@/components/Layouts/AsideLayout";
+import Range from "@/components/Input/Range/Multiple";
+import { Checkbox } from "@/components/Input";
 
 import AdvancedFilters from "./components/AdvancedFiltering";
-import Filtering from "./components/Filtering";
 
 import withApi from "./hoc/withWineApi";
 import withLogic from "./hoc/withWineLogic";
@@ -37,6 +40,7 @@ const CatalogPage = ({
                     renderAside={_ => (
                         <aside hidden={!filtersVisibility}>
                             <Filtering
+                                renderFiltersBody={() => <FiltersBody />}
                                 onClose={handleFiltersVisibility(false)}
                             />
                         </aside>
@@ -44,14 +48,14 @@ const CatalogPage = ({
                 >
                     {isLoaded ? (
                         <div className="catalog-grid">
-                            {products.map(({ product, brand }, i) => (
+                            {products.map(({ product, brand, id }) => (
                                 <BottleCard
                                     name={product.name}
                                     price={product.price}
                                     wineglass={product.glass_image}
                                     bottle={product.image}
                                     brand={brand}
-                                    key={i}
+                                    key={id}
                                 />
                             ))}
                         </div>
@@ -59,28 +63,60 @@ const CatalogPage = ({
                         <Loading />
                     )}
                 </AsideLayout>
-                {/* <div className="container-grid">
-                    <aside hidden={!filtersVisibility}>
-                        <Filtering onClose={handleFiltersVisibility(false)} />
-                    </aside>
-                    {isLoaded ? (
-                        <div className="catalog-grid">
-                            {products.map(({ name, price, brand }, i) => (
-                                <BottleCard
-                                    name={name}
-                                    price={price}
-                                    brand={brand}
-                                    key={i}
-                                />
-                            ))}
-                        </div>
-                    ) : (
-                        <Loading />
-                    )}
-                </div> */}
             </div>
         </div>
     );
 };
+
+function FilterBy({ criterias = [], propName = "name" }) {
+    return criterias.map((cr, i) => <Checkbox label={cr[propName]} key={i} />);
+}
+
+function FiltersBody() {
+    const { brands, colors, regions, sorts } = useStoreon(
+        "brands",
+        "colors",
+        "regions",
+        "sorts"
+    );
+    return (
+        <>
+            <div className="filters-criteria">
+                <h3 className="filters-criteria__name">Цена</h3>
+                <div className="filters-criteria__fields">
+                    <Range defaultRange={[30, 55]} />
+                </div>
+            </div>
+            <div className="filters-criteria">
+                <h3 className="filters-criteria__name">Бренды</h3>
+                <div className="filters-criteria__fields">
+                    <FilterBy criterias={brands ? brands : []} />
+                </div>
+            </div>
+            <div className="filters-criteria">
+                <h3 className="filters-criteria__name">Цвет</h3>
+                <div className="filters-criteria__fields">
+                    <FilterBy criterias={colors ? colors : []} />
+                </div>
+            </div>
+            <div className="filters-criteria">
+                <h3 className="filters-criteria__name">Регион</h3>
+                <div className="filters-criteria__fields">
+                    <FilterBy
+                        criterias={regions ? regions : []}
+                        propName="country"
+                    />
+                </div>
+            </div>
+
+            <div className="filters-criteria">
+                <h3 className="filters-criteria__name">Сорт винограда</h3>
+                <div className="filters-criteria__fields">
+                    <FilterBy criterias={sorts ? sorts : []} />
+                </div>
+            </div>
+        </>
+    );
+}
 
 export default compose(withApi, withLogic)(CatalogPage);

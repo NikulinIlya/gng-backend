@@ -5,42 +5,24 @@ import SearchInput from "@/components/SearchInput";
 import { HeaderContext } from "@/context/header";
 
 import useMeasures from "@/utils/useMeasures";
+import useBrands from "@/utils/useBrands";
 
 export default WrappedComponent => props => {
     const { products } = props;
-    const [extendedProducts, setExtendedProducts] = useState([]);
     const { isMobile } = useMeasures();
     const { setComponent } = useContext(HeaderContext);
-    const { flatBrandNames } = useStoreon("flatBrandNames");
     const [filtersVisibility, setFiltersVisibility] = useState(false);
 
     const onInputChange = _ => console.log(_.target.value);
     const handleFiltersVisibility = state => _ => setFiltersVisibility(state);
-    const decorateProductsWithBrands = (products, brands) =>
-        products.map(({ brand_id, ...restProps }) => ({
-            ...restProps,
-            brand: brands[brand_id]
-        }));
+
+    const extendedProducts = useBrands(products);
 
     useEffect(_ => {
         setComponent(_ => <SearchInput onChange={onInputChange} />);
     }, []);
 
-    useEffect(
-        _ => {
-            setExtendedProducts(
-                decorateProductsWithBrands(products, flatBrandNames)
-            );
-        },
-        [flatBrandNames, products]
-    );
-
-    useEffect(
-        _ => {
-            setFiltersVisibility(!isMobile);
-        },
-        [isMobile]
-    );
+    useEffect(_ => setFiltersVisibility(!isMobile), [isMobile]);
     useEffect(
         _ => {
             document.body.style.position =
