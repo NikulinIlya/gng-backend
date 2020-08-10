@@ -8,10 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - app/Support/Collection
 - ProductController getProductsByCategory method
-- vines-with-products api route
+- vines-with-products, product-with-settings/ api routes
 - ApiControllerService getWithProducts, paginate methods
 - VineController getWithProducts method
 - GrapeSortDimmer, BrandDimmer, LocationDimmer, AssistantPhraseDimmer
+- ProductController showProductWithSettings method
 
 ## [0.0.2] - 2020-08-05
 ### Added
