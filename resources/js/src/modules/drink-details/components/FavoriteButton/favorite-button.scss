@@ -1,0 +1,13 @@
+.fav-btn {
+    &__state {
+        &:checked ~ .fav-btn__custom-view img:first-child {
+            display: none;
+        }
+        &:checked ~ .fav-btn__custom-view img:last-child {
+            display: block;
+        }
+        &:not(:disabled) ~ .fav-btn__custom-view {
+            cursor: pointer;
+        }
+    }
+}

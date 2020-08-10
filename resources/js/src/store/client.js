@@ -15,9 +15,30 @@ export default store => {
         (localStorage.getItem("lang") &&
             existingLangs[localStorage.getItem("lang")]) ||
         null;
+    const favoriteProducts =
+        (localStorage.getItem("favorite-products") &&
+            JSON.parse(localStorage.getItem("favorite-products"))) ||
+        null;
 
     store.on("@init", () => ({
-        lang: memoizedLang || DEFAULT_LANG
+        lang: memoizedLang || DEFAULT_LANG,
+        isAuthorized: false,
+        favoriteProducts: favoriteProducts || []
+    }));
+
+    store.on(
+        "client/set-favorite-products",
+        ({ isAuthorized }, favoriteProducts) => {
+            if (!isAuthorized)
+                localStorage.setItem(
+                    "favorite-products",
+                    JSON.stringify(favoriteProducts)
+                );
+            return { favoriteProducts };
+        }
+    );
+    store.on("client/set-is-authorized", (_, isAuthorized) => ({
+        isAuthorized
     }));
     store.on("client/set-lang", async (_, lang) => {
         if (!existingLangs[lang]) return { lang: DEFAULT_LANG };

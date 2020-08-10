@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import ProductFeature from "./components/ProductFeature";
+import FavButton from "./components/FavoriteButton";
 import ProductCounter from "@/components/ProductCounter";
 import Progress from "@/components/Progress";
 import DetailsCard from "@/components/DetailsPageCard";
@@ -22,11 +23,17 @@ import cheeseIcon from "@/assets/images/icons/cheese-icon-gold.svg";
 
 import "./product-details.scss";
 
-function ProductDetails({ product, isLoaded }) {
+function ProductDetails({ product, isLoaded, isProductFavorite, onFavoriteStateChange }) {
     if (!isLoaded) return <Loading />;
     return (
         <div className="container">
             <article className="product-details">
+                <div className="product-details__fav">
+                    <FavButton
+                        state={isProductFavorite}
+                        onChange={onFavoriteStateChange}
+                    />
+                </div>
                 <div className="product-details__thumb">
                     <div className="backdrop">
                         <img src={backdrop} alt="" />

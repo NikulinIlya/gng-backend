@@ -5,6 +5,7 @@
     "about about";
   grid-template-columns: repeat(2, 1fr);
   padding: 60px 0;
+  position: relative;
   &__thumb {
     position: relative;
     text-align: center;
@@ -34,6 +35,12 @@
       height: 100%;
       object-fit: contain;
     }
+  }
+  &__fav{
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 2;
   }
   &__name {
     font-family: var(--morePro);
