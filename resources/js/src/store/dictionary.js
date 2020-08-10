@@ -1,7 +1,10 @@
 import redaxios, { to } from "@/utils/fetch";
 
 export default store => {
-    store.on("@init", () => ({ dictionary: null }));
+    store.on("@init", _ => {
+        store.dispatch("dictionary/get");
+        return { dictionary: null };
+    });
     store.on("dictionary/get", async ({ dictionary }) => {
         try {
             if (!dictionary) {

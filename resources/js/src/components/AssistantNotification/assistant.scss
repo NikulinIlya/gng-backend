@@ -1,0 +1,26 @@
+.notification{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #0b4339;
+  padding: 19px 0;
+  z-index: 10;
+  // height: 105px;
+  box-sizing: border-box;
+  &__container{
+    display: flex;
+  }
+  &__logo{
+    display: flex;
+    margin-right: 77px;
+  }
+  &__body{
+    flex: 1;
+    display: flex;
+  }
+  &__close{
+    margin-left: auto;
+    align-self: center;
+  }
+}

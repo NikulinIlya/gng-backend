@@ -1,22 +1,30 @@
 .btn {
-  @include reset-default-button;
-  min-height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: white;
-  background-color: #186759;
-  padding: 13px 33px;
-  font-family: var(--morePro);
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 20px;
-  cursor: pointer;
-  &__text {
-    transform: translateY(-3px);
-  }
-  &:disabled {
-    opacity: 0.5;
-  }
+    @include reset-default-button;
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    background-color: #186759;
+    padding: 13px 33px;
+    font-family: var(--morePro);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 20px;
+    cursor: pointer;
+
+    &.btn--default {
+        background-color: #186759;
+    }
+    &.btn--gold {
+        background-color: var(--defaultGold);
+    }
+
+    &__text {
+        transform: translateY(-3px);
+    }
+    &:disabled {
+        opacity: 0.5;
+    }
 }

@@ -16,6 +16,7 @@ import CatalogNavigation from "@/components/CatalogNavigation";
 import AgeLimitation from "@/components/AgeLimitation";
 import { SignIn, SignUp } from "@/components/Login";
 import Modal from "@/components/Modal";
+import CartNotification from "@/components/CartNotification";
 
 import { HeaderContext } from "@/context/header";
 import useMeasures from "@/utils/useMeasures";
@@ -57,13 +58,7 @@ const App = () => {
     const { isMobile } = useMeasures();
     const { dispatch } = useStoreon();
 
-    useEffect(_ => {
-        dispatch("dictionary/get");
-        (async _ => {
-            const [err, resp] = await to(redaxios("/api/product-categories"));
-            console.log("resp", resp);
-        })();
-    }, []);
+    useEffect(_ => {}, []);
     useEffect(
         _ => {
             if (search) {
@@ -159,6 +154,7 @@ const App = () => {
                     )}
                 </HeaderContext.Provider>
                 <Footer />
+                <CartNotification />
             </main>
         </>
     );

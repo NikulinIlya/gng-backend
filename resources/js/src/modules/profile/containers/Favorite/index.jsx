@@ -11,9 +11,9 @@ import withLogic from "./hoc/withFavoriteLogic";
 import "./favorite.scss";
 
 function Favorite({ isLoaded, isListEmpty, favoriteProducts }) {
-    console.log("isListEmpy", isListEmpty);
     if (!isLoaded) return <Loading />;
-    if (isListEmpty) return <h1 style={{ textAlign: "center" }}>Список пуст</h1>;
+    if (isListEmpty)
+        return <h1 style={{ textAlign: "center" }}>Список пуст</h1>;
     return (
         <div className="favorite">
             <div className="container">

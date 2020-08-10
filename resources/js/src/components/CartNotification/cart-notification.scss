@@ -1,0 +1,51 @@
+.cart-notification {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 44px;
+    align-self: center;
+    .message {
+        flex: 1;
+        &__title {
+            color: var(--lightGold);
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 24px;
+            margin-bottom: 5px;
+        }
+        &__text {
+            color: white;
+            font-family: var(--proxima);
+            font-size: 18px;
+            font-weight: 300;
+            line-height: 21.6px;
+        }
+        &__fact {
+            position: relative;
+            width: 100%;
+            color: white;
+            font-family: var(--proxima);
+            font-size: 20px;
+            font-weight: 300;
+            padding-top: 5px;
+            margin-top: 5px;
+            font-style: italic;
+            &:after {
+                position: absolute;
+                content: '';
+                left: 0;
+                top: 0;
+                width: 90%;
+                height: 1px;
+                background-color: var(--defaultGold);
+            }
+        }
+    }
+    .actions {
+        display: flex;
+        align-items: center;
+        button:not(:last-child) {
+            margin-right: 30px;
+        }
+    }
+}
