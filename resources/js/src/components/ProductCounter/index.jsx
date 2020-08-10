@@ -5,7 +5,7 @@ import useCounter from "@/utils/useCounter";
 import "./product-counter.scss";
 
 export default function ProductCounter({ title, price, label }) {
-  const { value, dispatch } = useCounter(2);
+  const { value, dispatch } = useCounter(1);
   return (
     <article className="order-counter">
       <div className="order-counter__measures">

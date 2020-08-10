@@ -36,6 +36,7 @@ function Strong({ products, productCategories }) {
                                 wineglass={glass_image}
                                 bottle={image}
                                 brand={brand}
+                                to={`/catalog/${id}`}
                             />
                         )
                     )}

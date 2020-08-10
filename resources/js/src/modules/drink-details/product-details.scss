@@ -28,9 +28,11 @@
     transform: translateX(-50%);
     width: 154px;
     height: 100%;
+    
     img {
       max-width: 154px;
       height: 100%;
+      object-fit: contain;
     }
   }
   &__name {

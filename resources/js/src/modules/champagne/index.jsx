@@ -32,6 +32,7 @@ function Champagne({ products, isLoaded }) {
                                     wineglass={glass_image}
                                     bottle={image}
                                     brand={brand}
+                                    to={`/catalog/${id}`}
                                     key={id}
                                 />
                             )

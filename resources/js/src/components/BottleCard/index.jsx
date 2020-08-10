@@ -19,7 +19,8 @@ function BottleCard({
     price,
     wineglass = glassTemplate,
     bottle,
-    useBackdrop = ""
+    useBackdrop = "",
+    to
 }) {
     const { isMobile } = useMeasures();
     return (
@@ -43,7 +44,7 @@ function BottleCard({
                 </div>
                 <section className="bottle-card__info">
                     <h2 className="bottle-card__name">
-                        <Link to="/some">{brand}</Link>
+                        <Link to={to}>{brand}</Link>
                     </h2>
                     <p className="bottle-card__details">{name}</p>
                 </section>

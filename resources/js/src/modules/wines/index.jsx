@@ -55,6 +55,7 @@ const CatalogPage = ({
                                     wineglass={product.glass_image}
                                     bottle={product.image}
                                     brand={brand}
+                                    to={`/catalog/${product.id}`}
                                     key={id}
                                 />
                             ))}
