@@ -48,12 +48,12 @@ class ApiControllerService
      *
      * @param Model $grapesPivotModel
      * @param int $idName
-     * @param int|null $drink_id
+     * @param int|null $drinkId
      * @return array
      */
-    public function getWithGrapeSorts($grapesPivotModel, $idName, $drink_id = null)
+    public function getWithGrapeSorts($grapesPivotModel, $idName, $drinkId = null)
     {
-        $entities = $this->getEntitiesCollection($this->model, $drink_id);
+        $entities = $this->getEntitiesCollection($this->model, $drinkId);
 
         $newEntities = [];
         foreach ($entities as $entity) {
@@ -140,7 +140,7 @@ class ApiControllerService
     /**
      * Make return entities collection to a special format.
      *
-     * @param \Illuminate\Support\Collection $entities
+     * @param \Illuminate\Support\Collection|array $entities
      * @param string $locale
      * @return \Illuminate\Support\Collection
      */
