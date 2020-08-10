@@ -113,5 +113,5 @@ Route::get('whiskey/{id}', 'Api\WhiskeyController@show');
 Route::get('bags', 'Api\BagController@index');
 Route::get('bags/{id}', 'Api\BagController@show');
 
-Route::get('glasses', 'Api\Glassontroller@index');
+Route::get('glasses', 'Api\GlassController@index');
 Route::get('glasses/{id}', 'Api\GlassController@show');
