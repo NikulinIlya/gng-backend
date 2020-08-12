@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->string('vendor_code');
             $table->string('image')->nullable();
             $table->string('glass_image')->nullable();
+            $table->bigInteger('brand_id')->nullable();
             $table->foreignId('product_category_id')->constrained('product_categories');
             $table->timestamps();
         });
