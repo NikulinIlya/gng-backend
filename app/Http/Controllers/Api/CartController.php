@@ -14,15 +14,15 @@ class CartController
         $this->cart = $cart;
     }
 
+    public function getProducts(): Collection
+    {
+        return $this->cart->getCartItems();
+    }
+
     public function addProduct($id)
     {
         $this->cart->addToCart($id);
 
-        return $this->cart->getCartItems();
-    }
-
-    public function getProducts(): Collection
-    {
         return $this->cart->getCartItems();
     }
 
