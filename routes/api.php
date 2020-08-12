@@ -116,3 +116,8 @@ Route::get('bags/{id}', 'Api\BagController@show');
 
 Route::get('glasses', 'Api\GlassController@index');
 Route::get('glasses/{id}', 'Api\GlassController@show');
+
+Route::prefix('cart')->group(function () {
+    Route::get('index', 'Api\CartController@getProducts');
+    Route::post('create', 'Api\CartController@getProducts');
+});
