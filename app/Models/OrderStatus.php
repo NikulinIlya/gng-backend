@@ -8,5 +8,8 @@ use TCG\Voyager\Traits\Translatable;
 class OrderStatus extends Model
 {
     use Translatable;
+
+    protected $table = 'order_statuses';
+
     protected $translatable = ['name'];
 }
