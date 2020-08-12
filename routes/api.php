@@ -124,4 +124,3 @@ Route::prefix('cart')->group(function () {
     Route::delete('/{product}', 'Api\CartController@remove')->name('cart.remove');
     Route::patch('/{product}', 'Api\CartController@update')->name('cart.update');
 });
-
