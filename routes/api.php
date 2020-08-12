@@ -116,3 +116,12 @@ Route::get('bags/{id}', 'Api\BagController@show');
 
 Route::get('glasses', 'Api\GlassController@index');
 Route::get('glasses/{id}', 'Api\GlassController@show');
+
+Route::prefix('cart')->group(function () {
+    Route::get('/', 'Api\CartController@index')->name('cart.index');
+    Route::post('/', 'Api\CartController@store')->name('cart.store');
+    Route::delete('/', 'Api\CartController@clear')->name('cart.clear');
+    Route::delete('/{product}', 'Api\CartController@remove')->name('cart.remove');
+    Route::patch('/{product}', 'Api\CartController@update')->name('cart.update');
+});
+
