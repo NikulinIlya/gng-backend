@@ -21,7 +21,7 @@ class SessionCartService implements CartManager
         }
     }
 
-    public function addToCart($productId, $price = null): Product
+    public function addToCart($productId, $type = 'single', $price = null, $quantity = 1): Product
     {
         $cart = $this->getCart();
 
@@ -29,9 +29,11 @@ class SessionCartService implements CartManager
 
         $item = collect([
             'product_id' => $productId,
+            'type' => $type,
             'price' => $price == null ? $product->price : $price,
             'product' => $product,
-            'image_url' => $product->image,
+            'image' => $product->image,
+            'quantity' => $quantity,
         ]);
 
         $a = collect($item);

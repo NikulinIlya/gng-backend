@@ -28,7 +28,7 @@ class DatabaseCartService implements CartManager
         return Cart::firstOrCreate(['user_id' => $this->userId]);
     }
 
-    public function addToCart($productId, $price = null): Product
+    public function addToCart($productId, $type = 'single', $price = null, $quantity = 1): Product
     {
         $product = Product::find($productId);
 
@@ -37,7 +37,11 @@ class DatabaseCartService implements CartManager
 
             $cart->items()->create([
                 'product_id' => $productId,
+                'type' => $type,
                 'price' => $price == null ? $product->price : $price,
+                'product' => $product,
+                'image' => $product->image,
+                'quantity' => $quantity,
             ]);
         }
 
