@@ -6,17 +6,26 @@ export default store => {
         productsInCart: products
     }));
 
-    store.on("cart/add", ({ productsInCart }, { product, callback = Function.prototype }) => {
-        const resultCart = [
-            ...productsInCart,
-            { id: product.id, count: product.count }
-        ];
-        localStorage.setItem("cart", JSON.stringify(resultCart));
-        callback();
-        return {
-            productsInCart: resultCart
-        };
-    });
+    store.on(
+        "cart/add",
+        ({ productsInCart }, { product, callback = Function.prototype }) => {
+            const indexOfAdded = productsInCart.findIndex(
+                p => p.id === product.id && p.count === product.count
+            );
+            const resultCart =
+                indexOfAdded === -1
+                    ? [...productsInCart, product]
+                    : [
+                          ...productsInCart.filter(p => p.id !== product.id),
+                          product
+                      ];
+            localStorage.setItem("cart", JSON.stringify(resultCart));
+            callback();
+            return {
+                productsInCart: resultCart
+            };
+        }
+    );
 
     store.on("cart/remove", ({ productsInCart }, id) => {
         const resultCart = productsInCart.filter(p => p.id !== id);
