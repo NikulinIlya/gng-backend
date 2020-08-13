@@ -27,7 +27,6 @@ class Kernel extends HttpKernel
             EnsureFrontendRequestsAreStateful::class,
             'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\CartResolutionMiddleware::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \App\Http\Middleware\Localization::class,
         ],
