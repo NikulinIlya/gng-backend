@@ -13,11 +13,15 @@
   }
   &__thumb {
     flex-basis: 154px;
+    height: 207px;
     flex-shrink: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-right: 23px;
+    img{
+      object-fit: contain;
+    }
   }
   &__info {
     flex: 1;

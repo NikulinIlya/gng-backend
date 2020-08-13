@@ -45,7 +45,6 @@ export default WrappedComponent => props => {
     // check if product faforite
     useEffect(
         _ => {
-            console.log('product',product)
             if (!isEmpty(product) && favoriteProducts) {
                 setIsProductFavorite(favoriteProducts.includes(product.id));
             }

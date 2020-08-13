@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-export default function useCounter(defaultValut) {
-  const [value, setValue] = useState(defaultValut);
+export default function useCounter(defaultValue) {
+  const [value, setValue] = useState(defaultValue);
   const increment = (_) => setValue(value + 1);
   const decrement = (_) => setValue(value <= 1 ? 1 : value - 1);
   const dispatch = (action) => {

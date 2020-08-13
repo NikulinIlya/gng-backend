@@ -11,7 +11,7 @@ import withLogic from "./hoc/withChampagneLogic";
 
 import "./champagne.scss";
 
-function Champagne({ products, isLoaded }) {
+function Champagne({ products, isLoaded, onAdd }) {
     return (
         <div className="champagne container">
             <AsideLayout title="Шампанское и Игристое">
@@ -35,6 +35,7 @@ function Champagne({ products, isLoaded }) {
                                     brand={brand}
                                     backdrop={backdrop}
                                     to={`/catalog/${id}`}
+                                    onAdd={_ => onAdd(id)}
                                     key={id}
                                 />
                             )

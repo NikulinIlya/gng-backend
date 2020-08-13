@@ -13,8 +13,8 @@ import withLogic from "./hoc/withStrongLogic";
 
 import "./strong.scss";
 
-function Strong({ products, productCategories, isLoaded }) {
-    if(!isLoaded) return <Loading />
+function Strong({ products, productCategories, isLoaded, onAdd }) {
+    if (!isLoaded) return <Loading />;
     return (
         <div className="strong container">
             <AsideLayout
@@ -47,6 +47,7 @@ function Strong({ products, productCategories, isLoaded }) {
                                 brand={brand}
                                 backdrop={backdrop}
                                 to={`/catalog/${id}`}
+                                onAdd={_ => onAdd(id)}
                             />
                         )
                     )}

@@ -25,6 +25,12 @@ export function CartNotificationProvider({ children }) {
         dispatch({ type: "HANDLE_VISIBILITY", payload: false });
     };
 
+    //hide notification 3 seconds after
+    useEffect(
+        _ => (state.visibility && setTimeout(onHide, 3000), Function.prototype),
+        [state.visibility]
+    );
+
     return (
         <CartNotificationContext.Provider value={{ dispatch }}>
             <>

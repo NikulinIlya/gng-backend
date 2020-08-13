@@ -12,7 +12,7 @@ export default WrappedComponent => props => {
     const { products } = props;
     const { isMobile } = useMeasures();
     const [wines, setWines] = useState([]);
-    const { dispatch, productsInCart } = useStoreon("productsInCart");
+    const { dispatch } = useStoreon();
     const { setComponent } = useContext(HeaderContext);
     const { dispatch: notificationDispatch } = useContext(
         CartNotificationContext
@@ -24,24 +24,19 @@ export default WrappedComponent => props => {
     const handleFiltersVisibility = state => _ => setFiltersVisibility(state);
     const onAdd = (id, count = 1) => {
         if (!id) return;
-        dispatch("cart/add", { id, count });
+        dispatch("cart/add", {
+            product: { id, count },
+            callback: _ =>
+                notificationDispatch({
+                    type: "HANDLE_VISIBILITY",
+                    payload: true
+                })
+        });
     };
 
     useEffect(_ => {
         setComponent(_ => <SearchInput onChange={onInputChange} />);
     }, []);
-
-    useEffect(
-        _ => {
-            if (productsInCart.length) {
-                notificationDispatch({
-                    type: "HANDLE_VISIBILITY",
-                    payload: true
-                });
-            }
-        },
-        [productsInCart]
-    );
 
     useEffect(
         _ => {
@@ -53,6 +48,7 @@ export default WrappedComponent => props => {
     useEffect(_ => console.log("wines", extendedProducts), [extendedProducts]);
 
     useEffect(_ => setFiltersVisibility(!isMobile), [isMobile]);
+
     useEffect(
         _ => {
             document.body.style.position =
