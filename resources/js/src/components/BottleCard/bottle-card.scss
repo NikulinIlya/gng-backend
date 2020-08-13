@@ -3,7 +3,7 @@
   height: 100%;
   display: flex;
   flex-flow: column nowrap;
-  &:hover {
+  &:not(.bottle-card--slide-disabled):hover {
     .bottle-card__bottle {
       transform: translateX(30px);
       transition: transform 0.3s ease-in-out;

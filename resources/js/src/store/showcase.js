@@ -7,25 +7,34 @@ export default store => {
         store.dispatch("showcase/get-regions");
         store.dispatch("showcase/get-grape-sorts");
         store.dispatch("showcase/get-product-categories");
+        store.dispatch("showcase/get-assistant-phrases");
         return {
             brands: null,
             colors: null,
             regions: null,
             sorts: null,
             productCategories: null,
+            assistantPhrases: null,
 
             flatBrandNames: null,
             flatRegionMapImages: null,
-            flatRegionNames: null
+            flatRegionNames: null,
+            flatColorNames: null
         };
     });
 
+    store.on("showcase/set-assistant-phrases", (_, assistantPhrases) => ({
+        assistantPhrases
+    }));
     store.on("showcase/set-brands", (_, brands) => ({ brands }));
     store.on("showcase/set-product-categories", (_, productCategories) => ({
         productCategories
     }));
     store.on("showcase/set-flat-brands", (_, flatBrandNames) => ({
         flatBrandNames
+    }));
+    store.on("showcase/set-flat-color-names", (_, flatColorNames) => ({
+        flatColorNames
     }));
     store.on("showcase/set-colors", (_, colors) => ({ colors }));
     store.on("showcase/set-regions", (_, regions) => ({ regions }));
@@ -80,12 +89,35 @@ export default store => {
         }
     );
 
+    store.on("showcase/get-assistant-phrases", async ({ assistantPhrases }) => {
+        if (assistantPhrases) return assistantPhrases;
+
+        try {
+            const [err, phrasesResponse] = await to(
+                redaxios(`/api/assistant-phrases`)
+            );
+            store.dispatch(
+                "showcase/set-assistant-phrases",
+                phrasesResponse.data
+            );
+        } catch {
+            return _;
+        }
+    });
+
     store.on("showcase/get-colors", async ({ colors }) => {
         if (colors) return colors;
 
         try {
             const [err, colorsResponse] = await to(redaxios(`/api/colours`));
             store.dispatch("showcase/set-colors", colorsResponse.data);
+            store.dispatch(
+                "showcase/set-flat-color-names",
+                colorsResponse.data.reduce(
+                    (acc, { id, name }) => ((acc[id] = name), acc),
+                    {}
+                )
+            );
         } catch {
             return _;
         }

@@ -3,6 +3,7 @@ import { useStoreon } from "storeon/react";
 
 import SearchInput from "@/components/SearchInput";
 import { HeaderContext } from "@/context/header";
+import { CartNotificationContext } from "@/components/CartNotification";
 
 import useMeasures from "@/utils/useMeasures";
 import useBrands from "@/utils/useBrands";
@@ -10,17 +11,46 @@ import useBrands from "@/utils/useBrands";
 export default WrappedComponent => props => {
     const { products } = props;
     const { isMobile } = useMeasures();
+    const [wines, setWines] = useState([]);
+    const { dispatch, productsInCart } = useStoreon("productsInCart");
     const { setComponent } = useContext(HeaderContext);
+    const { dispatch: notificationDispatch } = useContext(
+        CartNotificationContext
+    );
     const [filtersVisibility, setFiltersVisibility] = useState(false);
+    const extendedProducts = useBrands(wines);
 
     const onInputChange = _ => console.log(_.target.value);
     const handleFiltersVisibility = state => _ => setFiltersVisibility(state);
-
-    const extendedProducts = useBrands(products);
+    const onAdd = (id, count = 1) => {
+        if (!id) return;
+        dispatch("cart/add", { id, count });
+    };
 
     useEffect(_ => {
         setComponent(_ => <SearchInput onChange={onInputChange} />);
     }, []);
+
+    useEffect(
+        _ => {
+            if (productsInCart.length) {
+                notificationDispatch({
+                    type: "HANDLE_VISIBILITY",
+                    payload: true
+                });
+            }
+        },
+        [productsInCart]
+    );
+
+    useEffect(
+        _ => {
+            setWines(products.map(p => ({ ...p, ...p.product })));
+        },
+        [products]
+    );
+
+    useEffect(_ => console.log("wines", extendedProducts), [extendedProducts]);
 
     useEffect(_ => setFiltersVisibility(!isMobile), [isMobile]);
     useEffect(
@@ -33,7 +63,7 @@ export default WrappedComponent => props => {
     return (
         <WrappedComponent
             {...props}
-            {...{ isMobile, filtersVisibility, handleFiltersVisibility }}
+            {...{ isMobile, filtersVisibility, handleFiltersVisibility, onAdd }}
             products={extendedProducts}
         />
     );

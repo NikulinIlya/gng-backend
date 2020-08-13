@@ -16,7 +16,7 @@ import CatalogNavigation from "@/components/CatalogNavigation";
 import AgeLimitation from "@/components/AgeLimitation";
 import { SignIn, SignUp } from "@/components/Login";
 import Modal from "@/components/Modal";
-import CartNotification from "@/components/CartNotification";
+import { CartNotificationProvider } from "@/components/CartNotification";
 
 import { HeaderContext } from "@/context/header";
 import useMeasures from "@/utils/useMeasures";
@@ -58,7 +58,9 @@ const App = () => {
     const { isMobile } = useMeasures();
     const { dispatch } = useStoreon();
 
-    useEffect(_ => {}, []);
+    // useEffect(_ => {
+    //   // redaxios('/api/assistant-phrases')
+    // }, []);
     useEffect(
         _ => {
             if (search) {
@@ -80,81 +82,96 @@ const App = () => {
     return (
         <>
             <main className="app-view">
-                <HeaderContext.Provider
-                    value={{ renderingComponent, setComponent }}
-                >
-                    <Header />
-                    <CatalogNavigation />
-                    <Suspense fallback="Loading...">
-                        <Switch>
-                            <Route path="/brands" exact component={Brands} />
-                            <Route path="/contacts" component={Contacts} />
-                            <Route path="/about" component={About} />
-                            <Route exact path="/profile" component={Profile} />
-                            <Route exact path="/cart" component={Cart} />
-                            <Route path="/cart/order" component={Order} />
-                            <Route path="/static" component={StaticPage} />
-                            <Route
-                                exact
-                                path="/events"
-                                exact
-                                component={Events}
-                            />
-                            <Route
-                                path="/events/:eventId"
-                                exact
-                                component={EventPage}
-                            />
-                            <Route path="/news" exact component={News} />
-                            <Route
-                                path="/exclusive"
-                                exact
-                                component={Exclusive}
-                            />
-                            <Route path="/wines" exact component={Wines} />
-                            <Route path="/strong" exact component={Strong} />
-                            <Route
-                                path="/champagne"
-                                exact
-                                component={Champagne}
-                            />
-                            <Route
-                                path="/catalog/:productId"
-                                component={ProductDetails}
-                            />
-                            <Route path="/" exact component={Home} />
-                        </Switch>
-                    </Suspense>
+                <CartNotificationProvider>
+                    <HeaderContext.Provider
+                        value={{ renderingComponent, setComponent }}
+                    >
+                        <Header />
+                        <CatalogNavigation />
+                        <Suspense fallback="Loading...">
+                            <Switch>
+                                <Route
+                                    path="/brands"
+                                    exact
+                                    component={Brands}
+                                />
+                                <Route path="/contacts" component={Contacts} />
+                                <Route path="/about" component={About} />
+                                <Route
+                                    exact
+                                    path="/profile"
+                                    component={Profile}
+                                />
+                                <Route exact path="/cart" component={Cart} />
+                                <Route path="/cart/order" component={Order} />
+                                <Route path="/static" component={StaticPage} />
+                                <Route
+                                    exact
+                                    path="/events"
+                                    exact
+                                    component={Events}
+                                />
+                                <Route
+                                    path="/events/:eventId"
+                                    exact
+                                    component={EventPage}
+                                />
+                                <Route path="/news" exact component={News} />
+                                <Route
+                                    path="/exclusive"
+                                    exact
+                                    component={Exclusive}
+                                />
+                                <Route path="/wines" exact component={Wines} />
+                                <Route
+                                    path="/strong"
+                                    exact
+                                    component={Strong}
+                                />
+                                <Route
+                                    path="/champagne"
+                                    exact
+                                    component={Champagne}
+                                />
+                                <Route
+                                    path="/catalog/:productId"
+                                    component={ProductDetails}
+                                />
+                                <Route path="/" exact component={Home} />
+                            </Switch>
+                        </Suspense>
 
-                    {isLoginModalVisible.state && (
-                        <Modal
-                            closable={isMobile}
-                            onClose={_ =>
-                                history.push(window.location.pathname)
-                            }
-                        >
-                            {createElement(
-                                LoginVariants[isLoginModalVisible.variant],
-                                {
-                                    onClose: _ =>
-                                        history.push(window.location.pathname)
+                        {isLoginModalVisible.state && (
+                            <Modal
+                                closable={isMobile}
+                                onClose={_ =>
+                                    history.push(window.location.pathname)
                                 }
-                            )}
-                        </Modal>
-                    )}
+                            >
+                                {createElement(
+                                    LoginVariants[isLoginModalVisible.variant],
+                                    {
+                                        onClose: _ =>
+                                            history.push(
+                                                window.location.pathname
+                                            )
+                                    }
+                                )}
+                            </Modal>
+                        )}
 
-                    {isAgeDisclaimerVisible && (
-                        <Modal closable={false}>
-                            <AgeLimitation
-                                onPositive={_ =>
-                                    setIsAgeDisclaimerVisible(false)
-                                }
-                            />
-                        </Modal>
-                    )}
-                </HeaderContext.Provider>
+                        {isAgeDisclaimerVisible && (
+                            <Modal closable={false}>
+                                <AgeLimitation
+                                    onPositive={_ =>
+                                        setIsAgeDisclaimerVisible(false)
+                                    }
+                                />
+                            </Modal>
+                        )}
+                    </HeaderContext.Provider>
+                </CartNotificationProvider>
                 <Footer />
-                <CartNotification />
             </main>
         </>
     );

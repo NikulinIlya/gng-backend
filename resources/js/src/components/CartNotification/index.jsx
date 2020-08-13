@@ -1,22 +1,65 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer, createContext } from "react";
 
 import Assistant from "@/components/AssistantNotification";
 import Button from "@/components/Button";
 
+import useMeasures from "@/utils/useMeasures";
+
 import "./cart-notification.scss";
 
-export default function CartNotification({}) {
+export const CartNotificationContext = createContext({});
+
+export function CartNotificationProvider({ children }) {
+    const { isMobile } = useMeasures();
+    const [state, dispatch] = useReducer(
+        notificationReducer,
+        {
+            visibility: false,
+            title: "Хороший выбор!",
+            fact: ""
+        },
+        init
+    );
+
+    const onHide = _ => {
+        dispatch({ type: "HANDLE_VISIBILITY", payload: false });
+    };
+
     return (
-        <Assistant>
+        <CartNotificationContext.Provider value={{ dispatch }}>
+            <>
+                {children}
+                {!isMobile && state.visibility && (
+                    <CartNotification
+                        title={state.title}
+                        fact={state.fact}
+                        onHide={onHide}
+                    />
+                )}
+            </>
+        </CartNotificationContext.Provider>
+    );
+}
+
+function notificationReducer(state, action) {
+    switch (action.type) {
+        case "HANDLE_VISIBILITY":
+            return { ...state, visibility: action.payload };
+    }
+}
+
+function init(initialState) {
+    return initialState;
+}
+
+export default function CartNotification({ title, fact, onHide }) {
+    return (
+        <Assistant onClose={onHide}>
             <div className="cart-notification">
                 <section className="message">
-                    <h3 className="message__title">Хороший выбор!</h3>
+                    <h3 className="message__title">{title}</h3>
                     <p className="message__text">Товар добавлен в корзину.</p>
-                    <p className="message__fact">
-                        А вы знали, что в 2012 Ardbeg стала первой вискикурней,
-                        попавшей в космос в рамках невероятного эксперимента по
-                        изучению выдержки виски в условиях нулевой гравитации?
-                    </p>
+                    <p className="message__fact">{fact}</p>
                 </section>
                 <div className="actions">
                     <Button variant="gold">Продолжить</Button>

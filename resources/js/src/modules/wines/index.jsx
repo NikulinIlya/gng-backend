@@ -23,7 +23,8 @@ const CatalogPage = ({
     isMobile,
     products,
     filtersVisibility,
-    handleFiltersVisibility
+    handleFiltersVisibility,
+    onAdd
 }) => {
     return (
         <div className="catalog">
@@ -48,17 +49,21 @@ const CatalogPage = ({
                 >
                     {isLoaded ? (
                         <div className="catalog-grid">
-                            {products.map(({ product, brand, id }) => (
-                                <BottleCard
-                                    name={product.name}
-                                    price={product.price}
-                                    wineglass={product.glass_image}
-                                    bottle={product.image}
-                                    brand={brand}
-                                    to={`/catalog/${product.id}`}
-                                    key={id}
-                                />
-                            ))}
+                            {products.map(
+                                ({ product, brand, id, backdrop }) => (
+                                    <BottleCard
+                                        name={product.name}
+                                        price={product.price}
+                                        wineglass={product.glass_image}
+                                        bottle={product.image}
+                                        brand={brand}
+                                        to={`/catalog/${product.id}`}
+                                        onAdd={_ => onAdd(product.id)}
+                                        backdrop={backdrop}
+                                        key={id}
+                                    />
+                                )
+                            )}
                         </div>
                     ) : (
                         <Loading />

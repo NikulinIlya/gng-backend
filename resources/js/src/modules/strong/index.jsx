@@ -5,6 +5,7 @@ import BottleCard from "@/components/BottleCard";
 import Range from "@/components/Input/Range/Multiple";
 import { Checkbox } from "@/components/Input";
 import Filtering from "@/components/Filtering";
+import Loading from "@/components/Loading";
 import compose from "@/utils/compose";
 
 import withApi from "./hoc/withStrongApi";
@@ -12,8 +13,8 @@ import withLogic from "./hoc/withStrongLogic";
 
 import "./strong.scss";
 
-function Strong({ products, productCategories }) {
-    console.log("productCategories", productCategories);
+function Strong({ products, productCategories, isLoaded }) {
+    if(!isLoaded) return <Loading />
     return (
         <div className="strong container">
             <AsideLayout
@@ -28,7 +29,15 @@ function Strong({ products, productCategories }) {
             >
                 <div className="strong__grid">
                     {products.map(
-                        ({ id, name, price, glass_image, image, brand }) => (
+                        ({
+                            id,
+                            name,
+                            price,
+                            glass_image,
+                            image,
+                            brand,
+                            backdrop
+                        }) => (
                             <BottleCard
                                 key={id}
                                 name={name}
@@ -36,6 +45,7 @@ function Strong({ products, productCategories }) {
                                 wineglass={glass_image}
                                 bottle={image}
                                 brand={brand}
+                                backdrop={backdrop}
                                 to={`/catalog/${id}`}
                             />
                         )

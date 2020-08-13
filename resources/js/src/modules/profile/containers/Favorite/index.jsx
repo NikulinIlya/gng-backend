@@ -20,6 +20,8 @@ function Favorite({ isLoaded, isListEmpty, favoriteProducts }) {
                 <div className="favorite__list">
                     {favoriteProducts.map((p, i) => (
                         <BottleCard
+                            wineglass={p.glass_image}
+                            bottle={p.image}
                             name={p.name}
                             brand={p.brand}
                             price={p.price}

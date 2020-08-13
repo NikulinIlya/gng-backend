@@ -24,7 +24,8 @@ function Champagne({ products, isLoaded }) {
                                 brand,
                                 id,
                                 image,
-                                glass_image
+                                glass_image,
+                                backdrop
                             }) => (
                                 <BottleCard
                                     name={name}
@@ -32,6 +33,7 @@ function Champagne({ products, isLoaded }) {
                                     wineglass={glass_image}
                                     bottle={image}
                                     brand={brand}
+                                    backdrop={backdrop}
                                     to={`/catalog/${id}`}
                                     key={id}
                                 />

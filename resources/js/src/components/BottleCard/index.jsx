@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import cn from "classnames";
 
 import IconButton from "@/components/IconButton";
 import useMeasures from "@/utils/useMeasures";
@@ -17,25 +18,35 @@ function BottleCard({
     name,
     brand = "Cloudy Bay",
     price,
-    wineglass = glassTemplate,
+    wineglass,
     bottle,
-    useBackdrop = "",
-    to
+    backdrop = "",
+    to,
+    onAdd = Function.prototype
 }) {
     const { isMobile } = useMeasures();
+    const onAddToCart = e => {
+        e.stopPropagation();
+        onAdd(e);
+    };
     return (
-        <article className="bottle-card">
+        <article
+            className={cn("bottle-card", {
+                "bottle-card--slide-disabled": !wineglass
+            })}
+        >
             <div className="bottle-card__content">
                 <div className="bottle-card__main">
-                    {useBackdrop && (
-                        <img src={grape} alt="" className="backdrop" />
+                    {backdrop && (
+                        <img
+                            src={backdrop === "option1" ? grape : grain}
+                            alt=""
+                            className="backdrop"
+                        />
                     )}
-                    {!isMobile && (
+                    {!isMobile && wineglass && (
                         <div className="bottle-card__wineglass">
-                            <img
-                                src={wineglass ? wineglass : glassTemplate}
-                                alt=""
-                            />
+                            <img src={wineglass} alt="" />
                         </div>
                     )}
                     <div className="bottle-card__bottle">
@@ -54,7 +65,7 @@ function BottleCard({
                     </div>
                     <IconButton
                         className="bottle-card__buy"
-                        onClick={e => e.stopPropagation()}
+                        onClick={onAddToCart}
                     >
                         <img src={cartGold} alt="" />
                     </IconButton>

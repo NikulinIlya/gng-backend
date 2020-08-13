@@ -15,10 +15,10 @@ export default WrappedComponent => props => {
     useEffect(_ => {
         (async _ => {
             const [err, productResponse] = await to(
-                redaxios(`/api/products/${match.params.productId}`)
+                redaxios(`/api/product-with-settings/${match.params.productId}`)
             );
-            console.log("PR", productResponse.data[0]);
-            setProduct(productResponse.data[0]);
+            console.log("PR", productResponse.data);
+            setProduct(productResponse.data);
             setIsLoaded(true);
         })();
     }, []);

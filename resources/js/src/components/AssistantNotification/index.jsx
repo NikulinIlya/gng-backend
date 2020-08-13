@@ -7,7 +7,11 @@ import logo from "@/assets/images/logo-col-variant.svg";
 
 import "./assistant.scss";
 
-export default function AssistantNotification({ children, closable = true }) {
+export default function AssistantNotification({
+    children,
+    closable = true,
+    onClose = Function.prototype
+}) {
     return (
         <div className="notification">
             <div className="container notification__container">
@@ -17,7 +21,7 @@ export default function AssistantNotification({ children, closable = true }) {
                 <div className="notification__body">{children}</div>
                 {closable && (
                     <div className="notification__close">
-                        <IconButton>
+                        <IconButton onClick={onClose}>
                             <CloseIcon />
                         </IconButton>
                     </div>

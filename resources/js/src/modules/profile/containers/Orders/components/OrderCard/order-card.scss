@@ -12,6 +12,9 @@
     &-icon {
       display: flex;
       place-items: center;
+      flex-basis: 40px;
+      flex-grow: 0;
+      flex-shrink: 0;
       margin-right: 23px;
     }
     &-text {
@@ -45,7 +48,6 @@
 
 @media screen and (max-width: 768px) {
   .order-card {
-    // flex-flow: column nowrap;
     padding: 12px;
     &__date {
       font-size: 12px;
@@ -57,6 +59,9 @@
       font-size: 12px;
     }
     &__status{
+      &-icon{
+        flex-basis: 25px;
+      }
       &-text{
         font-size: 12px;
         line-height: 1;

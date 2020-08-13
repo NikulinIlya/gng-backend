@@ -23,7 +23,25 @@ import cheeseIcon from "@/assets/images/icons/cheese-icon-gold.svg";
 
 import "./product-details.scss";
 
-function ProductDetails({ product, isLoaded, isProductFavorite, onFavoriteStateChange }) {
+const detailsIcons = {
+    brand: "flag",
+    region: "marker",
+    grape_sorts: "grape",
+    temperature: "wineglass",
+    color: "color",
+    strength: "bottle"
+};
+
+function ProductDetails({
+    product,
+    brands = {},
+    productDetails,
+    productCategory,
+    isLoaded,
+    isProductFavorite,
+    onFavoriteStateChange
+}) {
+    const { image, name, vendor_code, price } = product;
     if (!isLoaded) return <Loading />;
     return (
         <div className="container">
@@ -39,64 +57,38 @@ function ProductDetails({ product, isLoaded, isProductFavorite, onFavoriteStateC
                         <img src={backdrop} alt="" />
                     </div>
                     <div className="product-details__bottle-img">
-                        <img
-                            src={product.image ? product.image : bottleImage}
-                            alt=""
-                        />
+                        <img src={image ? image : bottleImage} alt="" />
                     </div>
                 </div>
                 <section className="product-details__content">
                     <div className="product-details__common">
                         <h1 className="product-details__name">
-                            {product.brand}
+                            {productDetails["brand"].value}
                         </h1>
-                        <p className="product-details__descr">{product.name}</p>
+                        <p className="product-details__descr">{name}</p>
                         <p className="product-details__vendor-code">
-                            {`Номер товара: ${product.vendor_code}`}
+                            {`Номер товара: ${vendor_code}`}
                         </p>
                     </div>
                     <div className="product-details__features">
-                        {[
-                            {
-                                name: "Производитель",
-                                value: "Cloudy Bay",
-                                icon: "flag"
-                            },
-                            {
-                                name: "Регион",
-                                value: "Новая Зеландия, Мальборо",
-                                icon: "marker"
-                            },
-                            {
-                                name: "Виноград",
-                                value: "Sauvignon Blanc",
-                                icon: "grape"
-                            },
-                            {
-                                name: "Температура подачи",
-                                value: "8 - 10°C",
-                                icon: "wineglass"
-                            },
-                            {
-                                name: "Цвет",
-                                value: "Белое",
-                                icon: "color"
-                            },
-                            {
-                                name: "Крепость",
-                                value: "13.5 %",
-                                icon: "bottle"
-                            }
-                        ].map((f, i) => (
-                            <ProductFeature {...f} key={i} />
-                        ))}
+                        {productCategory.slug === "wine" &&
+                            Object.entries(
+                                productDetails
+                            ).map(([key, instance]) => (
+                                <ProductFeature
+                                    icon={detailsIcons[key]}
+                                    name={instance.name}
+                                    value={instance.value}
+                                    key={key}
+                                />
+                            ))}
                     </div>
                     <div className="product__calc">
-                        <Counter price={product.price} />
+                        <Counter price={price} />
                     </div>
                 </section>
                 <div className="product-details__about">
-                    {product.product_category_id === 1 && (
+                    {productCategory.slug === "wine" && (
                         <>
                             <h2 className="product-details__about-title">
                                 <span>Об этом вине</span>
