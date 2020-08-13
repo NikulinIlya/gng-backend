@@ -121,6 +121,6 @@ Route::prefix('cart')->group(function () {
     Route::get('/', 'Api\CartController@index')->name('cart.index');
     Route::post('/', 'Api\CartController@store')->name('cart.store');
     Route::delete('/', 'Api\CartController@clear')->name('cart.clear');
-    Route::delete('/{product}', 'Api\CartController@remove')->name('cart.remove');
+    Route::delete('/{rowId}', 'Api\CartController@remove')->name('cart.remove');
     Route::patch('/{product}', 'Api\CartController@update')->name('cart.update');
 });

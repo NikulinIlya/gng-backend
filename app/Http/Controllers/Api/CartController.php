@@ -93,13 +93,13 @@ class CartController
     /**
      * Remove an item from a cart.
      *
-     * @param int $id
+     * @param int $rowId
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function remove($id)
+    public function remove($rowId)
     {
-        Cart::remove($id);
+        Cart::remove($rowId);
 
         return response()->json(['message' => 'Item has been removed'], 204);
     }
