@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect, useReducer, useContext } from "react";
 
 import { useStoreon } from "storeon/react";
 
+import { CartNotificationContext } from "@/components/CartNotification";
 import isEmpty from "@/utils/is-empty";
 
 import initialDetails from "../product-details-template";
@@ -17,6 +18,9 @@ const wineDetails = [
 
 export default WrappedComponent => props => {
     const { product } = props;
+    const { dispatch: notificationDispatch } = useContext(
+        CartNotificationContext
+    );
     const [productCategory, setProductCategory] = useState({});
     const [isProductFavorite, setIsProductFavorite] = useState(false);
 
@@ -173,6 +177,19 @@ export default WrappedComponent => props => {
         }
         setIsProductFavorite(state);
     };
+
+    const onAdd = (id, count = 1) => {
+        if (!id) return;
+        dispatch("cart/add", {
+            product: { id, count },
+            callback: _ =>
+                notificationDispatch({
+                    type: "HANDLE_VISIBILITY",
+                    payload: true
+                })
+        });
+    };
+
     return (
         <WrappedComponent
             {...props}
@@ -182,6 +199,7 @@ export default WrappedComponent => props => {
             brands={flatBrandNames}
             isProductFavorite={isProductFavorite}
             onFavoriteStateChange={onFavoriteStateChange}
+            onAdd={onAdd}
         />
     );
 };

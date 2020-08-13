@@ -39,9 +39,10 @@ function ProductDetails({
     productCategory,
     isLoaded,
     isProductFavorite,
-    onFavoriteStateChange
+    onFavoriteStateChange,
+    onAdd
 }) {
-    const { image, name, vendor_code, price } = product;
+    const { image, name, vendor_code, price, id } = product;
     if (!isLoaded) return <Loading />;
     return (
         <div className="container">
@@ -84,7 +85,11 @@ function ProductDetails({
                             ))}
                     </div>
                     <div className="product__calc">
-                        <Counter price={price} />
+                        <Counter
+                            defaultCount={1}
+                            price={price}
+                            onAdd={val => onAdd(id, val)}
+                        />
                     </div>
                 </section>
                 <div className="product-details__about">
@@ -159,10 +164,12 @@ function ProductDetails({
     );
 }
 
-function Counter({ price = 1 }) {
+function Counter({ price = 1, defaultCount, onAdd }) {
     return (
         <ProductCounter
             price={price}
+            defaultCount={defaultCount}
+            onAdd={onAdd}
             title="Варианты покупки"
             label={_ => (
                 <div className="product__calc-tabs tabs">
