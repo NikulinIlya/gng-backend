@@ -80,4 +80,35 @@ class ProductController
 
         return $this->service->paginate($products, 10);
     }
+
+    /**
+     * Display the specified product with its settings.
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function showProductWithSettings($id)
+    {
+        $product = Product::findOrFail($id);
+        $productCategorySlug = $product->productCategory()->first()->slug;
+        $locale = app()->getLocale();
+        $productSettings = $product->$productCategorySlug()->firstOrFail();
+
+        if ($productCategorySlug == 'wine') {
+            $controller = new VineController();
+
+            $productSettings = $controller->show($productSettings->id);
+        } elseif ($productCategorySlug == 'champagne') {
+            $controller = new ChampagneController();
+
+            $productSettings = $controller->show($productSettings->id);
+        } else {
+            $productSettings = $this->service->makeEntityCollection([$productSettings], $locale);
+        }
+
+        $product = $this->service->makeEntityCollection([$product], $locale)[0];
+        $product[$productCategorySlug] = $productSettings[0];
+
+        return $product;
+    }
 }
