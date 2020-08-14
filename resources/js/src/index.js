@@ -50,6 +50,8 @@ const LoginVariants = {
     "sign-up": SignUp
 };
 
+
+
 const App = () => {
     const [renderingComponent, setComponent] = useState(null);
     const [isAgeDisclaimerVisible, setIsAgeDisclaimerVisible] = useState(false);
