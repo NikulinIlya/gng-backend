@@ -51,13 +51,13 @@ class ProductCategoryTest extends TestCase
 
         $productCategoryExistsId = 1;
 
-        $response = $this->get('/api/product-categories/' . $productCategoryExistsId);
+        $response = $this->get('/api/product-categories/'.$productCategoryExistsId);
 
         $response->assertOk()->assertJsonCount(1);
 
         $productCategoryNotExistsId = 4;
 
-        $response = $this->get('/api/product-categories/' . $productCategoryNotExistsId);
+        $response = $this->get('/api/product-categories/'.$productCategoryNotExistsId);
 
         $response->assertNotFound();
     }
