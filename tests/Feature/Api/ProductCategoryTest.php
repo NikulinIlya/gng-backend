@@ -12,13 +12,53 @@ class ProductCategoryTest extends TestCase
 {
     use DatabaseMigrations;
 
-    /** @test */
-    public function receiving_product_categories()
+    protected function createProductCategories(int $count)
     {
-        $productCategories = factory(ProductCategory::class, 3)->make();
+        $productCategories = factory(ProductCategory::class, $count)
+            ->create();
+    }
+
+    /** @test */
+    public function if_database_has_exact_number_of_product_categories()
+    {
+        $count = 3;
+
+        $this->createProductCategories($count);
+
+        $this->assertDatabaseCount('product_categories', $count);
+    }
+
+    /** @test */
+    public function receiving_exact_number_of_product_categories()
+    {
+        $count = 3;
+
+        $this->createProductCategories($count);
+
+        $this->assertDatabaseCount('product_categories', $count);
 
         $response = $this->get('/api/product-categories');
 
-        $response->assertStatus(200);
+        $response->assertOk()->assertJsonCount($count);
+    }
+
+    /** @test */
+    public function receiving_exact_product_category_by_its_id()
+    {
+        $count = 3;
+
+        $this->createProductCategories($count);
+
+        $productCategoryExistsId = 1;
+
+        $response = $this->get('/api/product-categories/' . $productCategoryExistsId);
+
+        $response->assertOk()->assertJsonCount(1);
+
+        $productCategoryNotExistsId = 4;
+
+        $response = $this->get('/api/product-categories/' . $productCategoryNotExistsId);
+
+        $response->assertNotFound();
     }
 }
