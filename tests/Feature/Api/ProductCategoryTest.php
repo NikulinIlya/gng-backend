@@ -4,51 +4,44 @@ namespace Tests\Feature\Api;
 
 use App\Models\ProductCategory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ProductCategoryTest extends TestCase
 {
     use DatabaseMigrations;
 
-    protected function createProductCategories(int $count)
+    protected $count = 3;
+
+    protected function setUp(): void
     {
-        $productCategories = factory(ProductCategory::class, $count)
+        parent::setUp();
+
+        $this->createProductCategories();
+    }
+
+    protected function createProductCategories()
+    {
+        $productCategories = factory(ProductCategory::class, $this->count)
             ->create();
     }
 
     /** @test */
     public function if_database_has_exact_number_of_product_categories()
     {
-        $count = 3;
-
-        $this->createProductCategories($count);
-
-        $this->assertDatabaseCount('product_categories', $count);
+        $this->assertDatabaseCount('product_categories', $this->count);
     }
 
     /** @test */
     public function receiving_exact_number_of_product_categories()
     {
-        $count = 3;
-
-        $this->createProductCategories($count);
-
-        $this->assertDatabaseCount('product_categories', $count);
-
         $response = $this->get('/api/product-categories');
 
-        $response->assertOk()->assertJsonCount($count);
+        $response->assertOk()->assertJsonCount($this->count);
     }
 
     /** @test */
     public function receiving_exact_product_category_by_its_id()
     {
-        $count = 3;
-
-        $this->createProductCategories($count);
-
         $productCategoryExistsId = 1;
 
         $response = $this->get('/api/product-categories/'.$productCategoryExistsId);
