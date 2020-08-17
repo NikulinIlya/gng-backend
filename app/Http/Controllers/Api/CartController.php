@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\CartItemStoreRequest;
+use App\Http\Services\ProductStockService;
 use Cart;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,26 @@ class CartController
     public function index()
     {
         return Cart::content();
+    }
+
+    /**
+     * Get total price of products in a cart.
+     *
+     * @return string
+     */
+    public function total()
+    {
+        return Cart::total();
+    }
+
+    /**
+     * Get count of products in a cart.
+     *
+     * @return string
+     */
+    public function count()
+    {
+        return Cart::count();
     }
 
     /**
@@ -59,35 +80,32 @@ class CartController
      * Change an item of a cart.
      *
      * @param Request $request
-     * @param int     $id
+     * @param int     $rowId
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $rowId)
     {
         $validator = \Validator::make(
             $request->all(),
             [
-                'quantity' => 'required|numeric|between:1,5',
+                'quantity' => 'required|numeric',
             ]
         );
 
         if ($validator->fails()) {
-            session()->flash('errors', collect(['Quantity must be between 1 and 5.']));
-
-            return response()->json(['success' => false], 400);
+            return response()->json([$validator->errors()], 400);
         }
 
-        if ($request->quantity > $request->productQuantity) {
-            session()->flash('errors', collect(['We currently do not have enough items in stock.']));
+        $service = new ProductStockService();
 
-            return response()->json(['success' => false], 400);
+        if ($request->quantity > $service->getProductAvailableQuantity($request->productId)) {
+            return response()->json(['message' => 'We currently do not have enough items in stock'], 400);
         }
 
-        Cart::update($id, $request->quantity);
-        session()->flash('success_message', 'Quantity was updated successfully!');
+        Cart::update($rowId, $request->quantity);
 
-        return response()->json(['success' => true], 200);
+        return response()->json(['message' => 'Quantity was updated successfully!'], 200);
     }
 
     /**
