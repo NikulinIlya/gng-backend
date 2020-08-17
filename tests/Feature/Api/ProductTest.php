@@ -24,9 +24,11 @@ class ProductTest extends TestCase
     {
         $productCategories = factory(ProductCategory::class, $this->count)
             ->create()
-            ->each(function ($productCategory) {
-                $productCategory->products()->save(factory(Product::class)->make());
-            });
+            ->each(
+                function ($productCategory) {
+                    $productCategory->products()->save(factory(Product::class)->make());
+                }
+            );
     }
 
     /** @test */
@@ -48,13 +50,42 @@ class ProductTest extends TestCase
     {
         $productExistsId = 3;
 
-        $response = $this->get('/api/products/'.$productExistsId);
+        $response = $this->get('/api/products/' . $productExistsId);
 
         $response->assertOk()->assertJsonCount(1);
 
         $productNotExistsId = 4;
 
-        $response = $this->get('/api/products/'.$productNotExistsId);
+        $response = $this->get('/api/products/' . $productNotExistsId);
+
+        $response->assertNotFound();
+    }
+
+    /** @test */
+    public function receiving_products_by_category()
+    {
+        $firstProductCategory = ProductCategory::first();
+
+        factory(Product::class)
+            ->create(
+                [
+                    'product_category_id' => $firstProductCategory->id,
+                ]
+            );
+
+        $response = $this->get('/api/products-by-category/' . $firstProductCategory->slug);
+
+        $response->assertOk()->assertJsonCount(2);
+
+        $secondProductCategory = ProductCategory::find(2);
+
+        $response = $this->get('/api/products-by-category/' . $secondProductCategory->slug);
+
+        $response->assertOk()->assertJsonCount(1);
+
+        $newProductCategory = factory(ProductCategory::class)->create();
+
+        $response = $this->get('/api/products-by-category/' . $newProductCategory->slug);
 
         $response->assertNotFound();
     }
