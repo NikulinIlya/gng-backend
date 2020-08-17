@@ -20,9 +20,11 @@ class CartTest extends TestCase
         $this->createProductCategoriesWithProducts();
     }
 
-    protected function createProductCategoriesWithProducts()
+    protected function createProductCategoriesWithProducts($count = null)
     {
-        $productCategories = factory(ProductCategory::class, $this->count)
+        $count = $count ?? $this->count;
+
+        $productCategories = factory(ProductCategory::class, $count)
             ->create()
             ->each(function ($productCategory) {
                 $productCategory->products()->save(factory(Product::class)->make());
