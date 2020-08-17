@@ -26,8 +26,96 @@ class CartTest extends TestCase
 
         $productCategories = factory(ProductCategory::class, $count)
             ->create()
-            ->each(function ($productCategory) {
-                $productCategory->products()->save(factory(Product::class)->make());
-            });
+            ->each(
+                function ($productCategory) {
+                    $productCategory->products()->save(factory(Product::class)->make());
+                }
+            );
+    }
+
+    /** @test */
+    public function will_fail_with_validate_errors_when_send_wrong_request_data()
+    {
+        $response = $this->json(
+            'POST',
+            '/api/cart',
+            []
+        );
+
+        $response->assertNotFound()->assertJson(
+            [
+                'message' => 'The given data was invalid.',
+                'errors'  => [
+                    'id'  => [
+                        'The id field is required.',
+                    ],
+                    'name' => [
+                        'The name field is required.',
+                    ],
+                    'quantity' => [
+                        'The quantity field is required.',
+                    ],
+                    'price' => [
+                        'The price field is required.',
+                    ],
+                    'type' => [
+                        'The type field is required.',
+                    ],
+                ],
+            ]
+        );
+
+        $response = $this->json(
+            'POST',
+            '/api/cart',
+            [
+                'id'       => "ABC",
+                'name'     => 123456,
+                'quantity' => 1.5,
+                'price'    => 1000.87,
+                'type'     => 'multi',
+            ]
+        );
+
+        $response->assertNotFound()->assertJson(
+            [
+                'message' => 'The given data was invalid.',
+                'errors'  => [
+                    'id'  => [
+                        'The id field must be an integer.',
+                    ],
+                    'name' => [
+                        'The name field must be a string.',
+                    ],
+                    'quantity' => [
+                        'The quantity field must be an integer.',
+                    ],
+                    'price' => [
+                        'The price field must be an integer.',
+                    ],
+                    'type' => [
+                        'The selected type is invalid.',
+                    ],
+                ],
+            ]
+        );
+    }
+
+    /** @test */
+    public function can_store_items_in_cart()
+    {
+        $product = Product::first();
+
+        $response = $this->json(
+            'POST',
+            '/api/cart',
+            [
+                'id'       => $product->id,
+                'name'     => $product->name,
+                'quantity' => 1,
+                'price'    => $product->price,
+                'type'     => 'single',
+            ]
+        );
     }
 }
