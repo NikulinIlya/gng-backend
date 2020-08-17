@@ -50,13 +50,13 @@ class ProductTest extends TestCase
     {
         $productExistsId = 3;
 
-        $response = $this->get('/api/products/' . $productExistsId);
+        $response = $this->get('/api/products/'.$productExistsId);
 
         $response->assertOk()->assertJsonCount(1);
 
         $productNotExistsId = 4;
 
-        $response = $this->get('/api/products/' . $productNotExistsId);
+        $response = $this->get('/api/products/'.$productNotExistsId);
 
         $response->assertNotFound();
     }
@@ -73,19 +73,19 @@ class ProductTest extends TestCase
                 ]
             );
 
-        $response = $this->get('/api/products-by-category/' . $firstProductCategory->slug);
+        $response = $this->get('/api/products-by-category/'.$firstProductCategory->slug);
 
         $response->assertOk()->assertJsonCount(2);
 
         $secondProductCategory = ProductCategory::find(2);
 
-        $response = $this->get('/api/products-by-category/' . $secondProductCategory->slug);
+        $response = $this->get('/api/products-by-category/'.$secondProductCategory->slug);
 
         $response->assertOk()->assertJsonCount(1);
 
         $newProductCategory = factory(ProductCategory::class)->create();
 
-        $response = $this->get('/api/products-by-category/' . $newProductCategory->slug);
+        $response = $this->get('/api/products-by-category/'.$newProductCategory->slug);
 
         $response->assertNotFound();
     }
