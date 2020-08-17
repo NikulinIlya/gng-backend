@@ -34,7 +34,8 @@ const detailsIcons = {
 
 function ProductDetails({
     product,
-    brands = {},
+    brands = [],
+    flatRegionImages,
     productDetails,
     productCategory,
     isLoaded,
@@ -42,7 +43,7 @@ function ProductDetails({
     onFavoriteStateChange,
     onAdd
 }) {
-    const { image, name, vendor_code, price, id } = product;
+    const { image, name, vendor_code, price, id, brand_id } = product;
     if (!isLoaded) return <Loading />;
     return (
         <div className="container">
@@ -55,7 +56,7 @@ function ProductDetails({
                 </div>
                 <div className="product-details__thumb">
                     <div className="backdrop">
-                        <img src={backdrop} alt="" />
+                        <img src={flatRegionImages[brands.find(b => b.id === brand_id).location_id]} alt="" />
                     </div>
                     <div className="product-details__bottle-img">
                         <img src={image ? image : bottleImage} alt="" />
@@ -72,17 +73,16 @@ function ProductDetails({
                         </p>
                     </div>
                     <div className="product-details__features">
-                        {productCategory.slug === "wine" &&
-                            Object.entries(
-                                productDetails
-                            ).map(([key, instance]) => (
-                                <ProductFeature
-                                    icon={detailsIcons[key]}
-                                    name={instance.name}
-                                    value={instance.value}
-                                    key={key}
-                                />
-                            ))}
+                        {Object.entries(
+                            productDetails
+                        ).map(([key, instance]) => (
+                            <ProductFeature
+                                icon={detailsIcons[key]}
+                                name={instance.name}
+                                value={instance.value}
+                                key={key}
+                            />
+                        ))}
                     </div>
                     <div className="product__calc">
                         <Counter
@@ -108,34 +108,32 @@ function ProductDetails({
                         </>
                     )}
                     <div className="product-details__relative">
-                        {[
-                            {
-                                title: "Гастрономические сочетания",
-                                content:
-                                    "Вино хорошо подходит к блюдам из рыбы и морепродуктов, его можно подавать к овощным салатам.",
-                                icon: fishIcon
-                            },
-                            {
-                                title: "Сочетания с сыром",
-                                content:
-                                    "Dolor sunt occaecat dolor excepteur commodo deserunt culpa ullamco elit in ad laboris exercitation nisi.",
-                                icon: cheeseIcon
-                            }
-                        ].map((r, i) => (
-                            <section className="relative-card" key={i}>
-                                <div className="relative-card__content">
-                                    <h3 className="relative-card__title">
-                                        {r.title}
+                        <section className="relative-card" >
+                            <div className="relative-card__content">
+                                <h3 className="relative-card__title">
+                                    Гастрономические сочетания
                                     </h3>
-                                    <p className="relative-card__descr">
-                                        {r.content}
-                                    </p>
-                                </div>
-                                <div className="relative-card__icon">
-                                    <img src={r.icon} alt="" />
-                                </div>
-                            </section>
-                        ))}
+                                <p className="relative-card__descr">
+                                    {product[productCategory.slug].recommendations}
+                                </p>
+                            </div>
+                            <div className="relative-card__icon">
+                                <img src={fishIcon} alt="" />
+                            </div>
+                        </section>
+                        <section className="relative-card" >
+                            <div className="relative-card__content">
+                                <h3 className="relative-card__title">
+                                    Сочетания с сыром
+                                    </h3>
+                                <p className="relative-card__descr">
+                                    {product[productCategory.slug].cheese}
+                                </p>
+                            </div>
+                            <div className="relative-card__icon">
+                                <img src={cheeseIcon} alt="" />
+                            </div>
+                        </section>
                     </div>
                     <div className="product-details__more-info">
                         {[

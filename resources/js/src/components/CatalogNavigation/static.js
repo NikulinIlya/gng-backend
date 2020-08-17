@@ -7,7 +7,7 @@ export const navigationItems = [
     {
         name: "Вино",
         slug: "vine",
-        path: "/wine"
+        path: "/wines"
     },
     {
         name: `Шампанское и Игристое!`,

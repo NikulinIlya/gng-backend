@@ -18,6 +18,7 @@ export default store => {
 
             flatBrandNames: null,
             flatRegionMapImages: null,
+            flatRegionImages: null,
             flatRegionNames: null,
             flatColorNames: null
         };
@@ -26,6 +27,7 @@ export default store => {
     store.on("showcase/set-assistant-phrases", (_, assistantPhrases) => ({
         assistantPhrases
     }));
+
     store.on("showcase/set-brands", (_, brands) => ({ brands }));
     store.on("showcase/set-product-categories", (_, productCategories) => ({
         productCategories
@@ -38,7 +40,8 @@ export default store => {
     }));
     store.on("showcase/set-colors", (_, colors) => ({ colors }));
     store.on("showcase/set-regions", (_, regions) => ({ regions }));
-    store.on("showcase/set-flat-region-images", (_, flatRegionMapImages) => ({
+    store.on("showcase/set-flat-region-images", (_, flatRegionImages) => ({ flatRegionImages }))
+    store.on("showcase/set-flat-region-map-images", (_, flatRegionMapImages) => ({
         flatRegionMapImages
     }));
     store.on("showcase/set-flat-region-names", (_, flatRegionNames) => ({
@@ -130,9 +133,16 @@ export default store => {
             const [err, regionsResponse] = await to(redaxios(`/api/locations`));
             store.dispatch("showcase/set-regions", regionsResponse.data);
             store.dispatch(
-                "showcase/set-flat-region-images",
+                "showcase/set-flat-region-map-images",
                 regionsResponse.data.reduce(
                     (acc, { id, map_image }) => ((acc[id] = map_image), acc),
+                    {}
+                )
+            );
+            store.dispatch(
+                "showcase/set-flat-region-images",
+                regionsResponse.data.reduce(
+                    (acc, { id, image }) => ((acc[id] = image), acc),
                     {}
                 )
             );

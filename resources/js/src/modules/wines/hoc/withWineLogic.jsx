@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useStoreon } from "storeon/react";
 
-import SearchInput from "@/components/SearchInput";
-import { HeaderContext } from "@/context/header";
 import { CartNotificationContext } from "@/components/CartNotification";
 
 import useMeasures from "@/utils/useMeasures";
@@ -13,14 +11,14 @@ export default WrappedComponent => props => {
     const { isMobile } = useMeasures();
     const [wines, setWines] = useState([]);
     const { dispatch } = useStoreon();
-    const { setComponent } = useContext(HeaderContext);
+    
     const { dispatch: notificationDispatch } = useContext(
         CartNotificationContext
     );
     const [filtersVisibility, setFiltersVisibility] = useState(false);
     const extendedProducts = useBrands(wines);
 
-    const onInputChange = _ => console.log(_.target.value);
+    
     const handleFiltersVisibility = state => _ => setFiltersVisibility(state);
     const onAdd = (id, count = 1) => {
         if (!id) return;
@@ -34,9 +32,6 @@ export default WrappedComponent => props => {
         });
     };
 
-    useEffect(_ => {
-        setComponent(_ => <SearchInput onChange={onInputChange} />);
-    }, []);
 
     useEffect(
         _ => {
@@ -44,8 +39,6 @@ export default WrappedComponent => props => {
         },
         [products]
     );
-
-    useEffect(_ => console.log("wines", extendedProducts), [extendedProducts]);
 
     useEffect(_ => setFiltersVisibility(!isMobile), [isMobile]);
 

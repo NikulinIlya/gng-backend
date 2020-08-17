@@ -4,8 +4,9 @@ import { useStoreon } from "storeon/react";
 
 import { CartNotificationContext } from "@/components/CartNotification";
 import isEmpty from "@/utils/is-empty";
+import { to } from "@/utils/fetch"
 
-import initialDetails from "../product-details-template";
+// import initialDetails from "../product-details-template";
 import productDetailsReducer from "../product-details-reducer";
 
 const wineDetails = [
@@ -16,6 +17,14 @@ const wineDetails = [
     "strength"
 ];
 
+const detailsTemplate = {
+    1: 'wine'
+}
+
+function init(state) {
+    return state
+}
+
 export default WrappedComponent => props => {
     const { product } = props;
     const { dispatch: notificationDispatch } = useContext(
@@ -23,10 +32,12 @@ export default WrappedComponent => props => {
     );
     const [productCategory, setProductCategory] = useState({});
     const [isProductFavorite, setIsProductFavorite] = useState(false);
+    const [detailsSchema, setDetailsSchema] = useState({});
 
     const [productDetails, dispatchAction] = useReducer(
         productDetailsReducer,
-        initialDetails
+        detailsSchema,
+        init
     );
 
     const {
@@ -34,6 +45,7 @@ export default WrappedComponent => props => {
         brands,
         flatBrandNames,
         flatRegionNames,
+        flatRegionImages,
         flatColorNames,
         favoriteProducts,
         productCategories
@@ -41,6 +53,7 @@ export default WrappedComponent => props => {
         "brands",
         "flatBrandNames",
         "flatRegionNames",
+        "flatRegionImages",
         "flatColorNames",
         "favoriteProducts",
         "productCategories"
@@ -71,6 +84,16 @@ export default WrappedComponent => props => {
     );
     //
 
+    useEffect(_ => {
+        if (!isEmpty(productCategory)) {
+            (async _ => {
+                const [err, response] = await to(import(`../details-templates/${productCategory.slug}`))
+                console.log('r', response.default)
+                setDetailsSchema(response.default)
+            })()
+        }
+    }, [productCategory])
+
     useEffect(_ => console.log("productDetails", productDetails), [
         productDetails
     ]);
@@ -87,11 +110,14 @@ export default WrappedComponent => props => {
                 const joinGrapeNames = names =>
                     names.reduce((acc, g) => ((acc += g.name), acc), "");
 
-                dispatchAction({
-                    type: "set",
-                    prop: "grape_sorts",
-                    payload: joinGrapeNames(product[slug].grape_sorts)
-                });
+                if (slug === 'wine') {
+                    dispatchAction({
+                        type: "set",
+                        prop: "grape_sorts",
+                        payload: joinGrapeNames(product[slug].grape_sorts)
+                    });
+                }
+
                 dispatchAction({
                     type: "set",
                     prop: "color",
@@ -196,7 +222,8 @@ export default WrappedComponent => props => {
             product={product}
             productCategory={productCategory}
             productDetails={productDetails}
-            brands={flatBrandNames}
+            brands={brands}
+            flatRegionImages={flatRegionImages}
             isProductFavorite={isProductFavorite}
             onFavoriteStateChange={onFavoriteStateChange}
             onAdd={onAdd}
