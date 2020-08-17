@@ -1,25 +1,18 @@
 import React, { useState, useEffect } from "react";
 
-import ProductFeature from "./components/ProductFeature";
-import FavButton from "./components/FavoriteButton";
-import ProductCounter from "@/components/ProductCounter";
-import Progress from "@/components/Progress";
 import DetailsCard from "@/components/DetailsPageCard";
 import Loading from "@/components/Loading";
 
-import withApi from "./hoc/withApi";
-import withLogic from "./hoc/withLogic";
-
 import compose from "@/utils/compose";
 
+import { ProductFeature, ProductSuggestion, FavButton, Counter, AboutWine } from "./components";
+
+import { withApi, withLogic } from "./hoc";
+
 import bottleImage from "@/assets/images/templates/product-details-bottle.png";
-import backdrop from "@/assets/images/templates/details-backdrop.png";
 import template1 from "@/assets/images/templates/sauvignon.png";
 import template2 from "@/assets/images/templates/grape.png";
 import template3 from "@/assets/images/templates/land.png";
-
-import fishIcon from "@/assets/images/icons/fish-icon-gold.svg";
-import cheeseIcon from "@/assets/images/icons/cheese-icon-gold.svg";
 
 import "./product-details.scss";
 
@@ -65,7 +58,7 @@ function ProductDetails({
                 <section className="product-details__content">
                     <div className="product-details__common">
                         <h1 className="product-details__name">
-                            {productDetails["brand"].value}
+                            {productDetails["brand"] ? productDetails["brand"].value : ''}
                         </h1>
                         <p className="product-details__descr">{name}</p>
                         <p className="product-details__vendor-code">
@@ -93,48 +86,13 @@ function ProductDetails({
                     </div>
                 </section>
                 <div className="product-details__about">
-                    {productCategory.slug === "wine" && (
-                        <>
-                            <h2 className="product-details__about-title">
-                                <span>Об этом вине</span>
-                            </h2>
-                            <div className="product-details__criterias">
-                                {["Сладость", "Тело", "Кислотность"].map(
-                                    (c, i) => (
-                                        <Progress label={c} key={i} />
-                                    )
-                                )}
-                            </div>
-                        </>
-                    )}
+                    {productCategory.slug === "wine" && <AboutWine acidity={product[productCategory.slug].acidity} acidity={product[productCategory.slug].sweetness} acidity={product[productCategory.slug].body} />}
+
                     <div className="product-details__relative">
-                        <section className="relative-card" >
-                            <div className="relative-card__content">
-                                <h3 className="relative-card__title">
-                                    Гастрономические сочетания
-                                    </h3>
-                                <p className="relative-card__descr">
-                                    {product[productCategory.slug].recommendations}
-                                </p>
-                            </div>
-                            <div className="relative-card__icon">
-                                <img src={fishIcon} alt="" />
-                            </div>
-                        </section>
-                        <section className="relative-card" >
-                            <div className="relative-card__content">
-                                <h3 className="relative-card__title">
-                                    Сочетания с сыром
-                                    </h3>
-                                <p className="relative-card__descr">
-                                    {product[productCategory.slug].cheese}
-                                </p>
-                            </div>
-                            <div className="relative-card__icon">
-                                <img src={cheeseIcon} alt="" />
-                            </div>
-                        </section>
+                        <ProductSuggestion variant="combination" text={product[productCategory.slug].recommendations} />
+                        <ProductSuggestion variant="cheese" text={product[productCategory.slug].cheese} />
                     </div>
+
                     <div className="product-details__more-info">
                         {[
                             {
@@ -159,38 +117,6 @@ function ProductDetails({
                 </div>
             </article>
         </div>
-    );
-}
-
-function Counter({ price = 1, defaultCount, onAdd }) {
-    return (
-        <ProductCounter
-            price={price}
-            defaultCount={defaultCount}
-            onAdd={onAdd}
-            title="Варианты покупки"
-            label={_ => (
-                <div className="product__calc-tabs tabs">
-                    <label className="tabs__item">
-                        <input
-                            defaultChecked
-                            name="unit"
-                            type="radio"
-                            className="visually-hidden"
-                        />
-                        <span>бутылки</span>
-                    </label>
-                    <label className="tabs__item">
-                        <input
-                            name="unit"
-                            type="radio"
-                            className="visually-hidden"
-                        />
-                        <span>ящики (6 бутылок)</span>
-                    </label>
-                </div>
-            )}
-        />
     );
 }
 

@@ -7,7 +7,7 @@ export default function Progress({ value = 50, label = "" }) {
     <div className="progress">
       {label && <div className="progress__label">{label}</div>}
       <div className="progress__value">
-        <progress value={value} max="100"></progress>
+        <progress value={value} max="100" min="1"></progress>
       </div>
     </div>
   );

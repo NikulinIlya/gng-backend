@@ -1,44 +1,20 @@
 import React, { useState, useEffect, useReducer, useContext } from "react";
-
 import { useStoreon } from "storeon/react";
 
-import { CartNotificationContext } from "@/components/CartNotification";
+import { CartNotificationContext as Cart } from "@/components/CartNotification";
 import isEmpty from "@/utils/is-empty";
 import { to } from "@/utils/fetch"
 
-// import initialDetails from "../product-details-template";
 import productDetailsReducer from "../product-details-reducer";
-
-const wineDetails = [
-    "brand",
-    "grape_sorts",
-    "temperature",
-    "colour_id",
-    "strength"
-];
-
-const detailsTemplate = {
-    1: 'wine'
-}
-
-function init(state) {
-    return state
-}
 
 export default WrappedComponent => props => {
     const { product } = props;
-    const { dispatch: notificationDispatch } = useContext(
-        CartNotificationContext
-    );
+    const { dispatch: notificationDispatch } = useContext(Cart);
     const [productCategory, setProductCategory] = useState({});
     const [isProductFavorite, setIsProductFavorite] = useState(false);
-    const [detailsSchema, setDetailsSchema] = useState({});
+    const [schemeIsLoaded, setSchemeIsLoaded] = useState(false)
 
-    const [productDetails, dispatchAction] = useReducer(
-        productDetailsReducer,
-        detailsSchema,
-        init
-    );
+    const [productDetails, dispatchAction] = useReducer(productDetailsReducer, {});
 
     const {
         dispatch,
@@ -89,7 +65,11 @@ export default WrappedComponent => props => {
             (async _ => {
                 const [err, response] = await to(import(`../details-templates/${productCategory.slug}`))
                 console.log('r', response.default)
-                setDetailsSchema(response.default)
+                dispatchAction({
+                    type: 'reinit',
+                    payload: response.default
+                })
+                setSchemeIsLoaded(true);
             })()
         }
     }, [productCategory])
@@ -97,32 +77,32 @@ export default WrappedComponent => props => {
     useEffect(_ => console.log("productDetails", productDetails), [
         productDetails
     ]);
+    useEffect(_ => console.log('schemeIsLoaded',schemeIsLoaded),[schemeIsLoaded])
 
     // set product grape sorts
     useEffect(
         _ => {
             if (
+                schemeIsLoaded &&
                 !isEmpty(product) &&
                 !isEmpty(productCategory) &&
                 flatColorNames
             ) {
                 const { slug } = productCategory;
-                const joinGrapeNames = names =>
-                    names.reduce((acc, g) => ((acc += g.name), acc), "");
 
                 if (slug === 'wine') {
-                    dispatchAction({
-                        type: "set",
-                        prop: "grape_sorts",
-                        payload: joinGrapeNames(product[slug].grape_sorts)
-                    });
+                    const joinGrapeNames = names =>
+                        names.reduce((acc, g) => ((acc += g.name), acc), "");
+
+                    const wineProps = {
+                        grape_sorts: joinGrapeNames(product[slug].grape_sorts),
+                        color: flatColorNames[product[slug].colour_id]
+                    }
+
+                    Object.entries(wineProps).forEach(([prop, payload]) =>
+                        dispatchAction({ type: 'set', prop, payload }))
                 }
 
-                dispatchAction({
-                    type: "set",
-                    prop: "color",
-                    payload: flatColorNames[product[slug].colour_id]
-                });
                 dispatchAction({
                     type: "set",
                     prop: "temperature",
@@ -135,14 +115,14 @@ export default WrappedComponent => props => {
                 });
             }
         },
-        [product, productCategory, flatColorNames]
+        [product, productCategory, flatColorNames, schemeIsLoaded]
     );
     //
 
     // set product brand
     useEffect(
         _ => {
-            if (!isEmpty(product) && flatBrandNames) {
+            if (schemeIsLoaded && !isEmpty(product) && flatBrandNames) {
                 dispatchAction({
                     type: "set",
                     prop: "brand",
@@ -150,29 +130,14 @@ export default WrappedComponent => props => {
                 });
             }
         },
-        [flatBrandNames, product]
-    );
-    //
-
-    // set product temperature
-    useEffect(
-        _ => {
-            if (!isEmpty(product) && flatBrandNames) {
-                dispatchAction({
-                    type: "set",
-                    prop: "brand",
-                    payload: flatBrandNames[product.brand_id]
-                });
-            }
-        },
-        [product]
+        [flatBrandNames, product,schemeIsLoaded]
     );
     //
 
     // set product region
     useEffect(
         _ => {
-            if (!isEmpty(product) && brands && flatRegionNames) {
+            if (schemeIsLoaded && !isEmpty(product) && brands && flatRegionNames) {
                 const brandInstance = brands.find(
                     b => b.id === product.brand_id
                 );
@@ -183,7 +148,7 @@ export default WrappedComponent => props => {
                 });
             }
         },
-        [brands, flatRegionNames, product]
+        [brands, flatRegionNames, product, schemeIsLoaded]
     );
     //
 

@@ -122,39 +122,6 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
     margin-bottom: 50px;
-    .relative-card {
-      display: flex;
-      padding: 25px 30px;
-      justify-content: space-between;
-      align-items: center;
-      border: 1px solid #e2d9cf;
-      &__icon {
-        display: flex;
-        place-items: center;
-        flex-basis: 70px;
-        flex-shrink: 0;
-        height: 70px;
-        margin-left: 33px;
-      }
-      &__content {
-        flex: 1;
-      }
-      &__title {
-        color: var(--defaultGold);
-        font-family: var(--morePro);
-        font-style: italic;
-        font-size: 18px;
-        font-weight: 400;
-        line-height: 18px;
-        margin-bottom: 14px;
-      }
-      &__descr {
-        font-family: var(--proxima);
-        font-size: 18px;
-        font-weight: 300;
-        line-height: 21.6px;
-      }
-    }
   }
   &__more-info {
     display: grid;
@@ -211,28 +178,7 @@
     }
     &__relative {
       grid-template-columns: 1fr;
-      .relative-card {
-        flex-flow: column nowrap;
-        align-items: flex-start;
-        &__title {
-          font-size: 16px;
-          font-weight: 400;
-          line-height: 19.2px;
-        }
-        &__content {
-          margin-bottom: 13px;
-        }
-        &__descr {
-          font-size: 16px;
-          font-weight: 300;
-          line-height: 19.2px;
-        }
-        &__icon {
-          flex-basis: 51px;
-          height: 51px;
-          margin: 0;
-        }
-      }
+      
     }
     &__criterias {
       flex-flow: column nowrap;
