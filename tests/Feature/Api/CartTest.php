@@ -2,24 +2,32 @@
 
 namespace Tests\Feature\Api;
 
+use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class CartTest extends TestCase
 {
     use DatabaseMigrations;
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function testExample()
-    {
-        $response = $this->get('/');
+    protected $count = 3;
 
-        $response->assertStatus(200);
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->createProductCategoriesWithProducts();
     }
+
+    protected function createProductCategoriesWithProducts()
+    {
+        $productCategories = factory(ProductCategory::class, $this->count)
+            ->create()
+            ->each(function ($productCategory) {
+                $productCategory->products()->save(factory(Product::class)->make());
+            });
+    }
+
+
 }
