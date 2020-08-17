@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - migrations CreateProductsTable, CreateProductCategoriesTable
 - factories/ ProductFactory, ProductCategoryFactory
 - ProductCategoryTest, ProductTest, CartTest
+- app/Http/Services/ProductStockService
 
 ### Removed
 - CartResolutionMiddleware
