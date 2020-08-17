@@ -153,7 +153,8 @@ class ApiControllerService
 
             // добавляется доп поле quantity пока нет данных
             if (get_class($this->model) == 'App\Models\Product') {
-                $entity['quantity'] = 10;
+                $service = new ProductStockService();
+                $entity['quantity'] = $service->getProductAvailableQuantity($entity->id);
             }
 
             $collection = $entity->toArray();
