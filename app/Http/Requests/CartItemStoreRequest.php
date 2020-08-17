@@ -26,8 +26,9 @@ class CartItemStoreRequest extends FormRequest
     {
         return [
             'id' => 'required|integer',
-            'name' => 'required',
+            'name' => 'required|string',
             'quantity' => 'required|integer',
+            'price' => 'required|integer',
             'type' => [
                 'required',
                 Rule::in(['single', 'case']),
