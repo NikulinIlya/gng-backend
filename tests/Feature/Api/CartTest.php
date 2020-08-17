@@ -69,7 +69,7 @@ class CartTest extends TestCase
             'POST',
             '/api/cart',
             [
-                'id'       => "ABC",
+                'id'       => 'ABC',
                 'name'     => 123456,
                 'quantity' => 1.5,
                 'price'    => 1000.87,
