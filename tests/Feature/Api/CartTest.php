@@ -28,6 +28,4 @@ class CartTest extends TestCase
                 $productCategory->products()->save(factory(Product::class)->make());
             });
     }
-
-
 }
