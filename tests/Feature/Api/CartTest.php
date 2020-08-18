@@ -45,8 +45,8 @@ class CartTest extends TestCase
         $response->assertNotFound()->assertJson(
             [
                 'message' => 'The given data was invalid.',
-                'errors'  => [
-                    'id'  => [
+                'errors' => [
+                    'id' => [
                         'The id field is required.',
                     ],
                     'name' => [
@@ -69,19 +69,19 @@ class CartTest extends TestCase
             'POST',
             '/api/cart',
             [
-                'id'       => 'ABC',
-                'name'     => 123456,
+                'id' => 'ABC',
+                'name' => 123456,
                 'quantity' => 1.5,
-                'price'    => 1000.87,
-                'type'     => 'multi',
+                'price' => 1000.87,
+                'type' => 'multi',
             ]
         );
 
         $response->assertNotFound()->assertJson(
             [
                 'message' => 'The given data was invalid.',
-                'errors'  => [
-                    'id'  => [
+                'errors' => [
+                    'id' => [
                         'The id field must be an integer.',
                     ],
                     'name' => [
@@ -106,16 +106,25 @@ class CartTest extends TestCase
     {
         $product = Product::first();
 
-        $response = $this->json(
-            'POST',
+        $response = $this->post(
             '/api/cart',
             [
-                'id'       => $product->id,
-                'name'     => $product->name,
+                'id' => $product->id,
+                'name' => $product->name,
                 'quantity' => 1,
-                'price'    => $product->price,
-                'type'     => 'single',
+                'price' => $product->price,
+                'type' => 'single',
             ]
         );
+
+        $response->assertOk();
+    }
+
+    /** @test */
+    public function will_receive_cart_items()
+    {
+        $response = $this->get('/api/cart/');
+
+        $response->assertOk()->assertJson([]);
     }
 }
