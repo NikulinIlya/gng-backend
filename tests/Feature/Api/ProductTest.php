@@ -50,13 +50,13 @@ class ProductTest extends TestCase
     {
         $productExistsId = 3;
 
-        $response = $this->get('/api/products/' . $productExistsId);
+        $response = $this->get('/api/products/'.$productExistsId);
 
         $response->assertOk()->assertJsonCount(1);
 
         $productNotExistsId = 4;
 
-        $response = $this->get('/api/products/' . $productNotExistsId);
+        $response = $this->get('/api/products/'.$productNotExistsId);
 
         $response->assertNotFound();
     }
@@ -73,22 +73,22 @@ class ProductTest extends TestCase
                 ]
             );
 
-        $response = $this->get('/api/products-by-category/' . $firstProductCategory->slug);
+        $response = $this->get('/api/products-by-category/'.$firstProductCategory->slug);
 
         $response->assertOk()
             ->assertJsonStructure([
-                "current_page",
-                "data",
-                "first_page_url",
-                "from",
-                "last_page",
-                "last_page_url",
-                "next_page_url",
-                "path",
-                "per_page",
-                "prev_page_url",
-                "to",
-                "total",
+                'current_page',
+                'data',
+                'first_page_url',
+                'from',
+                'last_page',
+                'last_page_url',
+                'next_page_url',
+                'path',
+                'per_page',
+                'prev_page_url',
+                'to',
+                'total',
             ]);
 
         $this->assertCount(2, $response['data'][0]);
