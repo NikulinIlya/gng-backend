@@ -53,44 +53,36 @@ export default WrappedComponent => props => {
     );
     //
 
-    //  set product category
+    //  set product category and default scheme
     useEffect(
         _ => {
             if (!isEmpty(product) && productCategories) {
-                const productCategory = productCategories.find(
-                    pc => pc.id === product.product_category_id
-                );
-                setProductCategory(productCategory);
+                const id = product["product_category_id"];
+                const category = productCategories.find(c => c.id === id);
+                if (category) {
+                    const { slug } = category;
+                    (async _ => {
+                        const [err, response] = await to(
+                            import(
+                                `../details-templates/${slug}`
+                            )
+                        );
+                        dispatchAction({
+                            type: "reinit",
+                            payload: response.default
+                        });
+                        setProductCategory(category);
+                        setSchemeIsLoaded(true);
+                    })();
+                }
             }
         },
         [productCategories, product]
     );
     //
 
-    useEffect(
-        _ => {
-            if (!isEmpty(productCategory)) {
-                (async _ => {
-                    const [err, response] = await to(
-                        import(`../details-templates/${productCategory.slug}`)
-                    );
-                    console.log("r", response.default);
-                    dispatchAction({
-                        type: "reinit",
-                        payload: response.default
-                    });
-                    setSchemeIsLoaded(true);
-                })();
-            }
-        },
-        [productCategory]
-    );
-
     useEffect(_ => console.log("productDetails", productDetails), [
         productDetails
-    ]);
-    useEffect(_ => console.log("schemeIsLoaded", schemeIsLoaded), [
-        schemeIsLoaded
     ]);
 
     // set product grape sorts
@@ -134,15 +126,22 @@ export default WrappedComponent => props => {
     );
     //
 
+    // set common props
+    useEffect(
+        _ => {
+            const { slug } = productCategory;
+            const neededCategories = ["wine", "champagne"];
+            if (schemeIsLoaded && neededCategories.includes(slug)) {
+            }
+        },
+        [product, productCategory, schemeIsLoaded]
+    );
+
     // set dosage
     useEffect(
         _ => {
             const { slug } = productCategory;
             if (schemeIsLoaded && slug === "champagne" && dictionary) {
-                console.log(
-                    "DOSAGE",
-                    `${product[slug].dosage} ${t("g-l", "г/л")}`
-                );
                 dispatchAction({
                     type: "set",
                     prop: "dosage",

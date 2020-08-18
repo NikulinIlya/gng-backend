@@ -5,7 +5,13 @@ import Loading from "@/components/Loading";
 
 import compose from "@/utils/compose";
 
-import { ProductFeature, ProductSuggestion, FavButton, Counter, AboutWine } from "./components";
+import {
+    ProductFeature,
+    ProductSuggestion,
+    FavButton,
+    Counter,
+    AboutWine
+} from "./components";
 
 import { withApi, withLogic } from "./hoc";
 
@@ -37,6 +43,7 @@ function ProductDetails({
     onAdd
 }) {
     const { image, name, vendor_code, price, id, brand_id } = product;
+    
     if (!isLoaded) return <Loading />;
     return (
         <div className="container">
@@ -49,7 +56,15 @@ function ProductDetails({
                 </div>
                 <div className="product-details__thumb">
                     <div className="backdrop">
-                        <img src={flatRegionImages[brands.find(b => b.id === brand_id).location_id]} alt="" />
+                        <img
+                            src={
+                                flatRegionImages[
+                                    brands.find(b => b.id === brand_id)
+                                        .location_id
+                                ]
+                            }
+                            alt=""
+                        />
                     </div>
                     <div className="product-details__bottle-img">
                         <img src={image ? image : bottleImage} alt="" />
@@ -58,7 +73,9 @@ function ProductDetails({
                 <section className="product-details__content">
                     <div className="product-details__common">
                         <h1 className="product-details__name">
-                            {productDetails["brand"] ? productDetails["brand"].value : ''}
+                            {productDetails["brand"]
+                                ? productDetails["brand"].value
+                                : ""}
                         </h1>
                         <p className="product-details__descr">{name}</p>
                         <p className="product-details__vendor-code">
@@ -66,16 +83,16 @@ function ProductDetails({
                         </p>
                     </div>
                     <div className="product-details__features">
-                        {Object.entries(
-                            productDetails
-                        ).map(([key, instance]) => (
-                            <ProductFeature
-                                icon={detailsIcons[key]}
-                                name={instance.name}
-                                value={instance.value}
-                                key={key}
-                            />
-                        ))}
+                        {Object.entries(productDetails).map(
+                            ([key, instance]) => (
+                                <ProductFeature
+                                    icon={detailsIcons[key]}
+                                    name={instance.name}
+                                    value={instance.value}
+                                    key={key}
+                                />
+                            )
+                        )}
                     </div>
                     <div className="product__calc">
                         <Counter
@@ -86,12 +103,28 @@ function ProductDetails({
                     </div>
                 </section>
                 <div className="product-details__about">
-                    {productCategory.slug === "wine" && <AboutWine acidity={product[productCategory.slug].acidity} acidity={product[productCategory.slug].sweetness} acidity={product[productCategory.slug].body} />}
-
-                    <div className="product-details__relative">
-                        <ProductSuggestion variant="combination" text={product[productCategory.slug].recommendations} />
-                        <ProductSuggestion variant="cheese" text={product[productCategory.slug].cheese} />
-                    </div>
+                    {productCategory.slug === "wine" && (
+                        <AboutWine
+                            acidity={product[productCategory.slug].acidity}
+                            acidity={product[productCategory.slug].sweetness}
+                            acidity={product[productCategory.slug].body}
+                        />
+                    )}
+                    {productCategory.slug && (
+                        <div className="product-details__relative">
+                            <ProductSuggestion
+                                variant="combination"
+                                text={
+                                    product[productCategory.slug]
+                                        .recommendations
+                                }
+                            />
+                            <ProductSuggestion
+                                variant="cheese"
+                                text={product[productCategory.slug].cheese}
+                            />
+                        </div>
+                    )}
 
                     <div className="product-details__more-info">
                         {[
