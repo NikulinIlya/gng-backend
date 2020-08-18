@@ -24,7 +24,7 @@ export default {
         nameSlug: "",
         icon: "bottle"
     },
-    color: {
+    dosage: {
         name: "Дозаж",
         nameSlug: "",
         icon: "color"

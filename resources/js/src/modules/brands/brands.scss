@@ -1,9 +1,11 @@
 .brands {
+  
   &__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
     margin-bottom: 30px;
+    padding-top: 15px;
     .square-aspect-ratio-wrapper {
       width: 100%;
       padding-top: 100%;
