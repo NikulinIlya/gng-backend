@@ -16,7 +16,7 @@ function InlineMode({
 }) {
     const { t } = useTranslate();
     const onSelect = (e, path) => {
-        if (path === "/wine") {
+        if (path === "/wines") {
             e.preventDefault();
             onChangeState(true);
             onChangeVariant("wine");

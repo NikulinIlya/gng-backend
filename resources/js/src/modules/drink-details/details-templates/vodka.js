@@ -1,27 +1,27 @@
 export default {
     brand: {
         name: "Производитель",
-        nameSlug: "",
-        icon: "flag"
+        nameSlug: ""
     },
     region: {
         name: "Регион",
-        nameSlug: "",
-        icon: "marker"
+        nameSlug: ""
     },
-    grape_sorts: {
+    raw: {
         name: "Сырье",
-        nameSlug: "",
-        icon: "grape"
+        nameSlug: ""
     },
-    temperature: {
+    aging: {
         name: "Выдержка",
         nameSlug: "",
         icon: "wineglass"
     },
     strength: {
-        name: "Вкус",
-        nameSlug: "",
-        icon: "bottle"
+        name: "Крепость",
+        nameSlug: ""
     },
+    taste: {
+        name: "Вкус",
+        nameSlug: ""
+    }
 };

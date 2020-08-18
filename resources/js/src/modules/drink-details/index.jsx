@@ -28,22 +28,27 @@ const detailsIcons = {
     grape_sorts: "grape",
     temperature: "wineglass",
     color: "color",
-    strength: "bottle"
+    strength: "bottle",
+    taste: "grape",
+    dosage: "color",
+    class: "wineglass",
+    aging: "flag",
+    raw: "grape"
 };
 
 function ProductDetails({
     product,
-    brands = [],
     flatRegionImages,
     productDetails,
     productCategory,
+    productRegion,
     isLoaded,
     isProductFavorite,
     onFavoriteStateChange,
     onAdd
 }) {
     const { image, name, vendor_code, price, id, brand_id } = product;
-    
+
     if (!isLoaded) return <Loading />;
     return (
         <div className="container">
@@ -56,15 +61,7 @@ function ProductDetails({
                 </div>
                 <div className="product-details__thumb">
                     <div className="backdrop">
-                        <img
-                            src={
-                                flatRegionImages[
-                                    brands.find(b => b.id === brand_id)
-                                        .location_id
-                                ]
-                            }
-                            alt=""
-                        />
+                        <img src={flatRegionImages[productRegion]} alt="" />
                     </div>
                     <div className="product-details__bottle-img">
                         <img src={image ? image : bottleImage} alt="" />
@@ -98,7 +95,7 @@ function ProductDetails({
                         <Counter
                             defaultCount={1}
                             price={price}
-                            onAdd={val => onAdd(id, val)}
+                            onAdd={val => onAdd(id, val, brand_id)}
                         />
                     </div>
                 </section>

@@ -24,3 +24,13 @@
     align-self: center;
   }
 }
+
+@media screen and (max-width:768px){
+  .notification{
+    padding-top: 0;
+    &__logo,
+    &__close{
+      display: none;
+    }
+  }
+}

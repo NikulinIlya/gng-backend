@@ -13,6 +13,7 @@ export default WrappedComponent => props => {
     const { dispatch: notificationDispatch } = useContext(Cart);
     const { t } = useTranslate();
     const [productCategory, setProductCategory] = useState({});
+    const [productRegion, setProductRegion] = useState({});
     const [isProductFavorite, setIsProductFavorite] = useState(false);
     const [schemeIsLoaded, setSchemeIsLoaded] = useState(false);
 
@@ -30,7 +31,8 @@ export default WrappedComponent => props => {
         flatColorNames,
         favoriteProducts,
         productCategories,
-        dictionary
+        dictionary,
+        assistantPhrases
     } = useStoreon(
         "brands",
         "flatBrandNames",
@@ -39,7 +41,8 @@ export default WrappedComponent => props => {
         "flatColorNames",
         "favoriteProducts",
         "productCategories",
-        "dictionary"
+        "dictionary",
+        "assistantPhrases"
     );
 
     // check if product faforite
@@ -63,9 +66,7 @@ export default WrappedComponent => props => {
                     const { slug } = category;
                     (async _ => {
                         const [err, response] = await to(
-                            import(
-                                `../details-templates/${slug}`
-                            )
+                            import(`../details-templates/${slug}`)
                         );
                         dispatchAction({
                             type: "reinit",
@@ -85,56 +86,52 @@ export default WrappedComponent => props => {
         productDetails
     ]);
 
-    // set product grape sorts
-    useEffect(
-        _ => {
-            if (
-                schemeIsLoaded &&
-                !isEmpty(product) &&
-                !isEmpty(productCategory) &&
-                flatColorNames
-            ) {
-                const { slug } = productCategory;
-
-                if (slug === "wine") {
-                    const joinGrapeNames = names =>
-                        names.map(({ name }) => name).join(", ");
-
-                    const wineProps = {
-                        grape_sorts: joinGrapeNames(product[slug].grape_sorts),
-                        color: flatColorNames[product[slug].colour_id]
-                    };
-
-                    Object.entries(wineProps).forEach(([prop, payload]) =>
-                        dispatchAction({ type: "set", prop, payload })
-                    );
-                }
-
-                dispatchAction({
-                    type: "set",
-                    prop: "temperature",
-                    payload: product[slug].temperature
-                });
-                dispatchAction({
-                    type: "set",
-                    prop: "strength",
-                    payload: `${product[slug].strength}%`
-                });
-            }
-        },
-        [product, productCategory, flatColorNames, schemeIsLoaded]
-    );
-    //
-
     // set common props
     useEffect(
         _ => {
             const { slug } = productCategory;
-            const neededCategories = ["wine", "champagne"];
-            if (schemeIsLoaded && neededCategories.includes(slug)) {
+            const wineOrChampagne = ["wine", "champagne"];
+            const strong = ["cognac", "vodka", "whiskey"];
+
+            if (schemeIsLoaded && brands) {
+                const brandInstance = brands.find(
+                    b => b.id === product.brand_id
+                );
+
+                const commonDrinkProps = {
+                    region: flatRegionNames[brandInstance.location_id],
+                    brand: flatBrandNames[product.brand_id],
+                    strength: `${product[slug].strength}%`
+                };
+
+                const wineProps = {
+                    grape_sorts: _ => joinGrapeNames(product[slug].grape_sorts),
+                    color: flatColorNames[product[slug].colour_id],
+                    temperature: product[slug].temperature
+                };
+
+                const strongProps = {
+                    aging: product[slug].aging,
+                    taste: product[slug].taste
+                };
+
+                if (wineOrChampagne.includes(slug)) applyProps(wineProps);
+                if (strong.includes(slug)) applyProps(strongProps);
+                if (slug === "cognac")
+                    applyProps({ class: product[slug].class });
+                if (slug === "vodka") applyProps({ raw: product[slug].raw });
+
+                applyProps(commonDrinkProps);
+                setProductRegion(brandInstance.location_id);
             }
         },
-        [product, productCategory, schemeIsLoaded]
+        [
+            productCategory,
+            brands,
+            flatRegionNames,
+            flatBrandNames,
+            schemeIsLoaded
+        ]
     );
 
     // set dosage
@@ -149,46 +146,26 @@ export default WrappedComponent => props => {
                 });
             }
         },
-        [product, productCategory, schemeIsLoaded, dictionary]
+        [schemeIsLoaded, productCategory, dictionary]
     );
 
-    // set product brand
-    useEffect(
-        _ => {
-            if (schemeIsLoaded && !isEmpty(product) && flatBrandNames) {
-                dispatchAction({
-                    type: "set",
-                    prop: "brand",
-                    payload: flatBrandNames[product.brand_id]
-                });
-            }
-        },
-        [flatBrandNames, product, schemeIsLoaded]
-    );
-    //
+    function joinGrapeNames(names) {
+        return names.map(({ name }) => name).join(", ");
+    }
 
-    // set product region
-    useEffect(
-        _ => {
-            if (
-                schemeIsLoaded &&
-                !isEmpty(product) &&
-                brands &&
-                flatRegionNames
-            ) {
-                const brandInstance = brands.find(
-                    b => b.id === product.brand_id
-                );
-                dispatchAction({
-                    type: "set",
-                    prop: "region",
-                    payload: flatRegionNames[brandInstance.location_id]
-                });
-            }
-        },
-        [brands, flatRegionNames, product, schemeIsLoaded]
-    );
-    //
+    function setPayload(payload) {
+        return typeof payload === "function" ? payload() : payload;
+    }
+
+    function applyProps(props) {
+        Object.entries(props).forEach(([prop, payload]) =>
+            dispatchAction({
+                type: "set",
+                prop,
+                payload: setPayload(payload)
+            })
+        );
+    }
 
     const onFavoriteStateChange = ({ target }) => {
         const state = target.checked;
@@ -207,14 +184,19 @@ export default WrappedComponent => props => {
         setIsProductFavorite(state);
     };
 
-    const onAdd = (id, count = 1) => {
+    const onAdd = (id, count = 1, brandId) => {
         if (!id) return;
+        // if (assistantPhrases && brandId) {
+        //     const suitable = assistantPhrases.filter(({ brand_id }) => brand_id === brandId)
+        //     console.log('assistantPhrases',suitable,brandId)
+        // }
         dispatch("cart/add", {
             product: { id, count },
             callback: _ =>
                 notificationDispatch({
                     type: "HANDLE_VISIBILITY",
-                    payload: true
+                    payload: true,
+                    fact: assistantPhrases[Math.floor(Math.random() * assistantPhrases.length)].phrase
                 })
         });
     };
@@ -224,8 +206,8 @@ export default WrappedComponent => props => {
             {...props}
             product={product}
             productCategory={productCategory}
+            productRegion={productRegion}
             productDetails={productDetails}
-            brands={brands}
             flatRegionImages={flatRegionImages}
             isProductFavorite={isProductFavorite}
             onFavoriteStateChange={onFavoriteStateChange}

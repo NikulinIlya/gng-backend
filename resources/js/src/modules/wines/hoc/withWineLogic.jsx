@@ -10,7 +10,7 @@ export default WrappedComponent => props => {
     const { products } = props;
     const { isMobile } = useMeasures();
     const [wines, setWines] = useState([]);
-    const { dispatch } = useStoreon();
+    const { dispatch, assistantPhrases } = useStoreon('assistantPhrases');
     
     const { dispatch: notificationDispatch } = useContext(
         CartNotificationContext
@@ -27,7 +27,8 @@ export default WrappedComponent => props => {
             callback: _ =>
                 notificationDispatch({
                     type: "HANDLE_VISIBILITY",
-                    payload: true
+                    payload: true,
+                    fact: assistantPhrases[Math.floor(Math.random() * assistantPhrases.length)].phrase
                 })
         });
     };

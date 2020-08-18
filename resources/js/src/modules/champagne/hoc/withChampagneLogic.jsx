@@ -10,7 +10,7 @@ export default WrappedComponent => props => {
     const { dispatch: notificationDispatch } = useContext(
         CartNotificationContext
     );
-    const { dispatch } = useStoreon();
+    const { dispatch, assistantPhrases } = useStoreon("assistantPhrases");
     const extendedProducts = useBrands(products);
 
     const onAdd = (id, count = 1) => {
@@ -20,7 +20,11 @@ export default WrappedComponent => props => {
             callback: _ =>
                 notificationDispatch({
                     type: "HANDLE_VISIBILITY",
-                    payload: true
+                    payload: true,
+                    fact:
+                        assistantPhrases[
+                            Math.floor(Math.random() * assistantPhrases.length)
+                        ].phrase
                 })
         });
     };

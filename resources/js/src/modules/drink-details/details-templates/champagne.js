@@ -28,5 +28,10 @@ export default {
         name: "Дозаж",
         nameSlug: "",
         icon: "color"
+    },
+    color: {
+        name: "Цвет",
+        nameSlug: "",
+        icon: "color"
     }
 };

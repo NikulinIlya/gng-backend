@@ -10,13 +10,11 @@ import "./cart-notification.scss";
 export const CartNotificationContext = createContext({});
 
 export function CartNotificationProvider({ children }) {
-    const { isMobile } = useMeasures();
     const [state, dispatch] = useReducer(
         notificationReducer,
         {
             visibility: false,
-            title: "Хороший выбор!",
-            fact: ""
+            title: "Хороший выбор!"
         },
         init
     );
@@ -35,7 +33,7 @@ export function CartNotificationProvider({ children }) {
         <CartNotificationContext.Provider value={{ dispatch }}>
             <>
                 {children}
-                {!isMobile && state.visibility && (
+                {state.visibility && (
                     <CartNotification
                         title={state.title}
                         fact={state.fact}
@@ -50,7 +48,7 @@ export function CartNotificationProvider({ children }) {
 function notificationReducer(state, action) {
     switch (action.type) {
         case "HANDLE_VISIBILITY":
-            return { ...state, visibility: action.payload };
+            return { ...state, visibility: action.payload, fact: action.fact };
     }
 }
 
@@ -68,7 +66,9 @@ export default function CartNotification({ title, fact, onHide }) {
                     <p className="message__fact">{fact}</p>
                 </section>
                 <div className="actions">
-                    <Button variant="gold">Продолжить</Button>
+                    <Button variant="gold" onClick={onHide}>
+                        Продолжить
+                    </Button>
                     <Button>Оформить заказ</Button>
                 </div>
             </div>

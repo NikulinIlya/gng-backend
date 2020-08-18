@@ -6,12 +6,34 @@
     align-self: center;
     .message {
         flex: 1;
+        display: grid;
+        grid-template-areas:
+            "title text"
+            "fact fact";
+        grid-auto-columns: min-content;
+        row-gap: 10px;
         &__title {
+            position: relative;
             color: var(--lightGold);
             font-size: 24px;
             font-weight: 400;
             line-height: 24px;
-            margin-bottom: 5px;
+            padding-right: 39px;
+            white-space: nowrap;
+
+            grid-area: title;
+
+            &:after {
+                position: absolute;
+                content: "";
+                top: 50%;
+                right: 17px;
+                transform: translateY(-50%);
+                width: 5px;
+                height: 5px;
+                border-radius: 50%;
+                background-color: #36665d;
+            }
         }
         &__text {
             color: white;
@@ -19,25 +41,32 @@
             font-size: 18px;
             font-weight: 300;
             line-height: 21.6px;
+
+            align-self: center;
+            grid-area: text;
+            white-space: nowrap;
         }
         &__fact {
             position: relative;
             width: 100%;
+            padding-top: 5px;
+
+            grid-area: fact;
+
             color: white;
             font-family: var(--proxima);
-            font-size: 20px;
-            font-weight: 300;
-            padding-top: 5px;
-            margin-top: 5px;
-            font-style: italic;
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 21.6px;
+
             &:after {
                 position: absolute;
-                content: '';
+                content: "";
                 left: 0;
                 top: 0;
-                width: 90%;
+                width: 100%;
                 height: 1px;
-                background-color: var(--defaultGold);
+                background-color: rgba(228, 234, 238, 0.15);
             }
         }
     }
@@ -46,6 +75,31 @@
         align-items: center;
         button:not(:last-child) {
             margin-right: 30px;
+        }
+    }
+}
+
+@media screen and (max-width:768px){
+    .cart-notification{
+        flex-flow: column nowrap;
+        padding-right: 0;
+        .message{
+            grid-template-areas: 
+            "title"
+            "text"
+            "fact";
+            grid-auto-columns: auto;
+            &__title{
+                &:after{display: none;}
+            }
+        }
+        .actions{
+            display: grid;
+            margin-top: 5px;
+            button:not(:last-child) {
+                margin-right: 0px;
+                margin-bottom: 5px;
+            }
         }
     }
 }

@@ -12,7 +12,10 @@ export default WrappedComponent => props => {
     const { dispatch: notificationDispatch } = useContext(
         CartNotificationContext
     );
-    const { dispatch, productCategories } = useStoreon("productCategories");
+    const { dispatch, productCategories, assistantPhrases } = useStoreon(
+        "productCategories",
+        "assistantPhrases"
+    );
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [categoriesOfStrong, setCategoriesOfStrong] = useState([]);
     const extendedProducts = useBrands(filteredProducts);
@@ -24,7 +27,11 @@ export default WrappedComponent => props => {
             callback: _ =>
                 notificationDispatch({
                     type: "HANDLE_VISIBILITY",
-                    payload: true
+                    payload: true,
+                    fact:
+                        assistantPhrases[
+                            Math.floor(Math.random() * assistantPhrases.length)
+                        ].phrase
                 })
         });
     };
