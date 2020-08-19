@@ -42,7 +42,6 @@ class ProductCategoryController
         return $this->service->show($id);
     }
 
-
     /**
      * Display a listing of products sorted by category.
      *
@@ -113,22 +112,22 @@ class ProductCategoryController
             $hasGrapes = true;
         }
         foreach ($products as $product) {
-            if (!in_array($brand = $product->brand, $brands)) {
+            if (! in_array($brand = $product->brand, $brands)) {
                 $brands[] = $brand;
-                if (!in_array($locationId = $brand->location_id, $locations)) {
+                if (! in_array($locationId = $brand->location_id, $locations)) {
                     $locations[] = $locationId;
                 }
             }
             $entity = $product->$categorySlug()->first();
 
-            if ($entity && $hasColours && !in_array($colour = $entity->colour, $colours)) {
-                    $colours[] = $colour;
+            if ($entity && $hasColours && ! in_array($colour = $entity->colour, $colours)) {
+                $colours[] = $colour;
             }
 
             if ($entity && $hasGrapes) {
                 $grapeSorts = $entity->grapeSorts;
                 foreach ($grapeSorts as $grapeSort) {
-                    if (!array_key_exists($grapeSort->id, $grapeSortsUnique)) {
+                    if (! array_key_exists($grapeSort->id, $grapeSortsUnique)) {
                         $grapeSortsUnique[$grapeSort->id] = $grapeSort;
                     }
                 }
