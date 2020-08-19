@@ -58,6 +58,7 @@ Route::get('product-with-settings/{id}', 'Api\ProductController@showProductWithS
 
 Route::get('product-categories', 'Api\ProductCategoryController@index');
 Route::get('product-categories/{id}', 'Api\ProductCategoryController@show');
+Route::get('product-categories-filters/{categorySlug}', 'Api\ProductController@getFilters');
 
 Route::get('brands', 'Api\BrandController@index');
 Route::get('brands/{id}', 'Api\BrandController@show');
