@@ -13,6 +13,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - VineController getWithProducts method
 - GrapeSortDimmer, BrandDimmer, LocationDimmer, AssistantPhraseDimmer
 - ProductController showProductWithSettings method
+- install bumbummen99/shoppingcart
+- routes/api cart group
+- add CartController methods
+- CartItemStoreRequest
+- migrations CreateProductsTable, CreateProductCategoriesTable
+- factories/ ProductFactory, ProductCategoryFactory
+- ProductCategoryTest, ProductTest, CartTest
+- app/Http/Services/ProductStockService
+
+### Removed
+- CartResolutionMiddleware
+- Models/Cart, CartItem
 
 ## [0.0.2] - 2020-08-05
 ### Added
