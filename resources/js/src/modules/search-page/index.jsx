@@ -23,6 +23,7 @@ function SearchPage({ isLoaded, products, query }) {
                                 <div className="search-page__grid">
                                     {products.map(({ id, image, ...rest }) => (
                                         <BottleCard
+                                            to={`/catalog/${id}`}
                                             bottle={image}
                                             {...rest}
                                             key={id}
