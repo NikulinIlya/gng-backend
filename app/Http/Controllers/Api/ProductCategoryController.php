@@ -40,4 +40,9 @@ class ProductCategoryController
     {
         return $this->service->show($id);
     }
+
+    public function getFilters($categorySlug)
+    {
+        $products = ProductCategory::where('slug', $categorySlug)->first();
+    }
 }
