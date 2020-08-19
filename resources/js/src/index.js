@@ -32,6 +32,7 @@ const Home = lazy(_ => import("@/modules/home"));
 const Wines = lazy(_ => import("@/modules/wines"));
 const Champagne = lazy(_ => import("@/modules/champagne"));
 const Strong = lazy(_ => import("@/modules/strong"));
+const SearchPage = lazy(_ => import("@/modules/search-page"));
 const ProductDetails = lazy(_ => import("@/modules/drink-details"));
 const Events = lazy(_ => import("@/modules/events"));
 const EventPage = lazy(_ => import("@/modules/events/containers/EventPage"));
@@ -49,8 +50,6 @@ const LoginVariants = {
     "sign-in": SignIn,
     "sign-up": SignUp
 };
-
-
 
 const App = () => {
     const [renderingComponent, setComponent] = useState(null);
@@ -135,6 +134,7 @@ const App = () => {
                                     exact
                                     component={Champagne}
                                 />
+                                <Route path="/search" component={SearchPage} />
                                 <Route
                                     path="/catalog/:productId"
                                     component={ProductDetails}

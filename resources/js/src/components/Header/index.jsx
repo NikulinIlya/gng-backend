@@ -9,6 +9,8 @@ import IconButton from "@/components/IconButton";
 import useMeasures from "@/utils/useMeasures";
 import useTranslate from "@/utils/useTranslate";
 
+import { history } from "@";
+
 import logo from "@/assets/images/logo.svg";
 import logoText from "@/assets/images/logo-text.svg";
 import favoriteIcon from "@/assets/images/icons/heart.svg";
@@ -58,7 +60,13 @@ const Header = () => {
                                 {renderingComponent ? (
                                     renderingComponent
                                 ) : (
-                                    <SearchInput />
+                                    <SearchInput
+                                        onChange={({ target }) =>
+                                            history.push(
+                                                `/search?query=${target.value}`
+                                            )
+                                        }
+                                    />
                                 )}
                             </div>
                         )}
@@ -125,7 +133,13 @@ const Header = () => {
                 </div>
             </div>
             {isMobile && mobileSearchVisibility && (
-                <SearchInput iconVisibility={false} placeholder="Поиск" />
+                <SearchInput
+                    onChange={({ target }) =>
+                        history.push(`/search?query=${target.value}`)
+                    }
+                    iconVisibility={false}
+                    placeholder="Поиск"
+                />
             )}
             {isMobile && mobileNavVisibility && (
                 <div className="header__mobile-nav">
