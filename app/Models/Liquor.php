@@ -17,4 +17,12 @@ class Liquor extends Model
     {
         return $this->belongsTo('App\Models\Product');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function colour()
+    {
+        return $this->belongsTo('App\Models\Colour');
+    }
 }
