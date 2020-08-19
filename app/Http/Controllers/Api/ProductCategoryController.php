@@ -51,11 +51,39 @@ class ProductCategoryController
      */
     public function getProductsByCategory($categorySlug)
     {
-        $products = ProductCategory::where('slug', $categorySlug)->firstOrFail()->products;
-
-        $products = $this->service->makeEntityCollection($products, app()->getLocale());
+        $products = $this->getProductsEntities($categorySlug);
 
         return $this->service->paginate($products, 10);
+    }
+
+    /**
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function getStrongDrinks()
+    {
+        $strongDrinksNames = ['cognac', 'liquor', 'whiskey', 'vodka'];
+        $strongProducts = [];
+
+        foreach ($strongDrinksNames as $strongDrinksName) {
+            $drinks = $this->getProductsEntities($strongDrinksName);
+
+            foreach ($drinks as $item) {
+                $strongProducts[] = $item;
+            }
+        }
+
+        return $this->service->paginate($strongProducts, 10);
+    }
+
+    /**
+     * @param string $categorySlug
+     * @return \Illuminate\Support\Collection
+     */
+    protected function getProductsEntities($categorySlug)
+    {
+        $products = ProductCategory::where('slug', $categorySlug)->firstOrFail()->products;
+
+        return $this->service->makeEntityCollection($products, app()->getLocale());
     }
 
     /**
