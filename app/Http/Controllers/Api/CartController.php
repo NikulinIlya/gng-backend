@@ -2,41 +2,123 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Services\Cart\CartManager;
-use Illuminate\Support\Collection;
+use App\Http\Requests\CartItemStoreRequest;
+use App\Http\Services\ProductStockService;
+use Cart;
+use Illuminate\Http\Request;
 
 class CartController
 {
-    protected $cart;
-
-    public function __construct(CartManager $cart)
+    /**
+     * Display all cart items.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function index()
     {
-        $this->cart = $cart;
+        return Cart::content();
     }
 
-    public function addProduct($id)
+    /**
+     * Get total price of products in a cart.
+     *
+     * @return string
+     */
+    public function total()
     {
-        $this->cart->addToCart($id);
-
-        return $this->cart->getCartItems();
+        return Cart::total();
     }
 
-    public function getProducts(): Collection
+    /**
+     * Get count of products in a cart.
+     *
+     * @return string
+     */
+    public function count()
     {
-        return $this->cart->getCartItems();
+        return Cart::count();
     }
 
-    public function removeProduct($id)
+    /**
+     * Add an item to a cart.
+     *
+     * @param CartItemStoreRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(CartItemStoreRequest $request)
     {
-        $this->cart->removeFromCart($id);
+        $duplicates = Cart::search(
+            function ($cartItem, $rowId) use ($request) {
+                return $cartItem->id === $request->id;
+            }
+        );
 
-        return $this->cart->getCartItems();
+        if ($duplicates->isNotEmpty()) {
+            return response()->json(['message' => 'Item is already in the cart'], 400);
+        }
+
+        Cart::add($request->id, $request->name, $request->quantity, $request->price, '', ['type' => $request->type])
+            ->associate('App\Models\Product');
+
+        return response()->json(['message' => 'Item was added to the cart'], 200);
     }
 
+    /**
+     * Clear a cart.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function clear()
     {
-        $this->cart->clearCartItems();
+        Cart::destroy();
 
-        return $this->cart->getCartItems();
+        return response()->json(['message' => 'Cart is clear'], 204);
+    }
+
+    /**
+     * Change an item of a cart.
+     *
+     * @param Request $request
+     * @param int     $rowId
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(Request $request, $rowId)
+    {
+        $validator = \Validator::make(
+            $request->all(),
+            [
+                'quantity' => 'required|numeric',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([$validator->errors()], 400);
+        }
+
+        $service = new ProductStockService();
+
+        if ($request->quantity > $service->getProductAvailableQuantity($request->productId)) {
+            return response()->json(['message' => 'We currently do not have enough items in stock'], 400);
+        }
+
+        Cart::update($rowId, $request->quantity);
+
+        return response()->json(['message' => 'Quantity was updated successfully!'], 200);
+    }
+
+    /**
+     * Remove an item from a cart.
+     *
+     * @param int $rowId
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function remove($rowId)
+    {
+        Cart::remove($rowId);
+
+        return response()->json(['message' => 'Item has been removed'], 204);
     }
 }
