@@ -42,6 +42,22 @@ class ProductCategoryController
         return $this->service->show($id);
     }
 
+
+    /**
+     * Display a listing of products sorted by category.
+     *
+     * @param $categorySlug
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function getProductsByCategory($categorySlug)
+    {
+        $products = ProductCategory::where('slug', $categorySlug)->firstOrFail()->products;
+
+        $products = $this->service->makeEntityCollection($products, app()->getLocale());
+
+        return $this->service->paginate($products, 10);
+    }
+
     /**
      * Get all unique filters for the needed product category.
      *
