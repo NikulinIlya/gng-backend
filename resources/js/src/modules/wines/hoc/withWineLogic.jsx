@@ -10,15 +10,14 @@ export default WrappedComponent => props => {
     const { products } = props;
     const { isMobile } = useMeasures();
     const [wines, setWines] = useState([]);
-    const { dispatch, assistantPhrases } = useStoreon('assistantPhrases');
-    
+    const { dispatch, assistantPhrases } = useStoreon("assistantPhrases");
+
     const { dispatch: notificationDispatch } = useContext(
         CartNotificationContext
     );
     const [filtersVisibility, setFiltersVisibility] = useState(false);
     const extendedProducts = useBrands(wines);
 
-    
     const handleFiltersVisibility = state => _ => setFiltersVisibility(state);
     const onAdd = (id, count = 1) => {
         if (!id) return;
@@ -28,14 +27,17 @@ export default WrappedComponent => props => {
                 notificationDispatch({
                     type: "HANDLE_VISIBILITY",
                     payload: true,
-                    fact: assistantPhrases[Math.floor(Math.random() * assistantPhrases.length)].phrase
+                    fact:
+                        assistantPhrases[
+                            Math.floor(Math.random() * assistantPhrases.length)
+                        ].phrase
                 })
         });
     };
 
-
     useEffect(
         _ => {
+            if (!products) return;
             setWines(products.map(p => ({ ...p, ...p.product })));
         },
         [products]

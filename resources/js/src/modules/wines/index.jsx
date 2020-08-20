@@ -11,8 +11,7 @@ import { Checkbox } from "@/components/Input";
 
 import AdvancedFilters from "./components/AdvancedFiltering";
 
-import withApi from "./hoc/withWineApi";
-import withLogic from "./hoc/withWineLogic";
+import { withApi, withLogic, withFiltering } from "./hoc";
 
 import compose from "@/utils/compose";
 
@@ -22,6 +21,7 @@ const CatalogPage = ({
     isLoaded,
     isMobile,
     products,
+    filters,
     filtersVisibility,
     handleFiltersVisibility,
     onAdd
@@ -41,7 +41,9 @@ const CatalogPage = ({
                     renderAside={_ => (
                         <aside hidden={!filtersVisibility}>
                             <Filtering
-                                renderFiltersBody={() => <FiltersBody />}
+                                renderFiltersBody={() => (
+                                    <FiltersBody filters={filters} />
+                                )}
                                 onClose={handleFiltersVisibility(false)}
                             />
                         </aside>
@@ -78,13 +80,8 @@ function FilterBy({ criterias = [], propName = "name" }) {
     return criterias.map((cr, i) => <Checkbox label={cr[propName]} key={i} />);
 }
 
-function FiltersBody() {
-    const { brands, colors, regions, sorts } = useStoreon(
-        "brands",
-        "colors",
-        "regions",
-        "sorts"
-    );
+function FiltersBody({ filters }) {
+    const isLocationCriteria = key => key === "locations";
     return (
         <>
             <div className="filters-criteria">
@@ -93,36 +90,23 @@ function FiltersBody() {
                     <Range defaultRange={[30, 55]} />
                 </div>
             </div>
-            <div className="filters-criteria">
-                <h3 className="filters-criteria__name">Бренды</h3>
-                <div className="filters-criteria__fields">
-                    <FilterBy criterias={brands ? brands : []} />
+            {Object.entries(filters).map(([key, filterItem]) => (
+                <div className="filters-criteria" key={key}>
+                    <h3 className="filters-criteria__name">
+                        {filterItem.label}
+                    </h3>
+                    <div className="filters-criteria__fields">
+                        <FilterBy
+                            criterias={filterItem.value}
+                            propName={
+                                isLocationCriteria(key) ? "country" : "name"
+                            }
+                        />
+                    </div>
                 </div>
-            </div>
-            <div className="filters-criteria">
-                <h3 className="filters-criteria__name">Цвет</h3>
-                <div className="filters-criteria__fields">
-                    <FilterBy criterias={colors ? colors : []} />
-                </div>
-            </div>
-            <div className="filters-criteria">
-                <h3 className="filters-criteria__name">Регион</h3>
-                <div className="filters-criteria__fields">
-                    <FilterBy
-                        criterias={regions ? regions : []}
-                        propName="country"
-                    />
-                </div>
-            </div>
-
-            <div className="filters-criteria">
-                <h3 className="filters-criteria__name">Сорт винограда</h3>
-                <div className="filters-criteria__fields">
-                    <FilterBy criterias={sorts ? sorts : []} />
-                </div>
-            </div>
+            ))}
         </>
     );
 }
 
-export default compose(withApi, withLogic)(CatalogPage);
+export default compose(withApi, withLogic, withFiltering)(CatalogPage);

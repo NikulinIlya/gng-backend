@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import Button from "@/components/Button";
+
 import useMeasures from "@/utils/useMeasures";
 
 import "./filters.scss";
@@ -27,16 +29,12 @@ function Filtering({ onClose, renderFiltersBody }) {
                         </div>
                     )}
 
-                {isMobile && (
-                    <div className="filters__footer">
-                        <button className="filters__submit" onClick={onClose}>
-                            Применить
-                        </button>
-                        <button className="filters__reset" onClick={onClose}>
-                            Сбросить
-                        </button>
-                    </div>
-                )}
+                <div className="filters__footer">
+                    <Button variant="gold" onClick={onClose}>
+                        Применить
+                    </Button>
+                    <Button onClick={onClose}>Сбросить</Button>
+                </div>
             </form>
         </article>
     );

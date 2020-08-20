@@ -6,25 +6,34 @@ import { Checkbox } from "@/components/Input";
 import Filtering from "@/components/Filtering";
 import BottleCard from "@/components/BottleCard";
 import Loading from "@/components/Loading";
-
+import Button from "@/components/Button";
 
 import compose from "@/utils/compose";
 import useTranslate from "@/utils/useTranslate";
 
-import withApi from "./hoc/withChampagneApi";
-import withLogic from "./hoc/withChampagneLogic";
+import { withApi, withLogic, withFiltering } from "./hoc";
 
 import "./champagne.scss";
 
-function Champagne({ products, isLoaded, onAdd }) {
+function Champagne({
+    products,
+    filters,
+    isLoaded,
+    filtersVisibility,
+    onAdd,
+    handleFiltersVisibility
+}) {
     const { t } = useTranslate();
+
     return (
         <div className="champagne container">
             <AsideLayout
                 title={t("champagne-and-sparkling", "Шампанское и Игристое")}
                 renderAside={_ => (
-                    <Filtering
-                        renderFiltersBody={_ => <FiltersBody categories={[]} />}
+                    <Aside
+                        filtersVisibility={filtersVisibility}
+                        visibilityHandler={handleFiltersVisibility}
+                        filters={filters}
                     />
                 )}
             >
@@ -66,7 +75,8 @@ function FilterBy({ criterias = [], propName = "name" }) {
     return criterias.map((cr, i) => <Checkbox label={cr[propName]} key={i} />);
 }
 
-function FiltersBody({ categories }) {
+function FiltersBody({ filters }) {
+    const isLocationCriteria = key => key === "locations";
     return (
         <>
             <div className="filters-criteria">
@@ -75,14 +85,37 @@ function FiltersBody({ categories }) {
                     <Range defaultRange={[30, 55]} />
                 </div>
             </div>
-            <div className="filters-criteria">
-                <h3 className="filters-criteria__name">Бренды</h3>
-                <div className="filters-criteria__fields">
-                    <FilterBy criterias={categories} />
+            {Object.entries(filters).map(([key, filterItem]) => (
+                <div className="filters-criteria" key={key}>
+                    <h3 className="filters-criteria__name">
+                        {filterItem.label}
+                    </h3>
+                    <div className="filters-criteria__fields">
+                        <FilterBy
+                            criterias={filterItem.value}
+                            propName={
+                                isLocationCriteria(key) ? "country" : "name"
+                            }
+                        />
+                    </div>
                 </div>
-            </div>
+            ))}
         </>
     );
 }
 
-export default compose(withApi, withLogic)(Champagne);
+function Aside({ filtersVisibility, visibilityHandler, filters }) {
+    const onClose = _ => visibilityHandler(false);
+    const onOpen = _ => visibilityHandler(true);
+
+    if (!filtersVisibility) return <Button onClick={onOpen}>Фильтры</Button>;
+    
+    return (
+        <Filtering
+            onClose={onClose}
+            renderFiltersBody={_ => <FiltersBody filters={filters} />}
+        />
+    );
+}
+
+export default compose(withApi, withLogic, withFiltering)(Champagne);

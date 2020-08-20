@@ -12,13 +12,10 @@ export default WrappedComponent => props => {
     const { dispatch: notificationDispatch } = useContext(
         CartNotificationContext
     );
-    const { dispatch, productCategories, assistantPhrases } = useStoreon(
-        "productCategories",
-        "assistantPhrases"
-    );
-    const [filteredProducts, setFilteredProducts] = useState([]);
+    const { dispatch, assistantPhrases } = useStoreon("assistantPhrases");
+
     const [categoriesOfStrong, setCategoriesOfStrong] = useState([]);
-    const extendedProducts = useBrands(filteredProducts);
+    const extendedProducts = useBrands(products);
 
     const onAdd = (id, count = 1) => {
         if (!id) return;
@@ -36,28 +33,6 @@ export default WrappedComponent => props => {
         });
     };
 
-    useEffect(
-        _ => {
-            setFilteredProducts(
-                products.filter(p =>
-                    STRONG_CATEGORIES.includes(p.product_category_id)
-                )
-            );
-        },
-        [products]
-    );
-    useEffect(
-        _ => {
-            if (productCategories) {
-                setCategoriesOfStrong(
-                    productCategories.filter(pc =>
-                        STRONG_CATEGORIES.includes(pc.id)
-                    )
-                );
-            }
-        },
-        [productCategories]
-    );
     return (
         <WrappedComponent
             {...props}

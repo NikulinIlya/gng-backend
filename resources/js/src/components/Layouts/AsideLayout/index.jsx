@@ -9,7 +9,7 @@ export default function AsideLayout({
     title,
     titleAs = "h1",
     renderAside,
-    children
+    children,
 }) {
     return (
         <section

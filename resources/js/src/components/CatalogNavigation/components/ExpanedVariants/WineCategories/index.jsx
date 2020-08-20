@@ -28,11 +28,9 @@ export default function WineCategories({ onChangeState }) {
                 </div>
             </div>
             <div className="wine-categories__all">
-                <Link to="/wines">
-                    <Button onClick={_ => onChangeState(false)}>
-                        Показать все вина
-                    </Button>
-                </Link>
+                <Button to="/wines" onClick={_ => onChangeState(false)}>
+                    Показать все вина
+                </Button>
             </div>
         </>
     );

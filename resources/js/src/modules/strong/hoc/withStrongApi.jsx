@@ -7,9 +7,9 @@ export default WrappedComponent => props => {
     const [products, setProducts] = useState([]);
     useEffect(_ => {
         (async _ => {
-            const [err, response] = await to(redaxios("/api/products"));
-            console.log("response PRODUCTS", response.data);
-            setProducts(response.data);
+            const [err, response] = await to(redaxios("/api/strong-drinks"));
+            console.log("response PRODUCTS", response.data.data[0]);
+            setProducts(response.data.data[0]);
             setIsLoaded(true);
         })();
     }, []);
