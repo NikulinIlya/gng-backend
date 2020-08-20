@@ -152,7 +152,7 @@ class ProductCategoryController
     }
 
     /**
-     * Get all filters
+     * Get all filters.
      *
      * @return array
      */
