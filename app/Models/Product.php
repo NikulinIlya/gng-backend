@@ -25,6 +25,16 @@ class Product extends Model
     }
 
     /**
+     * Get the associated brand.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function brand()
+    {
+        return $this->belongsTo('App\Models\Brand');
+    }
+
+    /**
      * Get the wine associated with the product.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

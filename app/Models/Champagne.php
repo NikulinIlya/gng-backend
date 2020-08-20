@@ -36,4 +36,12 @@ class Champagne extends Model
         return $this->belongsToMany('App\Models\GrapeSort', 'champagne_grapes')
             ->using('App\Models\ChampagneGrape');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function colour()
+    {
+        return $this->belongsTo('App\Models\Colour');
+    }
 }

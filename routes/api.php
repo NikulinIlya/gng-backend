@@ -53,11 +53,14 @@ Route::get('promotions/{id}', 'Api\PromotionController@show');
 Route::get('products', 'Api\ProductController@index');
 Route::get('products/{id}', 'Api\ProductController@show');
 Route::get('search-products', 'Api\ProductController@search');
-Route::get('products-by-category/{categorySlug}', 'Api\ProductController@getProductsByCategory');
 Route::get('product-with-settings/{id}', 'Api\ProductController@showProductWithSettings');
 
 Route::get('product-categories', 'Api\ProductCategoryController@index');
 Route::get('product-categories/{id}', 'Api\ProductCategoryController@show');
+Route::get('product-categories-filters/{categorySlug}', 'Api\ProductCategoryController@getFilters');
+Route::get('products-by-category/{categorySlug}', 'Api\ProductCategoryController@getProductsByCategory');
+Route::get('strong-drinks', 'Api\ProductCategoryController@getStrongDrinks');
+Route::get('strong-drinks/filters', 'Api\ProductCategoryController@getStrongDrinksFilters');
 
 Route::get('brands', 'Api\BrandController@index');
 Route::get('brands/{id}', 'Api\BrandController@show');
@@ -96,8 +99,8 @@ Route::get('grape-sorts/{id}', 'Api\GrapeSortController@show');
 Route::get('kits', 'Api\KitController@index');
 Route::get('kits/{id}', 'Api\KitController@show');
 
-Route::get('liquors', 'Api\KitController@index');
-Route::get('liquors/{id}', 'Api\KitController@show');
+Route::get('liquors', 'Api\LiquorController@index');
+Route::get('liquors/{id}', 'Api\LiquorController@show');
 
 Route::get('rares', 'Api\RareController@index');
 Route::get('rares/{id}', 'Api\RareController@show');

@@ -17,4 +17,12 @@ class Brand extends Model
     {
         return $this->belongsTo('App\Models\Location');
     }
+
+    /**
+     * Get products for the brand.
+     */
+    public function products()
+    {
+        return $this->hasMany('App\Models\Product');
+    }
 }

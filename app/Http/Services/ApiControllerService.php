@@ -208,7 +208,7 @@ class ApiControllerService
     /**
      * Paginate entities.
      *
-     * @param \Illuminate\Support\Collection $entities
+     * @param \Illuminate\Support\Collection|array $entities
      * @param int $perPage
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
