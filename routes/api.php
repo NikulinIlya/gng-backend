@@ -60,6 +60,8 @@ Route::get('product-categories/{id}', 'Api\ProductCategoryController@show');
 Route::get('product-categories-filters/{categorySlug}', 'Api\ProductCategoryController@getFilters');
 Route::get('products-by-category/{categorySlug}', 'Api\ProductCategoryController@getProductsByCategory');
 Route::get('strong-drinks', 'Api\ProductCategoryController@getStrongDrinks');
+Route::get('strong-drinks/filters', 'Api\ProductCategoryController@getStrongDrinksFilters');
+
 
 Route::get('brands', 'Api\BrandController@index');
 Route::get('brands/{id}', 'Api\BrandController@show');
