@@ -151,7 +151,33 @@ class ProductCategoryController
         return $filters;
     }
 
+    /**
+     * Get all filters
+     *
+     * @return array
+     */
     public function getStrongDrinksFilters()
     {
+        $filters = [];
+
+        foreach (self::STRONG_DRINKS as $drink) {
+            $filter = $this->getFilters($drink);
+
+            foreach ($filter['brands'] as $brand) {
+                $filters['brands'][] = $brand;
+            }
+
+            foreach ($filter['locations'] as $location) {
+                $filters['locations'][] = $location;
+            }
+
+            if (array_key_exists('colours', $filter)) {
+                foreach ($filter['colours'] as $colour) {
+                    $filters['colours'][] = $colour;
+                }
+            }
+        }
+
+        return $filters;
     }
 }
