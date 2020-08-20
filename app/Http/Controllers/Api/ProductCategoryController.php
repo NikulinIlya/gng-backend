@@ -8,6 +8,8 @@ use App\Models\ProductCategory;
 
 class ProductCategoryController
 {
+    const STRONG_DRINKS = ['cognac', 'liquor', 'whiskey', 'vodka'];
+
     /**
      * @var ApiControllerService
      */
@@ -60,10 +62,9 @@ class ProductCategoryController
      */
     public function getStrongDrinks()
     {
-        $strongDrinksNames = ['cognac', 'liquor', 'whiskey', 'vodka'];
         $strongProducts = [];
 
-        foreach ($strongDrinksNames as $strongDrinksName) {
+        foreach (self::STRONG_DRINKS as $strongDrinksName) {
             $drinks = $this->getProductsEntities($strongDrinksName);
 
             foreach ($drinks as $item) {
@@ -148,5 +149,10 @@ class ProductCategoryController
         }
 
         return $filters;
+    }
+
+    public function getStrongDrinksFilters()
+    {
+
     }
 }
