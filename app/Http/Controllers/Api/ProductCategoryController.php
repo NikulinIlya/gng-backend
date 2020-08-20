@@ -153,6 +153,5 @@ class ProductCategoryController
 
     public function getStrongDrinksFilters()
     {
-
     }
 }

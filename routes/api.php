@@ -62,7 +62,6 @@ Route::get('products-by-category/{categorySlug}', 'Api\ProductCategoryController
 Route::get('strong-drinks', 'Api\ProductCategoryController@getStrongDrinks');
 Route::get('strong-drinks/filters', 'Api\ProductCategoryController@getStrongDrinksFilters');
 
-
 Route::get('brands', 'Api\BrandController@index');
 Route::get('brands/{id}', 'Api\BrandController@show');
 
