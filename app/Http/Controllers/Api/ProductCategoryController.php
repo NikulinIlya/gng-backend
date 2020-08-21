@@ -54,7 +54,6 @@ class ProductCategoryController
      */
     public function getProductsByCategory(Request $request)
     {
-
         $products = $this->service->getProductsEntities($request->categorySlug, $request);
 
         return $this->service->paginate($products, 10);
