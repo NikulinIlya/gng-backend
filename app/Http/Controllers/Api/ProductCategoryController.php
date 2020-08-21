@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Services\ApiControllerService;
 use App\Models\Location;
 use App\Models\ProductCategory;
+use Illuminate\Http\Request;
 
 class ProductCategoryController
 {
@@ -47,12 +48,14 @@ class ProductCategoryController
     /**
      * Display a listing of products sorted by category.
      *
-     * @param $categorySlug
+     * @param Request $request
+     *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getProductsByCategory($categorySlug)
+    public function getProductsByCategory(Request $request)
     {
-        $products = $this->getProductsEntities($categorySlug);
+
+        $products = $this->service->getProductsEntities($request->categorySlug, $request);
 
         return $this->service->paginate($products, 10);
     }
@@ -65,7 +68,7 @@ class ProductCategoryController
         $strongProducts = [];
 
         foreach (self::STRONG_DRINKS as $strongDrinksName) {
-            $drinks = $this->getProductsEntities($strongDrinksName);
+            $drinks = $this->service->getProductsEntities($strongDrinksName);
 
             foreach ($drinks as $item) {
                 $strongProducts[] = $item;
@@ -73,17 +76,6 @@ class ProductCategoryController
         }
 
         return $this->service->paginate($strongProducts, 10);
-    }
-
-    /**
-     * @param string $categorySlug
-     * @return \Illuminate\Support\Collection
-     */
-    protected function getProductsEntities($categorySlug)
-    {
-        $products = ProductCategory::where('slug', $categorySlug)->firstOrFail()->products;
-
-        return $this->service->makeEntityCollection($products, app()->getLocale());
     }
 
     /**

@@ -172,6 +172,19 @@ class ApiControllerService
     }
 
     /**
+     * @param string $categorySlug
+     * @param \Request|null   $request
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getProductsEntities($categorySlug, $request = null)
+    {
+        $products = $this->model::where('slug', $categorySlug)->firstOrFail()->products;
+
+        return $this->makeEntityCollection($products, app()->getLocale());
+    }
+
+    /**
      * Set image field of the entity.
      *
      * @param Model $entity
