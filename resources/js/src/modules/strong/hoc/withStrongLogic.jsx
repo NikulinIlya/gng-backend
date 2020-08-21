@@ -4,8 +4,7 @@ import { useStoreon } from "storeon/react";
 import { CartNotificationContext } from "@/components/CartNotification";
 
 import useBrands from "@/utils/useBrands";
-
-const STRONG_CATEGORIES = [2, 4, 5, 6];
+import useFiltersApi from "@/utils/useFiltersApi";
 
 export default WrappedComponent => props => {
     const { products = [] } = props;
@@ -14,8 +13,8 @@ export default WrappedComponent => props => {
     );
     const { dispatch, assistantPhrases } = useStoreon("assistantPhrases");
 
-    const [categoriesOfStrong, setCategoriesOfStrong] = useState([]);
     const extendedProducts = useBrands(products);
+    const filters = useFiltersApi("strong");
 
     const onAdd = (id, count = 1) => {
         if (!id) return;
@@ -37,7 +36,7 @@ export default WrappedComponent => props => {
         <WrappedComponent
             {...props}
             products={extendedProducts}
-            productCategories={categoriesOfStrong}
+            filters={filters}
             onAdd={onAdd}
         />
     );

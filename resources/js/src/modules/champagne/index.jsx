@@ -39,29 +39,16 @@ function Champagne({
             >
                 {isLoaded ? (
                     <div className="champagne__grid">
-                        {products.map(
-                            ({
-                                name,
-                                price,
-                                brand,
-                                id,
-                                image,
-                                glass_image,
-                                backdrop
-                            }) => (
-                                <BottleCard
-                                    name={name}
-                                    price={price}
-                                    wineglass={glass_image}
-                                    bottle={image}
-                                    brand={brand}
-                                    backdrop={backdrop}
-                                    to={`/catalog/${id}`}
-                                    onAdd={_ => onAdd(id)}
-                                    key={id}
-                                />
-                            )
-                        )}
+                        {products.map(({ id, image, glass_image, ...rest }) => (
+                            <BottleCard
+                                wineglass={glass_image}
+                                bottle={image}
+                                to={`/catalog/${id}`}
+                                onAdd={_ => onAdd(id)}
+                                key={id}
+                                {...rest}
+                            />
+                        ))}
                     </div>
                 ) : (
                     <Loading />
@@ -76,7 +63,6 @@ function FilterBy({ criterias = [], propName = "name" }) {
 }
 
 function FiltersBody({ filters }) {
-    const isLocationCriteria = key => key === "locations";
     return (
         <>
             <div className="filters-criteria">
@@ -93,9 +79,7 @@ function FiltersBody({ filters }) {
                     <div className="filters-criteria__fields">
                         <FilterBy
                             criterias={filterItem.value}
-                            propName={
-                                isLocationCriteria(key) ? "country" : "name"
-                            }
+                            propName={key === "locations" ? "country" : "name"}
                         />
                     </div>
                 </div>
@@ -109,7 +93,7 @@ function Aside({ filtersVisibility, visibilityHandler, filters }) {
     const onOpen = _ => visibilityHandler(true);
 
     if (!filtersVisibility) return <Button onClick={onOpen}>Фильтры</Button>;
-    
+
     return (
         <Filtering
             onClose={onClose}

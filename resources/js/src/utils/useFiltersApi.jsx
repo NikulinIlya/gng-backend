@@ -7,9 +7,12 @@ export default function useApiState(slug) {
     useEffect(_ => {
         if (!slug) throw new Error("Category slug is undefined");
         (async _ => {
-            const [err, response] = await to(
-                redaxios(`/api/product-categories-filters/${slug}`)
-            );
+            const url =
+                slug === "strong"
+                    ? `/api/strong-drinks/filters`
+                    : `/api/product-categories-filters/${slug}`;
+                    
+            const [err, response] = await to(redaxios(url));
             console.log("FILTERS RESPONSE", response.data);
             setFilters(response.data);
         })();

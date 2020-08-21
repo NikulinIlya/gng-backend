@@ -26,17 +26,14 @@ export default WrappedComponent => props => {
     useEffect(
         _ => {
             if (!filters) return;
+            console.log("FILTERS", filters, Object.entries(filters));
             setLabeledFilters(
-                Object.entries(filters).reduce(
-                    (acc, [key, value]) => (
-                        (acc[key] = {
-                            value,
-                            label: filterLabels[key].name
-                        }),
-                        acc
-                    ),
-                    {}
-                )
+                Object.entries(filters).reduce((acc, [key, value]) => (
+                    acc[key] = {
+                        value,
+                        label: filterLabels[key].name
+                    },acc
+            ), {})
             );
         },
         [filters]

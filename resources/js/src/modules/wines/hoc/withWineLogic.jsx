@@ -9,14 +9,13 @@ import useBrands from "@/utils/useBrands";
 export default WrappedComponent => props => {
     const { products } = props;
     const { isMobile } = useMeasures();
-    const [wines, setWines] = useState([]);
     const { dispatch, assistantPhrases } = useStoreon("assistantPhrases");
 
     const { dispatch: notificationDispatch } = useContext(
         CartNotificationContext
     );
     const [filtersVisibility, setFiltersVisibility] = useState(false);
-    const extendedProducts = useBrands(wines);
+    const extendedProducts = useBrands(products);
 
     const handleFiltersVisibility = state => _ => setFiltersVisibility(state);
     const onAdd = (id, count = 1) => {
@@ -34,14 +33,6 @@ export default WrappedComponent => props => {
                 })
         });
     };
-
-    useEffect(
-        _ => {
-            if (!products) return;
-            setWines(products.map(p => ({ ...p, ...p.product })));
-        },
-        [products]
-    );
 
     useEffect(_ => setFiltersVisibility(!isMobile), [isMobile]);
 

@@ -52,15 +52,23 @@ const CatalogPage = ({
                     {isLoaded ? (
                         <div className="catalog-grid">
                             {products.map(
-                                ({ product, brand, id, backdrop }) => (
+                                ({
+                                    brand,
+                                    id,
+                                    backdrop,
+                                    price,
+                                    image,
+                                    glass_image,
+                                    name
+                                }) => (
                                     <BottleCard
-                                        name={product.name}
-                                        price={product.price}
-                                        wineglass={product.glass_image}
-                                        bottle={product.image}
+                                        name={name}
+                                        price={price}
+                                        wineglass={glass_image}
+                                        bottle={image}
                                         brand={brand}
-                                        to={`/catalog/${product.id}`}
-                                        onAdd={_ => onAdd(product.id)}
+                                        to={`/catalog/${id}`}
+                                        onAdd={_ => onAdd(id)}
                                         backdrop={backdrop}
                                         key={id}
                                     />

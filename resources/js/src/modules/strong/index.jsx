@@ -12,10 +12,11 @@ import useTranslate from "@/utils/useTranslate";
 
 import withApi from "./hoc/withStrongApi";
 import withLogic from "./hoc/withStrongLogic";
+import withFiltering from "@/modules/wines/hoc/withWineFiltering";
 
 import "./strong.scss";
 
-function Strong({ products, productCategories, isLoaded, onAdd }) {
+function Strong({ products, filters, isLoaded, onAdd }) {
     const { t } = useTranslate();
     if (!isLoaded) return <Loading />;
     return (
@@ -25,7 +26,7 @@ function Strong({ products, productCategories, isLoaded, onAdd }) {
                 renderAside={_ => (
                     <Filtering
                         renderFiltersBody={_ => (
-                            <FiltersBody categories={productCategories} />
+                            <FiltersBody filters={filters} />
                         )}
                     />
                 )}
@@ -64,7 +65,8 @@ function FilterBy({ criterias = [], propName = "name" }) {
     return criterias.map((cr, i) => <Checkbox label={cr[propName]} key={i} />);
 }
 
-function FiltersBody({ categories }) {
+function FiltersBody({ filters }) {
+    const isLocationCriteria = key => key === "locations";
     return (
         <>
             <div className="filters-criteria">
@@ -73,14 +75,23 @@ function FiltersBody({ categories }) {
                     <Range defaultRange={[30, 55]} />
                 </div>
             </div>
-            <div className="filters-criteria">
-                <h3 className="filters-criteria__name">Напитки</h3>
-                <div className="filters-criteria__fields">
-                    <FilterBy criterias={categories} />
+            {Object.entries(filters).map(([key, filterItem]) => (
+                <div className="filters-criteria" key={key}>
+                    <h3 className="filters-criteria__name">
+                        {filterItem.label}
+                    </h3>
+                    <div className="filters-criteria__fields">
+                        <FilterBy
+                            criterias={filterItem.value}
+                            propName={
+                                isLocationCriteria(key) ? "country" : "name"
+                            }
+                        />
+                    </div>
                 </div>
-            </div>
+            ))}
         </>
     );
 }
 
-export default compose(withApi, withLogic)(Strong);
+export default compose(withApi, withLogic, withFiltering)(Strong);
