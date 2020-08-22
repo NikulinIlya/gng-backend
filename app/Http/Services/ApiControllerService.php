@@ -3,6 +3,8 @@
 namespace App\Http\Services;
 
 use App\Models\GrapeSort;
+use App\Models\Location;
+use App\Models\Product;
 use App\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +17,7 @@ class ApiControllerService
 
     /**
      * ApiControllerService constructor.
+     *
      * @param Model|null $model
      */
     public function __construct($model = null)
@@ -36,6 +39,7 @@ class ApiControllerService
      * Display the specified entity with set content fields.
      *
      * @param int $id
+     *
      * @return mixed
      */
     public function show($id)
@@ -46,9 +50,10 @@ class ApiControllerService
     /**
      * Get drink entities with set grape sorts field.
      *
-     * @param Model $grapesPivotModel
-     * @param int $idName
+     * @param Model    $grapesPivotModel
+     * @param int      $idName
      * @param int|null $drinkId
+     *
      * @return array
      */
     public function getWithGrapeSorts($grapesPivotModel, $idName, $drinkId = null)
@@ -64,8 +69,10 @@ class ApiControllerService
                 $grapeSortsIds[] = $grapeSort->grape_sort_id;
             }
 
-            $drinkGrapeSorts = $this->makeEntityCollection(GrapeSort::whereIn('id', $grapeSortsIds)->get(),
-                app()->getLocale());
+            $drinkGrapeSorts = $this->makeEntityCollection(
+                GrapeSort::whereIn('id', $grapeSortsIds)->get(),
+                app()->getLocale()
+            );
 
             $entity['grape_sorts'] = $drinkGrapeSorts;
             $newEntities[] = $entity;
@@ -77,8 +84,9 @@ class ApiControllerService
     /**
      * Display the specified entity with set content fields.
      *
-     * @param Model $model
+     * @param Model    $model
      * @param int|null $id
+     *
      * @return mixed
      */
     protected function getEntitiesCollection($model, $id = null)
@@ -124,6 +132,7 @@ class ApiControllerService
      * Get only translated values from entity.
      *
      * @param Model $entity
+     *
      * @return array
      */
     public function getTranslatedFields($entity)
@@ -141,7 +150,8 @@ class ApiControllerService
      * Make return entities collection to a special format.
      *
      * @param \Illuminate\Support\Collection|array $entities
-     * @param string $locale
+     * @param string                               $locale
+     *
      * @return \Illuminate\Support\Collection
      */
     public function makeEntityCollection($entities, $locale)
@@ -169,6 +179,102 @@ class ApiControllerService
         }
 
         return $resultCollection;
+    }
+
+    public function getFilters($categorySlug)
+    {
+        $filters = [];
+
+        $products = $this->model::where('slug', $categorySlug)->firstOrFail()->products;
+
+        $brands = [];
+        $locations = [];
+        $hasColours = false;
+        $hasGrapes = false;
+
+        if (in_array($categorySlug, ['wine', 'champagne', 'liquor'])) {
+            $colours = [];
+            $hasColours = true;
+        }
+
+        if (in_array($categorySlug, ['wine', 'champagne'])) {
+            $grapeSortsUnique = [];
+            $hasGrapes = true;
+        }
+        foreach ($products as $product) {
+            if (! in_array($brand = $product->brand, $brands)) {
+                $brands[] = $brand;
+                if (! in_array($locationId = $brand->location_id, $locations)) {
+                    $locations[] = $locationId;
+                }
+            }
+            $entity = $product->$categorySlug()->first();
+
+            if ($entity && $hasColours && ! in_array($colour = $entity->colour, $colours)) {
+                $colours[] = $colour;
+            }
+
+            if ($entity && $hasGrapes) {
+                $grapeSorts = $entity->grapeSorts;
+                foreach ($grapeSorts as $grapeSort) {
+                    if (! array_key_exists($grapeSort->id, $grapeSortsUnique)) {
+                        $grapeSortsUnique[$grapeSort->id] = $grapeSort;
+                    }
+                }
+            }
+        }
+
+        $locale = app()->getLocale();
+
+        $filters['brands'] = $this->makeEntityCollection($brands, $locale);
+        $filters['locations'] = $this->makeEntityCollection(Location::find($locations), $locale);
+
+        if ($hasColours) {
+            $filters['colours'] = $this->makeEntityCollection($colours, $locale);
+        }
+
+        if ($hasGrapes) {
+            $filters['grape_sorts'] = $this->makeEntityCollection($grapeSortsUnique, $locale);
+        }
+
+        return $filters;
+    }
+
+    /**
+     * @param string        $categorySlug
+     * @param \Request|null $request
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getProductsEntities($categorySlug, $request = null)
+    {
+        $productCategoryId = $this->model::where('slug', $categorySlug)->firstOrFail()->id;
+
+        $brands = $request->input('brands');
+        $locations = $request->input('locations');
+        $priceMin = $request->input('price_min') ?? 0;
+        $priceMax = $request->input('price_max') ?? 1000000;
+        $colours = $request->input('colours');
+        $grapeSorts = $request->input('grape_sorts');
+
+        $products = Product::where('product_category_id', $productCategoryId)
+                           ->where(
+                               function ($query) use ($brands) {
+                                   if ($brands) {
+                                       $query->whereIn('brand_id', $brands);
+                                   }
+                               }
+                           )
+                           ->where(
+                               function ($query) use ($locations) {
+                                   if ($locations) {
+                                       $query->whereIn('brand_id', $brands);
+                                   }
+                               }
+                           )
+                           ->get();
+
+        return $this->makeEntityCollection($products, app()->getLocale());
     }
 
     /**
@@ -209,7 +315,8 @@ class ApiControllerService
      * Paginate entities.
      *
      * @param \Illuminate\Support\Collection|array $entities
-     * @param int $perPage
+     * @param int                                  $perPage
+     *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function paginate($entities, $perPage)
