@@ -5,9 +5,10 @@ import { CartNotificationContext } from "@/components/CartNotification";
 
 import useMeasures from "@/utils/useMeasures";
 import useBrands from "@/utils/useBrands";
+import useFilters from "@/utils/useFiltersApi";
 
 export default WrappedComponent => props => {
-    const { products } = props;
+    const { products, wineStateDispatcher } = props;
     const { isMobile } = useMeasures();
     const { dispatch, assistantPhrases } = useStoreon("assistantPhrases");
 
@@ -16,8 +17,10 @@ export default WrappedComponent => props => {
     );
     const [filtersVisibility, setFiltersVisibility] = useState(false);
     const extendedProducts = useBrands(products);
+    const filters = useFilters("wine");
 
-    const handleFiltersVisibility = state => _ => setFiltersVisibility(state);
+    const handleFiltersVisibility = state => setFiltersVisibility(state);
+
     const onAdd = (id, count = 1) => {
         if (!id) return;
         dispatch("cart/add", {
@@ -33,6 +36,13 @@ export default WrappedComponent => props => {
                 })
         });
     };
+
+    useEffect(
+        _ => {
+            wineStateDispatcher({ type: "set-filters", payload: filters });
+        },
+        [filters]
+    );
 
     useEffect(_ => setFiltersVisibility(!isMobile), [isMobile]);
 

@@ -4,7 +4,8 @@ import redaxios, { to } from "@/utils/fetch";
 
 export default WrappedComponent => props => {
     const [isLoaded, setIsLoaded] = useState(false);
-    const [state, dispatch] = useReducer(wineReducer, {});
+    const [state, dispatch] = useReducer(wineReducer, { filters: [] });
+
     useEffect(_ => {
         (async _ => {
             const [err, response] = await to(
@@ -14,15 +15,15 @@ export default WrappedComponent => props => {
             dispatch({ type: "set-products", payload: response.data.data[0] });
             setIsLoaded(true);
         })();
-        (async _ => {
-            const [errFilters, filtersResponse] = await to(
-                redaxios("/api/product-categories-filters/wine")
-            );
-            dispatch({ type: "set-filters", payload: filtersResponse.data });
-            console.log("filtersResponse", filtersResponse.data);
-        })();
     }, []);
-    return <WrappedComponent {...props} {...state} {...{ isLoaded }} />;
+
+    return (
+        <WrappedComponent
+            {...props}
+            {...state}
+            {...{ isLoaded, wineStateDispatcher: dispatch }}
+        />
+    );
 };
 
 function wineReducer(state, action) {

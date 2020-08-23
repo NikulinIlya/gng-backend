@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import Button from "@/components/Button";
+import Loading from "@/components/Loading";
 
-import data from "./static";
+import withLogic from "./hoc/withWineCategoriesLogic";
 
 import "./wine-categories.scss";
 
-const { brands, region, sort, color, budget } = data;
-
-export default function WineCategories({ onChangeState }) {
+function WineCategories({ onChangeState, filters, isLoaded }) {
+    const { brands, grape_sorts, locations, colours, budget } = filters;
+    if (!isLoaded) return <Loading />;
     return (
         <>
             <div className="wine-categories">
@@ -17,13 +18,13 @@ export default function WineCategories({ onChangeState }) {
                     <CategoryList {...brands} />
                 </div>
                 <div className="wine-categories__col">
-                    <CategoryList {...region} />
+                    <CategoryList {...locations} nameProp="country" />
                 </div>
                 <div className="wine-categories__col">
-                    <CategoryList {...sort} />
+                    <CategoryList {...grape_sorts} />
                 </div>
                 <div className="wine-categories__col wine-categories__col--multirow">
-                    <CategoryList {...color} />
+                    <CategoryList {...colours} />
                     <CategoryList {...budget} />
                 </div>
             </div>
@@ -36,17 +37,19 @@ export default function WineCategories({ onChangeState }) {
     );
 }
 
-function CategoryList({ name, list = [] }) {
+function CategoryList({ label, value = [], nameProp = "name" }) {
     return (
         <section className="wine-category">
-            <h4 className="wine-category__name">{name}</h4>
+            <h4 className="wine-category__name">{label}</h4>
             <ul className="wine-category__list">
-                {list.map((item, i) => (
+                {value.map((item, i) => (
                     <li className="wine-category__item" key={i}>
-                        <Link to="/catalog">{item}</Link>
+                        <Link to="/wines">{item[nameProp]}</Link>
                     </li>
                 ))}
             </ul>
         </section>
     );
 }
+
+export default withLogic(WineCategories);

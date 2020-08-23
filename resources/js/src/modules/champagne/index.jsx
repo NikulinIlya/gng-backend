@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 
 import AsideLayout from "@/components/Layouts/AsideLayout";
-import Range from "@/components/Input/Range/Multiple";
-import { Checkbox } from "@/components/Input";
-import Filtering from "@/components/Filtering";
 import BottleCard from "@/components/BottleCard";
 import Loading from "@/components/Loading";
-import Button from "@/components/Button";
+import AsideFiltering from "@/components/AsideFiltering";
 
 import compose from "@/utils/compose";
 import useTranslate from "@/utils/useTranslate";
@@ -17,7 +14,7 @@ import "./champagne.scss";
 
 function Champagne({
     products,
-    filters,
+    filters = [],
     isLoaded,
     filtersVisibility,
     onAdd,
@@ -30,7 +27,7 @@ function Champagne({
             <AsideLayout
                 title={t("champagne-and-sparkling", "Шампанское и Игристое")}
                 renderAside={_ => (
-                    <Aside
+                    <AsideFiltering
                         filtersVisibility={filtersVisibility}
                         visibilityHandler={handleFiltersVisibility}
                         filters={filters}
@@ -55,50 +52,6 @@ function Champagne({
                 )}
             </AsideLayout>
         </div>
-    );
-}
-
-function FilterBy({ criterias = [], propName = "name" }) {
-    return criterias.map((cr, i) => <Checkbox label={cr[propName]} key={i} />);
-}
-
-function FiltersBody({ filters }) {
-    return (
-        <>
-            <div className="filters-criteria">
-                <h3 className="filters-criteria__name">Цена</h3>
-                <div className="filters-criteria__fields">
-                    <Range defaultRange={[30, 55]} />
-                </div>
-            </div>
-            {Object.entries(filters).map(([key, filterItem]) => (
-                <div className="filters-criteria" key={key}>
-                    <h3 className="filters-criteria__name">
-                        {filterItem.label}
-                    </h3>
-                    <div className="filters-criteria__fields">
-                        <FilterBy
-                            criterias={filterItem.value}
-                            propName={key === "locations" ? "country" : "name"}
-                        />
-                    </div>
-                </div>
-            ))}
-        </>
-    );
-}
-
-function Aside({ filtersVisibility, visibilityHandler, filters }) {
-    const onClose = _ => visibilityHandler(false);
-    const onOpen = _ => visibilityHandler(true);
-
-    if (!filtersVisibility) return <Button onClick={onOpen}>Фильтры</Button>;
-
-    return (
-        <Filtering
-            onClose={onClose}
-            renderFiltersBody={_ => <FiltersBody filters={filters} />}
-        />
     );
 }
 

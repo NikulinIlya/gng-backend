@@ -25,6 +25,23 @@
     }
 }
 
+.filters-handler {
+    padding-left: 42px;
+    position: relative;
+    &:before {
+        position: absolute;
+        content: "";
+        width: 19px;
+        height: 19px;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+
+        background: url("../../../assets/images/icons/filters-icon.svg") no-repeat
+            center / contain;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .layout {
         grid-template-areas:
