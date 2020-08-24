@@ -67,8 +67,6 @@ class ProductCategoryController
      */
     public function getStrongDrinks(Request $request)
     {
-        //$strongProducts = [];
-
         $strongDrinksNames = $request->input('category') ?? self::STRONG_DRINKS;
 
         $productCategoriesId = ProductCategory::whereIn('slug', $strongDrinksNames)->get()->map(function ($category) {
@@ -76,15 +74,6 @@ class ProductCategoryController
         });
 
         $strongProducts = $this->service->getProductsEntities($request, $productCategoriesId->toArray(), $strongDrinksNames);
-        /*foreach ($strongDrinksNames as $strongDrinksName) {
-            $drinks = $this->service->getProductsEntities($strongDrinksName);
-
-            foreach ($drinks as $item) {
-                $strongProducts[] = $item;
-            }
-        }*/
-
-        return $strongProducts;
 
         return $this->service->paginate($strongProducts, 10);
     }
