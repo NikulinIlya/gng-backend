@@ -86,6 +86,7 @@ class ProductCategoryController
         }*/
 
         return $strongProducts;
+
         return $this->service->paginate($strongProducts, 10);
     }
 
