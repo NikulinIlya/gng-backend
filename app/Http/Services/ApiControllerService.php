@@ -381,7 +381,7 @@ class ApiControllerService
             'price_min' => $request->input('price-min') ?? 0,
             'price_max' => $request->input('price-max') ?? 1000000,
             'colours' => $request->input('colours'),
-            'grape_sorts' => $request->input('grape_sorts'),
+            'grape_sorts' => $request->input('grape-sorts'),
         ];
     }
 
