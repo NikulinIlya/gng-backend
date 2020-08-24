@@ -2,11 +2,13 @@
 
 namespace App\Http\Services;
 
+use App\Models\Brand;
 use App\Models\GrapeSort;
 use App\Models\Location;
 use App\Models\Product;
 use App\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class ApiControllerService
 {
@@ -50,8 +52,8 @@ class ApiControllerService
     /**
      * Get drink entities with set grape sorts field.
      *
-     * @param Model    $grapesPivotModel
-     * @param int      $idName
+     * @param Model $grapesPivotModel
+     * @param int $idName
      * @param int|null $drinkId
      *
      * @return array
@@ -84,7 +86,7 @@ class ApiControllerService
     /**
      * Display the specified entity with set content fields.
      *
-     * @param Model    $model
+     * @param Model $model
      * @param int|null $id
      *
      * @return mixed
@@ -150,7 +152,7 @@ class ApiControllerService
      * Make return entities collection to a special format.
      *
      * @param \Illuminate\Support\Collection|array $entities
-     * @param string                               $locale
+     * @param string $locale
      *
      * @return \Illuminate\Support\Collection
      */
@@ -202,22 +204,22 @@ class ApiControllerService
             $hasGrapes = true;
         }
         foreach ($products as $product) {
-            if (! in_array($brand = $product->brand, $brands)) {
+            if (!in_array($brand = $product->brand, $brands)) {
                 $brands[] = $brand;
-                if (! in_array($locationId = $brand->location_id, $locations)) {
+                if (!in_array($locationId = $brand->location_id, $locations)) {
                     $locations[] = $locationId;
                 }
             }
             $entity = $product->$categorySlug()->first();
 
-            if ($entity && $hasColours && ! in_array($colour = $entity->colour, $colours)) {
+            if ($entity && $hasColours && !in_array($colour = $entity->colour, $colours)) {
                 $colours[] = $colour;
             }
 
             if ($entity && $hasGrapes) {
                 $grapeSorts = $entity->grapeSorts;
                 foreach ($grapeSorts as $grapeSort) {
-                    if (! array_key_exists($grapeSort->id, $grapeSortsUnique)) {
+                    if (!array_key_exists($grapeSort->id, $grapeSortsUnique)) {
                         $grapeSortsUnique[$grapeSort->id] = $grapeSort;
                     }
                 }
@@ -241,40 +243,71 @@ class ApiControllerService
     }
 
     /**
-     * @param string        $categorySlug
-     * @param \Request|null $request
+     * @param Request $request
+     * @param array $productCategoriesId
      *
      * @return \Illuminate\Support\Collection
      */
-    public function getProductsEntities($categorySlug, $request = null)
+    public function getProductsEntities(Request $request, $productCategoriesId)
     {
-        $productCategoryId = $this->model::where('slug', $categorySlug)->firstOrFail()->id;
+        $filters = $this->combineFiltersArray($request, $productCategoriesId);
 
-        $brands = $request->input('brands');
-        $locations = $request->input('locations');
-        $priceMin = $request->input('price_min') ?? 0;
-        $priceMax = $request->input('price_max') ?? 1000000;
-        $colours = $request->input('colours');
-        $grapeSorts = $request->input('grape_sorts');
+        $products = Product::whereIn('product_category_id', $filters['product_category_id'])
+            ->where(
+                function ($query) use ($filters) {
+                    if ($filters['brands']) {
+                        $query->whereIn('brand_id', $filters['brands']);
+                    }
+                }
+            )
+            ->where(
+                function ($query) use ($filters) {
+                    if ($filters['locations']) {
+                        $brandsId = Brand::whereIn('location_id', $filters['locations'])->get()->map(function ($brand) {
+                            return $brand->id;
+                        });
 
-        $products = Product::where('product_category_id', $productCategoryId)
-                           ->where(
-                               function ($query) use ($brands) {
-                                   if ($brands) {
-                                       $query->whereIn('brand_id', $brands);
-                                   }
-                               }
-                           )
-                           ->where(
-                               function ($query) use ($locations) {
-                                   if ($locations) {
-                                       $query->whereIn('brand_id', $brands);
-                                   }
-                               }
-                           )
-                           ->get();
+                        $query->whereIn('brand_id', $brandsId);
+                    }
+                }
+            )
+            ->whereBetween('price', [$filters['price_min'], $filters['price_max']])
+            /*->where(
+                function ($query) use ($filters) {
+                    if ($filters['colours']) {
+                        $products = Product::whereIn('product_category_id', $filters['product_category_id'])->get();
+                        foreach ($products as $product) {
+                            $productCategorySlug = $product->productCategory->slug;
+                            $entity = $product->$productCategorySlug()->first();
+                            dd($entity);
+                        }
+                    }
+                }
+            )
+            ->where(
+                function ($query) use ($filters) {
+                    if ($filters['grape_sorts']) {
+
+                    }
+                }
+            )*/
+            ->get();
 
         return $this->makeEntityCollection($products, app()->getLocale());
+    }
+
+
+    public function combineFiltersArray(Request $request, $productCategoriesId)
+    {
+        return [
+            'product_category_id' => $productCategoriesId,
+            'brands' => $request->input('brands'),
+            'locations' => $request->input('locations'),
+            'price_min' => $request->input('price-min') ?? 0,
+            'price_max' => $request->input('price-max') ?? 1000000,
+            'colours' => $request->input('colours'),
+            'grape_sorts' => $request->input('grape_sorts'),
+        ];
     }
 
     /**
@@ -285,26 +318,26 @@ class ApiControllerService
     public function setImageField(&$entity)
     {
         if (isset($entity['main_image'])) {
-            $entity['main_image'] = str_replace('\\', '/', '/storage/'.$entity['main_image']);
+            $entity['main_image'] = str_replace('\\', '/', '/storage/' . $entity['main_image']);
         }
 
         if (isset($entity['image'])) {
-            $entity['image'] = str_replace('\\', '/', '/storage/'.$entity['image']);
+            $entity['image'] = str_replace('\\', '/', '/storage/' . $entity['image']);
         }
 
         if (isset($entity['glass_image'])) {
-            $entity['glass_image'] = str_replace('\\', '/', '/storage/'.$entity['glass_image']);
+            $entity['glass_image'] = str_replace('\\', '/', '/storage/' . $entity['glass_image']);
         }
 
         if (isset($entity['map_image'])) {
-            $entity['map_image'] = str_replace('\\', '/', '/storage/'.$entity['map_image']);
+            $entity['map_image'] = str_replace('\\', '/', '/storage/' . $entity['map_image']);
         }
 
         if (isset($entity['images'])) {
             $images = explode(',', str_replace('\\\\', '/', str_replace(['[', ']', '"'], '', $entity['images'])));
 
             foreach ($images as &$image) {
-                $image = '/storage/'.$image;
+                $image = '/storage/' . $image;
             }
 
             $entity['images'] = $images;
@@ -315,7 +348,7 @@ class ApiControllerService
      * Paginate entities.
      *
      * @param \Illuminate\Support\Collection|array $entities
-     * @param int                                  $perPage
+     * @param int $perPage
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
