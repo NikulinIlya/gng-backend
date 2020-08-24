@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Services\ApiControllerService;
-use App\Models\Location;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 
@@ -56,7 +55,7 @@ class ProductCategoryController
     {
         $productCategoryId = ProductCategory::where('slug', $request->categorySlug)->firstOrFail()->id;
 
-        $products = $this->service->getProductsEntities($request, [$productCategoryId]);
+        $products = $this->service->getProductsEntities($request, [$productCategoryId], [$request->categorySlug]);
 
         return $this->service->paginate($products, 10);
     }
@@ -76,7 +75,7 @@ class ProductCategoryController
             return $category->id;
         });
 
-        $strongProducts = $this->service->getProductsEntities($request, $productCategoriesId->toArray());
+        $strongProducts = $this->service->getProductsEntities($request, $productCategoriesId->toArray(), $strongDrinksNames);
         /*foreach ($strongDrinksNames as $strongDrinksName) {
             $drinks = $this->service->getProductsEntities($strongDrinksName);
 
