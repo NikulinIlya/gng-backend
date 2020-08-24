@@ -17,4 +17,20 @@ class Colour extends Model
     {
         return $this->hasMany('App\Models\Vine');
     }
+
+    /**
+     * Get the champagnes of the colours.
+     */
+    public function champagnes()
+    {
+        return $this->hasMany('App\Models\Champagne');
+    }
+
+    /**
+     * Get the liquors of the colours.
+     */
+    public function liquors()
+    {
+        return $this->hasMany('App\Models\Liquor');
+    }
 }
