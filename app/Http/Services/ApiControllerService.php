@@ -406,26 +406,26 @@ class ApiControllerService
     public function setImageField(&$entity)
     {
         if (isset($entity['main_image'])) {
-            $entity['main_image'] = str_replace('\\', '/', '/storage/' . $entity['main_image']);
+            $entity['main_image'] = str_replace('\\', '/', '/storage/'.$entity['main_image']);
         }
 
         if (isset($entity['image'])) {
-            $entity['image'] = str_replace('\\', '/', '/storage/' . $entity['image']);
+            $entity['image'] = str_replace('\\', '/', '/storage/'.$entity['image']);
         }
 
         if (isset($entity['glass_image'])) {
-            $entity['glass_image'] = str_replace('\\', '/', '/storage/' . $entity['glass_image']);
+            $entity['glass_image'] = str_replace('\\', '/', '/storage/'.$entity['glass_image']);
         }
 
         if (isset($entity['map_image'])) {
-            $entity['map_image'] = str_replace('\\', '/', '/storage/' . $entity['map_image']);
+            $entity['map_image'] = str_replace('\\', '/', '/storage/'.$entity['map_image']);
         }
 
         if (isset($entity['images'])) {
             $images = explode(',', str_replace('\\\\', '/', str_replace(['[', ']', '"'], '', $entity['images'])));
 
             foreach ($images as &$image) {
-                $image = '/storage/' . $image;
+                $image = '/storage/'.$image;
             }
 
             $entity['images'] = $images;
