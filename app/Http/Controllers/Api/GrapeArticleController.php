@@ -40,4 +40,16 @@ class GrapeArticleController
     {
         return $this->service->show($id);
     }
+
+    /**
+     * @param int $grapeId
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function showByGrape($grapeId)
+    {
+        $grapeArticle = GrapeArticle::where('grape_sort_id', $grapeId)->first();
+
+        return $this->service->makeEntityCollection([$grapeArticle], app()->getLocale());
+    }
 }
