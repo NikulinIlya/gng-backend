@@ -4,7 +4,6 @@ namespace App\Http\Services;
 
 use App\Models\Brand;
 use App\Models\Champagne;
-use App\Models\Colour;
 use App\Models\GrapeSort;
 use App\Models\Liquor;
 use App\Models\Location;
