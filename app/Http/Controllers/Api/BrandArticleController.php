@@ -40,4 +40,16 @@ class BrandArticleController
     {
         return $this->service->show($id);
     }
+
+    /**
+     * @param int $brandId
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function showByBrand($brandId)
+    {
+        $brandArticle = BrandArticle::where('brand_id', $brandId)->first();
+
+        return $this->service->makeEntityCollection([$brandArticle], app()->getLocale());
+    }
 }
