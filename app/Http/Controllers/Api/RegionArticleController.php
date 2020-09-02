@@ -40,4 +40,16 @@ class RegionArticleController
     {
         return $this->service->show($id);
     }
+
+    /**
+     * @param int $locationId
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function showByLocation($locationId)
+    {
+        $regionArticle = RegionArticle::where('location_id', $locationId)->first();
+
+        return $this->service->makeEntityCollection([$regionArticle], app()->getLocale());
+    }
 }
