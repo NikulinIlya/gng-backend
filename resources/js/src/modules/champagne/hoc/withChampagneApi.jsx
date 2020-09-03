@@ -10,8 +10,8 @@ export default WrappedComponent => props => {
             const [err, response] = await to(
                 redaxios("/api/products-by-category/champagne")
             );
-            console.log('response champagne',response.data.data[0])
-            setProducts(response.data.data[0]); 
+            console.log('response champagne',response.data.data)
+            setProducts(response.data.data); 
             setIsLoaded(true);
         })();
     }, []);

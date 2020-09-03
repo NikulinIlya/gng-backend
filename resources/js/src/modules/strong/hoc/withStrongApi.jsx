@@ -8,8 +8,8 @@ export default WrappedComponent => props => {
     useEffect(_ => {
         (async _ => {
             const [err, response] = await to(redaxios("/api/strong-drinks"));
-            console.log("response PRODUCTS", response.data.data[0]);
-            setProducts(response.data.data[0]);
+            console.log("response PRODUCTS", response.data.data);
+            setProducts(response.data.data);
             setIsLoaded(true);
         })();
     }, []);

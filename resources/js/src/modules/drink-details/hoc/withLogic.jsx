@@ -1,21 +1,28 @@
 import React, { useState, useEffect, useReducer, useContext } from "react";
 import { useStoreon } from "storeon/react";
+import { useLocation } from "react-router-dom";
 
 import { CartNotificationContext as Cart } from "@/components/CartNotification";
 import isEmpty from "@/utils/is-empty";
+import getRandom from "@/utils/get-random-item";
 import { to } from "@/utils/fetch";
 import useTranslate from "@/utils/useTranslate";
+
+import { history } from "@";
 
 import productDetailsReducer from "../product-details-reducer";
 
 export default WrappedComponent => props => {
-    const { product } = props;
+    const { product, brandArticles, grapeArticles, regionArticles } = props;
     const { dispatch: notificationDispatch } = useContext(Cart);
+    const location = useLocation();
     const { t } = useTranslate();
     const [productCategory, setProductCategory] = useState({});
     const [productRegion, setProductRegion] = useState({});
     const [isProductFavorite, setIsProductFavorite] = useState(false);
     const [schemeIsLoaded, setSchemeIsLoaded] = useState(false);
+    const [articleSet, setArticles] = useState({});
+    const [currentArticle, setCurrentArticle] = useState(null);
 
     const [productDetails, dispatchAction] = useReducer(
         productDetailsReducer,
@@ -43,6 +50,49 @@ export default WrappedComponent => props => {
         "productCategories",
         "dictionary",
         "assistantPhrases"
+    );
+
+    // articles
+    useEffect(
+        _ => {
+            brandArticles.length &&
+                setArticles({ ...articleSet, brand: getRandom(brandArticles) });
+        },
+        [brandArticles]
+    );
+
+    useEffect(
+        _ => {
+            const params = new URLSearchParams(location.search);
+            setCurrentArticle(
+                params.has("article") ? params.get("article") : null
+            );
+        },
+        [location.search]
+    );
+
+    useEffect(
+        _ => {
+            grapeArticles.length &&
+                setArticles({ ...articleSet, grape: getRandom(grapeArticles) });
+        },
+        [grapeArticles]
+    );
+    useEffect(
+        _ => {
+            regionArticles.length &&
+                setArticles({
+                    ...articleSet,
+                    region: getRandom(regionArticles)
+                });
+        },
+        [regionArticles]
+    );
+    useEffect(
+        _ => {
+            console.log("articleSet", articleSet);
+        },
+        [articleSet]
     );
 
     // check if product faforite
@@ -196,10 +246,15 @@ export default WrappedComponent => props => {
                 notificationDispatch({
                     type: "HANDLE_VISIBILITY",
                     payload: true,
-                    fact: assistantPhrases[Math.floor(Math.random() * assistantPhrases.length)].phrase
+                    fact:
+                        assistantPhrases[
+                            Math.floor(Math.random() * assistantPhrases.length)
+                        ].phrase
                 })
         });
     };
+
+    const onHideArticle = () => history.push(location.pathname);
 
     return (
         <WrappedComponent
@@ -208,10 +263,13 @@ export default WrappedComponent => props => {
             productCategory={productCategory}
             productRegion={productRegion}
             productDetails={productDetails}
+            articleSet={articleSet}
+            currentArticle={currentArticle}
             flatRegionImages={flatRegionImages}
             isProductFavorite={isProductFavorite}
             onFavoriteStateChange={onFavoriteStateChange}
             onAdd={onAdd}
+            onHideArticle={onHideArticle}
         />
     );
 };

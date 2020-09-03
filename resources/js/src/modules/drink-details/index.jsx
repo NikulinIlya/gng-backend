@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import DetailsCard from "@/components/DetailsPageCard";
 import Loading from "@/components/Loading";
+import Post from "@/modules/news/components/Post";
+import Modal from "@/components/Modal";
 
 import compose from "@/utils/compose";
 
@@ -42,10 +44,13 @@ function ProductDetails({
     productDetails,
     productCategory,
     productRegion,
+    articleSet,
+    currentArticle,
     isLoaded,
     isProductFavorite,
     onFavoriteStateChange,
-    onAdd
+    onAdd,
+    onHideArticle
 }) {
     const { image, name, vendor_code, price, id, brand_id } = product;
 
@@ -124,25 +129,35 @@ function ProductDetails({
                     )}
 
                     <div className="product-details__more-info">
-                        {[
-                            {
-                                image: template1,
-                                title: "Cloudy Bay",
-                                description: `Cloudy Bay was established by David Hohnen, of Cape Mentelle fame, in 1985. Cloudy Bay takes its name from `
-                            },
-                            {
-                                image: template2,
-                                title: "Cloudy Bay",
-                                description: `Cloudy Bay was established by David Hohnen, of Cape Mentelle fame, in 1985. Cloudy Bay takes its name from `
-                            },
-                            {
-                                image: template3,
-                                title: "Cloudy Bay",
-                                description: `Cloudy Bay was established by David Hohnen, of Cape Mentelle fame, in 1985. Cloudy Bay takes its name from `
-                            }
-                        ].map((c, i) => (
-                            <DetailsCard {...c} key={i} />
-                        ))}
+                        {articleSet.brand && (
+                            <DetailsCard
+                                image={template1}
+                                title={articleSet.brand.name}
+                                description={articleSet.brand.text}
+                                link={`?article=brand`}
+                            />
+                        )}
+                        {articleSet.grape && (
+                            <DetailsCard
+                                image={template2}
+                                title={articleSet.grape.name}
+                                description={articleSet.grape.text}
+                                link={`?article=grape`}
+                            />
+                        )}
+                        {articleSet.region && (
+                            <DetailsCard
+                                image={template3}
+                                title={articleSet.region.name}
+                                description={articleSet.region.text}
+                                link={`?article=region`}
+                            />
+                        )}
+                        {currentArticle && (
+                            <Modal onClose={onHideArticle}>
+                                <Post />
+                            </Modal>
+                        )}
                     </div>
                 </div>
             </article>
