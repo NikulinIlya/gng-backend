@@ -15,22 +15,23 @@ export default function Post({
   title = titleTemplate,
   descr = descrTemplate,
   content = contentTemplate,
+  mainImage = ''
 }) {
   return (
     <div className="post">
-      <img src={template} alt="" className="post__main-img" />
+      <img src={mainImage} alt="" className="post__main-img" />
       <h1 className="post__title">{title}</h1>
       <p className="post__descr">{descr}</p>
-      <div className="post__images">
+      {/* <div className="post__images">
         {Array.from({ length: 3 }).map((_, i) => (
           <div className="post__images-item" key={i}>
             <img src={template} alt="" />
           </div>
         ))}
-      </div>
-      {content.map((itm, i) => (
+      </div> */}
+      {/* {content.map((itm, i) => (
         <p key={i}>{itm}</p>
-      ))}
+      ))} */}
     </div>
   );
 }

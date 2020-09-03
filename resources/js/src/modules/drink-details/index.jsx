@@ -155,7 +155,11 @@ function ProductDetails({
                         )}
                         {currentArticle && (
                             <Modal onClose={onHideArticle}>
-                                <Post />
+                                <Post
+                                    title={articleSet[currentArticle].name}
+                                    descr={articleSet[currentArticle].text}
+                                    mainImage={articleSet[currentArticle].image}
+                                />
                             </Modal>
                         )}
                     </div>

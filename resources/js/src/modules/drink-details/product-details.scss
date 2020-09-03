@@ -126,7 +126,7 @@
   }
   &__more-info {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0,1fr));
     column-gap: 30px;
   }
 }
@@ -189,7 +189,7 @@
       }
     }
     &__more-info {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0,1fr);
       row-gap: 30px;
       .details-card {
         max-width: unset;
