@@ -22,6 +22,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ProductCategoryTest, ProductTest, CartTest
 - app/Http/Services/ProductStockService
 - ProductCategoryController getFilters, getStrongDrinksFilters methods
+- BrandArticle, GrapeArticle, RegionArticle models
+- articles api routes
+- Controllers/Api/BrandArticleController, GrapeArticleController, RegionArticleController
 
 ### Removed
 - CartResolutionMiddleware

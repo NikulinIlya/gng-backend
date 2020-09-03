@@ -120,6 +120,20 @@ Route::get('bags/{id}', 'Api\BagController@show');
 Route::get('glasses', 'Api\GlassController@index');
 Route::get('glasses/{id}', 'Api\GlassController@show');
 
+Route::prefix('articles')->group(function () {
+    Route::get('/brands', 'Api\BrandArticleController@index');
+    Route::get('/brands/{id}', 'Api\BrandArticleController@show');
+    Route::get('/brands-by/{brandId}', 'Api\BrandArticleController@showByBrand');
+
+    Route::get('/grapes', 'Api\GrapeArticleController@index');
+    Route::get('/grapes/{id}', 'Api\GrapeArticleController@show');
+    Route::get('/grapes-by/{grapeId}', 'Api\GrapeArticleController@showByGrape');
+
+    Route::get('/regions', 'Api\RegionArticleController@index');
+    Route::get('/regions/{id}', 'Api\RegionArticleController@show');
+    Route::get('/regions-by/{locationId}', 'Api\RegionArticleController@showByLocation');
+});
+
 Route::prefix('cart')->group(function () {
     Route::get('/', 'Api\CartController@index')->name('cart.index');
     Route::get('/total', 'Api\CartController@total')->name('cart.total');

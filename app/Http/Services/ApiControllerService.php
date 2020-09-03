@@ -2,9 +2,16 @@
 
 namespace App\Http\Services;
 
+use App\Models\Brand;
+use App\Models\Champagne;
 use App\Models\GrapeSort;
+use App\Models\Liquor;
+use App\Models\Location;
+use App\Models\Product;
+use App\Models\Vine;
 use App\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class ApiControllerService
 {
@@ -15,6 +22,7 @@ class ApiControllerService
 
     /**
      * ApiControllerService constructor.
+     *
      * @param Model|null $model
      */
     public function __construct($model = null)
@@ -36,6 +44,7 @@ class ApiControllerService
      * Display the specified entity with set content fields.
      *
      * @param int $id
+     *
      * @return mixed
      */
     public function show($id)
@@ -49,6 +58,7 @@ class ApiControllerService
      * @param Model $grapesPivotModel
      * @param int $idName
      * @param int|null $drinkId
+     *
      * @return array
      */
     public function getWithGrapeSorts($grapesPivotModel, $idName, $drinkId = null)
@@ -64,8 +74,10 @@ class ApiControllerService
                 $grapeSortsIds[] = $grapeSort->grape_sort_id;
             }
 
-            $drinkGrapeSorts = $this->makeEntityCollection(GrapeSort::whereIn('id', $grapeSortsIds)->get(),
-                app()->getLocale());
+            $drinkGrapeSorts = $this->makeEntityCollection(
+                GrapeSort::whereIn('id', $grapeSortsIds)->get(),
+                app()->getLocale()
+            );
 
             $entity['grape_sorts'] = $drinkGrapeSorts;
             $newEntities[] = $entity;
@@ -79,6 +91,7 @@ class ApiControllerService
      *
      * @param Model $model
      * @param int|null $id
+     *
      * @return mixed
      */
     protected function getEntitiesCollection($model, $id = null)
@@ -124,6 +137,7 @@ class ApiControllerService
      * Get only translated values from entity.
      *
      * @param Model $entity
+     *
      * @return array
      */
     public function getTranslatedFields($entity)
@@ -142,6 +156,7 @@ class ApiControllerService
      *
      * @param \Illuminate\Support\Collection|array $entities
      * @param string $locale
+     *
      * @return \Illuminate\Support\Collection
      */
     public function makeEntityCollection($entities, $locale)
@@ -169,6 +184,204 @@ class ApiControllerService
         }
 
         return $resultCollection;
+    }
+
+    public function getFilters($categorySlug)
+    {
+        $filters = [];
+
+        $products = $this->model::where('slug', $categorySlug)->firstOrFail()->products;
+
+        $brands = [];
+        $locations = [];
+        $hasColours = false;
+        $hasGrapes = false;
+
+        if (in_array($categorySlug, ['wine', 'champagne', 'liquor'])) {
+            $colours = [];
+            $hasColours = true;
+        }
+
+        if (in_array($categorySlug, ['wine', 'champagne'])) {
+            $grapeSortsUnique = [];
+            $hasGrapes = true;
+        }
+        foreach ($products as $product) {
+            if (! in_array($brand = $product->brand, $brands)) {
+                $brands[] = $brand;
+                if (! in_array($locationId = $brand->location_id, $locations)) {
+                    $locations[] = $locationId;
+                }
+            }
+            $entity = $product->$categorySlug()->first();
+
+            if ($entity && $hasColours && ! in_array($colour = $entity->colour, $colours)) {
+                $colours[] = $colour;
+            }
+
+            if ($entity && $hasGrapes) {
+                $grapeSorts = $entity->grapeSorts;
+                foreach ($grapeSorts as $grapeSort) {
+                    if (! array_key_exists($grapeSort->id, $grapeSortsUnique)) {
+                        $grapeSortsUnique[$grapeSort->id] = $grapeSort;
+                    }
+                }
+            }
+        }
+
+        $locale = app()->getLocale();
+
+        $filters['brands'] = $this->makeEntityCollection($brands, $locale);
+        $filters['locations'] = $this->makeEntityCollection(Location::find($locations), $locale);
+
+        if ($hasColours) {
+            $filters['colours'] = $this->makeEntityCollection($colours, $locale);
+        }
+
+        if ($hasGrapes) {
+            $filters['grape_sorts'] = $this->makeEntityCollection($grapeSortsUnique, $locale);
+        }
+
+        return $filters;
+    }
+
+    /**
+     * @param Request $request
+     * @param array $productCategoriesId
+     * @param array $productCategoriesSlug
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getProductsEntities(Request $request, $productCategoriesId, $productCategoriesSlug)
+    {
+        $filters = $this->combineFiltersArray($request);
+
+        $products = Product::whereIn('product_category_id', $productCategoriesId)
+            ->where(
+                function ($query) use ($filters) {
+                    if ($filters['brands']) {
+                        $query->whereIn('brand_id', $filters['brands']);
+                    }
+                }
+            )
+            ->where(
+                function ($query) use ($filters) {
+                    if ($filters['locations']) {
+                        $brandsId = Brand::whereIn('location_id', $filters['locations'])->get()->map(
+                            function ($brand) {
+                                return $brand->id;
+                            }
+                        );
+
+                        $query->whereIn('brand_id', $brandsId);
+                    }
+                }
+            )
+            ->whereBetween('price', [$filters['price_min'], $filters['price_max']])
+            ->where(
+                function ($query) use ($filters, $productCategoriesSlug) {
+                    if ($filters['colours']) {
+                        $productsId = [];
+
+                        foreach ($productCategoriesSlug as $productCategory) {
+                            switch ($productCategory) {
+                                case 'wine':
+                                    $model = new Vine();
+                                    break;
+                                case 'champagne':
+                                    $model = new Champagne();
+                                    break;
+                                case 'liquor':
+                                    $model = new Liquor();
+                                    break;
+                                default:
+                                    $model = null;
+                                    break;
+                            }
+
+                            if ($model) {
+                                $entityProductId =
+                                    $model::whereIn('colour_id', $filters['colours'])->get()->map(
+                                        function ($entity) {
+                                            return $entity->product_id;
+                                        }
+                                    );
+
+                                $productsId = array_merge($productsId, $entityProductId->toArray());
+                            }
+                        }
+
+                        $productsId = array_unique($productsId);
+
+                        $query->whereIn('id', $productsId);
+                    }
+                }
+            )
+            ->where(
+                function ($query) use ($filters, $productCategoriesSlug) {
+                    if ($filters['grape_sorts']) {
+                        $grapeSorts = GrapeSort::find($filters['grape_sorts']);
+
+                        if ($grapeSorts) {
+                            $productsId = [];
+
+                            foreach ($productCategoriesSlug as $productCategory) {
+                                switch ($productCategory) {
+                                    case 'wine':
+                                        foreach ($grapeSorts as $grapeSort) {
+                                            $entityIds = $grapeSort->vines->map(
+                                                function ($entity) {
+                                                    return $entity->product_id;
+                                                }
+                                            );
+
+                                            $productsId = array_merge($productsId, $entityIds->toArray());
+                                        }
+
+                                        break;
+                                    case 'champagne':
+                                        foreach ($grapeSorts as $grapeSort) {
+                                            $entityIds = $grapeSort->champagne->map(
+                                                function ($entity) {
+                                                    return $entity->product_id;
+                                                }
+                                            );
+
+                                            $productsId = array_merge($productsId, $entityIds->toArray());
+                                        }
+
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+
+                            $productsId = array_unique($productsId);
+
+                            $query->whereIn('id', $productsId);
+                        }
+                    }
+                }
+            )
+            ->get();
+
+        return $this->makeEntityCollection($products, app()->getLocale());
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function combineFiltersArray(Request $request)
+    {
+        return [
+            'brands' => $request->input('brands'),
+            'locations' => $request->input('locations'),
+            'price_min' => $request->input('price-min') ?? 0,
+            'price_max' => $request->input('price-max') ?? 1000000,
+            'colours' => $request->input('colours'),
+            'grape_sorts' => $request->input('grape-sorts'),
+        ];
     }
 
     /**
@@ -210,13 +423,16 @@ class ApiControllerService
      *
      * @param \Illuminate\Support\Collection|array $entities
      * @param int $perPage
+     *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function paginate($entities, $perPage)
     {
         $productsCollection = new Collection();
 
-        $productsCollection->push($entities);
+        foreach ($entities as $entity) {
+            $productsCollection->push($entity);
+        }
 
         return $productsCollection->paginate($perPage);
     }
