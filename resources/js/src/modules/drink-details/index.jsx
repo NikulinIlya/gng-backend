@@ -131,7 +131,7 @@ function ProductDetails({
                     <div className="product-details__more-info">
                         {articleSet.brand && (
                             <DetailsCard
-                                image={template1}
+                                image={articleSet.brand.main_image}
                                 title={articleSet.brand.name}
                                 description={articleSet.brand.text}
                                 link={`?article=brand`}
@@ -139,7 +139,7 @@ function ProductDetails({
                         )}
                         {articleSet.grape && (
                             <DetailsCard
-                                image={template2}
+                                image={articleSet.grape.main_image}
                                 title={articleSet.grape.name}
                                 description={articleSet.grape.text}
                                 link={`?article=grape`}
@@ -147,7 +147,7 @@ function ProductDetails({
                         )}
                         {articleSet.region && (
                             <DetailsCard
-                                image={template3}
+                                image={articleSet.region.main_image}
                                 title={articleSet.region.name}
                                 description={articleSet.region.text}
                                 link={`?article=region`}
@@ -158,7 +158,7 @@ function ProductDetails({
                                 <Post
                                     title={articleSet[currentArticle].name}
                                     descr={articleSet[currentArticle].text}
-                                    mainImage={articleSet[currentArticle].image}
+                                    mainImage={articleSet[currentArticle].main_image}
                                 />
                             </Modal>
                         )}
