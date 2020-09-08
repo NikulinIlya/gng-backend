@@ -8,7 +8,7 @@ import useBrands from "@/utils/useBrands";
 import useFilters from "@/utils/useFiltersApi";
 
 export default WrappedComponent => props => {
-    const { products, wineStateDispatcher } = props;
+    const { products, page, wineStateDispatcher } = props;
     const { isMobile } = useMeasures();
     const { dispatch, assistantPhrases } = useStoreon("assistantPhrases");
 
@@ -37,6 +37,10 @@ export default WrappedComponent => props => {
         });
     };
 
+    const onLoadMore = () => {
+        wineStateDispatcher({ type: "set-cur-page", payload: page + 1 });
+    };
+
     useEffect(
         _ => {
             wineStateDispatcher({ type: "set-filters", payload: filters });
@@ -56,7 +60,13 @@ export default WrappedComponent => props => {
     return (
         <WrappedComponent
             {...props}
-            {...{ isMobile, filtersVisibility, handleFiltersVisibility, onAdd }}
+            {...{
+                isMobile,
+                filtersVisibility,
+                handleFiltersVisibility,
+                onAdd,
+                onLoadMore
+            }}
             products={extendedProducts}
         />
     );

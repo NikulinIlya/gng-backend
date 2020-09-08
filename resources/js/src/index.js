@@ -146,17 +146,13 @@ const App = () => {
                         {isLoginModalVisible.state && (
                             <Modal
                                 closable={isMobile}
-                                onClose={_ =>
-                                    history.push(window.location.pathname)
-                                }
+                                onClose={_ => history.push(location.pathname)}
                             >
                                 {createElement(
                                     LoginVariants[isLoginModalVisible.variant],
                                     {
                                         onClose: _ =>
-                                            history.push(
-                                                window.location.pathname
-                                            )
+                                            history.push(location.pathname)
                                     }
                                 )}
                             </Modal>

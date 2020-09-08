@@ -4,6 +4,7 @@ import BottleCard from "@/components/BottleCard";
 import Loading from "@/components/Loading";
 import AsideLayout from "@/components/Layouts/AsideLayout";
 import AsideFiltering from "@/components/AsideFiltering";
+import Button from "@/components/Button";
 
 import AdvancedFilters from "./components/AdvancedFiltering";
 
@@ -15,11 +16,14 @@ import "./wines.scss";
 
 const CatalogPage = ({
     isLoaded,
+    lastPage,
+    page,
     products,
     filters,
     filtersVisibility,
     handleFiltersVisibility,
-    onAdd
+    onAdd,
+    onLoadMore
 }) => {
     return (
         <div className="catalog">
@@ -35,20 +39,34 @@ const CatalogPage = ({
                     )}
                 >
                     {isLoaded ? (
-                        <div className="catalog-grid">
-                            {products.map(
-                                ({ id, image, glass_image, ...restProps }) => (
-                                    <BottleCard
-                                        wineglass={glass_image}
-                                        bottle={image}
-                                        to={`/catalog/${id}`}
-                                        onAdd={_ => onAdd(id)}
-                                        key={id}
-                                        {...restProps}
-                                    />
-                                )
+                        <>
+                            <div className="catalog-grid">
+                                {products.map(
+                                    ({
+                                        id,
+                                        image,
+                                        glass_image,
+                                        ...restProps
+                                    }) => (
+                                        <BottleCard
+                                            wineglass={glass_image}
+                                            bottle={image}
+                                            to={`/catalog/${id}`}
+                                            onAdd={_ => onAdd(id)}
+                                            key={id}
+                                            {...restProps}
+                                        />
+                                    )
+                                )}
+                            </div>
+                            {page < lastPage && (
+                                <div className="catalog-load">
+                                    <Button onClick={onLoadMore}>
+                                        Показать еще
+                                    </Button>
+                                </div>
                             )}
-                        </div>
+                        </>
                     ) : (
                         <Loading />
                     )}
