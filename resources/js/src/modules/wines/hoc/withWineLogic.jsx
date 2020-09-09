@@ -44,6 +44,7 @@ export default WrappedComponent => props => {
     useEffect(
         _ => {
             wineStateDispatcher({ type: "set-filters", payload: filters });
+            console.log('filters',filters)
         },
         [filters]
     );

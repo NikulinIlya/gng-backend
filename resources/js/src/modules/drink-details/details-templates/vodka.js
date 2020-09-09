@@ -11,11 +11,6 @@ export default {
         name: "Сырье",
         nameSlug: ""
     },
-    aging: {
-        name: "Выдержка",
-        nameSlug: "",
-        icon: "wineglass"
-    },
     strength: {
         name: "Крепость",
         nameSlug: ""

@@ -11,11 +11,12 @@ import AdvancedFilters from "./components/AdvancedFiltering";
 import { withApi, withLogic, withFiltering } from "./hoc";
 
 import compose from "@/utils/compose";
+import { status as REQUEST } from "@/utils/request-status";
 
 import "./wines.scss";
 
 const CatalogPage = ({
-    isLoaded,
+    status,
     lastPage,
     page,
     products,
@@ -23,7 +24,8 @@ const CatalogPage = ({
     filtersVisibility,
     handleFiltersVisibility,
     onAdd,
-    onLoadMore
+    onLoadMore,
+    onFiltersChange
 }) => {
     return (
         <div className="catalog">
@@ -33,12 +35,14 @@ const CatalogPage = ({
                     renderAside={_ => (
                         <AsideFiltering
                             filters={filters}
+                            onChange={onFiltersChange}
                             filtersVisibility={filtersVisibility}
                             visibilityHandler={handleFiltersVisibility}
                         />
                     )}
                 >
-                    {isLoaded ? (
+                    {status === REQUEST.pending && <Loading />}
+                    {status === REQUEST.success && (
                         <>
                             <div className="catalog-grid">
                                 {products.map(
@@ -67,8 +71,6 @@ const CatalogPage = ({
                                 </div>
                             )}
                         </>
-                    ) : (
-                        <Loading />
                     )}
                 </AsideLayout>
             </div>

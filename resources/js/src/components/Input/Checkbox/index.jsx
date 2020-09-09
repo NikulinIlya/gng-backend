@@ -4,7 +4,7 @@ import "./checkbox.scss";
 
 export default function Checkbox({
   variant = 'rounded',
-  checked,
+  defaultChecked,
   label = "",
   className = "",
   ...inputProps
@@ -15,7 +15,7 @@ export default function Checkbox({
         type="checkbox"
         className={`checkbox__input ${className}`}
         {...inputProps}
-        checked={checked}
+        defaultChecked={defaultChecked}
       />
       <div className={["checkbox__custom-view",variant].join(' ')}></div>
       {label && <span className="checkbox__label">{label}</span>}

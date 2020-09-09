@@ -7,7 +7,7 @@ export default {
         name: "Регион",
         nameSlug: ""
     },
-    grape_sorts: {
+    type: {
         name: "Тип",
         nameSlug: ""
     },

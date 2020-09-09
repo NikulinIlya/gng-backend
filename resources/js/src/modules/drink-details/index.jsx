@@ -18,9 +18,6 @@ import {
 import { withApi, withLogic } from "./hoc";
 
 import bottleImage from "@/assets/images/templates/product-details-bottle.png";
-import template1 from "@/assets/images/templates/sauvignon.png";
-import template2 from "@/assets/images/templates/grape.png";
-import template3 from "@/assets/images/templates/land.png";
 
 import "./product-details.scss";
 
@@ -31,11 +28,47 @@ const detailsIcons = {
     temperature: "wineglass",
     color: "color",
     strength: "bottle",
-    taste: "grape",
-    dosage: "color",
-    class: "wineglass",
+    dosage: "spoon",
+    class: "star",
     aging: "flag",
     raw: "grape"
+};
+
+const vodka = {
+    brand: "flag",
+    raw: "spica",
+    region: "marker",
+    strength: "bottle",
+    taste: "vodkaTaste"
+};
+
+const cognac = {
+    aging: "barrel",
+    brand: "flag",
+    region: "marker",
+    strength: "bottle",
+    taste: "cognacTaste",
+    class: "star"
+};
+
+const whiskey = {
+    aging: "barrel",
+    brand: "flag",
+    region: "marker",
+    strength: "bottle",
+    type: "star",
+    taste: "whiskeyTaste"
+};
+
+const champagne = {
+    dosage: 'spoon',
+}
+
+const productIcons = {
+    vodka,
+    cognac,
+    whiskey,
+    common: detailsIcons
 };
 
 function ProductDetails({
@@ -88,7 +121,13 @@ function ProductDetails({
                         {Object.entries(productDetails).map(
                             ([key, instance]) => (
                                 <ProductFeature
-                                    icon={detailsIcons[key]}
+                                    icon={
+                                        productIcons[productCategory.slug]
+                                            ? productIcons[
+                                                  productCategory.slug
+                                              ][key]
+                                            : productIcons["common"][key]
+                                    }
                                     name={instance.name}
                                     value={instance.value}
                                     key={key}
@@ -158,7 +197,9 @@ function ProductDetails({
                                 <Post
                                     title={articleSet[currentArticle].name}
                                     descr={articleSet[currentArticle].text}
-                                    mainImage={articleSet[currentArticle].main_image}
+                                    mainImage={
+                                        articleSet[currentArticle].main_image
+                                    }
                                 />
                             </Modal>
                         )}

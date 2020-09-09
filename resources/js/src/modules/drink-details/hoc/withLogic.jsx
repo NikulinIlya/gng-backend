@@ -166,7 +166,13 @@ export default WrappedComponent => props => {
                 };
 
                 if (wineOrChampagne.includes(slug)) applyProps(wineProps);
-                if (strong.includes(slug)) applyProps(strongProps);
+                if (strong.includes(slug)) {
+                    const props = { ...strongProps };
+                    if (slug === "vodka") delete props["aging"];
+                    if (slug === "whiskey")
+                        props["type"] = product[slug]["type"];
+                    applyProps(props);
+                }
                 if (slug === "cognac")
                     applyProps({ class: product[slug].class });
                 if (slug === "vodka") applyProps({ raw: product[slug].raw });

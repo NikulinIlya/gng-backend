@@ -8,11 +8,12 @@ import { Checkbox } from "@/components/Input";
 export default function AsideFiltering({
     filtersVisibility,
     visibilityHandler,
-    filters
+    filters,
+    onChange
 }) {
     const onClose = _ => visibilityHandler(false);
     const onOpen = _ => visibilityHandler(true);
-    
+
     if (!filtersVisibility)
         return (
             <Button className="filters-handler" onClick={onOpen}>
@@ -23,16 +24,20 @@ export default function AsideFiltering({
     return (
         <Filtering
             onClose={onClose}
-            renderFiltersBody={_ => <FiltersBody filters={filters} />}
+            renderFiltersBody={_ => (
+                <FiltersBody filters={filters} onChange={onChange} />
+            )}
         />
     );
 }
 
-function FilterBy({ criterias = [], propName = "name" }) {
-    return criterias.map((cr, i) => <Checkbox label={cr[propName]} key={i} />);
+function FilterBy({ criterias = [], propName = "name", onChange }) {
+    return criterias.map((cr, i) => (
+        <Checkbox label={cr[propName]} onChange={onChange} value={cr.id} key={i} />
+    ));
 }
 
-function FiltersBody({ filters }) {
+function FiltersBody({ filters, onChange }) {
     const isLocationCriteria = key => key === "locations";
     return (
         <>
@@ -53,6 +58,7 @@ function FiltersBody({ filters }) {
                             propName={
                                 isLocationCriteria(key) ? "country" : "name"
                             }
+                            onChange={e => onChange(e,key)}
                         />
                     </div>
                 </div>

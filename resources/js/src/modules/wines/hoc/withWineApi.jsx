@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useReducer } from "react";
 
 import redaxios, { to } from "@/utils/fetch";
+import { status as REQUEST } from "@/utils/request-status";
 
 export default WrappedComponent => props => {
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [state, dispatch] = useReducer(wineReducer, { filters: [], page: 1 });
+    const [state, dispatch] = useReducer(wineReducer, {
+        filters: [],
+        page: 1,
+        status: REQUEST.pending,
+        activeFilters: []
+    });
 
     useEffect(_ => {
         (async _ => {
@@ -31,11 +36,17 @@ export default WrappedComponent => props => {
     );
 
     const loadByPage = async (page = 1) => {
-        setIsLoaded(false);
+        dispatch({
+            type: "set-status",
+            payload: REQUEST.pending
+        });
         const [err, response] = await to(
             redaxios(`/api/products-by-category/wine?page=${page}`)
         );
-        setIsLoaded(true);
+        dispatch({
+            type: "set-status",
+            payload: REQUEST.success
+        });
         return response.data;
     };
 
@@ -43,7 +54,7 @@ export default WrappedComponent => props => {
         <WrappedComponent
             {...props}
             {...state}
-            {...{ isLoaded, wineStateDispatcher: dispatch }}
+            {...{ wineStateDispatcher: dispatch }}
         />
     );
 };
@@ -58,6 +69,10 @@ function wineReducer(state, action) {
             return { ...state, page: action.payload };
         case "set-last-page":
             return { ...state, lastPage: action.payload };
+        case "set-status":
+            return { ...state, status: action.payload };
+        case "set-active-filters":
+            return { ...state, activeFilters: action.payload };
         default:
             return state;
     }
