@@ -120,7 +120,7 @@ class ApiControllerService
      */
     public function getWithProducts()
     {
-        $drinks = $this->model::all();
+        $drinks = $this->model::all(); // TODO: check orderBy
 
         $locale = app()->getLocale();
 
@@ -186,6 +186,11 @@ class ApiControllerService
         return $resultCollection;
     }
 
+    /**
+     * @param string $categorySlug
+     *
+     * @return array
+     */
     public function getFilters($categorySlug)
     {
         $filters = [];
@@ -363,6 +368,7 @@ class ApiControllerService
                     }
                 }
             )
+//            ->orderBy('brand_id') TODO
             ->get();
 
         return $this->makeEntityCollection($products, app()->getLocale());
