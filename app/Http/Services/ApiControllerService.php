@@ -120,14 +120,13 @@ class ApiControllerService
      */
     public function getWithProducts()
     {
-        $drinks = $this->model::all(); // TODO: check orderBy
+        $drinks = $this->model::all();
 
         $locale = app()->getLocale();
 
         foreach ($drinks as &$drink) {
             $product = $drink->product()->get();
             $drink['product'] = $this->makeEntityCollection($product, $locale)[0];
-            unset($drink['product_id']);
         }
 
         return $this->makeEntityCollection($drinks, $locale);
@@ -368,7 +367,7 @@ class ApiControllerService
                     }
                 }
             )
-//            ->orderBy('brand_id') TODO
+            ->orderBy('brand_id')
             ->get();
 
         return $this->makeEntityCollection($products, app()->getLocale());
