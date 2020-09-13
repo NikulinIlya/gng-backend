@@ -127,7 +127,6 @@ class ApiControllerService
         foreach ($drinks as &$drink) {
             $product = $drink->product()->get();
             $drink['product'] = $this->makeEntityCollection($product, $locale)[0];
-            unset($drink['product_id']);
         }
 
         return $this->makeEntityCollection($drinks, $locale);
@@ -186,6 +185,11 @@ class ApiControllerService
         return $resultCollection;
     }
 
+    /**
+     * @param string $categorySlug
+     *
+     * @return array
+     */
     public function getFilters($categorySlug)
     {
         $filters = [];
@@ -363,6 +367,7 @@ class ApiControllerService
                     }
                 }
             )
+            ->orderBy('brand_id')
             ->get();
 
         return $this->makeEntityCollection($products, app()->getLocale());
