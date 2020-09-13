@@ -1,30 +1,47 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, {
+    useState,
+    useEffect,
+    useReducer,
+    useMemo,
+    useCallback
+} from "react";
+import { useLocation } from "react-router-dom";
 
-import redaxios, { to } from "@/utils/fetch";
 import { status as REQUEST } from "@/utils/request-status";
+import { createApiService } from "@/utils/api-services";
+import useRequestStatus from "@/utils/useRequestStatus";
+
+const fetchWines = createApiService("/api/products-by-category/wine");
+const initialState = {
+    filters: {},
+    page: 1,
+    status: REQUEST.pending,
+    query: ""
+};
 
 export default WrappedComponent => props => {
-    const [state, dispatch] = useReducer(wineReducer, {
-        filters: [],
-        page: 1,
-        status: REQUEST.pending,
-        activeFilters: []
-    });
-
-    useEffect(_ => {
-        (async _ => {
-            const response = await loadByPage();
-            console.log("response", response);
-            dispatch({ type: "set-products", payload: response.data });
-            dispatch({ type: "set-last-page", payload: response.last_page });
-        })();
-    }, []);
+    const [state, dispatch] = useReducer(wineReducer, initialState);
+    const location = useLocation();
+    const setStatus = useRequestStatus(dispatch);
+    const isFirstPage = useMemo(_ => state.page === 1, [state.page]);
+    const urlParams = useMemo(_ => new URLSearchParams(location.search), [
+        location.search
+    ]);
+    const hasCategoryParams = useMemo(
+        _ =>
+            Object.keys(state.filters).some(f => urlParams.has(`${f}[]`)) ||
+            ["price-min", "price-max"].some(f => urlParams.has(f)),
+        [state.filters, urlParams]
+    );
 
     useEffect(
         _ => {
             (async _ => {
-                if (state.page !== 1) {
-                    const response = await loadByPage(state.page);
+                if (!isFirstPage) {
+                    const search = state.query
+                        ? `${state.query}&page=${state.page}`
+                        : `?page=${state.page}`;
+                    const response = await loadProducts(search);
                     dispatch({
                         type: "set-products",
                         payload: [...state.products, ...response.data]
@@ -35,18 +52,24 @@ export default WrappedComponent => props => {
         [state.page]
     );
 
-    const loadByPage = async (page = 1) => {
-        dispatch({
-            type: "set-status",
-            payload: REQUEST.pending
-        });
-        const [err, response] = await to(
-            redaxios(`/api/products-by-category/wine?page=${page}`)
-        );
-        dispatch({
-            type: "set-status",
-            payload: REQUEST.success
-        });
+    useEffect(
+        _ => {
+            (async _ => {
+                const response = await loadProducts(state.query);
+                dispatch({ type: "set-pagination", payload: response });
+            })();
+        },
+        [state.query]
+    );
+
+    const loadProducts = async (search = "") => {
+        setStatus(REQUEST.pending);
+        const [err, response] = await fetchWines({ search });
+        if (err) {
+            setStatus(REQUEST.error);
+            return err;
+        }
+        setStatus(REQUEST.success);
         return response.data;
     };
 
@@ -54,7 +77,12 @@ export default WrappedComponent => props => {
         <WrappedComponent
             {...props}
             {...state}
-            {...{ wineStateDispatcher: dispatch }}
+            {...{
+                wineStateDispatcher: dispatch,
+                location,
+                urlParams,
+                hasCategoryParams
+            }}
         />
     );
 };
@@ -71,8 +99,14 @@ function wineReducer(state, action) {
             return { ...state, lastPage: action.payload };
         case "set-status":
             return { ...state, status: action.payload };
-        case "set-active-filters":
-            return { ...state, activeFilters: action.payload };
+        case "set-pagination":
+            return {
+                ...state,
+                products: action.payload.data,
+                lastPage: action.payload.last_page
+            };
+        case "set-query":
+            return { ...state, query: action.payload };
         default:
             return state;
     }

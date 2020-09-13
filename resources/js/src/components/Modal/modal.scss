@@ -56,9 +56,7 @@
   .modal {
     &-overlay {
       height: 100%;
-      height: -moz-available; /* WebKit игнор. */
-      height: -webkit-fill-available; /* Mozilla игнор. */
-      height: fill-available;
+      height: stretch;
     }
 
     &-card {

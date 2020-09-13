@@ -1,0 +1,1 @@
+export const parseSearch = search => new URLSearchParams(search)

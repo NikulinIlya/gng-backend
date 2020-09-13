@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useStoreon } from "storeon/react";
 
+import isEmpty from "@/utils/is-empty";
+
 export default function useBrands(products = [], brandKey = "brand_id") {
     const [expandedProducts, setExpandedProducts] = useState(products);
     const { flatBrandNames, brands } = useStoreon("flatBrandNames", "brands");
@@ -25,17 +27,19 @@ export default function useBrands(products = [], brandKey = "brand_id") {
 
     useEffect(
         _ => {
-            setExpandedProducts(
-                decorateProductsWithBackdropOptions(
-                    decorateProductsWithBrands(
-                        products,
-                        flatBrandNames,
+            if (!isEmpty(products)) {
+                setExpandedProducts(
+                    decorateProductsWithBackdropOptions(
+                        decorateProductsWithBrands(
+                            products,
+                            flatBrandNames,
+                            brandKey
+                        ),
+                        brands,
                         brandKey
-                    ),
-                    brands,
-                    brandKey
-                )
-            );
+                    )
+                );
+            }
         },
         [products, brandKey, flatBrandNames, brands]
     );

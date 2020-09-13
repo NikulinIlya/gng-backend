@@ -6,10 +6,10 @@ import isEmpty from "@/utils/is-empty";
 const BUDGET_FILTER = {
     label: "Цена",
     value: [
-        { name: "до 1000 руб" },
-        { name: "1000 - 1500 руб" },
-        { name: "1500 - 3000 руб " },
-        { name: "от 3000 руб и более" }
+        { name: "до 1000 руб", query: '?price-max=1000' },
+        { name: "1000 - 1500 руб", query: '?price-min=1000&price-max=1500' },
+        { name: "1500 - 3000 руб", query: '?price-min=1500&price-max=3000' },
+        { name: "от 3000 руб и более", query: '?price-min=3000' }
     ]
 };
 

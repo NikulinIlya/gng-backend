@@ -3,8 +3,6 @@ import React, { useState, useEffect, useReducer, createContext } from "react";
 import Assistant from "@/components/AssistantNotification";
 import Button from "@/components/Button";
 
-import useMeasures from "@/utils/useMeasures";
-
 import "./cart-notification.scss";
 
 export const CartNotificationContext = createContext({});
@@ -23,9 +21,9 @@ export function CartNotificationProvider({ children }) {
         dispatch({ type: "HANDLE_VISIBILITY", payload: false });
     };
 
-    //hide notification 3 seconds after
+    //hide notification 10 seconds after
     useEffect(
-        _ => (state.visibility && setTimeout(onHide, 3000), Function.prototype),
+        _ => (state.visibility && setTimeout(onHide, 10000), Function.prototype),
         [state.visibility]
     );
 

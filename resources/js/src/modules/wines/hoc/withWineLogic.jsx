@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useStoreon } from "storeon/react";
+import { useLocation } from "react-router-dom"
 
 import { CartNotificationContext } from "@/components/CartNotification";
 
@@ -8,7 +9,7 @@ import useBrands from "@/utils/useBrands";
 import useFilters from "@/utils/useFiltersApi";
 
 export default WrappedComponent => props => {
-    const { products, page, wineStateDispatcher } = props;
+    const { products, page, wineStateDispatcher, history } = props;
     const { isMobile } = useMeasures();
     const { dispatch, assistantPhrases } = useStoreon("assistantPhrases");
 
@@ -18,6 +19,7 @@ export default WrappedComponent => props => {
     const [filtersVisibility, setFiltersVisibility] = useState(false);
     const extendedProducts = useBrands(products);
     const filters = useFilters("wine");
+    const location = useLocation()
 
     const handleFiltersVisibility = state => setFiltersVisibility(state);
 
@@ -38,13 +40,16 @@ export default WrappedComponent => props => {
     };
 
     const onLoadMore = () => {
-        wineStateDispatcher({ type: "set-cur-page", payload: page + 1 });
+        const newPage = page + 1
+        wineStateDispatcher({ type: "set-cur-page", payload: newPage });
+        history.push(`${history.location.pathname}?page=${newPage}`)
     };
+
+
 
     useEffect(
         _ => {
             wineStateDispatcher({ type: "set-filters", payload: filters });
-            console.log('filters',filters)
         },
         [filters]
     );
