@@ -382,10 +382,10 @@ class ApiControllerService
         return [
             'brands' => $request->input('brands'),
             'locations' => $request->input('locations'),
-            'price_min' => $request->input('price-min') ?? 0,
-            'price_max' => $request->input('price-max') ?? 1000000,
+            'price_min' => $request->input('price_min') ?? 0,
+            'price_max' => $request->input('price_max') ?? 1000000,
             'colours' => $request->input('colours'),
-            'grape_sorts' => $request->input('grape-sorts'),
+            'grape_sorts' => $request->input('grape_sorts'),
         ];
     }
 
