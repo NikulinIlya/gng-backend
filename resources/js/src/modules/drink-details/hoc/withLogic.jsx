@@ -12,6 +12,17 @@ import { history } from "@";
 
 import productDetailsReducer from "../product-details-reducer";
 
+function articlesReducer(state, action) {
+    switch (action.type) {
+        case "set-brand-article":
+            return { ...state, brand: action.payload };
+        case "set-grape-article":
+            return { ...state, grape: action.payload };
+        case "set-region-article":
+            return { ...state, region: action.payload };
+    }
+}
+
 export default WrappedComponent => props => {
     const { product, brandArticles, grapeArticles, regionArticles } = props;
     const { dispatch: notificationDispatch } = useContext(Cart);
@@ -21,7 +32,7 @@ export default WrappedComponent => props => {
     const [productRegion, setProductRegion] = useState({});
     const [isProductFavorite, setIsProductFavorite] = useState(false);
     const [schemeIsLoaded, setSchemeIsLoaded] = useState(false);
-    const [articleSet, setArticles] = useState({});
+    const [articleSet, dispatchArticles] = useReducer(articlesReducer, {});
     const [currentArticle, setCurrentArticle] = useState(null);
 
     const [productDetails, dispatchAction] = useReducer(
@@ -55,10 +66,43 @@ export default WrappedComponent => props => {
     // articles
     useEffect(
         _ => {
-            brandArticles.length &&
-                setArticles({ ...articleSet, brand: getRandom(brandArticles) });
+            if (isEmpty(product)) return;
+            const articles = [
+                {
+                    list: brandArticles,
+                    category: "brand",
+                    articleIdKey: "brand_article_id",
+                    type: "set-brand-article"
+                },
+                {
+                    list: grapeArticles,
+                    category: "grape",
+                    articleIdKey: "grape_article_id",
+                    type: "set-grape-article"
+                },
+                {
+                    list: regionArticles,
+                    category: "region",
+                    articleIdKey: "region_article_id",
+                    type: "set-region-article"
+                }
+            ];
+            
+            articles.forEach(art => {
+                if (art.list.length) {
+                    const findedArticle = art.list.find(
+                        f => f.id === product[art.articleIdKey]
+                    );
+                    dispatchArticles({
+                        type: art.type,
+                        payload: findedArticle
+                            ? findedArticle
+                            : getRandom(art.list)
+                    });
+                }
+            });
         },
-        [brandArticles]
+        [brandArticles, grapeArticles, regionArticles, product]
     );
 
     useEffect(
@@ -69,30 +113,6 @@ export default WrappedComponent => props => {
             );
         },
         [location.search]
-    );
-
-    useEffect(
-        _ => {
-            grapeArticles.length &&
-                setArticles({ ...articleSet, grape: getRandom(grapeArticles) });
-        },
-        [grapeArticles]
-    );
-    useEffect(
-        _ => {
-            regionArticles.length &&
-                setArticles({
-                    ...articleSet,
-                    region: getRandom(regionArticles)
-                });
-        },
-        [regionArticles]
-    );
-    useEffect(
-        _ => {
-            console.log("articleSet", articleSet);
-        },
-        [articleSet]
     );
 
     // check if product faforite
@@ -177,7 +197,7 @@ export default WrappedComponent => props => {
 
                 if (slug === "cognac")
                     applyProps({ class: product[slug].class });
-                    
+
                 if (slug === "vodka") applyProps({ raw: product[slug].raw });
 
                 applyProps(commonDrinkProps);

@@ -8,7 +8,7 @@ import useFiltersApi from "@/utils/useFiltersApi";
 import useMeasures from "@/utils/useMeasures";
 
 export default WrappedComponent => props => {
-    const { products = [] } = props;
+    const { products = [], page, strongDispatcher, history } = props;
     const { dispatch: notificationDispatch } = useContext(
         CartNotificationContext
     );
@@ -35,6 +35,12 @@ export default WrappedComponent => props => {
         });
     };
 
+    const onLoadMore = () => {
+        const newPage = page + 1
+        strongDispatcher({ type: "set-cur-page", payload: newPage });
+        history.push(`${history.location.pathname}?page=${newPage}`)
+    };
+
     useEffect(_ => setFiltersVisibility(!isMobile), [isMobile]);
 
     return (
@@ -45,6 +51,7 @@ export default WrappedComponent => props => {
             handleFiltersVisibility={setFiltersVisibility}
             filters={filters}
             onAdd={onAdd}
+            onLoadMore={onLoadMore}
         />
     );
 };

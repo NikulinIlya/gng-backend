@@ -4,9 +4,11 @@ import AsideLayout from "@/components/Layouts/AsideLayout";
 import BottleCard from "@/components/BottleCard";
 import Loading from "@/components/Loading";
 import AsideFiltering from "@/components/AsideFiltering";
+import Button from "@/components/Button";
 
 import compose from "@/utils/compose";
 import useTranslate from "@/utils/useTranslate";
+import { status as REQUEST } from "@/utils/request-status";
 
 import { withApi, withLogic, withFiltering } from "./hoc";
 
@@ -15,10 +17,13 @@ import "./champagne.scss";
 function Champagne({
     products,
     filters = [],
-    isLoaded,
+    status,
+    page,
+    lastPage,
     filtersVisibility,
     onAdd,
-    handleFiltersVisibility
+    handleFiltersVisibility,
+    onLoadMore
 }) {
     const { t } = useTranslate();
 
@@ -34,21 +39,32 @@ function Champagne({
                     />
                 )}
             >
-                {isLoaded ? (
-                    <div className="champagne__grid">
-                        {products.map(({ id, image, glass_image, ...rest }) => (
-                            <BottleCard
-                                wineglass={glass_image}
-                                bottle={image}
-                                to={`/catalog/${id}`}
-                                onAdd={_ => onAdd(id)}
-                                key={id}
-                                {...rest}
-                            />
-                        ))}
-                    </div>
-                ) : (
-                    <Loading />
+                {status === REQUEST.pending && <Loading />}
+                {status === REQUEST.success && (
+                    <>
+                        <div className="champagne__grid">
+                            {products.map(
+                                ({ id, image, glass_image, ...rest }) => (
+                                    <BottleCard
+                                        wineglass={glass_image}
+                                        bottle={image}
+                                        to={`/catalog/${id}`}
+                                        onAdd={_ => onAdd(id)}
+                                        key={id}
+                                        {...rest}
+                                    />
+                                )
+                            )}
+                        </div>
+                        
+                        {page < lastPage && (
+                            <div className="catalog-load">
+                                <Button onClick={onLoadMore}>
+                                    Показать еще
+                                </Button>
+                            </div>
+                        )}
+                    </>
                 )}
             </AsideLayout>
         </div>

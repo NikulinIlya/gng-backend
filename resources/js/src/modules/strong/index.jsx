@@ -4,9 +4,11 @@ import AsideLayout from "@/components/Layouts/AsideLayout";
 import BottleCard from "@/components/BottleCard";
 import Loading from "@/components/Loading";
 import AsideFiltering from "@/components/AsideFiltering";
+import Button from "@/components/Button";
 
 import compose from "@/utils/compose";
 import useTranslate from "@/utils/useTranslate";
+import { status as REQUEST } from "@/utils/request-status";
 
 import withApi from "./hoc/withStrongApi";
 import withLogic from "./hoc/withStrongLogic";
@@ -17,9 +19,12 @@ function Strong({
     products,
     filters,
     filtersVisibility,
-    isLoaded,
+    status,
+    page,
+    lastPage,
     onAdd,
-    handleFiltersVisibility
+    handleFiltersVisibility,
+    onLoadMore
 }) {
     const { t } = useTranslate();
 
@@ -35,23 +40,31 @@ function Strong({
                     />
                 )}
             >
-                {isLoaded ? (
-                    <div className="strong__grid">
-                        {products.map(
-                            ({ id, glass_image, image, ...restProps }) => (
-                                <BottleCard
-                                    key={id}
-                                    wineglass={glass_image}
-                                    bottle={image}
-                                    to={`/catalog/${id}`}
-                                    onAdd={_ => onAdd(id)}
-                                    {...restProps}
-                                />
-                            )
+                {status === REQUEST.pending && <Loading />}
+                {status === REQUEST.success && (
+                    <>
+                        <div className="strong__grid">
+                            {products.map(
+                                ({ id, glass_image, image, ...restProps }) => (
+                                    <BottleCard
+                                        key={id}
+                                        wineglass={glass_image}
+                                        bottle={image}
+                                        to={`/catalog/${id}`}
+                                        onAdd={_ => onAdd(id)}
+                                        {...restProps}
+                                    />
+                                )
+                            )}
+                        </div>
+                        {page < lastPage && (
+                            <div className="catalog-load">
+                                <Button onClick={onLoadMore}>
+                                    Показать еще
+                                </Button>
+                            </div>
                         )}
-                    </div>
-                ) : (
-                    <Loading />
+                    </>
                 )}
             </AsideLayout>
         </div>

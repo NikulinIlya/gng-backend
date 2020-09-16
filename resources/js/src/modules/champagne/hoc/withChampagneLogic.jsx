@@ -10,7 +10,7 @@ import useMeasures from "@/utils/useMeasures";
 import champagneReducer from "../champagneReducer";
 
 export default WrappedComponent => props => {
-    const { products } = props;
+    const { products, page, history, champagneDispatch } = props;
     const [state, champagneDispatcher] = useReducer(champagneReducer, {
         filtersVisibility: false
     });
@@ -59,6 +59,12 @@ export default WrappedComponent => props => {
         });
     };
 
+    const onLoadMore = () => {
+        const newPage = page + 1;
+        champagneDispatch({ type: "set-cur-page", payload: newPage });
+        history.push(`${history.location.pathname}?page=${newPage}`);
+    };
+
     return (
         <WrappedComponent
             {...props}
@@ -66,6 +72,7 @@ export default WrappedComponent => props => {
             filters={filters}
             onAdd={onAdd}
             handleFiltersVisibility={handleFiltersVisibility}
+            onLoadMore={onLoadMore}
         />
     );
 };
