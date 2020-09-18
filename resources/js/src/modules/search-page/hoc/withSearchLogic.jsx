@@ -1,15 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useLocation } from "react-router-dom";
+import { useStoreon } from "storeon/react"
 
 import useBrands from "@/utils/useBrands";
 
 export default WrappedComponent => props => {
-    const { products, fetchSearchResults } = props;
+    const { products, fetchSearchResults, fetchProducts } = props;
     const [query, setQuery] = useState("");
+    const [brandId, setBrandId] = useState("");
     const { search } = useLocation();
+    const { flatBrandNames } = useStoreon('flatBrandNames')
     const extendedProducts = useBrands(products);
-    
+    const [filteredProducts, setFilteredProducts] = useState(extendedProducts);
+
     useEffect(_ => handleSearchQuery(search), [search]);
+    useEffect(
+        _ => {
+            brandId && fetchProducts();
+        },
+        [brandId]
+    );
+    useEffect(
+        _ => {
+            if (products.length && brandId) {
+                setFilteredProducts(
+                    products.filter(p => p.brand_id === +brandId)
+                );
+            }
+        },
+        [products, brandId]
+    );
     useEffect(_ => (fetchSearchResults(query), Function.prototype), [query]);
 
     function handleSearchQuery(search) {
@@ -18,13 +38,18 @@ export default WrappedComponent => props => {
         if (params.has("query") && params.get("query")) {
             setQuery(params.get("query"));
         }
+        if (params.has("brand_id") && params.get("brand_id")) {
+            setBrandId(params.get("brand_id"));
+        }
     }
 
     return (
         <WrappedComponent
             {...props}
-            products={extendedProducts}
+            products={filteredProducts}
             query={query}
+            brandId={brandId}
+            brandNames={flatBrandNames}
         />
     );
 };

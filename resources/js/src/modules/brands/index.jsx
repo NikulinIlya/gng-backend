@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
+import { useStoreon } from "storeon/react";
 
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
 
-import { useStoreon } from "storeon/react";
+import { status as REQUEST } from "@/utils/request-status";
 
 import "./brands.scss";
 
@@ -13,27 +14,33 @@ export default function Brands() {
         "flatRegionMapImages",
         "flatRegionNames"
     );
-    const [sortedBrands, setSortedBrands] = useState([]);
-    const [isLoaded, setIsLoaded] = useState(false);
+
+    const [{ sortedBrands, status }, dispatch] = useReducer(brandsReducer, {
+        sortedBrands: [],
+        status: REQUEST.pending
+    });
+
     useEffect(
         _ => {
             if (brands && flatRegionMapImages && flatRegionNames) {
-                setSortedBrands(
-                    brands.map(({ location_id, ...restProps }) => ({
+                dispatch({
+                    type: "set-sorted-brands",
+                    payload: brands.map(({ location_id, ...restProps }) => ({
                         ...restProps,
                         map: flatRegionMapImages[location_id],
                         regionName: flatRegionNames[location_id]
                     }))
-                );
-                setIsLoaded(true);
+                });
+                dispatch({ type: "set-status", payload: REQUEST.success });
             }
         },
         [brands, flatRegionMapImages, flatRegionNames]
     );
-    useEffect(_ => console.log("sortedBrands", sortedBrands), [sortedBrands]);
+
     return (
         <div className="container">
-            {isLoaded ? (
+            {status === REQUEST.pending && <Loading />}
+            {status === REQUEST.success && (
                 <div className="brands__grid">
                     {sortedBrands.map((b, i) => (
                         <div className="square-aspect-ratio-wrapper" key={i}>
@@ -42,12 +49,12 @@ export default function Brands() {
                                     <img
                                         className="brands__item-logo"
                                         src={b.image}
-                                        alt=""
+                                        alt="logo"
                                     />
                                     <img
                                         className="brands__item-map"
                                         src={b.map}
-                                        alt=""
+                                        alt="map"
                                     />
                                 </div>
 
@@ -64,15 +71,24 @@ export default function Brands() {
                                     <p className="brands__item-history">
                                         {b.description}
                                     </p>
-                                    <Button>Продукция бренда</Button>
+                                    <Button to={`/search?brand_id=${b.id}`}>
+                                        Продукция бренда
+                                    </Button>
                                 </section>
                             </div>
                         </div>
                     ))}
                 </div>
-            ) : (
-                <Loading />
             )}
         </div>
     );
+}
+
+function brandsReducer(state, action) {
+    switch (action.type) {
+        case "set-sorted-brands":
+            return { ...state, sortedBrands: action.payload };
+        case "set-status":
+            return { ...state, status: action.payload };
+    }
 }
