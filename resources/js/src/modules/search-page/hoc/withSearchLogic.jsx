@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useLocation } from "react-router-dom";
-import { useStoreon } from "storeon/react"
+import { useStoreon } from "storeon/react";
 
 import useBrands from "@/utils/useBrands";
 
@@ -9,7 +9,7 @@ export default WrappedComponent => props => {
     const [query, setQuery] = useState("");
     const [brandId, setBrandId] = useState("");
     const { search } = useLocation();
-    const { flatBrandNames } = useStoreon('flatBrandNames')
+    const { flatBrandNames } = useStoreon("flatBrandNames");
     const extendedProducts = useBrands(products);
     const [filteredProducts, setFilteredProducts] = useState(extendedProducts);
 
@@ -26,7 +26,9 @@ export default WrappedComponent => props => {
                 setFilteredProducts(
                     products.filter(p => p.brand_id === +brandId)
                 );
+                return;
             }
+            setFilteredProducts(products);
         },
         [products, brandId]
     );
@@ -37,6 +39,8 @@ export default WrappedComponent => props => {
         const params = new URLSearchParams(search);
         if (params.has("query") && params.get("query")) {
             setQuery(params.get("query"));
+            setBrandId("");
+            return;
         }
         if (params.has("brand_id") && params.get("brand_id")) {
             setBrandId(params.get("brand_id"));
