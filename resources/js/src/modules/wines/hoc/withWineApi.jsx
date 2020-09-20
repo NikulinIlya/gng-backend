@@ -10,6 +10,8 @@ import { useLocation } from "react-router-dom";
 import { status as REQUEST } from "@/utils/request-status";
 import { createApiService } from "@/utils/api-services";
 import useRequestStatus from "@/utils/useRequestStatus";
+import useQueryParams from "@/utils/useQueryParams";
+import useFilters from "@/utils/useFiltersApi";
 
 const fetchWines = createApiService("/api/products-by-category/wine");
 const initialState = {
@@ -22,11 +24,13 @@ const initialState = {
 export default WrappedComponent => props => {
     const [state, dispatch] = useReducer(wineReducer, initialState);
     const location = useLocation();
+    const { search, params, applyParam } = useQueryParams();
     const setStatus = useRequestStatus(dispatch);
     const isFirstPage = useMemo(_ => state.page === 1, [state.page]);
     const urlParams = useMemo(_ => new URLSearchParams(location.search), [
         location.search
     ]);
+
     const hasCategoryParams = useMemo(
         _ =>
             Object.keys(state.filters).some(f => urlParams.has(`${f}[]`)) ||
@@ -38,10 +42,9 @@ export default WrappedComponent => props => {
         _ => {
             (async _ => {
                 if (!isFirstPage) {
-                    const search = state.query
-                        ? `${state.query}&page=${state.page}`
-                        : `?page=${state.page}`;
-                    const response = await loadProducts(search);
+                    const response = await loadProducts(
+                        applyParam(state.query, "page", state.page)
+                    );
                     dispatch({
                         type: "set-products",
                         payload: [...state.products, ...response.data]
@@ -65,10 +68,7 @@ export default WrappedComponent => props => {
     const loadProducts = async (search = "") => {
         setStatus(REQUEST.pending);
         const [err, response] = await fetchWines({ search });
-        if (err) {
-            setStatus(REQUEST.error);
-            return err;
-        }
+        if (err) return setStatus(REQUEST.error);
         setStatus(REQUEST.success);
         return response.data;
     };

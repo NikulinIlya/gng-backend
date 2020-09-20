@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import Button from "@/components/Button";
 
@@ -6,11 +6,23 @@ import useMeasures from "@/utils/useMeasures";
 
 import "./filters.scss";
 
-function Filtering({ onClose, renderFiltersBody }) {
+function Filtering({ onClose, onSubmit, onReset, renderFiltersBody }) {
     const { isMobile } = useMeasures();
+    const formRef = useRef(null);
+    const onSubmitFilters = e => {
+        e.preventDefault();
+        onSubmit();
+    };
+    const onResetFilters = e => {
+        e.preventDefault();
+        Array.from(formRef.current.elements).forEach(
+            el => el.checked && (el.checked = false)
+        );
+        onReset();
+    };
     return (
         <article className="filters">
-            <form>
+            <form ref={formRef}>
                 {isMobile && (
                     <div className="filters__head">
                         <button
@@ -30,10 +42,12 @@ function Filtering({ onClose, renderFiltersBody }) {
                     )}
 
                 <div className="filters__footer">
-                    <Button variant="gold" onClick={onClose}>
+                    <Button variant="gold" onClick={onSubmitFilters}>
                         Применить
                     </Button>
-                    <Button onClick={onClose}>Сбросить</Button>
+                    <Button onClick={onResetFilters} type="reset">
+                        Сбросить
+                    </Button>
                 </div>
             </form>
         </article>

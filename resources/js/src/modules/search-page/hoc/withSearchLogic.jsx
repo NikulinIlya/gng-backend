@@ -22,15 +22,15 @@ export default WrappedComponent => props => {
     );
     useEffect(
         _ => {
-            if (products.length && brandId) {
+            if (extendedProducts.length && brandId) {
                 setFilteredProducts(
-                    products.filter(p => p.brand_id === +brandId)
+                    extendedProducts.filter(p => p.brand_id === +brandId)
                 );
                 return;
             }
-            setFilteredProducts(products);
+            setFilteredProducts(extendedProducts);
         },
-        [products, brandId]
+        [extendedProducts, brandId]
     );
     useEffect(_ => (fetchSearchResults(query), Function.prototype), [query]);
 

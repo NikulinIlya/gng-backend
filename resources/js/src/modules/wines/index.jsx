@@ -23,9 +23,12 @@ const CatalogPage = ({
     filters,
     filtersVisibility,
     handleFiltersVisibility,
+    active,
     onAdd,
     onLoadMore,
-    onFiltersChange
+    onFiltersChange,
+    onFiltersSubmit,
+    onFiltersReset
 }) => {
     return (
         <div className="catalog">
@@ -35,7 +38,10 @@ const CatalogPage = ({
                     renderAside={_ => (
                         <AsideFiltering
                             filters={filters}
+                            active={active}
                             onChange={onFiltersChange}
+                            onSubmit={onFiltersSubmit}
+                            onReset={onFiltersReset}
                             filtersVisibility={filtersVisibility}
                             visibilityHandler={handleFiltersVisibility}
                         />

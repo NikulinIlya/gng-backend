@@ -9,7 +9,10 @@ export default function AsideFiltering({
     filtersVisibility,
     visibilityHandler,
     filters,
-    onChange
+    active,
+    onChange,
+    onSubmit,
+    onReset
 }) {
     const onClose = _ => visibilityHandler(false);
     const onOpen = _ => visibilityHandler(true);
@@ -24,27 +27,51 @@ export default function AsideFiltering({
     return (
         <Filtering
             onClose={onClose}
+            onSubmit={onSubmit}
+            onReset={onReset}
             renderFiltersBody={_ => (
-                <FiltersBody filters={filters} onChange={onChange} />
+                <FiltersBody
+                    filters={filters}
+                    active={active}
+                    onChange={onChange}
+                />
             )}
         />
     );
 }
 
-function FilterBy({ criterias = [], propName = "name", onChange }) {
+function FilterBy({
+    criterias = [],
+    active = {},
+    category,
+    propName = "name",
+    onChange
+}) {
     return criterias.map((cr, i) => (
-        <Checkbox label={cr[propName]} onChange={onChange} value={cr.id} key={i} />
+        <Checkbox
+            label={cr[propName]}
+            onChange={onChange}
+            defaultChecked={
+                active[category] && active[category].includes(cr.id + "")
+            }
+            value={cr.id}
+            key={i}
+        />
     ));
 }
 
-function FiltersBody({ filters, onChange }) {
-    const isLocationCriteria = key => key === "locations";
+function FiltersBody({ filters, active, onChange }) {
+    const getPropName = key => (key === "locations" ? "country" : "name");
     return (
         <>
             <div className="filters-criteria">
                 <h3 className="filters-criteria__name">Цена</h3>
                 <div className="filters-criteria__fields">
-                    <Range defaultRange={[30, 55]} />
+                    <Range
+                        min={1000}
+                        max={100000}
+                        defaultRange={[6000, 90000]}
+                    />
                 </div>
             </div>
             {Object.entries(filters).map(([key, filterItem]) => (
@@ -55,10 +82,10 @@ function FiltersBody({ filters, onChange }) {
                     <div className="filters-criteria__fields">
                         <FilterBy
                             criterias={filterItem.value}
-                            propName={
-                                isLocationCriteria(key) ? "country" : "name"
-                            }
-                            onChange={e => onChange(e,key)}
+                            active={active}
+                            category={key}
+                            propName={getPropName(key)}
+                            onChange={e => onChange(e, key)}
                         />
                     </div>
                 </div>

@@ -31,15 +31,15 @@ const strongLabels = {
             },
             {
                 name: "Водка",
-                id: 1
+                id: 2
             },
             {
                 name: "Виски",
-                id: 1
+                id: 3
             },
             {
                 name: "Ликёр",
-                id: 1
+                id: 4
             },
         ]
     }
@@ -80,8 +80,6 @@ export default function useApiState(slug) {
             {}
         );
     }
-
-    console.log("labeledFilters", labeledFilters);
 
     return labeledFilters;
 }

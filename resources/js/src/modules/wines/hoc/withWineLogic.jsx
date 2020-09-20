@@ -19,7 +19,6 @@ export default WrappedComponent => props => {
     const [filtersVisibility, setFiltersVisibility] = useState(false);
     const extendedProducts = useBrands(products);
     const filters = useFilters("wine");
-    const location = useLocation()
 
     const handleFiltersVisibility = state => setFiltersVisibility(state);
 
@@ -41,11 +40,8 @@ export default WrappedComponent => props => {
 
     const onLoadMore = () => {
         const newPage = page + 1
-        wineStateDispatcher({ type: "set-cur-page", payload: newPage });
         history.push(`${history.location.pathname}?page=${newPage}`)
     };
-
-
 
     useEffect(
         _ => {

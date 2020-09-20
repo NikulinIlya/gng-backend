@@ -1,57 +1,92 @@
 import React, { useState, useEffect, useReducer, useMemo } from "react";
-import { useLocation } from "react-router-dom";
+
+import useQueryParams from "@/utils/useQueryParams";
 
 export default WrappedComponent => props => {
-    const {
-        wineStateDispatcher,
-        filters,
-        urlParams,
-        hasCategoryParams
-    } = props;
-    const [state, filtersDispatcher] = useReducer(filtersDispatcher, {
+    const { wineStateDispatcher, filters, history } = props;
+    const [state, filtersDispatcher] = useReducer(filtersReducer, {
         activeFilters: {}
     });
+    const { params, buildQuery } = useQueryParams();
 
     useEffect(
         _ => {
-            const search = hasCategoryParams
-                ? [...Object.keys(filters)]
-                      .filter(f => urlParams.has(`${f}[]`))
-                      .reduce((acc, cur) => {
-                          return (acc += `${cur}[]=${urlParams.get(
-                              `${cur}[]`
-                          )}`);
-                      }, "?")
-                : "";
+            if (params) {
+                const filteredParams = Object.keys(params)
+                    .filter(key => filters[key])
+                    .reduce((acc, cur) => {
+                        acc[cur] = params[cur];
+                        return acc;
+                    }, {});
 
-            urlParams.has("page") &&
+                const normalizedQuery = buildQuery(filteredParams);
+
                 wineStateDispatcher({
-                    type: "set-cur-page",
-                    payload: +urlParams.get("page")
+                    type: "set-query",
+                    payload: normalizedQuery
                 });
 
-            wineStateDispatcher({
-                type: "set-query",
-                payload: search
-            });
+                if (params["page"] && !isNaN(params["page"]))
+                    wineStateDispatcher({
+                        type: "set-cur-page",
+                        payload: +params["page"]
+                    });
+            }
         },
-        [urlParams, filters]
+        [params, filters]
     );
 
+    useEffect(
+        _ => {
+            console.log("state.activeFilters", state.activeFilters);
+            console.log(buildQuery(state.activeFilters));
+        },
+        [state.activeFilters]
+    );
+
+    useEffect(_ => console.log("params", params), [params]);
+
     const onFiltersChange = (e, category) => {
-        // if (e.target.checked) {
-        //     const instance = { category, value: e.target.value }
-        //     const payload = [...activeFilters, instance]
-        // } else {
-        // }
-        // wineStateDispatcher({
-        //     type: "set-active-filters",
-        //     payload
-        // });
-        // console.log("change", e.target.value, "key", category);
+        const active = { ...state.activeFilters };
+        const { value } = e.target;
+
+        if (e.target.checked) {
+            active[category] = active[category]
+                ? [...active[category], value]
+                : [value];
+        } else {
+        }
+
+        filtersDispatcher({
+            type: "set-active-filters",
+            payload: active
+        });
+
+        console.log("change", e.target.value, "key", category);
     };
 
-    return <WrappedComponent {...props} onFiltersChange={onFiltersChange} />;
+    const onFiltersSubmit = () => {
+        console.log("submit");
+        history.push(buildQuery(state.activeFilters));
+    };
+    const onFiltersReset = () => {
+        console.log("reset");
+        history.push(location.pathname);
+        filtersDispatcher({
+            type: "set-active-filters",
+            payload: {}
+        });
+    };
+
+    return (
+        <WrappedComponent
+            {...props}
+            onFiltersChange={onFiltersChange}
+            onFiltersSubmit={onFiltersSubmit}
+            onFiltersReset={onFiltersReset}
+            active={params}
+        />
+    );
 };
 
 function filtersReducer(state, action) {

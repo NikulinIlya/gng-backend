@@ -22,7 +22,7 @@ export default WrappedComponent => props => {
             search: `?query=${query}`
         });
         if (err) return setStatus(REQUEST.error);
-        console.log("searchResponse", searchResponse);
+        // console.log("searchResponse", searchResponse);
         dispatch({ type: "set-products", payload: searchResponse.data });
         setStatus(REQUEST.success);
     }
@@ -31,7 +31,7 @@ export default WrappedComponent => props => {
         setStatus(REQUEST.pending);
         const [err, productsResponse] = await productsFetcher({ search: "" });
         if (err) return setStatus(REQUEST.error);
-        console.log("productsResponse", productsResponse);
+        // console.log("productsResponse", productsResponse);
         dispatch({ type: "set-products", payload: productsResponse.data });
         setStatus(REQUEST.success);
     }
