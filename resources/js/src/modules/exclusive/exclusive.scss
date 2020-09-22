@@ -4,6 +4,13 @@
   gap: 30px;
   margin-bottom: 100px;
   padding-top: 15px;
+  .exclusive-card{
+    &__content{
+      a{
+        display: inline-block;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 768px){
@@ -16,7 +23,7 @@
         height: 100%;
         display: flex;
         flex-flow: column nowrap;
-        button{
+        button,a{
           margin-top: auto;
         }
       }

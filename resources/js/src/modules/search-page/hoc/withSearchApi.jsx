@@ -6,10 +6,13 @@ import useRequestStatus from "@/utils/useRequestStatus";
 
 const searchFetcher = createApiService("/api/search-products");
 const productsFetcher = createApiService("/api/products");
+const raresFetcher = createApiService("/api/rares");
+const vintagesFetcher = createApiService("/api/vintages");
 
 export default WrappedComponent => props => {
     const [state, dispatch] = useReducer(searchReducer, {
         products: [],
+        productIds: [],
         status: REQUEST.pending
     });
 
@@ -36,12 +39,32 @@ export default WrappedComponent => props => {
         setStatus(REQUEST.success);
     }
 
+    async function fetchProductsByCategory(category) {
+        const allowedFetcher = {
+            vintages: vintagesFetcher,
+            rares: raresFetcher
+        };
+        if (!allowedFetcher[category]) return;
+        setStatus(REQUEST.pending);
+        const [err, productsResponse] = await allowedFetcher[category]({
+            search: ""
+        });
+        if (err) return setStatus(REQUEST.error);
+        // console.log("productsResponse", productsResponse);
+        dispatch({
+            type: "set-product-ids",
+            payload: productsResponse.data.map(p => p.product_id)
+        });
+        setStatus(REQUEST.success);
+    }
+
     return (
         <WrappedComponent
             {...props}
             {...state}
             fetchSearchResults={fetchSearchResults}
             fetchProducts={fetchProducts}
+            fetchProductsByCategory={fetchProductsByCategory}
         />
     );
 };
@@ -52,5 +75,7 @@ function searchReducer(state, action) {
             return { ...state, products: action.payload };
         case "set-status":
             return { ...state, status: action.payload };
+        case "set-product-ids":
+            return { ...state, productIds: action.payload };
     }
 }

@@ -12,8 +12,13 @@ export default WrappedComponent => props => {
     useEffect(
         _ => {
             if (params) {
+                const extendedFilters = {
+                    ...filters,
+                    price_min: "value",
+                    price_max: "value"
+                };
                 const filteredParams = Object.keys(params)
-                    .filter(key => filters[key])
+                    .filter(key => extendedFilters[key])
                     .reduce((acc, cur) => {
                         acc[cur] = params[cur];
                         return acc;
@@ -38,6 +43,18 @@ export default WrappedComponent => props => {
 
     useEffect(
         _ => {
+            if (params) {
+                filtersDispatcher({
+                    type: "set-active-filters",
+                    payload: params
+                });
+            }
+        },
+        [params]
+    );
+
+    useEffect(
+        _ => {
             console.log("state.activeFilters", state.activeFilters);
             console.log(buildQuery(state.activeFilters));
         },
@@ -47,6 +64,12 @@ export default WrappedComponent => props => {
     useEffect(_ => console.log("params", params), [params]);
 
     const onFiltersChange = (e, category) => {
+        console.log("e", e, "category", category);
+        if (category === "price") {
+            handlePriceFilter(e);
+            return;
+        }
+
         const active = { ...state.activeFilters };
         const { value } = e.target;
 
@@ -55,14 +78,27 @@ export default WrappedComponent => props => {
                 ? [...active[category], value]
                 : [value];
         } else {
+            if (active[category].includes(value)) {
+                active[category] = active[category].filter(v => v !== value);
+            }
         }
 
         filtersDispatcher({
             type: "set-active-filters",
             payload: active
         });
-
         console.log("change", e.target.value, "key", category);
+    };
+
+    const handlePriceFilter = value => {
+        filtersDispatcher({
+            type: "set-active-filters",
+            payload: {
+                ...state.activeFilters,
+                price_min: value[0],
+                price_max: value[1]
+            }
+        });
     };
 
     const onFiltersSubmit = () => {

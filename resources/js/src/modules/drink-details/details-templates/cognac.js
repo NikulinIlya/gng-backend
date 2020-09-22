@@ -12,7 +12,7 @@ export default {
         nameSlug: ""
     },
     aging: {
-        name: "Выдержка",
+        name: "Возраст коньячного спирта",
         nameSlug: ""
     },
     strength: {

@@ -31,13 +31,6 @@ export default WrappedComponent => props => {
         location.search
     ]);
 
-    const hasCategoryParams = useMemo(
-        _ =>
-            Object.keys(state.filters).some(f => urlParams.has(`${f}[]`)) ||
-            ["price-min", "price-max"].some(f => urlParams.has(f)),
-        [state.filters, urlParams]
-    );
-
     useEffect(
         _ => {
             (async _ => {
@@ -80,8 +73,7 @@ export default WrappedComponent => props => {
             {...{
                 wineStateDispatcher: dispatch,
                 location,
-                urlParams,
-                hasCategoryParams
+                urlParams
             }}
         />
     );

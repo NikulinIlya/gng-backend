@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useReducer, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 
-// import isEmpty from "@/utils/is-empty";
-
 export default function useQueryParams() {
     const [state, dispatch] = useReducer(queryReducer, { params: null });
     const { search } = useLocation();
@@ -20,11 +18,6 @@ export default function useQueryParams() {
         },
         [search]
     );
-
-    // const applySearchParam = useCallback(
-    //     (key, value) => applyParam(search, key, value),
-    //     [search]
-    // );
 
     return { ...state, applyParam, buildQuery };
 }

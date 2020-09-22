@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import BottleCard from "@/components/BottleCard";
 import Loading from "@/components/Loading";
+import Heading from "@/components/Heading";
 
 import { withApi, withLogic } from "./hoc";
 
@@ -10,7 +11,19 @@ import { status as REQUEST } from "@/utils/request-status";
 
 import "./search-page.scss";
 
-function SearchPage({ status, products, query, brandId, brandNames }) {
+const categoryLabels = {
+    vintages: "Винтажи",
+    rares: "Редкие"
+};
+
+function SearchPage({
+    status,
+    products,
+    query,
+    brandId,
+    category,
+    brandNames
+}) {
     return (
         <div className="container">
             <div className="search-page">
@@ -23,6 +36,11 @@ function SearchPage({ status, products, query, brandId, brandNames }) {
                     <h1 className="search-page__title">
                         Search for "{brandNames[brandId]}"
                     </h1>
+                )}
+                {category && categoryLabels[category] && (
+                    <Heading className="search-page__title">
+                        {categoryLabels[category]}
+                    </Heading>
                 )}
                 <div className="search-page__results">
                     {status === REQUEST.pending && <Loading />}

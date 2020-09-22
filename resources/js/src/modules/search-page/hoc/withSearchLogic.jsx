@@ -5,9 +5,16 @@ import { useStoreon } from "storeon/react";
 import useBrands from "@/utils/useBrands";
 
 export default WrappedComponent => props => {
-    const { products, fetchSearchResults, fetchProducts } = props;
+    const {
+        products,
+        productIds,
+        fetchSearchResults,
+        fetchProducts,
+        fetchProductsByCategory
+    } = props;
     const [query, setQuery] = useState("");
     const [brandId, setBrandId] = useState("");
+    const [category, setCategory] = useState("");
     const { search } = useLocation();
     const { flatBrandNames } = useStoreon("flatBrandNames");
     const extendedProducts = useBrands(products);
@@ -22,16 +29,32 @@ export default WrappedComponent => props => {
     );
     useEffect(
         _ => {
+            if (category) {
+                fetchProducts();
+                fetchProductsByCategory(category);
+            }
+        },
+        [category]
+    );
+    useEffect(
+        _ => {
             if (extendedProducts.length && brandId) {
                 setFilteredProducts(
                     extendedProducts.filter(p => p.brand_id === +brandId)
                 );
                 return;
             }
+            if (productIds.length && extendedProducts.length) {
+                setFilteredProducts(
+                    extendedProducts.filter(p => productIds.includes(p.id))
+                );
+                return;
+            }
             setFilteredProducts(extendedProducts);
         },
-        [extendedProducts, brandId]
+        [extendedProducts, productIds, brandId]
     );
+
     useEffect(_ => (fetchSearchResults(query), Function.prototype), [query]);
 
     function handleSearchQuery(search) {
@@ -45,6 +68,9 @@ export default WrappedComponent => props => {
         if (params.has("brand_id") && params.get("brand_id")) {
             setBrandId(params.get("brand_id"));
         }
+        if (params.has("category") && params.get("category")) {
+            setCategory(params.get("category"));
+        }
     }
 
     return (
@@ -53,6 +79,7 @@ export default WrappedComponent => props => {
             products={filteredProducts}
             query={query}
             brandId={brandId}
+            category={category}
             brandNames={flatBrandNames}
         />
     );
