@@ -8,12 +8,14 @@
     flex-shrink: 0;
     flex-grow: 0;
 
+    padding: 0 22px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   &__info {
     .event-calc {
+      min-width: 520px;
       &__label {
         display: block;
         padding-bottom: 16px;

@@ -8,7 +8,7 @@ export default function ProductCounter({
     title,
     price,
     label,
-    defaultCount,
+    defaultCount = 1,
     onAdd
 }) {
     const { value, dispatch } = useCounter(defaultCount);

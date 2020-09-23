@@ -70,7 +70,10 @@ function FiltersBody({ filters, active, onChange }) {
                     <Range
                         min={1000}
                         max={100000}
-                        defaultRange={[1000, 100000]}
+                        defaultRange={[
+                            +active["price_min"] || 1000,
+                            +active["price_max"] || 100000
+                        ]}
                         onChange={value => onChange(value, "price")}
                     />
                 </div>

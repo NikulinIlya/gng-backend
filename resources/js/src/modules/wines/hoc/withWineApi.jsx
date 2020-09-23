@@ -11,7 +11,7 @@ import { status as REQUEST } from "@/utils/request-status";
 import { createApiService } from "@/utils/api-services";
 import useRequestStatus from "@/utils/useRequestStatus";
 import useQueryParams from "@/utils/useQueryParams";
-import useFilters from "@/utils/useFiltersApi";
+// import useFilters from "@/utils/useFiltersApi";
 
 const fetchWines = createApiService("/api/products-by-category/wine");
 const initialState = {

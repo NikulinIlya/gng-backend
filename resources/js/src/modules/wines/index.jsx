@@ -33,7 +33,12 @@ const CatalogPage = ({
     return (
         <div className="catalog">
             <div className="container">
-                <AdvancedFilters />
+                {console.log('!active',active)}
+                <AdvancedFilters
+                    active={active}
+                    onChange={onFiltersChange}
+                    onSubmit={onFiltersSubmit}
+                />
                 <AsideLayout
                     renderAside={_ => (
                         <AsideFiltering

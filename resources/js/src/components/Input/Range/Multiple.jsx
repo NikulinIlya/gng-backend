@@ -11,6 +11,7 @@ function MultipleRange({
         Math.min(...range),
         Math.max(...range)
     ]);
+    // useEffect(_ => setRange(defaultRange), [defaultRange]);
     useEffect(() => setNormalized([Math.min(...range), Math.max(...range)]), [
         range
     ]);
