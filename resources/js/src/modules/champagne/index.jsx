@@ -36,6 +36,7 @@ function Champagne({
                         filtersVisibility={filtersVisibility}
                         visibilityHandler={handleFiltersVisibility}
                         filters={filters}
+                        onChange={Function.prototype}
                     />
                 )}
             >
@@ -56,7 +57,7 @@ function Champagne({
                                 )
                             )}
                         </div>
-                        
+
                         {page < lastPage && (
                             <div className="catalog-load">
                                 <Button onClick={onLoadMore}>

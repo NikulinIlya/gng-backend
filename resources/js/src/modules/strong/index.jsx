@@ -37,6 +37,7 @@ function Strong({
                         filtersVisibility={filtersVisibility}
                         filters={filters}
                         visibilityHandler={handleFiltersVisibility}
+                        onChange={Function.prototype}
                     />
                 )}
             >
