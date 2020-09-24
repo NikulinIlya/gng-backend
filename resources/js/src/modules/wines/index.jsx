@@ -33,7 +33,6 @@ const CatalogPage = ({
     return (
         <div className="catalog">
             <div className="container">
-                {console.log('!active',active)}
                 <AdvancedFilters
                     active={active}
                     onChange={onFiltersChange}

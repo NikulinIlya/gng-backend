@@ -36,6 +36,7 @@ function Strong({
                     <AsideFiltering
                         filtersVisibility={filtersVisibility}
                         filters={filters}
+                        active={{}}
                         visibilityHandler={handleFiltersVisibility}
                         onChange={Function.prototype}
                     />

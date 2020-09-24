@@ -13,6 +13,20 @@ export const monthNames = [
     "Ноябрь",
     "Декабрь"
 ];
+export const contextMonthNames = [
+    "Января",
+    "Февраля",
+    "Марта",
+    "Апреля",
+    "Мая",
+    "Июня",
+    "Июля",
+    "Августа",
+    "Сентября",
+    "Октября",
+    "Ноября",
+    "Декабря"
+];
 export const getDaysInMonth = date =>
     new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 

@@ -36,6 +36,7 @@ function Champagne({
                         filtersVisibility={filtersVisibility}
                         visibilityHandler={handleFiltersVisibility}
                         filters={filters}
+                        active={{}}
                         onChange={Function.prototype}
                     />
                 )}

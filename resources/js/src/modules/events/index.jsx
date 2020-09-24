@@ -15,7 +15,7 @@ import { withApi, withLogic } from "./hoc";
 
 import "./events.scss";
 
-function Events({ eventList, status }) {
+function Events({ eventList, futureEvents, status }) {
     const viewBy = {
         list: ListView,
         calendar: CalendarView
@@ -31,7 +31,7 @@ function Events({ eventList, status }) {
                     <Navigation defaultType={type} onChange={setType} />
                     <div className="events__view">
                         {createElement(viewBy[type], {
-                            list: eventList,
+                            list: futureEvents,
                             events: eventList.map(e => e.date)
                         })}
                     </div>

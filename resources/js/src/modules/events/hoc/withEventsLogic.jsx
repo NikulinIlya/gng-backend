@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useMemo } from "react";
 
-import { monthNames, getTime } from "../components/CalendarView/calendar-helpers";
+import {
+    contextMonthNames,
+    getTime
+} from "../components/CalendarView/calendar-helpers";
 
 export default WrappedComponent => props => {
     const { eventList } = props;
@@ -11,7 +14,7 @@ export default WrappedComponent => props => {
                     ...event,
                     date: new Date(event.event_date),
                     day: new Date(event.event_date).getDate(),
-                    month: monthNames[new Date(event.event_date).getMonth()],
+                    month: contextMonthNames[new Date(event.event_date).getMonth()],
                     time: getTime(new Date(event.event_date))
                 }))
                 .sort(
@@ -20,6 +23,18 @@ export default WrappedComponent => props => {
         },
         [eventList]
     );
-    
-    return <WrappedComponent {...props} eventList={parsedEvents} />;
+    const futureEvents = useMemo(
+        _ => {
+            return parsedEvents.filter(e => e.date > new Date());
+        },
+        [parsedEvents]
+    );
+
+    return (
+        <WrappedComponent
+            {...props}
+            eventList={parsedEvents}
+            futureEvents={futureEvents}
+        />
+    );
 };
