@@ -31,7 +31,8 @@ function Events({ eventList, futureEvents, status }) {
                     <Navigation defaultType={type} onChange={setType} />
                     <div className="events__view">
                         {createElement(viewBy[type], {
-                            list: futureEvents,
+                            list: eventList,
+                            futureEvents,
                             events: eventList.map(e => e.date)
                         })}
                     </div>
