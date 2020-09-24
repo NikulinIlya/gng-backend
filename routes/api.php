@@ -39,7 +39,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::post('/register', 'Auth\RegisterController@register');
 Route::post('/login', 'Auth\LoginController@login');
 
-
 Route::get('phrases', 'Api\MainPhraseController@index');
 Route::get('phrases/{id}', 'Api\MainPhraseController@show');
 
