@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Models\User;
 use Auth;
 use Hash;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController
 {
@@ -26,7 +26,7 @@ class LoginController
         }
 
         throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.']
+            'email' => ['The provided credentials are incorrect.'],
         ]);
     }
 

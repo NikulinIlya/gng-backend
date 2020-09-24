@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Http\Controllers\Auth;
-
 
 use App\Models\User;
 use Hash;
@@ -21,7 +19,7 @@ class RegisterController
         return User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
         ]);
     }
 }
