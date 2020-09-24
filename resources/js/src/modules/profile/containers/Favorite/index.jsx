@@ -24,6 +24,7 @@ function Favorite({ isLoaded, isListEmpty, favoriteProducts }) {
                             bottle={p.image}
                             name={p.name}
                             brand={p.brand}
+                            backdrop={p.backdrop}
                             price={p.price}
                             to={`/catalog/${p.id}`}
                             key={p.id}

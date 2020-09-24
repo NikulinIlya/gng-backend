@@ -1,7 +1,8 @@
 .events {
-  margin-bottom: 88px;
+  margin-bottom: 0px;
   padding-top: 15px;
   &.past-events {
+    margin-bottom: 88px;
     .events__view {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
