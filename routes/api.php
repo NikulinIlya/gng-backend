@@ -28,16 +28,13 @@ Route::get('lang/{locale?}', function (Request $request, $locale = 'ru') {
     return response()->json($locale, 200);
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
-
-    Route::post('/logout', 'Auth\LoginController@logout');
 });
 
-Route::post('/register', 'Auth\RegisterController@register');
-Route::post('/login', 'Auth\LoginController@login');
+Auth::routes();
 
 Route::get('phrases', 'Api\MainPhraseController@index');
 Route::get('phrases/{id}', 'Api\MainPhraseController@show');
