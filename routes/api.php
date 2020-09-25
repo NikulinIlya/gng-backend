@@ -34,7 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('phrases', 'Api\MainPhraseController@index');
 Route::get('phrases/{id}', 'Api\MainPhraseController@show');
