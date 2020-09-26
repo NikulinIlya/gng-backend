@@ -22,7 +22,7 @@ export const navigationItems = [
     {
         name: "Аксессуары",
         slug: "accessories",
-        path: "/exclusive"
+        path: "/accessories"
     },
     {
         name: "Акции",

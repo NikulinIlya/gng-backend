@@ -1,0 +1,32 @@
+.exclusive{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 30px;
+    margin-bottom: 100px;
+    padding-top: 15px;
+    .exclusive-card{
+      &__content{
+        a{
+          display: inline-block;
+        }
+      }
+    }
+  }
+  
+  @media screen and (max-width: 768px){
+    .exclusive{
+      display: block;
+      .exclusive-card{
+        margin-bottom: 20px;
+        &__content{
+          box-sizing: border-box;
+          height: 100%;
+          display: flex;
+          flex-flow: column nowrap;
+          button,a{
+            margin-top: auto;
+          }
+        }
+      }
+    }
+  }

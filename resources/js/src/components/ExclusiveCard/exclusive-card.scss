@@ -12,8 +12,20 @@
   &__content {
     position: relative;
     padding: 81px 60px;
+    box-sizing: border-box;
+    height: 100%;
     color: white;
     overflow: hidden;
+    &:after{
+      position: absolute;
+      content: '';
+      background-color: rgba(0,0,0,.4);
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
   }
   &__backdrop {
     position: absolute;

@@ -1,46 +1,42 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useStoreon } from "storeon/react";
-import { useLocation } from "react-router-dom"
 
 import { CartNotificationContext } from "@/components/CartNotification";
 
 import useMeasures from "@/utils/useMeasures";
 import useBrands from "@/utils/useBrands";
 import useFilters from "@/utils/useFiltersApi";
+import useQueryParams from "@/utils/useQueryParams";
+import getRandom from "@/utils/get-random-item";
 
 export default WrappedComponent => props => {
     const { products, page, wineStateDispatcher, history } = props;
+
     const { isMobile } = useMeasures();
     const { dispatch, assistantPhrases } = useStoreon("assistantPhrases");
-
-    const { dispatch: notificationDispatch } = useContext(
-        CartNotificationContext
-    );
+    const { notify } = useContext(CartNotificationContext);
+    const { applyParam } = useQueryParams();
     const [filtersVisibility, setFiltersVisibility] = useState(false);
     const extendedProducts = useBrands(products);
     const filters = useFilters("wine");
 
-    const handleFiltersVisibility = state => setFiltersVisibility(state);
-
     const onAdd = (id, count = 1) => {
         if (!id) return;
+
+        const brandId = extendedProducts.find(p => p.id === id).brand_id;
+
         dispatch("cart/add", {
             product: { id, count },
             callback: _ =>
-                notificationDispatch({
-                    type: "HANDLE_VISIBILITY",
-                    payload: true,
-                    fact:
-                        assistantPhrases[
-                            Math.floor(Math.random() * assistantPhrases.length)
-                        ].phrase
+                notify({
+                    text: getRandom(assistantPhrases[brandId])
                 })
         });
     };
 
     const onLoadMore = () => {
-        const newPage = page + 1
-        history.push(`${history.location.pathname}?page=${newPage}`)
+        const url = applyParam(location.search, "page", page + 1);
+        history.push(url);
     };
 
     useEffect(
@@ -65,7 +61,7 @@ export default WrappedComponent => props => {
             {...{
                 isMobile,
                 filtersVisibility,
-                handleFiltersVisibility,
+                handleFiltersVisibility: setFiltersVisibility,
                 onAdd,
                 onLoadMore
             }}

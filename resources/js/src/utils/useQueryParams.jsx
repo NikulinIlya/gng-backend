@@ -19,7 +19,7 @@ export default function useQueryParams() {
         [search]
     );
 
-    return { ...state, applyParam, buildQuery };
+    return { ...state, applyParam, buildQuery, normalizeQueryParams };
 }
 
 function queryReducer(state, action) {
@@ -31,8 +31,18 @@ function queryReducer(state, action) {
     }
 }
 
+function normalizeQueryParams(params = {}, allowedParamNames = []) {
+    const normalized = Object.keys(params)
+        .filter(key => allowedParamNames.includes(key))
+        .reduce((acc, cur) => {
+            acc[cur] = params[cur];
+            return acc;
+        }, {});
+    return normalized;
+}
+
 function applyParam(search = "", key = "", value = "") {
-    if ([search, key, value].some(v => !v)) return "";
+    if ([key, value].some(v => !v)) return "";
 
     const searchParams = new URLSearchParams(search);
 

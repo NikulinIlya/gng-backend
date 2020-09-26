@@ -1,34 +1,27 @@
-import React, { useState, useEffect, useReducer, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 
 import useQueryParams from "@/utils/useQueryParams";
 
 const specialWineFilters = ["sweetness", "body", "acidity"];
+const commonProductFilters = ["price_max", "price_max"];
 
 export default WrappedComponent => props => {
     const { wineStateDispatcher, filters, history } = props;
-    const [state, filtersDispatcher] = useReducer(filtersReducer, {
-        activeFilters: {}
-    });
-    const { params, buildQuery } = useQueryParams();
+    const [activeFilters, setActiveFilters] = useState({});
+    const { params, buildQuery, normalizeQueryParams } = useQueryParams();
 
     useEffect(
         _ => {
             if (params) {
-                const extendedFilters = {
-                    ...filters,
-                    sweetness: "1",
-                    body: "1",
-                    acidity: "1",
-                    price_min: "value",
-                    price_max: "value"
-                };
-                const filteredParams = Object.keys(params)
-                    .filter(key => extendedFilters[key])
-                    .reduce((acc, cur) => {
-                        acc[cur] = params[cur];
-                        return acc;
-                    }, {});
-
+                const allowedFilters = [
+                    ...Object.keys(filters),
+                    ...commonProductFilters,
+                    ...specialWineFilters
+                ];
+                const filteredParams = normalizeQueryParams(
+                    params,
+                    allowedFilters
+                );
                 const normalizedQuery = buildQuery(filteredParams);
 
                 wineStateDispatcher({
@@ -48,39 +41,53 @@ export default WrappedComponent => props => {
 
     useEffect(
         _ => {
-            if (params) {
-                filtersDispatcher({
-                    type: "set-active-filters",
-                    payload: params
-                });
-            }
+            if (params) setActiveFilters(params);
         },
         [params]
     );
 
     useEffect(
         _ => {
-            console.log("state.activeFilters", state.activeFilters);
+            console.log("state.activeFilters", activeFilters);
             // console.log(buildQuery(state.activeFilters));
         },
-        [state.activeFilters]
+        [activeFilters]
     );
 
     useEffect(_ => console.log("params", params), [params]);
 
-    const onFiltersChange = (e, category) => {
-        // console.log("e", e, "category", category);
+    
+
+    const onFiltersChange = (...args) => {
+        const [, category] = args;
+
         if (category === "price") {
-            handlePriceFilter(e);
+            handlePriceFilter(...args);
             return;
         }
         if (specialWineFilters.includes(category)) {
-            // console.log(e.target.value, category);
-            handleSpecialFilters(e.target.value, category);
+            handleSpecialFilters(...args);
             return;
         }
 
-        const active = { ...state.activeFilters };
+        handleCommonTypeFilters(...args);
+    };
+
+    const handlePriceFilter = ([min, max]) => {
+        setActiveFilters({
+            ...activeFilters,
+            price_min: min,
+            price_max: max
+        });
+    };
+
+    const handleSpecialFilters = (e, category) => {
+        const { value } = e.target;
+        setActiveFilters({ ...activeFilters, [category]: value });
+    };
+
+    const handleCommonTypeFilters = (e, category) => {
+        const active = { ...activeFilters };
         const { value } = e.target;
 
         if (e.target.checked) {
@@ -93,42 +100,18 @@ export default WrappedComponent => props => {
             }
         }
 
-        filtersDispatcher({
-            type: "set-active-filters",
-            payload: active
-        });
-        // console.log("change", e.target.value, "key", category);
-    };
-
-    const handlePriceFilter = value => {
-        filtersDispatcher({
-            type: "set-active-filters",
-            payload: {
-                ...state.activeFilters,
-                price_min: value[0],
-                price_max: value[1]
-            }
-        });
-    };
-
-    const handleSpecialFilters = (value, category) => {
-        filtersDispatcher({
-            type: "set-active-filters",
-            payload: { ...state.activeFilters, [category]: value }
-        });
+        setActiveFilters(active);
     };
 
     const onFiltersSubmit = () => {
         console.log("submit");
-        history.push(buildQuery(state.activeFilters));
+        history.push(buildQuery(activeFilters));
     };
+
     const onFiltersReset = () => {
         console.log("reset");
         history.push(location.pathname);
-        filtersDispatcher({
-            type: "set-active-filters",
-            payload: {}
-        });
+        setActiveFilters({});
     };
 
     return (
@@ -137,14 +120,7 @@ export default WrappedComponent => props => {
             onFiltersChange={onFiltersChange}
             onFiltersSubmit={onFiltersSubmit}
             onFiltersReset={onFiltersReset}
-            active={state.activeFilters}
+            active={activeFilters}
         />
     );
 };
-
-function filtersReducer(state, action) {
-    switch (action.type) {
-        case "set-active-filters":
-            return { ...state, activeFilters: action.payload };
-    }
-}

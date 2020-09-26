@@ -1,61 +1,50 @@
-import React, {
-    useState,
-    useEffect,
-    useReducer,
-    useMemo,
-    useCallback
-} from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useReducer, useMemo, useCallback } from "react";
 
 import { status as REQUEST } from "@/utils/request-status";
 import { createApiService } from "@/utils/api-services";
 import useRequestStatus from "@/utils/useRequestStatus";
 import useQueryParams from "@/utils/useQueryParams";
-// import useFilters from "@/utils/useFiltersApi";
 
 const fetchWines = createApiService("/api/products-by-category/wine");
+
 const initialState = {
     filters: {},
     page: 1,
     status: REQUEST.pending,
-    query: ""
+    query: "",
+    products: []
 };
 
 export default WrappedComponent => props => {
     const [state, dispatch] = useReducer(wineReducer, initialState);
-    const location = useLocation();
-    const { search, params, applyParam } = useQueryParams();
+    const { page, query, products } = state;
+    const { applyParam } = useQueryParams();
     const setStatus = useRequestStatus(dispatch);
-    const isFirstPage = useMemo(_ => state.page === 1, [state.page]);
-    const urlParams = useMemo(_ => new URLSearchParams(location.search), [
-        location.search
-    ]);
 
     useEffect(
         _ => {
             (async _ => {
-                if (!isFirstPage) {
-                    const response = await loadProducts(
-                        applyParam(state.query, "page", state.page)
-                    );
+                if (page !== 1) {
+                    const search = applyParam(query, "page", page);
+                    const { data } = await loadProducts(search);
                     dispatch({
                         type: "set-products",
-                        payload: [...state.products, ...response.data]
+                        payload: [...products, ...data]
                     });
                 }
             })();
         },
-        [state.page]
+        [page]
     );
 
     useEffect(
         _ => {
             (async _ => {
-                const response = await loadProducts(state.query);
+                const response = await loadProducts(query);
                 dispatch({ type: "set-pagination", payload: response });
             })();
         },
-        [state.query]
+        [query]
     );
 
     const loadProducts = async (search = "") => {
@@ -70,11 +59,7 @@ export default WrappedComponent => props => {
         <WrappedComponent
             {...props}
             {...state}
-            {...{
-                wineStateDispatcher: dispatch,
-                location,
-                urlParams
-            }}
+            wineStateDispatcher={dispatch}
         />
     );
 };

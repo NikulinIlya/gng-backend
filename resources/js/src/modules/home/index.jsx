@@ -13,7 +13,7 @@ import useTranslate from "@/utils/useTranslate";
 
 import { discounts, contacts } from "./static";
 
-import map from "@/assets/images/map_lg.jpg";
+import map from "@/assets/images/templates/map1.jpg";
 import mobileMap from "@/assets/images/contacts-map.jpg";
 
 import "./home.scss";

@@ -8,6 +8,8 @@ const searchFetcher = createApiService("/api/search-products");
 const productsFetcher = createApiService("/api/products");
 const raresFetcher = createApiService("/api/rares");
 const vintagesFetcher = createApiService("/api/vintages");
+const bagsFetcher = createApiService("/api/bags");
+const glassesFetcher = createApiService("/api/glasses");
 
 export default WrappedComponent => props => {
     const [state, dispatch] = useReducer(searchReducer, {
@@ -42,7 +44,9 @@ export default WrappedComponent => props => {
     async function fetchProductsByCategory(category) {
         const allowedFetcher = {
             vintages: vintagesFetcher,
-            rares: raresFetcher
+            rares: raresFetcher,
+            bags: bagsFetcher,
+            glasses: glassesFetcher
         };
         if (!allowedFetcher[category]) return;
         setStatus(REQUEST.pending);

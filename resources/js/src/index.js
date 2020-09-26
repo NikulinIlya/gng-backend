@@ -37,6 +37,7 @@ const ProductDetails = lazy(_ => import("@/modules/drink-details"));
 const Events = lazy(_ => import("@/modules/events"));
 const EventPage = lazy(_ => import("@/modules/events/containers/EventPage"));
 const Exclusive = lazy(_ => import("@/modules/exclusive"));
+const Accessories = lazy(_ => import("@/modules/accessories"));
 const News = lazy(_ => import("@/modules/news"));
 const Brands = lazy(_ => import("@/modules/brands"));
 const Contacts = lazy(_ => import("@/modules/contacts"));
@@ -106,6 +107,12 @@ const App = () => {
                                 <Route exact path="/cart" component={Cart} />
                                 <Route path="/cart/order" component={Order} />
                                 <Route path="/static" component={StaticPage} />
+                                <Route
+                                    exact
+                                    path="/accessories"
+                                    exact
+                                    component={Accessories}
+                                />
                                 <Route
                                     exact
                                     path="/events"

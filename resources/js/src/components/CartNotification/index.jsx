@@ -1,7 +1,14 @@
-import React, { useState, useEffect, useReducer, createContext } from "react";
+import React, {
+    useEffect,
+    useReducer,
+    createContext,
+    useCallback
+} from "react";
 
 import Assistant from "@/components/AssistantNotification";
 import Button from "@/components/Button";
+
+import useTranslate from "@/utils/useTranslate";
 
 import "./cart-notification.scss";
 
@@ -21,14 +28,19 @@ export function CartNotificationProvider({ children }) {
         dispatch({ type: "HANDLE_VISIBILITY", payload: false });
     };
 
+    const notify = ({ text }) =>
+        dispatch({ type: "HANDLE_VISIBILITY", payload: true, fact: text });
+
     //hide notification 10 seconds after
     useEffect(
-        _ => (state.visibility && setTimeout(onHide, 10000), Function.prototype),
+        _ => (
+            state.visibility && setTimeout(onHide, 10000), Function.prototype
+        ),
         [state.visibility]
     );
 
     return (
-        <CartNotificationContext.Provider value={{ dispatch }}>
+        <CartNotificationContext.Provider value={{ dispatch, notify }}>
             <>
                 {children}
                 {state.visibility && (
@@ -55,11 +67,14 @@ function init(initialState) {
 }
 
 export default function CartNotification({ title, fact, onHide }) {
+    const { t } = useTranslate();
     return (
         <Assistant onClose={onHide}>
             <div className="cart-notification">
                 <section className="message">
-                    <h3 className="message__title">{title}</h3>
+                    <h3 className="message__title">
+                        {t(`good-choice`, title)}
+                    </h3>
                     <p className="message__text">Товар добавлен в корзину.</p>
                     <p className="message__fact">{fact}</p>
                 </section>
