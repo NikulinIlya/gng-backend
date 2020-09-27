@@ -1,6 +1,7 @@
 import React, {
     useState,
     useEffect,
+    useCallback,
     createElement,
     Suspense,
     lazy
@@ -16,11 +17,11 @@ import CatalogNavigation from "@/components/CatalogNavigation";
 import AgeLimitation from "@/components/AgeLimitation";
 import { SignIn, SignUp } from "@/components/Login";
 import Modal from "@/components/Modal";
+import NotFound from "@/components/NotFound";
 import { CartNotificationProvider } from "@/components/CartNotification";
 
 import { HeaderContext } from "@/context/header";
 import useMeasures from "@/utils/useMeasures";
-import redaxios, { to } from "@/utils/fetch";
 
 import { store } from "@/store";
 
@@ -60,9 +61,17 @@ const App = () => {
     const { isMobile } = useMeasures();
     const { dispatch } = useStoreon();
 
-    // useEffect(_ => {
-    //   // redaxios('/api/assistant-phrases')
-    // }, []);
+    const handleScrollY = useCallback(_ => {
+        document.documentElement.style.setProperty(
+            "--scroll-y",
+            `${window.scrollY}px`
+        );
+    }, []);
+
+    useEffect(_ => {
+        window.addEventListener("scroll", handleScrollY);
+        return _ => window.removeEventListener("scroll", handleScrollY);
+    }, []);
     useEffect(
         _ => {
             if (search) {
@@ -147,6 +156,7 @@ const App = () => {
                                     component={ProductDetails}
                                 />
                                 <Route path="/" exact component={Home} />
+                                <Route component={NotFound} />
                             </Switch>
                         </Suspense>
 

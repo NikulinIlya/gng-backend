@@ -3,6 +3,7 @@ import React, { useState, useEffect, createElement } from "react";
 import PastEventCard from "@/components/PastEventCard";
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
+import Heading from "@/components/Heading";
 
 import compose from "@/utils/compose";
 import { status as REQUEST } from "@/utils/request-status";
@@ -23,11 +24,13 @@ function Events({ eventList, futureEvents, pastEvents, status }) {
     const [type, setType] = useState("list");
 
     return (
-        <div className="container">
-            {status === REQUEST.pending && <Loading />}
+        <div className="events-container container">
+            {status === REQUEST.pending && <Loading fixed />}
             {status === REQUEST.success && (
                 <section className="events">
-                    <h1 className="events__title">Предстоящие мероприятия</h1>
+                    <Heading className="events__title">
+                        Предстоящие мероприятия
+                    </Heading>
                     <Navigation defaultType={type} onChange={setType} />
                     <div className="events__view">
                         {createElement(viewBy[type], {
@@ -40,7 +43,9 @@ function Events({ eventList, futureEvents, pastEvents, status }) {
             )}
 
             <section className="events past-events">
-                <h2 className="events__title">Прошедшие мероприятия</h2>
+                <Heading className="events__title">
+                    Прошедшие мероприятия
+                </Heading>
                 <div className="events__view">
                     {pastEvents.map((e, i) => (
                         <div className="past-events__item" key={i}>

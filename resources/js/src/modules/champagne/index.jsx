@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import AsideLayout from "@/components/Layouts/AsideLayout";
 import BottleCard from "@/components/BottleCard";
@@ -19,11 +19,15 @@ function Champagne({
     filters = [],
     status,
     page,
+    active,
     lastPage,
     filtersVisibility,
     onAdd,
     handleFiltersVisibility,
-    onLoadMore
+    onLoadMore,
+    onFiltersChange,
+    onFiltersSubmit,
+    onFiltersReset
 }) {
     const { t } = useTranslate();
 
@@ -36,13 +40,15 @@ function Champagne({
                         filtersVisibility={filtersVisibility}
                         visibilityHandler={handleFiltersVisibility}
                         filters={filters}
-                        active={{}}
-                        onChange={Function.prototype}
+                        active={active}
+                        onChange={onFiltersChange}
+                        onSubmit={onFiltersSubmit}
+                        onReset={onFiltersReset}
                     />
                 )}
             >
-                {status === REQUEST.pending && <Loading />}
-                {status === REQUEST.success && (
+                {status === REQUEST.pending && <Loading fixed />}
+                {(status === REQUEST.success || !!products.length) && (
                     <>
                         <div className="champagne__grid">
                             {products.map(

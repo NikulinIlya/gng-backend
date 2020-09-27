@@ -13,7 +13,9 @@ import "./search-page.scss";
 
 const categoryLabels = {
     vintages: "Винтажи",
-    rares: "Редкие"
+    rares: "Редкие",
+    bags: "Сумки",
+    glasses: "Бокалы"
 };
 
 function SearchPage({

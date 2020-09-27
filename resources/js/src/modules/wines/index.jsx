@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
 
 import BottleCard from "@/components/BottleCard";
 import Loading from "@/components/Loading";
@@ -7,7 +7,6 @@ import AsideFiltering from "@/components/AsideFiltering";
 import Button from "@/components/Button";
 
 import AdvancedFilters from "./components/AdvancedFiltering";
-
 import { withApi, withLogic, withFiltering } from "./hoc";
 
 import compose from "@/utils/compose";
@@ -51,8 +50,8 @@ const CatalogPage = ({
                         />
                     )}
                 >
-                    {status === REQUEST.pending && <Loading />}
-                    {status === REQUEST.success && (
+                    {status === REQUEST.pending && <Loading fixed />}
+                    {(status === REQUEST.success || !!products.length) && (
                         <>
                             <div className="catalog-grid">
                                 {products.map(

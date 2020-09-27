@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useReducer, useCallback } from "react";
+import React, { useEffect, useReducer } from "react";
 import { useLocation } from "react-router-dom";
+
+const commonProductFilters = ["price_max", "price_max"];
 
 export default function useQueryParams() {
     const [state, dispatch] = useReducer(queryReducer, { params: null });
@@ -33,7 +35,9 @@ function queryReducer(state, action) {
 
 function normalizeQueryParams(params = {}, allowedParamNames = []) {
     const normalized = Object.keys(params)
-        .filter(key => allowedParamNames.includes(key))
+        .filter(key =>
+            [...commonProductFilters, ...allowedParamNames].includes(key)
+        )
         .reduce((acc, cur) => {
             acc[cur] = params[cur];
             return acc;

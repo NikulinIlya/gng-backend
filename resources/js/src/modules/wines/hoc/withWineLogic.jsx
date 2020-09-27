@@ -59,13 +59,13 @@ export default WrappedComponent => props => {
         <WrappedComponent
             {...props}
             {...{
+                products: extendedProducts,
                 isMobile,
                 filtersVisibility,
                 handleFiltersVisibility: setFiltersVisibility,
                 onAdd,
                 onLoadMore
             }}
-            products={extendedProducts}
         />
     );
 };

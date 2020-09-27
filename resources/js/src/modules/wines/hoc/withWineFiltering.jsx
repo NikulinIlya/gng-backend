@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import useQueryParams from "@/utils/useQueryParams";
 
 const specialWineFilters = ["sweetness", "body", "acidity"];
-const commonProductFilters = ["price_max", "price_max"];
 
 export default WrappedComponent => props => {
     const { wineStateDispatcher, filters, history } = props;
@@ -13,22 +12,28 @@ export default WrappedComponent => props => {
     useEffect(
         _ => {
             if (params) {
+                // merge all allowed param keys for current category
                 const allowedFilters = [
                     ...Object.keys(filters),
-                    ...commonProductFilters,
                     ...specialWineFilters
                 ];
+
+                // filter urlParams for only allowed list
                 const filteredParams = normalizeQueryParams(
                     params,
                     allowedFilters
                 );
+
+                // build query string from filtered params
                 const normalizedQuery = buildQuery(filteredParams);
 
+                // dispatch normalized query string
                 wineStateDispatcher({
                     type: "set-query",
                     payload: normalizedQuery
                 });
 
+                // dispatch new page if existing
                 if (params["page"] && !isNaN(params["page"]))
                     wineStateDispatcher({
                         type: "set-cur-page",
@@ -56,8 +61,6 @@ export default WrappedComponent => props => {
 
     useEffect(_ => console.log("params", params), [params]);
 
-    
-
     const onFiltersChange = (...args) => {
         const [, category] = args;
 
@@ -65,6 +68,7 @@ export default WrappedComponent => props => {
             handlePriceFilter(...args);
             return;
         }
+
         if (specialWineFilters.includes(category)) {
             handleSpecialFilters(...args);
             return;
@@ -86,18 +90,17 @@ export default WrappedComponent => props => {
         setActiveFilters({ ...activeFilters, [category]: value });
     };
 
-    const handleCommonTypeFilters = (e, category) => {
+    const handleCommonTypeFilters = (value, category) => {
         const active = { ...activeFilters };
-        const { value } = e.target;
 
-        if (e.target.checked) {
-            active[category] = active[category]
-                ? [...active[category], value]
-                : [value];
-        } else {
+        if (active[category]) {
             if (active[category].includes(value)) {
                 active[category] = active[category].filter(v => v !== value);
+            } else {
+                active[category] = [...active[category], value];
             }
+        } else {
+            active[category] = [value];
         }
 
         setActiveFilters(active);

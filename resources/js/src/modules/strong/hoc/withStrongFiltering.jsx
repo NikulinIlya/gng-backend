@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import useQueryParams from "@/utils/useQueryParams";
 
 export default WrappedComponent => props => {
-    const { champagneDispatch, filters, history } = props;
+    const { strongDispatcher, filters, history } = props;
     const [activeFilters, setActiveFilters] = useState({});
     const { params, buildQuery, normalizeQueryParams } = useQueryParams();
 
@@ -23,14 +23,14 @@ export default WrappedComponent => props => {
                 const normalizedQuery = buildQuery(filteredParams);
 
                 // dispatch normalized query string
-                champagneDispatch({
+                strongDispatcher({
                     type: "set-query",
                     payload: normalizedQuery
                 });
 
                 // dispatch new page if existing
                 if (params["page"] && !isNaN(params["page"]))
-                    champagneDispatch({
+                    strongDispatcher({
                         type: "set-cur-page",
                         payload: +params["page"]
                     });

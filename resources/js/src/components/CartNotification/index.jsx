@@ -82,7 +82,7 @@ export default function CartNotification({ title, fact, onHide }) {
                     <Button variant="gold" onClick={onHide}>
                         Продолжить
                     </Button>
-                    <Button>Оформить заказ</Button>
+                    <Button onClick={onHide} to="/cart">Оформить заказ</Button>
                 </div>
             </div>
         </Assistant>

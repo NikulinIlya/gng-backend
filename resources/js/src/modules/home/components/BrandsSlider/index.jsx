@@ -1,8 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import IconButton from "@/components/IconButton";
-
-import prevIcon from "@/assets/images/icons/arrow-prev.svg";
-import nextIcon from "@/assets/images/icons/arrow-next.svg";
 
 import brands from "@/modules/brands/static";
 
@@ -10,31 +6,36 @@ import "./brands-slider.scss";
 
 export default function BrandsSlider() {
     const sliderRef = useRef(null);
-    const onNext = _ => {
+    const [dir, setDir] = useState(1);
+
+    useEffect(
+        _ => {
+            const id = autoScroll(dir);
+            return _ => clearInterval(id);
+        },
+        [dir]
+    );
+
+    const autoScroll = dir => {
         const { current: slider } = sliderRef;
-        console.log(slider.scrollWidth, slider.clientWidth);
         const id = setInterval(_ => {
-            slider.scrollLeft += 100;
-            if (slider.scrollLeft + slider.clientWidth === slider.scrollWidth) {
-                console.log("END");
-                clearInterval(id);
+            if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth) {
+                setDir(-1);
+            } else if (!slider.scrollLeft) {
+                setDir(1);
             }
-        }, 100);
+            if (dir === 1) {
+                slider.scrollLeft += 1;
+            } else {
+                slider.scrollLeft -= 1;
+            }
+        }, 50);
+        return id;
     };
-    const onPrev = _ => {
-        const { current: slider } = sliderRef;
-        const id = setInterval(_ => {
-            slider.scrollLeft -= 100;
-            if (!slider.scrollLeft) clearInterval(id);
-        }, 100);
-    };
+
     return (
         <>
             <div className="brands-slider">
-                <div className="nav-side nav-side--prev" onMouseEnter={onPrev}>
-                    <img src={prevIcon} alt="" />
-                </div>
-
                 <ul className="home-brands__list" ref={sliderRef}>
                     {brands.map(({ logo, name }) => (
                         <li className="home-brands__item" key={name}>
@@ -42,10 +43,6 @@ export default function BrandsSlider() {
                         </li>
                     ))}
                 </ul>
-
-                <div className="nav-side nav-side--next" onMouseEnter={onNext}>
-                    <img src={nextIcon} alt="" />
-                </div>
             </div>
         </>
     );

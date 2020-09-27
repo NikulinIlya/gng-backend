@@ -16,6 +16,7 @@
     }
     &__content {
         grid-area: layout-content;
+        position: relative;
     }
     &.layout--simplified {
         grid-template-areas:

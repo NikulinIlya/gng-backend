@@ -10,8 +10,7 @@ import compose from "@/utils/compose";
 import useTranslate from "@/utils/useTranslate";
 import { status as REQUEST } from "@/utils/request-status";
 
-import withApi from "./hoc/withStrongApi";
-import withLogic from "./hoc/withStrongLogic";
+import { withApi, withLogic, withFiltering } from "./hoc";
 
 import "./strong.scss";
 
@@ -22,9 +21,13 @@ function Strong({
     status,
     page,
     lastPage,
+    active,
     onAdd,
     handleFiltersVisibility,
-    onLoadMore
+    onLoadMore,
+    onFiltersChange,
+    onFiltersReset,
+    onFiltersSubmit
 }) {
     const { t } = useTranslate();
 
@@ -36,14 +39,16 @@ function Strong({
                     <AsideFiltering
                         filtersVisibility={filtersVisibility}
                         filters={filters}
-                        active={{}}
+                        active={active}
                         visibilityHandler={handleFiltersVisibility}
-                        onChange={Function.prototype}
+                        onChange={onFiltersChange}
+                        onReset={onFiltersReset}
+                        onSubmit={onFiltersSubmit}
                     />
                 )}
             >
-                {status === REQUEST.pending && <Loading />}
-                {status === REQUEST.success && (
+                {status === REQUEST.pending && <Loading fixed />}
+                {(status === REQUEST.success || !!products.length) && (
                     <>
                         <div className="strong__grid">
                             {products.map(
@@ -73,4 +78,4 @@ function Strong({
     );
 }
 
-export default compose(withApi, withLogic)(Strong);
+export default compose(withApi, withLogic, withFiltering)(Strong);

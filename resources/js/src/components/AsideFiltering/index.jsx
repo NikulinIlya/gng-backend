@@ -47,17 +47,18 @@ function FilterBy({
     propName = "name",
     onChange
 }) {
-    return criterias.map((cr, i) => (
-        <Checkbox
-            label={cr[propName]}
-            onChange={onChange}
-            defaultChecked={
-                active[category] && active[category].includes(cr.id + "")
-            }
-            value={cr.id}
-            key={i}
-        />
-    ));
+    return criterias.map((cr, i) => {
+        const isChecked =
+            active[category] && active[category].includes(cr.id + "");
+        return (
+            <Checkbox
+                label={cr[propName]}
+                onChange={_ => onChange(cr.id + "")}
+                checked={!!isChecked}
+                key={i}
+            />
+        );
+    });
 }
 
 function FiltersBody({ filters, active, onChange }) {
