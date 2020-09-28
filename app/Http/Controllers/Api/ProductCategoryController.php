@@ -96,22 +96,32 @@ class ProductCategoryController
      */
     public function getStrongDrinksFilters()
     {
-        $filters = [];
+        $filters = [
+            'brands' => [],
+            'locations' => [],
+            'colours' => [],
+        ];
 
         foreach (self::STRONG_DRINKS as $drink) {
             $filter = $this->getFilters($drink);
 
             foreach ($filter['brands'] as $brand) {
-                $filters['brands'][] = $brand;
+                if (! in_array($brand, $filters['brands'])) {
+                    $filters['brands'][] = $brand;
+                }
             }
 
             foreach ($filter['locations'] as $location) {
-                $filters['locations'][] = $location;
+                if (! in_array($location, $filters['locations'])) {
+                    $filters['locations'][] = $location;
+                }
             }
 
             if (array_key_exists('colours', $filter)) {
                 foreach ($filter['colours'] as $colour) {
-                    $filters['colours'][] = $colour;
+                    if (! in_array($colour, $filters['colours'])) {
+                        $filters['colours'][] = $colour;
+                    }
                 }
             }
         }
