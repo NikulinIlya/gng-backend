@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 
 class ProductCategoryController
 {
-    const STRONG_DRINKS = ['cognac', 'liquor', 'whiskey', 'vodka'];
-
     /**
      * @var ApiControllerService
      */
@@ -67,13 +65,23 @@ class ProductCategoryController
      */
     public function getStrongDrinks(Request $request)
     {
-        $strongDrinksNames = $request->input('category') ?? self::STRONG_DRINKS;
+        if ($strongDrinksNames = $request->input('category')) {
+            $productCategoriesIds = ProductCategory::whereIn('slug', $strongDrinksNames)->get()->map(function ($category) {
+                return $category->id;
+            });
+        } else {
+            $strongDrinks = ProductCategory::where('is_strong_drink', 1)->get();
 
-        $productCategoriesId = ProductCategory::whereIn('slug', $strongDrinksNames)->get()->map(function ($category) {
-            return $category->id;
-        });
+            $strongDrinksNames = $strongDrinks->map(function ($category) {
+                return $category->slug;
+            });
 
-        $strongProducts = $this->service->getProductsEntities($request, $productCategoriesId->toArray(), $strongDrinksNames);
+            $productCategoriesIds = $strongDrinks->map(function ($category) {
+                return $category->id;
+            });
+        }
+
+        $strongProducts = $this->service->getProductsEntities($request, $productCategoriesIds->toArray(), $strongDrinksNames);
 
         return $this->service->paginate($strongProducts, 10);
     }
@@ -102,7 +110,15 @@ class ProductCategoryController
             'colours' => [],
         ];
 
-        foreach (self::STRONG_DRINKS as $drink) {
+        $strongDrinks = ProductCategory::where('is_strong_drink', 1)->get();
+
+        $filters['strong_drinks'] = $this->service->makeEntityCollection($strongDrinks, app()->getLocale());
+
+        $strongDrinksNames = $strongDrinks->map(function ($category) {
+            return $category->slug;
+        });
+
+        foreach ($strongDrinksNames as $drink) {
             $filter = $this->getFilters($drink);
 
             foreach ($filter['brands'] as $brand) {

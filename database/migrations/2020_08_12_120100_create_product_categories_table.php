@@ -17,6 +17,7 @@ class CreateProductCategoriesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
+            $table->tinyInteger('is_strong_drink')->default(0);
             $table->timestamps();
         });
     }
