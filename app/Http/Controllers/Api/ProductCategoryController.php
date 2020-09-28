@@ -81,7 +81,7 @@ class ProductCategoryController
             });
         }
 
-        $strongProducts = $this->service->getProductsEntities($request, $productCategoriesIds->toArray(), $strongDrinksNames);
+        $strongProducts = $this->service->getProductsEntities($request, $productCategoriesIds, $strongDrinksNames->toArray());
 
         return $this->service->paginate($strongProducts, 10);
     }

@@ -371,8 +371,8 @@ class ApiControllerService
                            )
                            ->where(
                                function ($query) use ($filters, $productCategoriesSlug) {
-                                   if (
-                                       $productCategoriesSlug[0] === 'wine'
+                                   if (! empty($productCategoriesSlug)
+                                       && $productCategoriesSlug[0] === 'wine'
                                        && ($filters['sweetness']
                                            || $filters['body']
                                            || $filters['acidity'])
