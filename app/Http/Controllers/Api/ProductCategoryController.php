@@ -65,9 +65,9 @@ class ProductCategoryController
      */
     public function getStrongDrinks(Request $request)
     {
-        if ($strongDrinksNames = $request->input('categories')) {
-            $productCategoriesIds = ProductCategory::whereIn('slug', $strongDrinksNames)->get()->map(function ($category) {
-                return $category->id;
+        if ($productCategoriesIds = $request->input('categories')) {
+            $strongDrinksNames = ProductCategory::whereIn('id', $productCategoriesIds)->get()->map(function ($category) {
+                return $category->slug;
             });
         } else {
             $strongDrinks = ProductCategory::where('is_strong_drink', 1)->get();
