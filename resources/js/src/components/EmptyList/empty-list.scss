@@ -1,0 +1,31 @@
+.empty-list {
+    @include card-styles;
+    text-align: center;
+    padding: 45px 90px;
+    box-sizing: border-box;
+    &__title {
+        color: var(--defaultGold);
+        font-size: 28px;
+    }
+    &__description {
+        font-size: 22px;
+        margin-bottom: 12px;
+    }
+    &__button {
+        a {
+            display: inline-block;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .empty-list {
+        padding: 30px 30px;
+        &__title{
+            font-size: 22px;
+        }
+        &__description{
+            font-size: 16px;
+        }
+    }
+}

@@ -5,6 +5,7 @@ import Loading from "@/components/Loading";
 import AsideLayout from "@/components/Layouts/AsideLayout";
 import AsideFiltering from "@/components/AsideFiltering";
 import Button from "@/components/Button";
+import EmptyList from "@/components/EmptyList";
 
 import AdvancedFilters from "./components/AdvancedFiltering";
 import { withApi, withLogic, withFiltering } from "./hoc";
@@ -51,6 +52,9 @@ const CatalogPage = ({
                     )}
                 >
                     {status === REQUEST.pending && <Loading fixed />}
+                    {status === REQUEST.success && !!!products.length && (
+                        <EmptyList />
+                    )}
                     {(status === REQUEST.success || !!products.length) && (
                         <>
                             <div className="catalog-grid">

@@ -5,6 +5,7 @@ import BottleCard from "@/components/BottleCard";
 import Loading from "@/components/Loading";
 import AsideFiltering from "@/components/AsideFiltering";
 import Button from "@/components/Button";
+import EmptyList from "@/components/EmptyList";
 
 import compose from "@/utils/compose";
 import useTranslate from "@/utils/useTranslate";
@@ -48,6 +49,9 @@ function Strong({
                 )}
             >
                 {status === REQUEST.pending && <Loading fixed />}
+                {status === REQUEST.success && !!!products.length && (
+                    <EmptyList />
+                )}
                 {(status === REQUEST.success || !!products.length) && (
                     <>
                         <div className="strong__grid">

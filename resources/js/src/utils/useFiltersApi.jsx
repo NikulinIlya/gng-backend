@@ -3,6 +3,9 @@ import React, { useState, useEffect, useReducer } from "react";
 import redaxios, { to } from "@/utils/fetch";
 
 const filterLabels = {
+    categories: {
+        name: "Тип напитка"
+    },
     brands: {
         name: "Бренд",
         nameSlug: ""
@@ -21,30 +24,6 @@ const filterLabels = {
     }
 };
 
-const strongLabels = {
-    strong: {
-        label: "Тип напитка",
-        value: [
-            {
-                name: "Коньяк",
-                id: 1
-            },
-            {
-                name: "Водка",
-                id: 2
-            },
-            {
-                name: "Виски",
-                id: 3
-            },
-            {
-                name: "Ликёр",
-                id: 4
-            },
-        ]
-    }
-};
-
 export default function useApiState(slug) {
     const [labeledFilters, setLabeledFilters] = useState({});
     useEffect(_ => {
@@ -57,19 +36,14 @@ export default function useApiState(slug) {
 
             const [err, response] = await to(redaxios(url));
             // console.log("FILTERS RESPONSE", response.data);
-            const normalizedData = isStrongCategory
-                ? {
-                      ...strongLabels,
-                      ...decorateFiltersWithLabels(response.data)
-                  }
-                : decorateFiltersWithLabels(response.data);
+            const normalizedData = decorateFiltersWithLabels(response.data);
             setLabeledFilters(normalizedData);
         })();
     }, []);
 
     function decorateFiltersWithLabels(filters) {
         if (!filters) return [];
-        return Object.entries(filters).reduce(
+        return Object.entries(filters).reverse().reduce(
             (acc, [key, value]) => (
                 (acc[key] = {
                     value,

@@ -50,9 +50,17 @@ function FilterBy({
     return criterias.map((cr, i) => {
         const isChecked =
             active[category] && active[category].includes(cr.id + "");
+        const getLabel = propName => {
+            const isLocation = propName === "country";
+            return !isLocation
+                ? cr[propName]
+                : cr[propName] === cr.region
+                ? cr[propName]
+                : `${cr[propName]} (${cr.region})`;
+        };
         return (
             <Checkbox
-                label={cr[propName]}
+                label={getLabel(propName)}
                 onChange={_ => onChange(cr.id + "")}
                 checked={!!isChecked}
                 key={i}
