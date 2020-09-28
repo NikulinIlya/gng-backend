@@ -112,7 +112,7 @@ class ProductCategoryController
 
         $strongDrinks = ProductCategory::where('is_strong_drink', 1)->get();
 
-        $filters['strong_drinks'] = $this->service->makeEntityCollection($strongDrinks, app()->getLocale());
+        $filters['categories'] = $this->service->makeEntityCollection($strongDrinks, app()->getLocale());
 
         $strongDrinksNames = $strongDrinks->map(function ($category) {
             return $category->slug;
