@@ -105,8 +105,8 @@ Route::get('liquors/{id}', 'Api\LiquorController@show');
 Route::get('rares', 'Api\RareController@index');
 Route::get('rares/{id}', 'Api\RareController@show');
 
-Route::get('vintages', 'Api\RareController@index');
-Route::get('vintages/{id}', 'Api\RareController@show');
+Route::get('vintages', 'Api\VintageController@index');
+Route::get('vintages/{id}', 'Api\VintageController@show');
 
 Route::get('vodka', 'Api\VodkaController@index');
 Route::get('vodka/{id}', 'Api\VodkaController@show');

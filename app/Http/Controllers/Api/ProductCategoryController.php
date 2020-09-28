@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 
 class ProductCategoryController
 {
-    const STRONG_DRINKS = ['cognac', 'liquor', 'whiskey', 'vodka'];
-
     /**
      * @var ApiControllerService
      */
@@ -67,13 +65,23 @@ class ProductCategoryController
      */
     public function getStrongDrinks(Request $request)
     {
-        $strongDrinksNames = $request->input('category') ?? self::STRONG_DRINKS;
+        if ($productCategoriesIds = $request->input('categories')) {
+            $strongDrinksNames = ProductCategory::whereIn('id', $productCategoriesIds)->get()->map(function ($category) {
+                return $category->slug;
+            });
+        } else {
+            $strongDrinks = ProductCategory::where('is_strong_drink', 1)->get();
 
-        $productCategoriesId = ProductCategory::whereIn('slug', $strongDrinksNames)->get()->map(function ($category) {
-            return $category->id;
-        });
+            $strongDrinksNames = $strongDrinks->map(function ($category) {
+                return $category->slug;
+            });
 
-        $strongProducts = $this->service->getProductsEntities($request, $productCategoriesId->toArray(), $strongDrinksNames);
+            $productCategoriesIds = $strongDrinks->map(function ($category) {
+                return $category->id;
+            });
+        }
+
+        $strongProducts = $this->service->getProductsEntities($request, $productCategoriesIds, $strongDrinksNames->toArray());
 
         return $this->service->paginate($strongProducts, 10);
     }
@@ -96,22 +104,40 @@ class ProductCategoryController
      */
     public function getStrongDrinksFilters()
     {
-        $filters = [];
+        $filters = [
+            'brands' => [],
+            'locations' => [],
+            'colours' => [],
+        ];
 
-        foreach (self::STRONG_DRINKS as $drink) {
+        $strongDrinks = ProductCategory::where('is_strong_drink', 1)->get();
+
+        $filters['categories'] = $this->service->makeEntityCollection($strongDrinks, app()->getLocale());
+
+        $strongDrinksNames = $strongDrinks->map(function ($category) {
+            return $category->slug;
+        });
+
+        foreach ($strongDrinksNames as $drink) {
             $filter = $this->getFilters($drink);
 
             foreach ($filter['brands'] as $brand) {
-                $filters['brands'][] = $brand;
+                if (! in_array($brand, $filters['brands'])) {
+                    $filters['brands'][] = $brand;
+                }
             }
 
             foreach ($filter['locations'] as $location) {
-                $filters['locations'][] = $location;
+                if (! in_array($location, $filters['locations'])) {
+                    $filters['locations'][] = $location;
+                }
             }
 
             if (array_key_exists('colours', $filter)) {
                 foreach ($filter['colours'] as $colour) {
-                    $filters['colours'][] = $colour;
+                    if (! in_array($colour, $filters['colours'])) {
+                        $filters['colours'][] = $colour;
+                    }
                 }
             }
         }
