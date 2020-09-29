@@ -43,7 +43,7 @@ Route::middleware('auth:sanctum')->group(
     }
 );
 
-Auth::routes(['verify' => true]);
+Auth::routes(); //['verify' => true]
 
 Route::get(
     '/welcome-email-testing',
