@@ -12,11 +12,11 @@ module.exports = env => ({
         chunkFilename: "chunks/[name].chunk.js",
         publicPath: env.prod ? "/build/" : "/"
     },
-    watch: true,
-    watchOptions: {
-        aggregateTimeout: 200,
-        ignored: /node_modules/
-    },
+    // watch: true,
+    // watchOptions: {
+    //     aggregateTimeout: 200,
+    //     ignored: /node_modules/
+    // },
     optimization: {
         splitChunks: {
             chunks: "all"
@@ -31,7 +31,7 @@ module.exports = env => ({
     devServer: {
         proxy: [
             {
-                context: ["/api", "/storage"],
+                context: ["/api", "/storage", "/sanctum"],
                 target: targetUrl,
                 changeOrigin: true
             }
@@ -40,18 +40,14 @@ module.exports = env => ({
         host: "127.0.0.1",
         port: 8083,
         compress: true,
-        historyApiFallback: true,
-        // https: true
+        historyApiFallback: true
     },
     plugins: [
         new CleanWebpackPlugin(),
-        (_ =>
-            env.prod
-                ? () => {}
-                : new HtmlWebpackPlugin({
-                      title: "Dev Grapes & Grains",
-                      template: "resources/js/template.html"
-                  }))()
+        new HtmlWebpackPlugin({
+            title: "Dev Grapes & Grains",
+            template: "resources/js/template.html"
+        })
     ],
     module: {
         rules: [

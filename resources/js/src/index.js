@@ -22,6 +22,7 @@ import { CartNotificationProvider } from "@/components/CartNotification";
 
 import { HeaderContext } from "@/context/header";
 import useMeasures from "@/utils/useMeasures";
+import redaxios, { to } from "@/utils/fetch";
 
 import { store } from "@/store";
 
@@ -69,6 +70,11 @@ const App = () => {
     }, []);
 
     useEffect(_ => {
+        (async _ => {
+            const response = await to(redaxios("/sanctum/csrf-cookie"));
+            console.log("response", response);
+        })();
+
         window.addEventListener("scroll", handleScrollY);
         return _ => window.removeEventListener("scroll", handleScrollY);
     }, []);
