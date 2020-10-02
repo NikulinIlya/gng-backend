@@ -83,7 +83,6 @@ Route::get('search-products', 'Api\ProductController@search');
 Route::get('product-with-settings/{id}', 'Api\ProductController@showProductWithSettings');
 Route::get('popular-products', 'Api\ProductController@getPopularProducts');
 
-
 Route::get('product-categories', 'Api\ProductCategoryController@index');
 Route::get('product-categories/{id}', 'Api\ProductCategoryController@show');
 Route::get('product-categories-filters/{categorySlug}', 'Api\ProductCategoryController@getFilters');
