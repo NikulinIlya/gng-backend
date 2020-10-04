@@ -95,4 +95,20 @@ class ProductController
 
         return $product;
     }
+
+    /**
+     * Display only popular products.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getPopularProducts()
+    {
+        $locale = app()->getLocale();
+
+        $products = ($locale === 'ru')
+            ? Product::where('is_popular', 1)->get()
+            : Product::withTranslations($locale)->where('is_popular', 1)->get();
+
+        return $this->service->makeEntityCollection($products, $locale);
+    }
 }

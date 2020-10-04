@@ -25,6 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - BrandArticle, GrapeArticle, RegionArticle models
 - articles api routes
 - Controllers/Api/BrandArticleController, GrapeArticleController, RegionArticleController
+- Auth
+- ProductController@getPopularProducts
 
 ### Removed
 - CartResolutionMiddleware
