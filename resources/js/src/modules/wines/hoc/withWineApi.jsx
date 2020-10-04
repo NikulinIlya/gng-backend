@@ -52,6 +52,7 @@ export default WrappedComponent => props => {
         const [err, response] = await fetchWines({ search });
         if (err) return setStatus(REQUEST.error);
         setStatus(REQUEST.success);
+        console.log("response", response);
         return response.data;
     };
 

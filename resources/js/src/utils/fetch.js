@@ -1,7 +1,7 @@
 import redaxios from "redaxios";
-// import axios from "axios"
+import axios from "axios"
 
-const instance = redaxios.create({
+const instance = axios.create({
     headers: {
         "Content-Type": "application/json"
     },

@@ -1,6 +1,10 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { createProxyMiddleware } = require("http-proxy-middleware");
+
+const getRules = require("./webpack.loaders");
+const createProxy = require("./proxy-middleware");
 
 const targetUrl = "http://gng.wine";
 
@@ -12,11 +16,6 @@ module.exports = env => ({
         chunkFilename: "chunks/[name].chunk.js",
         publicPath: env.prod ? "/build/" : "/"
     },
-    // watch: true,
-    // watchOptions: {
-    //     aggregateTimeout: 200,
-    //     ignored: /node_modules/
-    // },
     optimization: {
         splitChunks: {
             chunks: "all"
@@ -29,18 +28,61 @@ module.exports = env => ({
         }
     },
     devServer: {
-        proxy: [
-            {
-                context: ["/api", "/storage", "/sanctum"],
-                target: targetUrl,
-                changeOrigin: true
-            }
-        ],
+        // proxy: [
+        //     {
+        //         context: ["/api", "/storage", "/sanctum"],
+        //         target: targetUrl,
+        //         changeOrigin: true,
+        //         secure: false
+        //     }
+        // ],
         contentBase: path.resolve(__dirname, "public/build"),
         host: "127.0.0.1",
         port: 8083,
+        disableHostCheck: true,
         compress: true,
-        historyApiFallback: true
+        historyApiFallback: true,
+        after(app) {
+            app.use(
+                createProxyMiddleware(["/api", "/storage", "/sanctum"], {
+                    target: targetUrl,
+                    changeOrigin: true,
+                    secure: false,
+                    cookieDomainRewrite: {
+                        "*": ""
+                    },
+                    onProxyRes(proxyRes, req, res) {
+                        Object.keys(proxyRes.headers).forEach(key => {
+                            res.append(key, proxyRes.headers[key]);
+                        });
+                        // console.log(
+                        //     "proxyRes.headers!",
+                        //     proxyRes.headers.location
+                        // );
+
+                        // if (
+                        //     proxyRes.headers.location.includes(
+                        //         "https://gng.wine/api/lang/en"
+                        //     )
+                        // ) {
+                        //     console.log('proxyRes',proxyRes)
+                        // }
+                        if (
+                            "set-cookie" in proxyRes.headers &&
+                            Array.isArray(proxyRes.headers["set-cookie"])
+                        ) {
+                            console.log('set!!!!')
+                            proxyRes.headers["set-cookie"] = proxyRes.headers[
+                                "set-cookie"
+                            ].map(cookie =>
+                                cookie.replace(/[Ss]ecure\s*;?/, "")
+                            );
+                        }
+                    },
+                    logLevel: "info"
+                })
+            );
+        }
     },
     plugins: [
         new CleanWebpackPlugin(),
@@ -50,69 +92,6 @@ module.exports = env => ({
         })
     ],
     module: {
-        rules: [
-            {
-                test: /\.jsx?$/,
-                loader: "babel-loader",
-                include: path.resolve(__dirname, "resources/js/src"),
-                query: {
-                    presets: ["@babel/env", "@babel/react"],
-                    plugins: [
-                        [
-                            "@babel/plugin-transform-runtime",
-                            {
-                                corejs: false
-                            }
-                        ]
-                    ]
-                }
-            },
-            {
-                test: /\.svg$/,
-                use: ["@svgr/webpack"]
-            },
-            {
-                test: /\.(s[ac]ss|css)$/i,
-                use: [
-                    "style-loader",
-                    "css-loader",
-                    "postcss-loader",
-                    {
-                        loader: "sass-loader",
-                        options: {
-                            prependData: `@import 'styles/variables'; @import 'styles/mixins';`,
-                            sassOptions: {
-                                includePaths: [
-                                    path.resolve(
-                                        __dirname,
-                                        "resources/js/src/assets"
-                                    )
-                                ]
-                            }
-                        }
-                    }
-                ]
-            },
-            {
-                test: /\.(png|svg|jpg|gif|ico)$/,
-                use: {
-                    loader: "file-loader",
-                    options: {
-                        name: "images/[name].[ext]"
-                    }
-                }
-            },
-            {
-                test: /\.(woff|woff2|eot|ttf|otf)$/,
-                use: [
-                    {
-                        loader: "file-loader",
-                        options: {
-                            name: "fonts/[name].[ext]"
-                        }
-                    }
-                ]
-            }
-        ]
+        rules: getRules(path)
     }
 });

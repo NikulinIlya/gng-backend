@@ -71,8 +71,9 @@ const App = () => {
 
     useEffect(_ => {
         (async _ => {
-            const response = await to(redaxios("/sanctum/csrf-cookie"));
-            console.log("response", response);
+            // const response = await to(redaxios("/sanctum/csrf-cookie"));
+            const lang = await to(redaxios("/api/lang/en"));
+            // console.log("response", response);
         })();
 
         window.addEventListener("scroll", handleScrollY);
