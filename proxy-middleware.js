@@ -1,25 +1,27 @@
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
-module.exports = (target) => {
+function relayRequestHeaders(proxyReq, req) {
+    Object.keys(req.headers).forEach(function(key) {
+        proxyReq.setHeader(key, req.headers[key]);
+    });
+}
+
+function relayResponseHeaders(proxyRes, req, res) {
+    Object.keys(proxyRes.headers).forEach(function(key) {
+        res.append(key, proxyRes.headers[key]);
+    });
+}
+
+module.exports = target => {
     return createProxyMiddleware(["/api", "/storage", "/sanctum"], {
         target,
         changeOrigin: true,
-        followRedirects: true,
         secure: false,
-        // cookieDomainRewrite: {
-        //     "*": "*"
-        // },
-        // onProxyRes(proxyRes) {
-        //     console.log("proxyRes.headers!!!!!!!!!", proxyRes.headers);
-        //     if (
-        //         "set-cookie" in proxyRes.headers &&
-        //         Array.isArray(proxyRes.headers["set-cookie"])
-        //     ) {
-        //         proxyRes.headers["set-cookie"] = proxyRes.headers[
-        //             "set-cookie"
-        //         ].map(cookie => cookie.replace(/[Ss]ecure\s*;?/, ""));
-        //     }
-        // },
+        cookieDomainRewrite: {
+            "*": "localhost"
+        },
+        onProxyReq: relayRequestHeaders,
+        onProxyRes: relayResponseHeaders,
         logLevel: "warn"
     });
 };

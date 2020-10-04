@@ -24,3 +24,21 @@ export default function NotFound() {
         </div>
     );
 }
+
+export function Noop() {
+    return (
+        <div className="container">
+            <section className="not-found">
+                <div className="not-found__container">
+                    <span className="not-found__heading noop">Coming soon</span>
+                    <p className="not-found__description">
+                        This section will be available soon
+                    </p>
+                    <div className="not-found__home">
+                        <Button to="/wines">Check out our Catalog</Button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    );
+}

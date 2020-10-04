@@ -2,14 +2,17 @@ import React, { useState, useEffect } from "react";
 
 import Slider from "./components/Slider";
 import Banner from "./components/BannerCard";
-import BrandsSlider from "./components/BrandsSlider"
+import BrandsSlider from "./components/BrandsSlider";
 
 import Heading from "@/components/Heading";
 import BottleCard from "@/components/BottleCard";
+import Loading from "@/components/Loading";
 import DetailsCard from "@/components/DetailsPageCard";
 
+import { status as REQUEST } from "@/utils/request-status";
 import useMeasures from "@/utils/useMeasures";
 import useTranslate from "@/utils/useTranslate";
+import usePopular from "./usePopular";
 
 import { discounts, contacts } from "./static";
 
@@ -18,9 +21,10 @@ import mobileMap from "@/assets/images/contacts-map.jpg";
 
 import "./home.scss";
 
-export default function HomePage() {
+function HomePage() {
     const { isMobile } = useMeasures();
-    const { t } = useTranslate()
+    const { t } = useTranslate();
+    const { products: popular, status } = usePopular();
     return (
         <div className="home-page">
             <div className="home-page__slider">
@@ -28,16 +32,25 @@ export default function HomePage() {
             </div>
             <section className="popular container">
                 <Heading className="popular__heading ">Популярное</Heading>
-                <div className="popular__body">
-                    {Array.from({ length: 4 }).map((_, i) => (
-                        <BottleCard key={i} />
-                    ))}
-                </div>
+                {status === REQUEST.pending && <Loading />}
+                {status === REQUEST.success && (
+                    <div className="popular__body">
+                        {popular.map((_, i) => (
+                            <BottleCard
+                                {..._}
+                                bottle={_.image}
+                                wineglass={_.glass_image}
+                                to={`/catalog/${_.id}`}
+                                key={i}
+                            />
+                        ))}
+                    </div>
+                )}
             </section>
             <section className="home-banner">
                 <Banner />
             </section>
-            <section className="discounts container">
+            {/* <section className="discounts container">
                 <Heading className="popular__heading ">
                     Акции и Предложения
                 </Heading>
@@ -46,7 +59,7 @@ export default function HomePage() {
                         <DetailsCard {...item} key={i} />
                     ))}
                 </div>
-            </section>
+            </section> */}
             <section className="contacts container">
                 <Heading className="contacts__heading">Контакты</Heading>
                 <div className="contacts__body">
@@ -56,7 +69,9 @@ export default function HomePage() {
                                 <img src={item.icon} alt="" />
                             </div>
                             <h3 className="contact-item__name">{item.name}</h3>
-                            <p className="contact-item__value">{item.value}</p>
+                            <p className="contact-item__value">
+                                {t(item.valueSlug, item.value)}
+                            </p>
                         </div>
                     ))}
                 </div>
@@ -74,3 +89,5 @@ export default function HomePage() {
         </div>
     );
 }
+
+export default HomePage;

@@ -29,17 +29,19 @@ export const contacts = [
     icon: marker,
     name: "Адрес",
     nameSlug: "",
-    valueSlug: '',
+    valueSlug: 'g-moskva-ul-seleznevskaya-dom-19-2',
     value: "г. Москва, ул. Селезневская , дом 19/2",
   },
   {
     icon: phone,
     name: "Телефон",
+    valueSlug: '',
     value: "8 (982) 655-50-00",
   },
   {
     icon: time,
     name: "Время работы",
+    valueSlug: '',
     value: "Понедельник – пятница с 9.00 до 18.00",
   },
 ];

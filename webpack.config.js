@@ -43,45 +43,7 @@ module.exports = env => ({
         compress: true,
         historyApiFallback: true,
         after(app) {
-            app.use(
-                createProxyMiddleware(["/api", "/storage", "/sanctum"], {
-                    target: targetUrl,
-                    changeOrigin: true,
-                    secure: false,
-                    cookieDomainRewrite: {
-                        "*": ""
-                    },
-                    onProxyRes(proxyRes, req, res) {
-                        Object.keys(proxyRes.headers).forEach(key => {
-                            res.append(key, proxyRes.headers[key]);
-                        });
-                        // console.log(
-                        //     "proxyRes.headers!",
-                        //     proxyRes.headers.location
-                        // );
-
-                        // if (
-                        //     proxyRes.headers.location.includes(
-                        //         "https://gng.wine/api/lang/en"
-                        //     )
-                        // ) {
-                        //     console.log('proxyRes',proxyRes)
-                        // }
-                        if (
-                            "set-cookie" in proxyRes.headers &&
-                            Array.isArray(proxyRes.headers["set-cookie"])
-                        ) {
-                            console.log('set!!!!')
-                            proxyRes.headers["set-cookie"] = proxyRes.headers[
-                                "set-cookie"
-                            ].map(cookie =>
-                                cookie.replace(/[Ss]ecure\s*;?/, "")
-                            );
-                        }
-                    },
-                    logLevel: "info"
-                })
-            );
+            app.use(createProxy(targetUrl));
         }
     },
     plugins: [

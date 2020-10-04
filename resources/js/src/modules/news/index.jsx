@@ -1,34 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 
-import MainNewsCard from "./components/MainNewsCard";
-import Post from "./components/Post";
-import DetailsCard from "@/components/DetailsPageCard";
-import Modal from "@/components/Modal";
+// import MainNewsCard from "./components/MainNewsCard";
+// import Post from "./components/Post";
+// import DetailsCard from "@/components/DetailsPageCard";
+// import Modal from "@/components/Modal";
+import { Noop } from "@/components/NotFound";
 
-import { history } from "@/index";
+// import { history } from "@/index";
 
-import wineSet from "@/assets/images/templates/wine-set.png";
+// import wineSet from "@/assets/images/templates/wine-set.png";
 
 import "./news.scss";
 
 export default function News() {
-  const [isPostVisible, setPostVisibility] = useState(false);
-  const { search } = useLocation();
-  useEffect(
-    (_) => {
-      setPostVisibility(search ? true : false);
-    },
-    [search]
-  );
+    // const [isPostVisible, setPostVisibility] = useState(false);
+    // const { search } = useLocation();
+    // useEffect(
+    //   (_) => {
+    //     setPostVisibility(search ? true : false);
+    //   },
+    //   [search]
+    // );
 
-  const onClosePost = (_) => {
-    history.push(location.pathname);
-  };
+    // const onClosePost = (_) => {
+    //   history.push(location.pathname);
+    // };
 
-  return (
-    <div className="container">
-      {isPostVisible && (
+    return (
+        <div className="container">
+            <Noop />
+            {/* {isPostVisible && (
         <Modal onClose={onClosePost}>
           <Post />
         </Modal>
@@ -46,7 +48,7 @@ export default function News() {
             description={`An important white grape in Bordeaux and the Loire Valley that has now found fame in New Zealand and now Chile. `}
           />
         ))}
-      </div>
-    </div>
-  );
+      </div> */}
+        </div>
+    );
 }

@@ -71,9 +71,10 @@ const App = () => {
 
     useEffect(_ => {
         (async _ => {
-            // const response = await to(redaxios("/sanctum/csrf-cookie"));
-            const lang = await to(redaxios("/api/lang/en"));
-            // console.log("response", response);
+            const response = await to(redaxios("/sanctum/csrf-cookie"));
+            // const login = await to(redaxios("/api/register"));
+            // const lang = await to(redaxios("/api/lang/en"));
+            console.log("response", response);
         })();
 
         window.addEventListener("scroll", handleScrollY);
@@ -148,7 +149,7 @@ const App = () => {
                                 />
                                 <Route path="/wines" exact component={Wines} />
                                 <Route
-                                    path="/strong"
+                                    path="/spirits"
                                     exact
                                     component={Strong}
                                 />
