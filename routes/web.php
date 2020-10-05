@@ -18,6 +18,8 @@ Route::group(['prefix' => 'admin-panel'], function () {
     Voyager::routes();
 });
 
+Auth::routes(); //['verify' => true]
+
 Route::get('/{uri?}', function (Request $request) {
     if (isset($_COOKIE['vi'])) {
         return view('index');
