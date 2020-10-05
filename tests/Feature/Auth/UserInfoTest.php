@@ -30,7 +30,7 @@ class UserInfoTest extends TestCase
         $user = factory(User::class)->create();
 
         factory(UserInfo::class)->create([
-            'user_id' => $user->id
+            'user_id' => $user->id,
         ]);
 
         Sanctum::actingAs($user);
@@ -49,7 +49,7 @@ class UserInfoTest extends TestCase
         $user = factory(User::class)->create();
 
         $userInfo = factory(UserInfo::class)->create([
-            'user_id' => $user->id
+            'user_id' => $user->id,
         ]);
 
         Sanctum::actingAs($user);

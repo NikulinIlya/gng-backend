@@ -30,13 +30,13 @@ class UserInfoController
         if ($validator->fails()) {
             return response()
                 ->json([
-                    $validator->errors()
+                    $validator->errors(),
                 ], 422);
         }
 
         return response()
             ->json([
-                'message' => 'ok'
+                'message' => 'ok',
             ], 200);
         UserInfo::where('user_id', Auth::id())
             ->update([
