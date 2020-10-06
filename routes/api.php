@@ -40,10 +40,11 @@ Route::middleware('auth:sanctum')->group(
                 return $request->user();
             }
         );
+
+        Route::get('/user-info', 'Api\UserInfoController@show');
+        Route::put('/update-user-info', 'Api\UserInfoController@update');
     }
 );
-
-Auth::routes(); //['verify' => true]
 
 Route::get(
     '/welcome-email-testing',
