@@ -73,23 +73,53 @@ const App = () => {
     useEffect(_ => {
         (async _ => {
             const data = {
-                name: 'vigen',
-                email: 'some@mail.address',
-                password: '123456789',
-                second_name: '',
-                phone:'89887776655',
+                name: "vigen",
+                email: "some@mail.address",
+                password: "123456789",
+                second_name: "",
+                phone: "89887776655",
                 discount_agreed: true,
                 events_agreed: true
-            }
+            };
             const response = await to(redaxios("/sanctum/csrf-cookie"));
             const login = await to(
                 redaxios({
                     method: "post",
                     url: "/api/register",
                     headers: {
-                        accept: "json"
+                        accept: "json",
+                        "Content-Type": "multipart/form-data"
+                    },
+                    body: Object.entries(data).reduce((acc, cur, i, arr) => {
+                        return (
+                            acc +
+                            `${cur[0]}=${cur[1]}${
+                                i !== arr.length - 1 ? "&" : ""
+                            }`
+                        );
+                    }, "")
+                })
+            );
+            await to(
+                redaxios({
+                    method: "post",
+                    url: "/api/register",
+                    headers: {
+                        accept: "json",
+                        "Content-Type": "multipart/form-data"
                     },
                     body: JSON.stringify(data)
+                })
+            );
+            await to(
+                redaxios({
+                    method: "post",
+                    url: "/api/register",
+                    headers: {
+                        accept: "json",
+                        "Content-Type": "multipart/form-data"
+                    },
+                    body: data
                 })
             );
             // const lang = await to(redaxios("/api/lang/en"));
