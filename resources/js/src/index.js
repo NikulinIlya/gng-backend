@@ -76,7 +76,7 @@ const App = () => {
             const data = {
                 // name: "vigen",
                 email: "some@mail.address",
-                password: "123456789",
+                password: "123456789"
                 // password_confirmation: "123456789",
                 // second_name: "",
                 // phone: "89887776655",
@@ -85,7 +85,7 @@ const App = () => {
             };
 
             const response = await to(redaxios("/sanctum/csrf-cookie"));
-            await to(axios.post("/login", data));
+            await to(axios({ url: "/login", method: "post", data }));
             console.log("response", response);
         })();
 
