@@ -9,7 +9,7 @@ import withApi from "./hoc/withCartApi";
 import withLogic from "./hoc/withCartLogic";
 
 import compose from "@/utils/compose";
-
+import useTranslate from "@/utils/useTranslate";
 import { history } from "@";
 
 import "./cart.scss";
@@ -23,11 +23,14 @@ function Cart({
     onRemove,
     onCountChange
 }) {
+    const { t } = useTranslate();
     return (
         <div className="container">
             <section className="cart">
                 <h1 className="cart__title">
-                    Ваша корзина {!products.length && isLoaded ? "пуста" : ""}
+                    {!products.length && isLoaded
+                        ? t("cart-is-empty", "Ваша корзина пуста")
+                        : t("your-basket", "Ваша корзина")}
                 </h1>
                 {!!products.length && (
                     <>
@@ -72,20 +75,27 @@ function Cart({
                         <aside className="cart__nav">
                             <div className="cart__side-container promo">
                                 <label className="promo__label">
-                                    <span>Промокод</span>
+                                    <span>{t("promo-code", "Промокод")}</span>
                                     <input type="text" />
                                 </label>
-                                <button className="promo__button">Ок</button>
+                                <button className="promo__button">
+                                    {t("ok", "Ок")}
+                                </button>
                             </div>
                             <div className="cart__side-container order">
-                                <h2 className="order__title">Ваш заказ</h2>
+                                <h2 className="order__title">
+                                    {t("your-order", "Ваш заказ")}
+                                </h2>
                                 <form
                                     className="order__form"
                                     onSubmit={_ => history.push("/cart/order")}
                                 >
                                     <div className="order__line">
                                         <span className="order__key">
-                                            Товаров в корзине
+                                            {t(
+                                                "items-in-the-basket",
+                                                "Товаров в корзине"
+                                            )}
                                         </span>
                                         <span className="order__value">
                                             {cartSize} шт
@@ -93,21 +103,26 @@ function Cart({
                                     </div>
                                     <div className="order__line">
                                         <span className="order__key">
-                                            Всего
+                                            {t("inall", "Всего")}
                                         </span>
                                         <span className="order__value">
-                                            {cartSum} руб.
+                                            {cartSum} {t("rub", "руб.")}
                                         </span>
                                     </div>
                                     <div className="order__line">
                                         <span className="order__key">
-                                            Итого
+                                            {t("total", "Итого")}
                                         </span>
                                         <span className="order__value">
-                                            {cartSum} руб.
+                                            {cartSum} {t("rub", "руб.")}
                                         </span>
                                     </div>
-                                    <Button>Продолжить оформление</Button>
+                                    <Button>
+                                        {t(
+                                            "further-processing",
+                                            "Продолжить оформление"
+                                        )}
+                                    </Button>
                                 </form>
                             </div>
                         </aside>

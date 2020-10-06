@@ -21,6 +21,6 @@ export default {
     },
     taste: {
         name: "Вкус",
-        nameSlug: ""
+        nameSlug: "taste"
     }
 };

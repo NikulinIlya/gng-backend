@@ -16,6 +16,7 @@ export default function Exclusive() {
                     <ExclusiveCard
                         key={d.name}
                         {...d}
+                        name={t(d.nameSlug,d.name)}
                         description={t(d.descrSlug, d.description)}
                     />
                 ))}

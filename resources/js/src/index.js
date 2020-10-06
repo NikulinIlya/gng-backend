@@ -19,6 +19,7 @@ import { SignIn, SignUp } from "@/components/Login";
 import Modal from "@/components/Modal";
 import NotFound from "@/components/NotFound";
 import { CartNotificationProvider } from "@/components/CartNotification";
+import Loading from "@/components/Loading";
 
 import { HeaderContext } from "@/context/header";
 import useMeasures from "@/utils/useMeasures";
@@ -60,7 +61,7 @@ const App = () => {
     const [isLoginModalVisible, setIsLoginModalVisible] = useState({});
     const { search } = useLocation();
     const { isMobile } = useMeasures();
-    const { dispatch } = useStoreon();
+    const { dispatch, appIsPending } = useStoreon("appIsPending");
 
     const handleScrollY = useCallback(_ => {
         document.documentElement.style.setProperty(
@@ -107,66 +108,94 @@ const App = () => {
                     >
                         <Header />
                         <CatalogNavigation />
-                        <Suspense fallback="Loading...">
-                            <Switch>
-                                <Route
-                                    path="/brands"
-                                    exact
-                                    component={Brands}
-                                />
-                                <Route path="/contacts" component={Contacts} />
-                                <Route path="/about" component={About} />
-                                <Route
-                                    exact
-                                    path="/profile"
-                                    component={Profile}
-                                />
-                                <Route exact path="/cart" component={Cart} />
-                                <Route path="/cart/order" component={Order} />
-                                <Route path="/static" component={StaticPage} />
-                                <Route
-                                    exact
-                                    path="/accessories"
-                                    exact
-                                    component={Accessories}
-                                />
-                                <Route
-                                    exact
-                                    path="/events"
-                                    exact
-                                    component={Events}
-                                />
-                                <Route
-                                    path="/events/:eventId"
-                                    exact
-                                    component={EventPage}
-                                />
-                                <Route path="/news" exact component={News} />
-                                <Route
-                                    path="/exclusive"
-                                    exact
-                                    component={Exclusive}
-                                />
-                                <Route path="/wines" exact component={Wines} />
-                                <Route
-                                    path="/spirits"
-                                    exact
-                                    component={Strong}
-                                />
-                                <Route
-                                    path="/champagne"
-                                    exact
-                                    component={Champagne}
-                                />
-                                <Route path="/search" component={SearchPage} />
-                                <Route
-                                    path="/catalog/:productId"
-                                    component={ProductDetails}
-                                />
-                                <Route path="/" exact component={Home} />
-                                <Route component={NotFound} />
-                            </Switch>
-                        </Suspense>
+                        {appIsPending ? (
+                            <Loading />
+                        ) : (
+                            <Suspense fallback="Loading...">
+                                <Switch>
+                                    <Route
+                                        path="/brands"
+                                        exact
+                                        component={Brands}
+                                    />
+                                    <Route
+                                        path="/contacts"
+                                        component={Contacts}
+                                    />
+                                    <Route path="/about" component={About} />
+                                    <Route
+                                        exact
+                                        path="/profile"
+                                        component={Profile}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/cart"
+                                        component={Cart}
+                                    />
+                                    <Route
+                                        path="/cart/order"
+                                        component={Order}
+                                    />
+                                    <Route
+                                        path="/static"
+                                        component={StaticPage}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/accessories"
+                                        exact
+                                        component={Accessories}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/events"
+                                        exact
+                                        component={Events}
+                                    />
+                                    <Route
+                                        path="/events/:eventId"
+                                        exact
+                                        component={EventPage}
+                                    />
+                                    <Route
+                                        path="/news"
+                                        exact
+                                        component={News}
+                                    />
+                                    <Route
+                                        path="/exclusive"
+                                        exact
+                                        component={Exclusive}
+                                    />
+                                    <Route
+                                        path="/wines"
+                                        exact
+                                        component={Wines}
+                                    />
+                                    <Route
+                                        path="/spirits"
+                                        exact
+                                        component={Strong}
+                                    />
+                                    <Route
+                                        path="/champagne"
+                                        exact
+                                        component={Champagne}
+                                    />
+                                    <Route
+                                        path="/search"
+                                        component={SearchPage}
+                                    />
+                                    <Route
+                                        path="/catalog/:productId"
+                                        component={ProductDetails}
+                                    />
+                                    <Route path="/" exact component={Home} />
+                                    <Route component={NotFound} />
+                                </Switch>
+                            </Suspense>
+                        )}
 
                         {isLoginModalVisible.state && (
                             <Modal

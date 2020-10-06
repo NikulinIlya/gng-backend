@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useStoreon } from "storeon/react";
 
 import Heading from "@/components/Heading";
 import Button from "@/components/Button";
 import { TextField, Checkbox, Select } from "@/components/Input";
+import {
+    monthNames,
+    monthNamesEn
+} from "@/modules/events/components/CalendarView/calendar-helpers";
 
 import useTranslate from "@/utils/useTranslate";
 
@@ -22,7 +27,6 @@ export default function Account() {
                 <form className="personal-info">
                     <TextField label={t("name", "Имя")} />
                     <TextField label={t("second-name", "Фамилия")} />
-                    <TextField label={t("", "Отчество")} />
                     <div className="fields-grid">
                         <TextField label={t("mob-number", "Телефон")} />
                         <TextField label="Email" />
@@ -36,10 +40,13 @@ export default function Account() {
                             <div className="fields-flex__body">
                                 <Checkbox
                                     variant="square"
-                                    label="Мужской"
+                                    label={t("male", "Мужской")}
                                     defaultChecked
                                 />
-                                <Checkbox variant="square" label="Женский" />
+                                <Checkbox
+                                    variant="square"
+                                    label={t("female", "Женский")}
+                                />
                             </div>
                         </div>
                     </div>
@@ -117,33 +124,25 @@ function ProfileSection({ title, children }) {
 }
 
 function DateInput({ label = "Дата" }) {
+    const { lang } = useStoreon("lang");
+
     const days = Array.from({ length: 31 }).map((_, i) => ({
         text: ++i,
         value: ++i
     }));
-    const months = [
-        "Январь",
-        "Февраль",
-        "Март",
-        "Апрель",
-        "Май",
-        "Июнь",
-        "Июль",
-        "Август",
-        "Сентябрь",
-        "Октябрь",
-        "Ноябрь",
-        "Декабрь"
-    ];
     const minYear = new Date().getFullYear() - 100;
     const maxYear = new Date().getFullYear() - 18;
+    const localizedMonthNames = lang === "en" ? monthNamesEn : monthNames;
     return (
         <div className="date">
             {label && <h3 className="date__title">{label}</h3>}
             <div className="date__body">
                 <Select options={days} />
                 <Select
-                    options={months.map((m, i) => ({ text: m, value: i }))}
+                    options={localizedMonthNames.map((m, i) => ({
+                        text: m,
+                        value: i
+                    }))}
                 />
                 <Select
                     options={Array.from({ length: maxYear - minYear }).map(

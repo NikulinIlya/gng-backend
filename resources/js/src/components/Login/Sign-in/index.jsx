@@ -26,16 +26,18 @@ export default function SingIn({ onClose }) {
             )}
             <h1 className="login__title">{t("sign-in", "Вход")}</h1>
             <p className="login__prediction">
-                Еще нет аккаунта?{" "}
+                {t("don-t-have-an-account-yet", "Еще нет аккаунта?")}{" "}
                 <Link to="?login=sign-up">{t("sign-up", "Регистрация")}</Link>
             </p>
             <form className="login__form">
-                <TextField label={"Email или телефон"} />
-                <TextField label={"Пароль"} type="password" />
+                <TextField
+                    label={t("e-mail-or-telephone-number", "Email или телефон")}
+                />
+                <TextField label={t("password", "Пароль")} type="password" />
                 <Button>{t("sign-in", "Вход")}</Button>
             </form>
             <Link className="login__forgot" to="/">
-                Забыли пароль?
+                {t('forgot-your-password','Забыли пароль?')}
             </Link>
         </div>
     );

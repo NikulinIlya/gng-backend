@@ -9,11 +9,11 @@ export default {
     },
     type: {
         name: "Тип",
-        nameSlug: ""
+        nameSlug: "whiskey-type"
     },
     aging: {
         name: "Выдержка",
-        nameSlug: ""
+        nameSlug: "maturation"
     },
     strength: {
         name: "Крепость",
@@ -21,6 +21,6 @@ export default {
     },
     taste: {
         name: "Вкус",
-        nameSlug: ""
+        nameSlug: "taste"
     }
 };

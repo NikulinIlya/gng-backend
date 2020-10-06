@@ -3,6 +3,7 @@ import vintages from "@/assets/images/templates/vintage-drinks.jpg";
 export default [
     {
         name: "Винтажи",
+        nameSlug: "vintages",
         description: `Est laborum adipisicing nostrud amet esse culpa paria tur labore labore. Laboris aliquip duis ullamco.`,
         descrSlug: `vintage-champagne-is-created-only-in-the-year-when-the-wine-has-something-to-tell-you`,
         backdrop: vintages,
@@ -10,6 +11,7 @@ export default [
     },
     {
         name: "Редкие",
+        nameSlug: "rare",
         description: `Est laborum adipisicing nostrud amet esse culpa paria tur labore labore. Laboris aliquip duis ullamco.`,
         descrSlug: `discover-the-world-of-the-most-exclusive-gandg-products`,
         backdrop: rares,

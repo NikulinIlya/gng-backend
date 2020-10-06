@@ -5,10 +5,12 @@ import Button from "@/components/Button";
 import Loading from "@/components/Loading";
 
 import { status as REQUEST } from "@/utils/request-status";
+import useTranslate from "@/utils/useTranslate";
 
 import "./brands.scss";
 
 export default function Brands() {
+    const { t } = useTranslate();
     const { brands, flatRegionMapImages, flatRegionNames } = useStoreon(
         "brands",
         "flatRegionMapImages",
@@ -72,7 +74,10 @@ export default function Brands() {
                                         {b.description}
                                     </p>
                                     <Button to={`/search?brand_id=${b.id}`}>
-                                        Продукция бренда
+                                        {t(
+                                            "brand-products",
+                                            "Продукция бренда"
+                                        )}
                                     </Button>
                                 </section>
                             </div>

@@ -23,7 +23,19 @@ export default store => {
             flatColorNames: null
         };
     });
+    store.on("showcase/force-reinit", () => {
+        store.dispatch("showcase/set-brands", null);
+        store.dispatch("showcase/set-colors", null);
+        store.dispatch("showcase/set-regions", null);
+        store.dispatch("showcase/set-grape-sorts", null);
+        store.dispatch("showcase/set-product-categories", null);
 
+        store.dispatch("showcase/get-brands");
+        store.dispatch("showcase/get-colors");
+        store.dispatch("showcase/get-regions");
+        store.dispatch("showcase/get-grape-sorts");
+        store.dispatch("showcase/get-product-categories");
+    });
     store.on("showcase/set-brands", (_, brands) => ({ brands }));
     store.on("showcase/set-product-categories", (_, productCategories) => ({
         productCategories

@@ -4,6 +4,7 @@ import BottleCard from "@/components/BottleCard";
 import Loading from "@/components/Loading";
 
 import compose from "@/utils/compose";
+import useTranslate from "@/utils/useTranslate";
 
 import withApi from "./hoc/withFavoriteApi";
 import withLogic from "./hoc/withFavoriteLogic";
@@ -11,9 +12,14 @@ import withLogic from "./hoc/withFavoriteLogic";
 import "./favorite.scss";
 
 function Favorite({ isLoaded, isListEmpty, favoriteProducts }) {
+    const { t } = useTranslate();
     if (!isLoaded) return <Loading />;
     if (isListEmpty)
-        return <h1 style={{ textAlign: "center" }}>Список пуст</h1>;
+        return (
+            <h1 style={{ textAlign: "center" }}>
+                {t("your-list-is-empty", "Список пуст")}
+            </h1>
+        );
     return (
         <div className="favorite">
             <div className="container">

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import IconButton from "@/components/IconButton";
 
 import useCounter from "@/utils/useCounter";
+import useTranslate from "@/utils/useTranslate";
 
 import template from "@/assets/images/templates/cart-item-template.png";
 
@@ -20,6 +21,7 @@ export default function CartContentsItem({
     onRemove,
     onCountChange = Function.prototype
 }) {
+    const { t } = useTranslate();
     const { value, dispatch } = useCounter(count);
     useEffect(_ => onCountChange(value), [value]);
     return (
@@ -37,12 +39,12 @@ export default function CartContentsItem({
                     <h2 className="cart-item__name">{brand}</h2>
                     <p className="cart-item__descr">{name}</p>
                     <p className="cart-item__vendor-code">
-                        Номер товара: {vendorCode}
+                        {t('set-number','Номер товара')}: {vendorCode}
                     </p>
                     <div className="cart-item__footer">
                         <div className="cart-item__sum">
                             <span className="cart-item__sum-label">
-                                Количество
+                                {t("quantity", "Количество")}
                             </span>
                             <div className="cart-item__counter-nav">
                                 <button
@@ -64,10 +66,10 @@ export default function CartContentsItem({
                         </div>
                         <div className="cart-item__sum">
                             <span className="cart-item__sum-label">
-                                Стоимость
+                                {t("cost", "Стоимость")}
                             </span>
                             <p className="cart-item__sum-value">
-                                <span>{price}</span> руб.{" "}
+                                <span>{price}</span> {t('rub','руб.')}{" "}
                             </p>
                         </div>
                     </div>

@@ -23,7 +23,8 @@ export default store => {
     store.on("@init", () => ({
         lang: memoizedLang || DEFAULT_LANG,
         isAuthorized: false,
-        favoriteProducts: favoriteProducts || []
+        favoriteProducts: favoriteProducts || [],
+        appIsPending: false
     }));
 
     store.on(
@@ -42,7 +43,7 @@ export default store => {
     }));
     store.on("client/set-lang", async (_, lang) => {
         if (!existingLangs[lang]) return { lang: DEFAULT_LANG };
-
+        store.dispatch("client/set-app-pending", true);
         try {
             const [err, langResponse] = await to(redaxios(`/api/lang/${lang}`));
             store.dispatch("dictionary/force-load");
@@ -50,6 +51,10 @@ export default store => {
             return { lang };
         } catch {
             return _;
+        } finally {
+            store.dispatch("showcase/force-reinit");
+            store.dispatch("client/set-app-pending", false);
         }
     });
+    store.on("client/set-app-pending", (_, state) => ({ appIsPending: state }));
 };

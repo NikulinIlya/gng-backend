@@ -14,7 +14,7 @@ import "./footer.scss";
 const footerGridData = [
     {
         colName: "Покупателям",
-        colNameSlug: "",
+        colNameSlug: "for-our-customers",
         links: [
             {
                 label: "О компании",
@@ -52,11 +52,11 @@ const footerGridData = [
                 labelSlug: "our-events",
                 path: "/events"
             },
-            {
-                label: "Винотека G&G",
-                labelSlug: "",
-                path: "/static"
-            }
+            // {
+            //     label: "Винотека G&G",
+            //     labelSlug: "",
+            //     path: "/static"
+            // }
         ]
     },
     {
@@ -167,7 +167,10 @@ function Copy() {
             </div>
             <div className="copy__item">
                 <p>gng.wine</p>
-                <p>Все права защищены, {new Date().getFullYear()}</p>
+                <p>
+                    {t("all-rights-reserved", "Все права защищены")},{" "}
+                    {new Date().getFullYear()}
+                </p>
             </div>
         </div>
     );

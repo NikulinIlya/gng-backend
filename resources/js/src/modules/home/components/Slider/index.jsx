@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import Button from "@/components/Button";
+import useTranslate from "@/utils/useTranslate";
 
 import slideTemplate from "@/assets/images/templates/main-page-slider.png";
 
@@ -22,6 +23,7 @@ export default function Slider() {
 }
 
 function SliderCard() {
+  const {t} = useTranslate()
   return (
     <section className="slider-card">
       <div className="slider-card__content">
@@ -30,7 +32,7 @@ function SliderCard() {
           The series begins by looking at the factors that influence
         </p>
         <a className="slider-card__details">
-          <Button>Подробнее</Button>
+          <Button>{t("learn-more", "подробнее")}</Button>
         </a>
       </div>
     </section>

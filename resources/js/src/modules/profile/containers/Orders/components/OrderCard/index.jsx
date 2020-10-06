@@ -39,7 +39,7 @@ export default function OrderCard({ status = "process" }) {
                     {t(statuses[status].labelSlug, statuses[status].label)}
                 </span>
             </div>
-            <div className="order-card__date">от 15.04 2020</div>
+            <div className="order-card__date">15.04 2020</div>
     <div className="order-card__sum">11 300{` ${t('rub','руб.')}`}</div>
         </div>
     );
