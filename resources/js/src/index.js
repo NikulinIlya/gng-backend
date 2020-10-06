@@ -74,17 +74,18 @@ const App = () => {
     useEffect(_ => {
         (async _ => {
             const data = {
-                name: "vigen",
+                // name: "vigen",
                 email: "some@mail.address",
                 password: "123456789",
-                password_confirmation: "123456789",
-                second_name: "",
-                phone: "89887776655",
-                discount_agreed: true,
-                events_agreed: true
+                // password_confirmation: "123456789",
+                // second_name: "",
+                // phone: "89887776655",
+                // discount_agreed: true,
+                // events_agreed: true
             };
+
             const response = await to(redaxios("/sanctum/csrf-cookie"));
-            await to(axios.post("/register", data));
+            await to(axios.post("/login", data));
             console.log("response", response);
         })();
 
