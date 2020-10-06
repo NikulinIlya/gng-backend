@@ -88,41 +88,11 @@ const App = () => {
                     url: "/register",
                     headers: {
                         accept: "json",
-                        "Content-Type": "multipart/form-data"
-                    },
-                    body: Object.entries(data).reduce((acc, cur, i, arr) => {
-                        return (
-                            acc +
-                            `${cur[0]}=${cur[1]}${
-                                i !== arr.length - 1 ? "&" : ""
-                            }`
-                        );
-                    }, "")
-                })
-            );
-            await to(
-                redaxios({
-                    method: "post",
-                    url: "/register",
-                    headers: {
-                        accept: "json",
-                        "Content-Type": "multipart/form-data"
+                        "Content-Type": "application/json"
                     },
                     body: JSON.stringify(data)
                 })
             );
-            await to(
-                redaxios({
-                    method: "post",
-                    url: "/register",
-                    headers: {
-                        accept: "json",
-                        "Content-Type": "multipart/form-data"
-                    },
-                    body: data
-                })
-            );
-            // const lang = await to(redaxios("/api/lang/en"));
             console.log("response", response);
         })();
 
