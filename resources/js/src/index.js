@@ -85,7 +85,7 @@ const App = () => {
             const login = await to(
                 redaxios({
                     method: "post",
-                    url: "/api/register",
+                    url: "/register",
                     headers: {
                         accept: "json",
                         "Content-Type": "multipart/form-data"
@@ -103,7 +103,7 @@ const App = () => {
             await to(
                 redaxios({
                     method: "post",
-                    url: "/api/register",
+                    url: "/register",
                     headers: {
                         accept: "json",
                         "Content-Type": "multipart/form-data"
@@ -114,7 +114,7 @@ const App = () => {
             await to(
                 redaxios({
                     method: "post",
-                    url: "/api/register",
+                    url: "/register",
                     headers: {
                         accept: "json",
                         "Content-Type": "multipart/form-data"
