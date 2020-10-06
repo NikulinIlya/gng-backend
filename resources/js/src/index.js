@@ -85,7 +85,14 @@ const App = () => {
             };
 
             const response = await to(redaxios("/sanctum/csrf-cookie"));
-            await to(axios({ url: "/login", method: "post", data }));
+            await to(
+                axios({
+                    url: "/login",
+                    method: "post",
+                    headers: { accept: "json" },
+                    data
+                })
+            );
             console.log("response", response);
         })();
 
