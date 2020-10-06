@@ -10,6 +10,7 @@ import ReactDOM from "react-dom";
 import { Router, Switch, Route, useLocation } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { StoreContext, useStoreon } from "storeon/react";
+import axios from "axios";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -82,17 +83,7 @@ const App = () => {
                 events_agreed: true
             };
             const response = await to(redaxios("/sanctum/csrf-cookie"));
-            const login = await to(
-                redaxios({
-                    method: "post",
-                    url: "/register",
-                    headers: {
-                        accept: "json",
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(data)
-                })
-            );
+            await to(axios.post("/register", data));
             console.log("response", response);
         })();
 
