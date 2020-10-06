@@ -72,6 +72,15 @@ const App = () => {
 
     useEffect(_ => {
         (async _ => {
+            const data = {
+                name: 'vigen',
+                email: 'some@mail.address',
+                password: '123456789',
+                second_name: '',
+                phone:'89887776655',
+                discount_agreed: true,
+                events_agreed: true
+            }
             const response = await to(redaxios("/sanctum/csrf-cookie"));
             const login = await to(
                 redaxios({
@@ -79,7 +88,8 @@ const App = () => {
                     url: "/api/register",
                     headers: {
                         accept: "json"
-                    }
+                    },
+                    body: JSON.stringify(data)
                 })
             );
             // const lang = await to(redaxios("/api/lang/en"));
