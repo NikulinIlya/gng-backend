@@ -66,7 +66,7 @@ class RegisterController extends Controller
         if ($validator->fails()) {
             return response()
                 ->json([
-                    $validator->errors()
+                    $validator->errors(),
                 ], 422);
         }
 

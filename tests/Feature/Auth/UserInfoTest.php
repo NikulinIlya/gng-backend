@@ -49,7 +49,7 @@ class UserInfoTest extends TestCase
         $user = factory(User::class)->create();
 
         factory(UserInfo::class)->create([
-            'user_id' => $user->id
+            'user_id' => $user->id,
         ]);
 
         Sanctum::actingAs($user);
@@ -57,7 +57,7 @@ class UserInfoTest extends TestCase
         $response = $this->json('PUT', '/api/update-user-info', [
             'second_name' => 'Jones',
             'patronymic' => 'Jonsovich',
-            'phone' => (string)rand(70000000000, 89999999999),
+            'phone' => (string) rand(70000000000, 89999999999),
         ]);
 
         $response->assertOk()->assertJson(['message' => 'Update completed successfully']);
