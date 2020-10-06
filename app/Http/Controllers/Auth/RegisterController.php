@@ -100,8 +100,8 @@ class RegisterController extends Controller
                 'user_id' => $user->id,
                 'second_name' => $data['second_name'],
                 'phone' => $data['phone'],
-                'discount_agreed' => (int)$data['discount_agreed'],
-                'events_agreed' => (int)$data['events_agreed'],
+                'discount_agreed' => (int) $data['discount_agreed'],
+                'events_agreed' => (int) $data['events_agreed'],
             ]);
         }
 
