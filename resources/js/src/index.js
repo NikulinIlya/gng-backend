@@ -73,7 +73,15 @@ const App = () => {
     useEffect(_ => {
         (async _ => {
             const response = await to(redaxios("/sanctum/csrf-cookie"));
-            // const login = await to(redaxios("/api/register"));
+            const login = await to(
+                redaxios({
+                    method: "post",
+                    url: "/api/register",
+                    headers: {
+                        accept: "json"
+                    }
+                })
+            );
             // const lang = await to(redaxios("/api/lang/en"));
             console.log("response", response);
         })();
