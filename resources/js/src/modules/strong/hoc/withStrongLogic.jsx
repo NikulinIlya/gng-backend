@@ -10,7 +10,7 @@ import useQueryParams from "@/utils/useQueryParams";
 import getRandom from "@/utils/get-random-item";
 
 export default WrappedComponent => props => {
-    const { products = [], page, strongDispatcher, history } = props;
+    const { products = [], page, history } = props;
     const { notify } = useContext(CartNotificationContext);
     const { applyParam } = useQueryParams();
     const { isMobile } = useMeasures();

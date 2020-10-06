@@ -6,6 +6,7 @@ import { CartNotificationContext } from "@/components/CartNotification";
 import useBrands from "@/utils/useBrands";
 import useFiltersApi from "@/utils/useFiltersApi";
 import useMeasures from "@/utils/useMeasures";
+import getRandom from "@/utils/get-random-item";
 
 import champagneReducer from "../champagneReducer";
 
@@ -14,9 +15,7 @@ export default WrappedComponent => props => {
     const [state, champagneDispatcher] = useReducer(champagneReducer, {
         filtersVisibility: false
     });
-    const { dispatch: notificationDispatch } = useContext(
-        CartNotificationContext
-    );
+    const { notify } = useContext(CartNotificationContext);
     const { isMobile } = useMeasures();
     const filters = useFiltersApi("champagne");
     const { dispatch, assistantPhrases } = useStoreon("assistantPhrases");
@@ -45,16 +44,14 @@ export default WrappedComponent => props => {
 
     const onAdd = (id, count = 1) => {
         if (!id) return;
+
+        const brandId = extendedProducts.find(p => p.id === id).brand_id;
+
         dispatch("cart/add", {
             product: { id, count },
             callback: _ =>
-                notificationDispatch({
-                    type: "HANDLE_VISIBILITY",
-                    payload: true,
-                    fact:
-                        assistantPhrases[
-                            Math.floor(Math.random() * assistantPhrases.length)
-                        ].phrase
+                notify({
+                    text: getRandom(assistantPhrases[brandId])
                 })
         });
     };

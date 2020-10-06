@@ -75,14 +75,21 @@ export default function CartNotification({ title, fact, onHide }) {
                     <h3 className="message__title">
                         {t(`good-choice`, title)}
                     </h3>
-                    <p className="message__text">Товар добавлен в корзину.</p>
+                    <p className="message__text">
+                        {t(
+                            "the-product-added-to-your-cart",
+                            "Товар добавлен в корзину."
+                        )}
+                    </p>
                     <p className="message__fact">{fact}</p>
                 </section>
                 <div className="actions">
                     <Button variant="gold" onClick={onHide}>
-                        Продолжить
+                        {t("continue", "Продолжить")}
                     </Button>
-                    <Button onClick={onHide} to="/cart">Оформить заказ</Button>
+                    <Button onClick={onHide} to="/cart">
+                        {t("place-an-order", "Оформить заказ")}
+                    </Button>
                 </div>
             </div>
         </Assistant>

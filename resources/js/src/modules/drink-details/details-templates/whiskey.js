@@ -1,11 +1,11 @@
 export default {
     brand: {
         name: "Производитель",
-        nameSlug: ""
+        nameSlug: "producer"
     },
     region: {
         name: "Регион",
-        nameSlug: ""
+        nameSlug: "region"
     },
     type: {
         name: "Тип",
@@ -17,7 +17,7 @@ export default {
     },
     strength: {
         name: "Крепость",
-        nameSlug: ""
+        nameSlug: "strength"
     },
     taste: {
         name: "Вкус",

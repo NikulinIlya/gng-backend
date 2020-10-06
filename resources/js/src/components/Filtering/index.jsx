@@ -3,11 +3,13 @@ import React, { useState, useEffect, useRef } from "react";
 import Button from "@/components/Button";
 
 import useMeasures from "@/utils/useMeasures";
+import useTranslate from "@/utils/useTranslate";
 
 import "./filters.scss";
 
 function Filtering({ onClose, onSubmit, onReset, renderFiltersBody }) {
     const { isMobile } = useMeasures();
+    const { t } = useTranslate();
     const formRef = useRef(null);
     const onSubmitFilters = e => {
         e.preventDefault();
@@ -43,10 +45,10 @@ function Filtering({ onClose, onSubmit, onReset, renderFiltersBody }) {
 
                 <div className="filters__footer">
                     <Button variant="gold" onClick={onSubmitFilters}>
-                        Применить
+                        {t("apply", "Применить")}
                     </Button>
                     <Button onClick={onResetFilters} type="reset">
-                        Сбросить
+                        {t("reset", "Сбросить")}
                     </Button>
                 </div>
             </form>

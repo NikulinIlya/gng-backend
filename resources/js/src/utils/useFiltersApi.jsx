@@ -4,23 +4,24 @@ import redaxios, { to } from "@/utils/fetch";
 
 const filterLabels = {
     categories: {
-        name: "Тип напитка"
+        name: "Тип напитка",
+        nameSlug: "product-type"
     },
     brands: {
         name: "Бренд",
-        nameSlug: ""
+        nameSlug: "brand"
     },
     colours: {
         name: "Цвет",
-        nameSlug: ""
+        nameSlug: "colour"
     },
     grape_sorts: {
         name: "Сорт винограда",
-        nameSlug: ""
+        nameSlug: "grapes-variety"
     },
     locations: {
         name: "Регион",
-        nameSlug: ""
+        nameSlug: "region"
     }
 };
 
@@ -43,16 +44,19 @@ export default function useApiState(slug) {
 
     function decorateFiltersWithLabels(filters) {
         if (!filters) return [];
-        return Object.entries(filters).reverse().reduce(
-            (acc, [key, value]) => (
-                (acc[key] = {
-                    value,
-                    label: filterLabels[key].name
-                }),
-                acc
-            ),
-            {}
-        );
+        return Object.entries(filters)
+            .reverse()
+            .reduce(
+                (acc, [key, value]) => (
+                    (acc[key] = {
+                        value,
+                        label: filterLabels[key].name,
+                        labelSlug: filterLabels[key].nameSlug
+                    }),
+                    acc
+                ),
+                {}
+            );
     }
 
     return labeledFilters;

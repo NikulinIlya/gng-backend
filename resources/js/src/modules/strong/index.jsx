@@ -31,7 +31,6 @@ function Strong({
     onFiltersSubmit
 }) {
     const { t } = useTranslate();
-
     return (
         <div className="strong container">
             <AsideLayout
@@ -68,10 +67,10 @@ function Strong({
                                 )
                             )}
                         </div>
-                        {page < lastPage && (
+                        {page < lastPage && !!products.length && (
                             <div className="catalog-load">
                                 <Button onClick={onLoadMore}>
-                                    Показать еще
+                                    {t("show-more", "Показать еще")}
                                 </Button>
                             </div>
                         )}

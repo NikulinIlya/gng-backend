@@ -1,23 +1,23 @@
 export default {
     brand: {
         name: "Производитель",
-        nameSlug: ""
+        nameSlug: "producer"
     },
     region: {
         name: "Регион",
-        nameSlug: ""
+        nameSlug: "region"
     },
     class: {
         name: "Класс",
-        nameSlug: ""
+        nameSlug: "class"
     },
     aging: {
         name: "Возраст коньячного спирта",
-        nameSlug: ""
+        nameSlug: "eaux-de-vie-age"
     },
     strength: {
         name: "Крепость",
-        nameSlug: ""
+        nameSlug: "strength"
     },
     taste: {
         name: "Вкус",

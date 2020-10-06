@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
+import useTranslate from "@/utils/useTranslate";
 
 import withLogic from "./hoc/withWineCategoriesLogic";
 
@@ -10,6 +11,7 @@ import "./wine-categories.scss";
 
 function WineCategories({ onChangeState, filters, isLoaded }) {
     const { brands, grape_sorts, locations, colours, budget } = filters;
+    const { t } = useTranslate();
     if (!isLoaded) return <Loading />;
     return (
         <>
@@ -51,7 +53,7 @@ function WineCategories({ onChangeState, filters, isLoaded }) {
             </div>
             <div className="wine-categories__all">
                 <Button to="/wines" onClick={_ => onChangeState(false)}>
-                    Показать все вина
+                    {t("view-full-selection", "Показать все вина")}
                 </Button>
             </div>
         </>
@@ -60,15 +62,17 @@ function WineCategories({ onChangeState, filters, isLoaded }) {
 
 function CategoryList({
     label,
+    labelSlug,
     value = [],
     nameProp = "name",
     category,
     isExotic,
     onClick
 }) {
+    const { t } = useTranslate();
     return (
         <section className="wine-category">
-            <h4 className="wine-category__name">{label}</h4>
+            <h4 className="wine-category__name">{t(labelSlug, label)}</h4>
             <ul className="wine-category__list">
                 {value.map((item, i) => (
                     <li className="wine-category__item" key={i}>

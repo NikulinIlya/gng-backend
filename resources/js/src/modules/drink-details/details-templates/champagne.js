@@ -1,37 +1,30 @@
 export default {
     brand: {
         name: "Производитель",
-        nameSlug: "",
-        icon: "flag"
+        nameSlug: "producer"
     },
     region: {
         name: "Регион",
-        nameSlug: "",
-        icon: "marker"
+        nameSlug: "region"
     },
     grape_sorts: {
         name: "Виноград",
-        nameSlug: "",
-        icon: "grape"
+        nameSlug: "grapes-variety"
     },
     temperature: {
         name: "Температура подачи",
-        nameSlug: "",
-        icon: "wineglass"
+        nameSlug: "serving-temperature"
     },
     strength: {
         name: "Крепость",
-        nameSlug: "",
-        icon: "bottle"
+        nameSlug: "strength"
     },
     dosage: {
         name: "Дозаж",
-        nameSlug: "",
-        icon: "color"
+        nameSlug: "dosage"
     },
     color: {
         name: "Цвет",
-        nameSlug: "",
-        icon: "color"
+        nameSlug: "colour"
     }
 };

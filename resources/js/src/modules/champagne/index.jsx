@@ -69,10 +69,10 @@ function Champagne({
                             )}
                         </div>
 
-                        {page < lastPage && (
+                        {page < lastPage && !!products.length && (
                             <div className="catalog-load">
                                 <Button onClick={onLoadMore}>
-                                    Показать еще
+                                    {t("show-more", "Показать еще")}
                                 </Button>
                             </div>
                         )}

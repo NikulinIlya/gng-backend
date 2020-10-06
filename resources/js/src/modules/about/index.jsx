@@ -13,37 +13,37 @@ import wineSet from "@/assets/images/templates/wine-set.png";
 import "./about.scss";
 
 export default function About() {
-  return (
-    <div className="about-page">
-      <div className="about-page__banner">
-        <img src={banner} alt="" className="about-page__backdrop" />
-        <section className="about-page__banner-content container">
-          <div className="about-page__logo">
-            <img src={logo} alt="" />
-          </div>
-          <h1 className="about-page__title">
-            Magna id proident laborum esse nostrud
-          </h1>
-          <p className="about-page__subtitle">
+    return (
+        <div className="about-page">
+            <div className="about-page__banner">
+                <img src={banner} alt="" className="about-page__backdrop" />
+                <section className="about-page__banner-content container">
+                    <div className="about-page__logo">
+                        <img src={logo} alt="" />
+                    </div>
+                    <h1 className="about-page__title">Grapes & Grains</h1>
+                    {/* <p className="about-page__subtitle">
             Magna id proident sunt laborum esse nostrud mollit minim laboris
             duis culpa ex minim. Esse pariatur duis laboris mollit do laboris
             anim
-          </p>
-        </section>
-      </div>
-      <div className="about-page__numbers">
-        <div className="container">
-          <ul className="numbers">
-            {Array.from({ length: 3 }).map((itm, i) => (
-              <li className="numbers__item" key={i}>
-                <span className="numbers__item-value">12</span>
-                <span className="numbers__item-key">pariatur incididunt</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-      <div className="about-page__info-block">
+          </p> */}
+                </section>
+            </div>
+            <div className="about-page__numbers">
+                <div className="container">
+                    <ul className="numbers">
+                        {Array.from({ length: 3 }).map((itm, i) => (
+                            <li className="numbers__item" key={i}>
+                                <span className="numbers__item-value">12</span>
+                                <span className="numbers__item-key">
+                                    pariatur incididunt
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+            {/* <div className="about-page__info-block">
         <div className="container">
           <div className="info-block">
             <div className="info-block__image">
@@ -68,46 +68,48 @@ export default function About() {
             </div>
           </div>
         </div>
-      </div>
-      <div
-        className="about-page__info-block"
-        style={{ backgroundColor: "#f8f8f8" }}
-      >
-        <div className="container">
-          <div className="info-block" style={{ paddingBottom: 0 }}>
-            <div className="info-block__content">
-              <h2 className="info-block__title">
-                Reprehenderit anim cupidatat ullamco
-              </h2>
-              <p>
-                Magna id proident sunt laborum esse nostrud mollit minim laboris
-                duis culpa ex minim. Esse pariatur duis laboris mollit do
-                laboris anim ea ea amet veniam qui. Aute culpa eiusmod culpa
-                excepteur consectetur dolore non voluptate nostrud minim sint
-                quis. Ullamco exercitation et sint eu laboris.
-              </p>
-              <img src={signTemplate} alt="" />
+      </div> */}
+            <div
+                className="about-page__info-block"
+                style={{ backgroundColor: "#f8f8f8" }}
+            >
+                <div className="container">
+                    <div className="info-block" style={{ paddingBottom: 0 }}>
+                        <div className="info-block__content">
+                            <h2 className="info-block__title">
+                                Reprehenderit anim cupidatat ullamco
+                            </h2>
+                            <p>
+                                Magna id proident sunt laborum esse nostrud
+                                mollit minim laboris duis culpa ex minim. Esse
+                                pariatur duis laboris mollit do laboris anim ea
+                                ea amet veniam qui. Aute culpa eiusmod culpa
+                                excepteur consectetur dolore non voluptate
+                                nostrud minim sint quis. Ullamco exercitation et
+                                sint eu laboris.
+                            </p>
+                            <img src={signTemplate} alt="" />
+                        </div>
+                        <div className="info-block__image">
+                            <img src={template2} alt="" />
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="info-block__image">
-              <img src={template2} alt="" />
+            <div className="about-page__cards">
+                <div className="container">
+                    <div className="cards">
+                        {Array.from({ length: 3 }).map((_, i) => (
+                            <DetailsCard
+                                image={wineSet}
+                                title={"Aute occaecat"}
+                                description={`An important white grape in Bordeaux and the Loire Valley that has now found fame in New Zealand and now Chile. `}
+                                key={i}
+                            />
+                        ))}
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <div className="about-page__cards">
-        <div className="container">
-          <div className="cards">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <DetailsCard
-                image={wineSet}
-                title={"Aute occaecat"}
-                description={`An important white grape in Bordeaux and the Loire Valley that has now found fame in New Zealand and now Chile. `}
-                key={i}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    );
 }

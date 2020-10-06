@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+
+import useTranslate from "@/utils/useTranslate";
 
 import map from "@/assets/images/contacts-map.jpg";
 
-import marker from "@/assets/images/icons/marker.svg";
+import { contacts } from "@/modules/home/static";
 
 import "./contacts.scss";
 
 export default function Contacts() {
+    const { t } = useTranslate();
     return (
         <div className="contacts-page">
             <div className="container">
@@ -14,52 +17,31 @@ export default function Contacts() {
                     <div className="contacts-page__map">
                         <img src={map} alt="" />
                     </div>
-                    <h1 className="contacts-page__title">Контакты</h1>
+                    <h1 className="contacts-page__title">
+                        {t("contacts", "Контакты")}
+                    </h1>
                     <div className="contacts-page__content">
                         <ul className="contacts-page__info">
+                            {contacts.map((item, i) => (
+                                <li className="contacts-page__info-item info-item">
+                                    <div className="info-item__icon">
+                                        <img src={item.icon} alt={item.name} />
+                                    </div>
+                                    <h2 className="info-item__key">
+                                        {t(item.nameSlug, item.name)}
+                                    </h2>
+                                    <p className="info-item__value">
+                                        {t(item.valueSlug, item.value)}
+                                    </p>
+                                </li>
+                            ))}
                             <li className="contacts-page__info-item info-item">
                                 <div className="info-item__icon">
-                                    <img
-                                        src={
-                                            require("@/assets/images/icons/contacts-marker-icon.svg")
-                                                .default
-                                        }
-                                        alt=""
-                                    />
+                                    <img src={contacts[2].icon} alt={""} />
                                 </div>
-                                <h2 className="info-item__key">Адрес</h2>
+                                <h2 className="info-item__key">Email</h2>
                                 <p className="info-item__value">
-                                    г. Москва, ул. Селезневская , дом 19/2
-                                </p>
-                            </li>
-                            <li className="contacts-page__info-item info-item">
-                                <div className="info-item__icon">
-                                    <img
-                                        src={
-                                            require("@/assets/images/icons/contacts-phone-icon.svg")
-                                                .default
-                                        }
-                                        alt=""
-                                    />
-                                </div>
-                                <h2 className="info-item__key">Телефон</h2>
-                                <p className="info-item__value">
-                                    8 (982) 655-50-00
-                                </p>
-                            </li>
-                            <li className="contacts-page__info-item info-item">
-                                <div className="info-item__icon">
-                                    <img
-                                        src={
-                                            require("@/assets/images/icons/contacts-time-icon.svg")
-                                                .default
-                                        }
-                                        alt=""
-                                    />
-                                </div>
-                                <h2 className="info-item__key">Время работы</h2>
-                                <p className="info-item__value">
-                                    Понедельник – пятница с 9.00 до 18.00
+                                    info@gng.wine
                                 </p>
                             </li>
                         </ul>

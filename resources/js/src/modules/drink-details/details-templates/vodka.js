@@ -1,19 +1,19 @@
 export default {
     brand: {
         name: "Производитель",
-        nameSlug: ""
+        nameSlug: "producer"
     },
     region: {
         name: "Регион",
-        nameSlug: ""
+        nameSlug: "region"
     },
     raw: {
         name: "Сырье",
-        nameSlug: ""
+        nameSlug: "raw"
     },
     strength: {
         name: "Крепость",
-        nameSlug: ""
+        nameSlug: "strength"
     },
     taste: {
         name: "Вкус",

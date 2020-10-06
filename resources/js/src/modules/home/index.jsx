@@ -31,7 +31,9 @@ function HomePage() {
                 <Slider />
             </div>
             <section className="popular container">
-                <Heading className="popular__heading ">Популярное</Heading>
+                <Heading className="popular__heading ">
+                    {t("popular", "Популярное")}
+                </Heading>
                 {status === REQUEST.pending && <Loading />}
                 {status === REQUEST.success && (
                     <div className="popular__body">
@@ -61,14 +63,18 @@ function HomePage() {
                 </div>
             </section> */}
             <section className="contacts container">
-                <Heading className="contacts__heading">Контакты</Heading>
+                <Heading className="contacts__heading">
+                    {t("contacts", "Контакты")}
+                </Heading>
                 <div className="contacts__body">
                     {contacts.map((item, i) => (
                         <div className="contact-item" key={i}>
                             <div className="contact-item__icon">
                                 <img src={item.icon} alt="" />
                             </div>
-                            <h3 className="contact-item__name">{item.name}</h3>
+                            <h3 className="contact-item__name">
+                                {t(item.nameSlug, item.name)}
+                            </h3>
                             <p className="contact-item__value">
                                 {t(item.valueSlug, item.value)}
                             </p>

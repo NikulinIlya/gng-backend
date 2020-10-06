@@ -5,6 +5,7 @@ import isEmpty from "@/utils/is-empty";
 
 const BUDGET_FILTER = {
     label: "Цена",
+    labelSlug: "price",
     value: [
         { name: "до 1000 руб", query: "?price_max=1000" },
         { name: "1000 - 1500 руб", query: "?price_min=1000&price_max=1500" },

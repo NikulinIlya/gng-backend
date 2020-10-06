@@ -11,6 +11,7 @@ import AdvancedFilters from "./components/AdvancedFiltering";
 import { withApi, withLogic, withFiltering } from "./hoc";
 
 import compose from "@/utils/compose";
+import useTranslate from "@/utils/useTranslate";
 import { status as REQUEST } from "@/utils/request-status";
 
 import "./wines.scss";
@@ -30,6 +31,7 @@ const CatalogPage = ({
     onFiltersSubmit,
     onFiltersReset
 }) => {
+    const { t } = useTranslate();
     return (
         <div className="catalog">
             <div className="container">
@@ -76,10 +78,10 @@ const CatalogPage = ({
                                     )
                                 )}
                             </div>
-                            {page < lastPage && (
+                            {page < lastPage && !!products.length && (
                                 <div className="catalog-load">
                                     <Button onClick={onLoadMore}>
-                                        Показать еще
+                                        {t("show-more", "Показать еще")}
                                     </Button>
                                 </div>
                             )}

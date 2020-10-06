@@ -4,6 +4,7 @@ import cn from "classnames";
 
 import IconButton from "@/components/IconButton";
 import useMeasures from "@/utils/useMeasures";
+import useTranslate from "@/utils/useTranslate";
 
 import bottleTemplate from "@/assets/images/templates/template-bottle.png";
 import glassTemplate from "@/assets/images/wineglass-template.png";
@@ -25,6 +26,7 @@ function BottleCard({
     onAdd = Function.prototype
 }) {
     const { isMobile } = useMeasures();
+    const { t } = useTranslate();
     const onAddToCart = e => {
         e.stopPropagation();
         onAdd(e);
@@ -61,7 +63,7 @@ function BottleCard({
                 </section>
                 <div className="bottle-card__footer">
                     <div className="bottle-card__price">
-                        <strong>{price}</strong> руб.
+                        <strong>{price}</strong> {t("rub", "руб.")}
                     </div>
                     <IconButton
                         className="bottle-card__buy"

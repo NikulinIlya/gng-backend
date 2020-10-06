@@ -4,6 +4,7 @@ import PastEventCard from "@/components/PastEventCard";
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
 import Heading from "@/components/Heading";
+import { Noop } from "@/components/NotFound";
 
 import compose from "@/utils/compose";
 import { status as REQUEST } from "@/utils/request-status";
@@ -22,6 +23,12 @@ function Events({ eventList, futureEvents, pastEvents, status }) {
         calendar: CalendarView
     };
     const [type, setType] = useState("list");
+
+    return (
+        <div className="events-container container">
+            <Noop />
+        </div>
+    );
 
     return (
         <div className="events-container container">

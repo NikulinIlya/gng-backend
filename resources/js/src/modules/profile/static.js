@@ -6,18 +6,21 @@ export default [
   {
     name: "profile-tabs",
     label: "Мои заказы",
+    labelSlug: 'my-orders',
     icon: ListIcon,
     id: "orders",
   },
   {
     name: "profile-tabs",
     label: "Профиль",
+    labelSlug: 'profile',
     icon: ProfileIcon,
     id: "info",
   },
   {
     name: "profile-tabs",
     label: "Избранное",
+    labelSlug: 'favorites',
     icon: FavIcon,
     id: "favorite",
   },

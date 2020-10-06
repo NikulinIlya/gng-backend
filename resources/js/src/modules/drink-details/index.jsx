@@ -6,6 +6,7 @@ import Post from "@/modules/news/components/Post";
 import Modal from "@/components/Modal";
 
 import compose from "@/utils/compose";
+import useTranslate from "@/utils/useTranslate";
 
 import {
     ProductFeature,
@@ -61,13 +62,15 @@ const whiskey = {
 };
 
 const champagne = {
-    dosage: 'spoon',
-}
+    dosage: "spoon"
+};
 
 const productIcons = {
     vodka,
     cognac,
     whiskey,
+    vodka,
+    champagne,
     common: detailsIcons
 };
 
@@ -86,7 +89,7 @@ function ProductDetails({
     onHideArticle
 }) {
     const { image, name, vendor_code, price, id, brand_id } = product;
-
+    const { t } = useTranslate();
     if (!isLoaded) return <Loading />;
     return (
         <div className="container">
@@ -114,7 +117,10 @@ function ProductDetails({
                         </h1>
                         <p className="product-details__descr">{name}</p>
                         <p className="product-details__vendor-code">
-                            {`Номер товара: ${vendor_code}`}
+                            {`${t(
+                                "set-number",
+                                "Номер товара"
+                            )}: ${vendor_code}`}
                         </p>
                     </div>
                     <div className="product-details__features">
@@ -128,7 +134,7 @@ function ProductDetails({
                                               ][key]
                                             : productIcons["common"][key]
                                     }
-                                    name={instance.name}
+                                    name={t(instance.nameSlug, instance.name)}
                                     value={instance.value}
                                     key={key}
                                 />
@@ -147,8 +153,8 @@ function ProductDetails({
                     {productCategory.slug === "wine" && (
                         <AboutWine
                             acidity={product[productCategory.slug].acidity}
-                            acidity={product[productCategory.slug].sweetness}
-                            acidity={product[productCategory.slug].body}
+                            sweetness={product[productCategory.slug].sweetness}
+                            body={product[productCategory.slug].body}
                         />
                     )}
                     {productCategory.slug && (

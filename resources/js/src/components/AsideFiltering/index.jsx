@@ -4,6 +4,7 @@ import Filtering from "@/components/Filtering";
 import Button from "@/components/Button";
 import Range from "@/components/Input/Range/Multiple";
 import { Checkbox } from "@/components/Input";
+import useTranslate from "@/utils/useTranslate";
 
 export default function AsideFiltering({
     filtersVisibility,
@@ -70,11 +71,12 @@ function FilterBy({
 }
 
 function FiltersBody({ filters, active, onChange }) {
+    const { t } = useTranslate();
     const getPropName = key => (key === "locations" ? "country" : "name");
     return (
         <>
             <div className="filters-criteria">
-                <h3 className="filters-criteria__name">Цена</h3>
+                <h3 className="filters-criteria__name">{t("price", "Цена")}</h3>
                 <div className="filters-criteria__fields">
                     <Range
                         min={1000}
@@ -90,7 +92,7 @@ function FiltersBody({ filters, active, onChange }) {
             {Object.entries(filters).map(([key, filterItem]) => (
                 <div className="filters-criteria" key={key}>
                     <h3 className="filters-criteria__name">
-                        {filterItem.label}
+                        {t(filterItem.labelSlug, filterItem.label)}
                     </h3>
                     <div className="filters-criteria__fields">
                         <FilterBy
