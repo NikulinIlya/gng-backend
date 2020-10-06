@@ -39,7 +39,7 @@ class UserInfoControllerUserInfoController
 
         return response()
             ->json([
-                'message' => 'Update completed successfully'
+                'message' => 'Update completed successfully',
             ], 200);
     }
 }
