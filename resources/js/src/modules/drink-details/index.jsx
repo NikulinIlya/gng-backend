@@ -82,13 +82,15 @@ function ProductDetails({
     productRegion,
     articleSet,
     currentArticle,
+    countIn,
+    setCountIn,
     isLoaded,
     isProductFavorite,
     onFavoriteStateChange,
     onAdd,
     onHideArticle
 }) {
-    const { image, name, vendor_code, price, id, brand_id } = product;
+    const { image, name, vendor_code, price, case_price, id, brand_id } = product;
     const { t } = useTranslate();
     if (!isLoaded) return <Loading />;
     return (
@@ -144,7 +146,15 @@ function ProductDetails({
                     <div className="product__calc">
                         <Counter
                             defaultCount={1}
-                            price={price}
+                            price={
+                                countIn === "bottles"
+                                    ? price
+                                    : case_price
+                                    ? case_price
+                                    : price
+                            }
+                            countIn={countIn}
+                            setCountIn={setCountIn}
                             onAdd={val => onAdd(id, val, brand_id)}
                         />
                     </div>

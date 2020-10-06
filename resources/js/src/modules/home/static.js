@@ -45,5 +45,12 @@ export const contacts = [
         nameSlug: "opening-hours",
         valueSlug: "pn-pt-10-00-20-00",
         value: "Понедельник – пятница с 9.00 до 18.00"
+    },
+    {
+        icon: time,
+        name: "Email",
+        nameSlug: "",
+        valueSlug: "",
+        value: "info@gng.wine"
     }
 ];

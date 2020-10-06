@@ -10,6 +10,7 @@ export default WrappedComponent => props => {
     const [brandArticles, setBrandArticles] = useState([]);
     const [grapeArticles, setGrapeArticles] = useState([]);
     const [regionArticles, setRegionArticles] = useState([]);
+    const [countIn, setCountIn] = useState("bottles");
 
     useEffect(_ => {
         (async _ => {
@@ -42,6 +43,8 @@ export default WrappedComponent => props => {
             grapeArticles={grapeArticles}
             regionArticles={regionArticles}
             isLoaded={isLoaded}
+            countIn={countIn}
+            setCountIn={setCountIn}
         />
     );
 };

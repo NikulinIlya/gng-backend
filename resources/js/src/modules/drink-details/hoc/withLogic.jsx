@@ -25,7 +25,7 @@ function articlesReducer(state, action) {
 
 export default WrappedComponent => props => {
     const { product, brandArticles, grapeArticles, regionArticles } = props;
-    const { dispatch: notificationDispatch } = useContext(Cart);
+    const { notify } = useContext(Cart);
     const location = useLocation();
     const { t } = useTranslate();
     const [productCategory, setProductCategory] = useState({});
@@ -87,7 +87,7 @@ export default WrappedComponent => props => {
                     type: "set-region-article"
                 }
             ];
-            
+
             articles.forEach(art => {
                 if (art.list.length) {
                     const findedArticle = art.list.find(
@@ -265,20 +265,12 @@ export default WrappedComponent => props => {
 
     const onAdd = (id, count = 1, brandId) => {
         if (!id) return;
-        // if (assistantPhrases && brandId) {
-        //     const suitable = assistantPhrases.filter(({ brand_id }) => brand_id === brandId)
-        //     console.log('assistantPhrases',suitable,brandId)
-        // }
+
         dispatch("cart/add", {
             product: { id, count },
             callback: _ =>
-                notificationDispatch({
-                    type: "HANDLE_VISIBILITY",
-                    payload: true,
-                    fact:
-                        assistantPhrases[
-                            Math.floor(Math.random() * assistantPhrases.length)
-                        ].phrase
+                notify({
+                    text: getRandom(assistantPhrases[brandId])
                 })
         });
     };

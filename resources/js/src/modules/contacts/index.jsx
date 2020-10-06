@@ -35,15 +35,6 @@ export default function Contacts() {
                                     </p>
                                 </li>
                             ))}
-                            <li className="contacts-page__info-item info-item">
-                                <div className="info-item__icon">
-                                    <img src={contacts[2].icon} alt={""} />
-                                </div>
-                                <h2 className="info-item__key">Email</h2>
-                                <p className="info-item__value">
-                                    info@gng.wine
-                                </p>
-                            </li>
                         </ul>
                         <p className="contacts-page__disclaimer">
                             В соответствии с Постановлением Правительства РФ от

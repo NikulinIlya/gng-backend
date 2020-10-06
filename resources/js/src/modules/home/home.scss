@@ -30,8 +30,8 @@
       margin-bottom: 50px;
     }
     &__body {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      display: flex;
+      justify-content: space-between;
       .contact-item {
         display: grid;
         grid-template-areas:
@@ -140,6 +140,7 @@
         margin-bottom: 31px;
       }
       &__body {
+        display: grid;
         grid-template-columns: 1fr;
         gap: 15px;
         .contact-item {
