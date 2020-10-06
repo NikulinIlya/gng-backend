@@ -77,6 +77,7 @@ const App = () => {
                 name: "vigen",
                 email: "some@mail.address",
                 password: "123456789",
+                password_confirmation: "123456789",
                 second_name: "",
                 phone: "89887776655",
                 discount_agreed: true,
