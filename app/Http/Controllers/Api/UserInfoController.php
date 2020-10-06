@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Validator;
 
-class UserInfoController
+class UserInfoControllerUserInfoController
 {
     public function show(Request $request)
     {
@@ -34,19 +34,12 @@ class UserInfoController
                 ], 422);
         }
 
+        UserInfo::where('user_id', Auth::id())
+            ->update($request->input());
+
         return response()
             ->json([
-                'message' => 'ok',
+                'message' => 'Update completed successfully'
             ], 200);
-        UserInfo::where('user_id', Auth::id())
-            ->update([
-                'second_name' => $request->input('second_name'),
-                'patronymic' => $request->input('second_name'),
-                'phone' => $request->input('second_name'),
-                'gender' => $request->input('second_name'),
-                'discount_agreed' => $request->input('second_name'),
-                'events_agreed' => $request->input('second_name'),
-                'birthday' => $request->input('second_name'),
-            ]);
     }
 }
