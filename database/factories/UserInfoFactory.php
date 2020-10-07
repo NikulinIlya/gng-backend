@@ -9,6 +9,7 @@ $factory->define(UserInfo::class, function (Faker $faker) {
     $genders = ['male', 'female'];
 
     return [
+        'email' => null,
         'second_name' => $faker->lastName,
         'patronymic' => $faker->lastName,
         'phone' => rand(70000000000, 89999999999),
