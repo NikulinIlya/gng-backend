@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Validator;
 
-class UserInfoControllerUserInfoController
+class UserInfoController
 {
     public function show(Request $request)
     {
