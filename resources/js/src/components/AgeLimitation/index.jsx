@@ -22,8 +22,7 @@ export default function AgeLimitation({ onPositive, onNegative }) {
       <section className="age-limitation__footer actions">
         <h2 className="actions__title">Вам уже исполнилось 18 лет?</h2>
         <div className="actions__set">
-          <Button onClick={onPositive}>Да</Button>
-          <Button onClick={onNegative}>Нет</Button>
+          <Button onClick={onPositive}>Мне исполнилось 18 лет</Button>
         </div>
       </section>
     </div>

@@ -7,10 +7,26 @@ const BUDGET_FILTER = {
     label: "Цена",
     labelSlug: "price",
     value: [
-        { name: "до 1000 руб", query: "?price_max=1000" },
-        { name: "1000 - 1500 руб", query: "?price_min=1000&price_max=1500" },
-        { name: "1500 - 3000 руб", query: "?price_min=1500&price_max=3000" },
-        { name: "от 3000 руб и более", query: "?price_min=3000" }
+        {
+            name: "до 1000 руб",
+            nameSlug: "up-to-1000-rub",
+            query: "?price_max=1000"
+        },
+        {
+            name: "1000 - 1500 руб",
+            nameSlug: "1000-1500-rub",
+            query: "?price_min=1000&price_max=1500"
+        },
+        {
+            name: "1500 - 3000 руб",
+            nameSlug: "1500-3000-rub",
+            query: "?price_min=1500&price_max=3000"
+        },
+        {
+            name: "от 3000 руб и более",
+            nameSlug: "more-than-3000-rub",
+            query: "?price_min=3000"
+        }
     ]
 };
 

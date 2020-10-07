@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useStoreon } from "storeon/react";
 
 import Heading from "@/components/Heading";
@@ -31,6 +31,8 @@ export default function Account() {
                         <TextField label={t("mob-number", "Телефон")} />
                         <TextField label="Email" />
                         <DateInput
+                            // TODO: FIX
+                            lang={localStorage.getItem("lang")}
                             label={t("date-of-birth", "Дата Рождения")}
                         />
                         <div className="fields-flex">
@@ -123,9 +125,7 @@ function ProfileSection({ title, children }) {
     );
 }
 
-function DateInput({ label = "Дата" }) {
-    const { lang } = useStoreon("lang");
-
+function DateInput({ label = "Дата", lang = "ru" }) {
     const days = Array.from({ length: 31 }).map((_, i) => ({
         text: ++i,
         value: ++i

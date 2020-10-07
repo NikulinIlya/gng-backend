@@ -84,7 +84,9 @@ function CategoryList({
                             }`}
                             onClick={onClick}
                         >
-                            {item[nameProp]}
+                            {labelSlug !== "price"
+                                ? item[nameProp]
+                                : t(item.nameSlug, item.name)}
                         </Link>
                     </li>
                 ))}

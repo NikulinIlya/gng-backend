@@ -7,6 +7,7 @@ import Modal from "@/components/Modal";
 
 import compose from "@/utils/compose";
 import useTranslate from "@/utils/useTranslate";
+import UNIT from "@/utils/product-unit";
 
 import {
     ProductFeature,
@@ -90,7 +91,15 @@ function ProductDetails({
     onAdd,
     onHideArticle
 }) {
-    const { image, name, vendor_code, price, case_price, id, brand_id } = product;
+    const {
+        image,
+        name,
+        vendor_code,
+        price,
+        case_price,
+        id,
+        brand_id
+    } = product;
     const { t } = useTranslate();
     if (!isLoaded) return <Loading />;
     return (
@@ -147,7 +156,7 @@ function ProductDetails({
                         <Counter
                             defaultCount={1}
                             price={
-                                countIn === "bottles"
+                                countIn === UNIT.thing
                                     ? price
                                     : case_price
                                     ? case_price

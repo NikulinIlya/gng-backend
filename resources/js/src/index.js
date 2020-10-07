@@ -58,11 +58,13 @@ const LoginVariants = {
 
 const App = () => {
     const [renderingComponent, setComponent] = useState(null);
-    const [isAgeDisclaimerVisible, setIsAgeDisclaimerVisible] = useState(false);
+    const [isAgeDisclaimerVisible, setIsAgeDisclaimerVisible] = useState(
+        !localStorage.getItem("age-confirmed")
+    );
     const [isLoginModalVisible, setIsLoginModalVisible] = useState({});
     const { search } = useLocation();
     const { isMobile } = useMeasures();
-    const { dispatch, appIsPending } = useStoreon("appIsPending");
+    const { appIsPending } = useStoreon("appIsPending");
 
     const handleScrollY = useCallback(_ => {
         document.documentElement.style.setProperty(
@@ -233,9 +235,13 @@ const App = () => {
                         {isAgeDisclaimerVisible && (
                             <Modal closable={false}>
                                 <AgeLimitation
-                                    onPositive={_ =>
-                                        setIsAgeDisclaimerVisible(false)
-                                    }
+                                    onPositive={_ => {
+                                        localStorage.setItem(
+                                            "age-confirmed",
+                                            true
+                                        );
+                                        setIsAgeDisclaimerVisible(false);
+                                    }}
                                 />
                             </Modal>
                         )}

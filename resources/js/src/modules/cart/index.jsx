@@ -24,6 +24,7 @@ function Cart({
     onCountChange
 }) {
     const { t } = useTranslate();
+    console.log("productsInCart!!!", productsInCart);
     return (
         <div className="container">
             <section className="cart">
@@ -44,29 +45,29 @@ function Cart({
                                         vendor_code,
                                         brand,
                                         id
-                                    }) => (
-                                        <CartItem
-                                            price={price}
-                                            vendorCode={vendor_code}
-                                            name={name}
-                                            brand={brand}
-                                            image={image}
-                                            onRemove={_ => onRemove(id)}
-                                            count={
-                                                productsInCart.find(
-                                                    p => p.id === id
-                                                )
-                                                    ? productsInCart.find(
-                                                          p => p.id === id
-                                                      ).count
-                                                    : undefined
-                                            }
-                                            onCountChange={value =>
-                                                onCountChange(id, value)
-                                            }
-                                            key={id}
-                                        />
-                                    )
+                                    }) => {
+                                        const product =
+                                            productsInCart.find(
+                                                p => p.id === id
+                                            ) || {};
+                                        console.log("product", product);
+                                        return (
+                                            <CartItem
+                                                price={price}
+                                                vendorCode={vendor_code}
+                                                name={name}
+                                                brand={brand}
+                                                image={image}
+                                                onRemove={_ => onRemove(id)}
+                                                unit={product.unit}
+                                                count={product.count}
+                                                onCountChange={value =>
+                                                    onCountChange(id, value)
+                                                }
+                                                key={id}
+                                            />
+                                        );
+                                    }
                                 )
                             ) : (
                                 <Loading />

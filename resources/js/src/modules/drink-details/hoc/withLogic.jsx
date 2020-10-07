@@ -7,6 +7,7 @@ import isEmpty from "@/utils/is-empty";
 import getRandom from "@/utils/get-random-item";
 import { to } from "@/utils/fetch";
 import useTranslate from "@/utils/useTranslate";
+import UNIT from "@/utils/product-unit";
 
 import { history } from "@";
 
@@ -24,7 +25,13 @@ function articlesReducer(state, action) {
 }
 
 export default WrappedComponent => props => {
-    const { product, brandArticles, grapeArticles, regionArticles } = props;
+    const {
+        product,
+        brandArticles,
+        grapeArticles,
+        regionArticles,
+        countIn
+    } = props;
     const { notify } = useContext(Cart);
     const location = useLocation();
     const { t } = useTranslate();
@@ -267,7 +274,7 @@ export default WrappedComponent => props => {
         if (!id) return;
 
         dispatch("cart/add", {
-            product: { id, count },
+            product: { id, count, unit: countIn },
             callback: _ =>
                 notify({
                     text: getRandom(assistantPhrases[brandId])

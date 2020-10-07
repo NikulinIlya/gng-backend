@@ -8,14 +8,21 @@ import { withApi, withLogic } from "./hoc";
 
 import compose from "@/utils/compose";
 import { status as REQUEST } from "@/utils/request-status";
+import useTranslate from "@/utils/useTranslate";
 
 import "./search-page.scss";
 
 const categoryLabels = {
-    vintages: "Винтажи",
-    rares: "Редкие",
-    bags: "Сумки",
-    glasses: "Бокалы"
+    vintages: {
+        name: "Винтажи",
+        nameSlug: "vintages"
+    },
+    rares: {
+        name: "Редкие",
+        nameSlug: "rare"
+    },
+    bags: { name: "Сумки", nameSlug: "" },
+    glasses: { name: "Бокалы", nameSlug: "" }
 };
 
 function SearchPage({
@@ -26,6 +33,7 @@ function SearchPage({
     category,
     brandNames
 }) {
+    const { t } = useTranslate();
     return (
         <div className="container">
             <div className="search-page">
@@ -41,7 +49,10 @@ function SearchPage({
                 )}
                 {category && categoryLabels[category] && (
                     <Heading className="search-page__title">
-                        {categoryLabels[category]}
+                        {t(
+                            categoryLabels[category].nameSlug,
+                            categoryLabels[category].name
+                        )}
                     </Heading>
                 )}
                 <div className="search-page__results">

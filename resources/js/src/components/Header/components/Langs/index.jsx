@@ -10,6 +10,7 @@ export default function Langs() {
     const { dispatch, lang } = useStoreon("lang");
     function onChange({ target }) {
         const { value } = target;
+        console.log('value',value)
         dispatch("client/set-lang", value);
     }
     return (

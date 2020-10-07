@@ -68,11 +68,13 @@
       color: var(--darkText);
       font-size: 24px;
 
+      
       line-height: 24px;
       font-family: var(--morePro);
       span {
         font-weight: 700;
         font-family: var(--proxima);
+
       }
     }
   }
@@ -93,6 +95,7 @@
       font-size: 22px;
       font-weight: 400;
       line-height: 22px;
+      text-align: center;
     }
   }
 }

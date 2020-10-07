@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
+import { useStoreon } from "storeon/react";
 
 import Info from "./components/InfoLine";
 
@@ -25,7 +26,12 @@ const Header = () => {
     const [mobileSearchVisibility, setMobileSearchVisibility] = useState(false);
     const { renderingComponent } = useContext(HeaderContext);
     const { isMobile } = useMeasures();
+    const { productsInCart } = useStoreon("productsInCart");
     const { t } = useTranslate();
+    const itemsInCart = useMemo(
+        _ => productsInCart.reduce((acc, cur) => acc + cur.count, 0),
+        [productsInCart]
+    );
     useEffect(
         _ => {
             if (isMobile)
@@ -34,6 +40,12 @@ const Header = () => {
                     : "static";
         },
         [mobileNavVisibility, isMobile]
+    );
+    useEffect(
+        _ => {
+            console.log("productsInCart", productsInCart);
+        },
+        [productsInCart]
     );
     return (
         <header
@@ -113,6 +125,12 @@ const Header = () => {
                                 <div className="nav-item__icon">
                                     <img src={cartIcon} alt="" />
                                 </div>
+                                {!!itemsInCart && (
+                                    <div className="count-label">
+                                        <span>{itemsInCart}</span>
+                                    </div>
+                                )}
+
                                 <Link to="/cart"></Link>
                             </div>
                             {isMobile && (

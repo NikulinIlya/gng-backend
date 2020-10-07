@@ -37,10 +37,11 @@
         margin-bottom: 20px;
       }
       &__set {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
+        // display: grid;
+        // grid-template-columns: repeat(2, 1fr);
+        // gap: 30px;
         button {
+          width: 100%;
           &:nth-child(2) {
             background-color: transparent;
             color: var(--defaultGold);

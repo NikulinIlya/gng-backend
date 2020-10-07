@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useStoreon } from "storeon/react";
 
 import redaxios, { to } from "@/utils/fetch";
+import UNIT from "@/utils/product-unit";
 
 export default WrappedComponent => props => {
     const { match } = props;
@@ -10,7 +11,7 @@ export default WrappedComponent => props => {
     const [brandArticles, setBrandArticles] = useState([]);
     const [grapeArticles, setGrapeArticles] = useState([]);
     const [regionArticles, setRegionArticles] = useState([]);
-    const [countIn, setCountIn] = useState("bottles");
+    const [countIn, setCountIn] = useState(UNIT.thing);
 
     useEffect(_ => {
         (async _ => {

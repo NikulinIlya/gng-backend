@@ -41,19 +41,21 @@ export default store => {
     store.on("client/set-is-authorized", (_, isAuthorized) => ({
         isAuthorized
     }));
-    store.on("client/set-lang", async (_, lang) => {
-        if (!existingLangs[lang]) return { lang: DEFAULT_LANG };
-        store.dispatch("client/set-app-pending", true);
+    store.on("client/set-lang", async (_, langValue) => {
+        console.log("langvalue", langValue);
+        if (!existingLangs[langValue]) return { lang: DEFAULT_LANG };
+        // store.dispatch("client/set-app-pending", true);
         try {
-            const [err, langResponse] = await to(redaxios(`/api/lang/${lang}`));
-            store.dispatch("dictionary/force-load");
-            localStorage.setItem("lang", lang);
-            return { lang };
+            await to(redaxios(`/api/lang/${langValue}`));
+            localStorage.setItem("lang", langValue);
+
+            return { ..._, lang: langValue };
         } catch {
-            return _;
+            return { lang: DEFAULT_LANG };
         } finally {
+            store.dispatch("dictionary/force-load");
             store.dispatch("showcase/force-reinit");
-            store.dispatch("client/set-app-pending", false);
+            // store.dispatch("client/set-app-pending", false);
         }
     });
     store.on("client/set-app-pending", (_, state) => ({ appIsPending: state }));

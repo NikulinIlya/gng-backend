@@ -4,6 +4,7 @@ import IconButton from "@/components/IconButton";
 
 import useCounter from "@/utils/useCounter";
 import useTranslate from "@/utils/useTranslate";
+import UNIT from "@/utils/product-unit";
 
 import template from "@/assets/images/templates/cart-item-template.png";
 
@@ -18,6 +19,7 @@ export default function CartContentsItem({
     image,
     vendorCode,
     count = 1,
+    unit = UNIT.thing,
     onRemove,
     onCountChange = Function.prototype
 }) {
@@ -39,12 +41,15 @@ export default function CartContentsItem({
                     <h2 className="cart-item__name">{brand}</h2>
                     <p className="cart-item__descr">{name}</p>
                     <p className="cart-item__vendor-code">
-                        {t('set-number','Номер товара')}: {vendorCode}
+                        {t("set-number", "Номер товара")}: {vendorCode}
                     </p>
                     <div className="cart-item__footer">
                         <div className="cart-item__sum">
                             <span className="cart-item__sum-label">
                                 {t("quantity", "Количество")}
+                                {` (${
+                                    unit === UNIT.thing || !unit ? `шт` : "ящик"
+                                })`}
                             </span>
                             <div className="cart-item__counter-nav">
                                 <button
@@ -69,7 +74,7 @@ export default function CartContentsItem({
                                 {t("cost", "Стоимость")}
                             </span>
                             <p className="cart-item__sum-value">
-                                <span>{price}</span> {t('rub','руб.')}{" "}
+                                <span>{price}</span> {t("rub", "руб.")}{" "}
                             </p>
                         </div>
                     </div>
