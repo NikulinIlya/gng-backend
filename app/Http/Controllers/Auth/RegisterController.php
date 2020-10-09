@@ -98,6 +98,7 @@ class RegisterController extends Controller
         if ($user) {
             UserInfo::create([
                 'user_id' => $user->id,
+                'email' => $data['email'],
                 'second_name' => $data['second_name'],
                 'phone' => $data['phone'],
                 'discount_agreed' => (int) $data['discount_agreed'],

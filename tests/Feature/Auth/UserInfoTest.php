@@ -31,6 +31,7 @@ class UserInfoTest extends TestCase
 
         factory(UserInfo::class)->create([
             'user_id' => $user->id,
+            'email' => $user->email,
         ]);
 
         Sanctum::actingAs($user);
@@ -40,6 +41,7 @@ class UserInfoTest extends TestCase
         $response->assertOk()
         ->assertJsonFragment([
             'user_id' => $user->id,
+            'email' => $user->email,
         ]);
     }
 
@@ -50,6 +52,7 @@ class UserInfoTest extends TestCase
 
         factory(UserInfo::class)->create([
             'user_id' => $user->id,
+            'email' => $user->email,
         ]);
 
         Sanctum::actingAs($user);
