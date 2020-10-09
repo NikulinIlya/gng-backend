@@ -114,6 +114,11 @@
         line-height: 58.8px;
         margin-bottom: 27px;
       }
+      &__image{
+        display: flex;
+        justify-content: flex-end;
+        padding: 30px 0;
+      }
       p {
         font-size: 18px;
         font-weight: 300;

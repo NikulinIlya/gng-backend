@@ -29,7 +29,7 @@ const footerGridData = [
             {
                 label: "Ответственное потребление",
                 labelSlug: "responsible-consumption",
-                path: "/static"
+                path: "/static?doc=4"
             }
         ]
     },
@@ -40,18 +40,18 @@ const footerGridData = [
             {
                 label: "Правовая информация",
                 labelSlug: "legal-information",
-                path: "/static"
+                path: "/static?doc=3"
             },
             {
                 label: "Заказ, получение и оплата",
                 labelSlug: "how-to-order-take-and-pay",
-                path: "/static"
+                path: "/static?doc=5"
             },
             {
                 label: "Наши мероприятия",
                 labelSlug: "our-events",
                 path: "/events"
-            },
+            }
             // {
             //     label: "Винотека G&G",
             //     labelSlug: "",

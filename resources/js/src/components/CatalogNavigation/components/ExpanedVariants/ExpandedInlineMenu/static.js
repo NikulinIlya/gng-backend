@@ -7,7 +7,7 @@ export default [
     {
         label: "Ответственное потребление",
         labelSlug: "responsible-consumption",
-        to: "/static"
+        to: "/static?doc=4"
     },
     {
         label: "Гарантии",

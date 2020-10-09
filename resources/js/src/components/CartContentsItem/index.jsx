@@ -48,7 +48,9 @@ export default function CartContentsItem({
                             <span className="cart-item__sum-label">
                                 {t("quantity", "Количество")}
                                 {` (${
-                                    unit === UNIT.thing || !unit ? `шт` : "ящик"
+                                    unit === UNIT.thing || !unit
+                                        ? t("pieces", "шт")
+                                        : "ящик"
                                 })`}
                             </span>
                             <div className="cart-item__counter-nav">

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import BottleCard from "@/components/BottleCard";
 import Loading from "@/components/Loading";
 import Heading from "@/components/Heading";
+import NotFound, { Noop } from "@/components/NotFound";
 
 import { withApi, withLogic } from "./hoc";
 
@@ -34,6 +35,17 @@ function SearchPage({
     brandNames
 }) {
     const { t } = useTranslate();
+    const announcedCats = ["14"];
+    const [isAnnounced, setIsAnnounced] = useState(false);
+    useEffect(_ => {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (
+            urlParams.has("brand_id") &&
+            announcedCats.includes(urlParams.get("brand_id"))
+        ) {
+            setIsAnnounced(true);
+        }
+    }, []);
     return (
         <div className="container">
             <div className="search-page">
@@ -44,7 +56,7 @@ function SearchPage({
                 )}
                 {brandId && brandNames && (
                     <h1 className="search-page__title">
-                        Search for "{brandNames[brandId]}"
+                        {t("search-for", "Поиск по ")} "{brandNames[brandId]}"
                     </h1>
                 )}
                 {category && categoryLabels[category] && (
@@ -60,19 +72,22 @@ function SearchPage({
                     {status === REQUEST.success &&
                         (products.length ? (
                             <div className="search-page__grid">
-                                {products.map(({ id, image, ...rest }) => (
-                                    <BottleCard
-                                        to={`/catalog/${id}`}
-                                        bottle={image}
-                                        {...rest}
-                                        key={id}
-                                    />
-                                ))}
+                                {products.map(
+                                    ({ id, image, glass_image, ...rest }) => (
+                                        <BottleCard
+                                            to={`/catalog/${id}`}
+                                            bottle={image}
+                                            wineglass={glass_image}
+                                            {...rest}
+                                            key={id}
+                                        />
+                                    )
+                                )}
                             </div>
                         ) : (
-                            <p className="search-page__empty-result">
-                                Nothing was found
-                            </p>
+                            <div className="search-page__empty-result">
+                                {isAnnounced ? <Noop /> : <NotFound />}
+                            </div>
                         ))}
                 </div>
             </div>

@@ -25,12 +25,12 @@ export default function Counter({
                             checked={countIn === UNIT.thing}
                             name="unit"
                             type="radio"
-                            onChange={_ => setCountIn(UNIT.thing)}
+                            // onChange={_ => setCountIn(UNIT.thing)}
                             className="visually-hidden"
                         />
                         <span>{t("bottles", "бутылки")}</span>
                     </label>
-                    <label className="tabs__item">
+                    {/* <label className="tabs__item">
                         <input
                             checked={countIn === UNIT.case}
                             name="unit"
@@ -39,7 +39,7 @@ export default function Counter({
                             className="visually-hidden"
                         />
                         <span>{t("cases", "ящики (6 бутылок)")}</span>
-                    </label>
+                    </label> */}
                 </div>
             )}
         />

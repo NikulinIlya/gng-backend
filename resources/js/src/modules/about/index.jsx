@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import DetailsCard from "@/components/DetailsPageCard";
 
+import useTranslate from "@/utils/useTranslate";
+
 import banner from "@/assets/images/templates/about-banner.png";
 import logo from "@/assets/images/about-logo.svg";
 
@@ -9,10 +11,21 @@ import template from "@/assets/images/templates/about-info-image.png";
 import template2 from "@/assets/images/templates/about-info-image-2.png";
 import signTemplate from "@/assets/images/templates/sign.png";
 import wineSet from "@/assets/images/templates/wine-set.png";
+import grape from "@/assets/images/bg_grape.svg";
 
 import "./about.scss";
 
 export default function About() {
+    const { t } = useTranslate();
+    const [numberKeys, setNumberKeys] = useState("");
+    const [numberValues, setNumberValues] = useState("");
+    useEffect(_ => {
+        const scheme = t("about-scheme", "");
+        if (!scheme) return;
+        const res = scheme.split("|");
+        setNumberKeys(res[0]);
+        setNumberValues(res[1]);
+    });
     return (
         <div className="about-page">
             <div className="about-page__banner">
@@ -32,11 +45,13 @@ export default function About() {
             <div className="about-page__numbers">
                 <div className="container">
                     <ul className="numbers">
-                        {Array.from({ length: 3 }).map((itm, i) => (
+                        {numberKeys.split(",").map((itm, i) => (
                             <li className="numbers__item" key={i}>
-                                <span className="numbers__item-value">12</span>
+                                <span className="numbers__item-value">
+                                    {itm}
+                                </span>
                                 <span className="numbers__item-key">
-                                    pariatur incididunt
+                                    {numberValues.split(",")[i]}
                                 </span>
                             </li>
                         ))}
@@ -77,21 +92,20 @@ export default function About() {
                     <div className="info-block" style={{ paddingBottom: 0 }}>
                         <div className="info-block__content">
                             <h2 className="info-block__title">
-                                Reprehenderit anim cupidatat ullamco
+                                {t(
+                                    "edward-seymour-johnson-founder-and-ceo",
+                                    "Edward Seymour Johnson, Founder & CEO"
+                                )}
                             </h2>
                             <p>
-                                Magna id proident sunt laborum esse nostrud
-                                mollit minim laboris duis culpa ex minim. Esse
-                                pariatur duis laboris mollit do laboris anim ea
-                                ea amet veniam qui. Aute culpa eiusmod culpa
-                                excepteur consectetur dolore non voluptate
-                                nostrud minim sint quis. Ullamco exercitation et
-                                sint eu laboris.
+                                {t(
+                                    "gng-grapes-and-grains-is-a-niche-start-up-wines-and-spirits-company-our-focus-is-to-offer-our-customers-quality-products-that-will-delight-any-table-gng-supports-an-environmental-social-and-governance-ethos",
+                                    'GNG ("Grapes & Grains") is a niche start-up wines & spirits company. Our focus is to offer our customers quality products that will delight any table. GNG supports an Environmental, Social and Governance ethos.'
+                                )}
                             </p>
-                            <img src={signTemplate} alt="" />
                         </div>
                         <div className="info-block__image">
-                            <img src={template2} alt="" />
+                            <img src={grape} alt="" />
                         </div>
                     </div>
                 </div>

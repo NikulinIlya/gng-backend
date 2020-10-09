@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import cn from "classnames";
 
 import DetailsCard from "@/components/DetailsPageCard";
 import Loading from "@/components/Loading";
@@ -82,6 +83,7 @@ function ProductDetails({
     setCountIn,
     isLoaded,
     isProductFavorite,
+    isSpiritDrink,
     onFavoriteStateChange,
     onAdd,
     onHideArticle
@@ -110,7 +112,12 @@ function ProductDetails({
                     <div className="backdrop">
                         <img src={flatRegionImages[productRegion]} alt="" />
                     </div>
-                    <div className="product-details__bottle-img">
+                    <div
+                        className={cn(
+                            "product-details__bottle-img",
+                            isSpiritDrink ? "strong" : ""
+                        )}
+                    >
                         <img src={image ? image : bottleImage} alt="" />
                     </div>
                 </div>
