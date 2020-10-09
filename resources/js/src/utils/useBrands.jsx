@@ -13,6 +13,7 @@ export default function useBrands(products = [], brandKey = "brand_id") {
 
     const decorateProductsWithBackdropOptions = (products, brands, brandKey) =>
         products.map(product => {
+            if (!brands) return product;
             const brand = brands.find(b => b.id === product[brandKey]) || {
                 background: "option1"
             };
@@ -25,7 +26,7 @@ export default function useBrands(products = [], brandKey = "brand_id") {
 
     useEffect(
         _ => {
-            if (products && flatBrandNames) {
+            if (products && flatBrandNames && brands) {
                 setExpandedProducts(
                     decorateProductsWithBackdropOptions(
                         decorateProductsWithBrands(

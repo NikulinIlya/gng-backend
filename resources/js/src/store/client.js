@@ -44,7 +44,7 @@ export default store => {
     store.on("client/set-lang", async (_, langValue) => {
         console.log("langvalue", langValue);
         if (!existingLangs[langValue]) return { lang: DEFAULT_LANG };
-        // store.dispatch("client/set-app-pending", true);
+        store.dispatch("client/set-app-pending", true);
         try {
             await to(redaxios(`/api/lang/${langValue}`));
             localStorage.setItem("lang", langValue);
@@ -55,7 +55,7 @@ export default store => {
         } finally {
             store.dispatch("dictionary/force-load");
             store.dispatch("showcase/force-reinit");
-            // store.dispatch("client/set-app-pending", false);
+            store.dispatch("client/set-app-pending", false);
         }
     });
     store.on("client/set-app-pending", (_, state) => ({ appIsPending: state }));

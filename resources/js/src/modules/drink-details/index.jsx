@@ -62,16 +62,11 @@ const whiskey = {
     taste: "whiskeyTaste"
 };
 
-const champagne = {
-    dosage: "spoon"
-};
-
 const productIcons = {
     vodka,
     cognac,
     whiskey,
     vodka,
-    champagne,
     common: detailsIcons
 };
 
