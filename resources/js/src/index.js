@@ -10,7 +10,6 @@ import ReactDOM from "react-dom";
 import { Router, Switch, Route, useLocation } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { StoreContext, useStoreon } from "storeon/react";
-import axios from "axios";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -24,7 +23,6 @@ import Loading from "@/components/Loading";
 
 import { HeaderContext } from "@/context/header";
 import useMeasures from "@/utils/useMeasures";
-import redaxios, { to } from "@/utils/fetch";
 
 import { store } from "@/store";
 
@@ -74,30 +72,6 @@ const App = () => {
     }, []);
 
     useEffect(_ => {
-        (async _ => {
-            const data = {
-                // name: "vigen",
-                email: "some@mail.address",
-                password: "123456789"
-                // password_confirmation: "123456789",
-                // second_name: "",
-                // phone: "89887776655",
-                // discount_agreed: true,
-                // events_agreed: true
-            };
-
-            const response = await to(redaxios("/sanctum/csrf-cookie"));
-            await to(
-                axios({
-                    url: "/login",
-                    method: "post",
-                    headers: { accept: "json" },
-                    data
-                })
-            );
-            console.log("response", response);
-        })();
-
         window.addEventListener("scroll", handleScrollY);
         return _ => window.removeEventListener("scroll", handleScrollY);
     }, []);
