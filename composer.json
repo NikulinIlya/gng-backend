@@ -20,7 +20,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.4",
         "tcg/voyager": "^1.4",
-        "teamtnt/laravel-scout-tntsearch-driver": "^9.0"
+        "teamtnt/laravel-scout-tntsearch-driver": "^9.0",
+        "ext-json": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.8",
