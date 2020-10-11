@@ -30,7 +30,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        if (!$request->filled('cart')) {
+        if (! $request->filled('cart')) {
             return response()
                 ->json([
                     'Error' => 'Empty cart',
@@ -58,7 +58,7 @@ class OrderController extends Controller
             'price' => $price,
             'user_id' => $request->user()->id,
             'order_status_id' => 1,
-            'order_info' => json_encode($orderInfo)
+            'order_info' => json_encode($orderInfo),
         ]);
 
         return response()
@@ -80,7 +80,7 @@ class OrderController extends Controller
             OrderProduct::create([
                 'order_id' => $order->id,
                 'product_id' => $item->model->id,
-                'quantity' => $item->qty
+                'quantity' => $item->qty,
             ]);
         }
 
