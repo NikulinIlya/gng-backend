@@ -46,7 +46,6 @@ class LoginController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return JsonResponse|void
-     *
      */
     protected function validateLogin(Request $request)
     {
