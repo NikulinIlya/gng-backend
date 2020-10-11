@@ -26,12 +26,21 @@ const Header = () => {
     const [mobileSearchVisibility, setMobileSearchVisibility] = useState(false);
     const { renderingComponent } = useContext(HeaderContext);
     const { isMobile } = useMeasures();
-    const { productsInCart } = useStoreon("productsInCart");
+    const { dispatch, productsInCart, isAuthorized } = useStoreon(
+        "productsInCart",
+        "isAuthorized"
+    );
     const { t } = useTranslate();
     const itemsInCart = useMemo(
         _ => productsInCart.reduce((acc, cur) => acc + cur.count, 0),
         [productsInCart]
     );
+
+    const onSignOut = e => {
+        e.preventDefault();
+        dispatch("client/set-is-authorized", false);
+    };
+
     useEffect(
         _ => {
             if (isMobile)
@@ -85,19 +94,31 @@ const Header = () => {
                         <div className="header__nav">
                             {!isMobile && (
                                 <div className="header__nav-item">
-                                    <Link
-                                        className="sign-in"
-                                        to="?login=sign-in"
-                                    >
-                                        {t("sign-in", "Вход")}
-                                    </Link>
-                                    {"/"}
-                                    <Link
-                                        className="sign-up"
-                                        to="?login=sign-up"
-                                    >
-                                        {t("sign-up", "Регистрация")}
-                                    </Link>
+                                    {isAuthorized ? (
+                                        <Link
+                                            className="sign-in"
+                                            to="/"
+                                            onClick={onSignOut}
+                                        >
+                                            {t("sign-out", "Выйти")}
+                                        </Link>
+                                    ) : (
+                                        <>
+                                            <Link
+                                                className="sign-in"
+                                                to="?login=sign-in"
+                                            >
+                                                {t("sign-in", "Вход")}
+                                            </Link>
+                                            {"/"}
+                                            <Link
+                                                className="sign-up"
+                                                to="?login=sign-up"
+                                            >
+                                                {t("sign-up", "Регистрация")}
+                                            </Link>
+                                        </>
+                                    )}
                                 </div>
                             )}
                             {isMobile && (
@@ -150,6 +171,8 @@ const Header = () => {
                     </div>
                 </div>
             </div>
+
+            {/* MOBILE VIEW */}
             {isMobile && mobileSearchVisibility && (
                 <SearchInput
                     onChange={({ target }) =>
@@ -159,6 +182,7 @@ const Header = () => {
                     placeholder="Поиск"
                 />
             )}
+
             {isMobile && mobileNavVisibility && (
                 <div className="header__mobile-nav">
                     <div className="container">

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useReducer, useCallback } from "react";
+import { useStoreon } from "storeon/react";
 
 import useForm from "@/utils/useForm";
 import { status as REQUEST } from "@/utils/request-status";
@@ -46,13 +47,14 @@ const rules = {
 };
 
 export default WrappedComponent => props => {
-    const { submitForm, setStatus } = props;
+    const { submitForm, setStatus, onClose } = props;
     const [state, formDispatch] = useReducer(formReducer, initialState);
     const [isFormTouched, setIsFormTouched] = useState(false);
     const { isFormValid, errors } = useForm({
         formFields: state,
         fieldRules: rules
     });
+    const { dispatch } = useStoreon();
 
     const onFieldChange = (field = "", value = "") => {
         if (!field || !initialState.hasOwnProperty(field))
@@ -81,18 +83,26 @@ export default WrappedComponent => props => {
             setIsFormTouched(true);
 
             const { terms_agreed, ...data } = state;
-            
+
             if (!isFormValid) return;
             const [err, response] = await submitForm(data);
 
             setStatus(REQUEST.success);
+
+            if (response) {
+                dispatch("client/set-is-authorized", true);
+                onClose();
+            }
         },
         [isFormValid]
     );
 
-    useEffect(_ => {
-        console.log('isFormValid',isFormValid)
-    },[isFormValid])
+    useEffect(
+        _ => {
+            console.log("isFormValid", isFormValid);
+        },
+        [isFormValid]
+    );
 
     return (
         <WrappedComponent
