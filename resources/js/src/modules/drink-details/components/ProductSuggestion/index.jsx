@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import useTranslate from "@/utils/useTranslate";
 
-import fishIcon from "@/assets/images/icons/fish-icon-gold.svg";
+import fishIcon from "@/assets/images/icons/cook.svg";
 import cheeseIcon from "@/assets/images/icons/cheese-icon-gold.svg";
 
 import "./product-suggestion.scss";
