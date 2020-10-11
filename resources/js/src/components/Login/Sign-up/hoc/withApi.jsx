@@ -6,6 +6,7 @@ import { status as REQUEST } from "@/utils/request-status";
 
 export default WrappedComponent => props => {
     const [status, setStatus] = useState(REQUEST.success);
+
     const submitForm = async data => {
         setStatus(REQUEST.pending);
         await to(redaxios("/sanctum/csrf-cookie"));
@@ -13,7 +14,7 @@ export default WrappedComponent => props => {
             axios({
                 url: "/register",
                 method: "post",
-                headers: { accept: "json" },
+                headers: { accept: "json", "Content-Type": "application/json" },
                 data
             })
         );
