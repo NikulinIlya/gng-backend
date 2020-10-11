@@ -20,7 +20,7 @@ export default function useCart() {
             }
 
             storeDispatch("cart/add", {
-                product: { id: productId, count, unit: UNIT.case },
+                product: { id: productId, count, unit: UNIT.thing },
                 callback: _ => throwNotification(brandId)
             });
             

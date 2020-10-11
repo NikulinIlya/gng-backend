@@ -54,7 +54,7 @@ export default function Order() {
                             key={i}
                         />
                     ))}
-                    <Checkbox
+                    {/* <Checkbox
                         defaultChecked
                         variant="square"
                         label={t(
@@ -77,7 +77,7 @@ export default function Order() {
                             "i-agree-with-the-site-rules-and-consent-to-the-processing-of-personal-data",
                             "Я согласен с правилами использования сайта"
                         )}
-                    />
+                    /> */}
                     <Button>{t("place-an-order", "Оформление заказа")}</Button>
                 </form>
                 <Disclaimer />
