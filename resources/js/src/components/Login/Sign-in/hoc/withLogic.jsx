@@ -5,47 +5,21 @@ import useForm from "@/utils/useForm";
 import { status as REQUEST } from "@/utils/request-status";
 
 const errMessageTemplates = {
-    required: "Заполните поле",
-    phone: "Введите номер телефона в формате +79998888888 или 89998888888",
     format: "Неверный формат"
 };
 
 const initialState = {
-    name: "",
-    second_name: "",
-    phone: "",
     email: "",
-    password: "",
-    password_confirmation: "",
-    discount_agreed: true,
-    events_agreed: true,
-    terms_agreed: true
+    password: ""
 };
 
 const rules = {
-    name: name =>
-        Boolean(name.length) || `${errMessageTemplates["required"]}: Имя`,
-    second_name: sName =>
-        Boolean(sName.length) || `${errMessageTemplates["required"]}: Фамилия`,
-    phone: phone =>
-        (phone.length >= 11 && phone.length <= 12) ||
-        errMessageTemplates["phone"],
     email: email =>
         /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
             email
         ) || `${errMessageTemplates["format"]}: Email`,
     password: pass =>
-        pass.length >= 8 ||
-        "Пароль должен состоять не менее, чем из 8 символов",
-    password_confirmation: {
-        dependencies: ["password", "password_confirmation"],
-        validator: (pass, passConfirm) =>
-            (passConfirm.length >= 8 && passConfirm === pass) ||
-            "Пароли должны совпадать"
-    },
-    terms_agreed: state =>
-        Boolean(state) ||
-        `${errMessageTemplates["required"]}: Соглашение на обработку персональных данных`
+        pass.length >= 8 || "Пароль должен состоять не менее, чем из 8 символов"
 };
 
 export default WrappedComponent => props => {
@@ -84,10 +58,8 @@ export default WrappedComponent => props => {
             e.preventDefault();
             setIsFormTouched(true);
 
-            const { terms_agreed, ...data } = state;
-
             if (!isFormValid) return;
-            const [err, response] = await submitForm(data);
+            const [err, response] = await submitForm(state);
 
             setStatus(REQUEST.success);
 
@@ -98,7 +70,7 @@ export default WrappedComponent => props => {
         },
         [isFormValid]
     );
-    
+
     return (
         <WrappedComponent
             {...props}

@@ -7,12 +7,23 @@ import IconButton from "@/components/IconButton";
 
 import useMeasures from "@/utils/useMeasures";
 import useTranslate from "@/utils/useTranslate";
+import compose from "@/utils/compose";
+
+import { withApi, withLogic } from "./hoc";
 
 import { ReactComponent as CloseIcon } from "@/assets/images/icons/close-gold-icon.svg";
 
 import "../login.scss";
 
-export default function SingIn({ onClose }) {
+function SingIn({
+    onClose,
+    onInputChange,
+    onFormSubmit,
+    status,
+    errors,
+    isFormTouched,
+    ...restProps
+}) {
     const { isMobile } = useMeasures();
     const { t } = useTranslate();
     return (
@@ -29,16 +40,36 @@ export default function SingIn({ onClose }) {
                 {t("don-t-have-an-account-yet", "Еще нет аккаунта?")}{" "}
                 <Link to="?login=sign-up">{t("sign-up", "Регистрация")}</Link>
             </p>
-            <form className="login__form">
+            <form className="login__form" onSubmit={onFormSubmit}>
                 <TextField
-                    label={t("e-mail-or-telephone-number", "Email или телефон")}
+                    name="email"
+                    onChange={onInputChange}
+                    value={restProps["email"]}
+                    label={t("email", "Email")}
                 />
-                <TextField label={t("password", "Пароль")} type="password" />
+                <TextField
+                    name="password"
+                    onChange={onInputChange}
+                    value={restProps["password"]}
+                    label={t("password", "Пароль")}
+                    type="password"
+                />
+                {isFormTouched && (
+                    <div className="messages">
+                        {errors.map(err => (
+                            <p className="messages__item" key={err}>
+                                {err}
+                            </p>
+                        ))}
+                    </div>
+                )}
                 <Button>{t("sign-in", "Вход")}</Button>
             </form>
             <Link className="login__forgot" to="/">
-                {t('forgot-your-password','Забыли пароль?')}
+                {t("forgot-your-password", "Забыли пароль?")}
             </Link>
         </div>
     );
 }
+
+export default compose(withApi, withLogic)(SingIn);
