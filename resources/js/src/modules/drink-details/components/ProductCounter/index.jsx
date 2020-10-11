@@ -25,6 +25,7 @@ export default function Counter({
                             checked={countIn === UNIT.thing}
                             name="unit"
                             type="radio"
+                            readOnly
                             // onChange={_ => setCountIn(UNIT.thing)}
                             className="visually-hidden"
                         />

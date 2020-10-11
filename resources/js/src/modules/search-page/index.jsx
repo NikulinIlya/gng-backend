@@ -32,7 +32,8 @@ function SearchPage({
     query,
     brandId,
     category,
-    brandNames
+    brandNames,
+    onAdd
 }) {
     const { t } = useTranslate();
     const announcedCats = ["14"];
@@ -73,11 +74,18 @@ function SearchPage({
                         (products.length ? (
                             <div className="search-page__grid">
                                 {products.map(
-                                    ({ id, image, glass_image, ...rest }) => (
+                                    ({
+                                        id,
+                                        image,
+                                        glass_image,
+                                        brand_id,
+                                        ...rest
+                                    }) => (
                                         <BottleCard
                                             to={`/catalog/${id}`}
                                             bottle={image}
                                             wineglass={glass_image}
+                                            onAdd={_ => onAdd(id, 1, brandId)}
                                             {...rest}
                                             key={id}
                                         />

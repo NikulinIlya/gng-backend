@@ -21,6 +21,7 @@ export default WrappedComponent => props => {
             isLoaded={isLoaded}
             products={products}
             loadProductsInCart={loadProductsInCart}
+            setIsLoaded={setIsLoaded}
         />
     );
 };

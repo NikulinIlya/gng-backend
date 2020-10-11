@@ -10,15 +10,20 @@ export default store => {
         "cart/add",
         ({ productsInCart }, { product, callback = Function.prototype }) => {
             const indexOfAdded = productsInCart.findIndex(
-                p => p.id === product.id && p.count === product.count
+                p => p.id === product.id
             );
+
             const resultCart =
                 indexOfAdded === -1
                     ? [...productsInCart, product]
-                    : [
-                          ...productsInCart.filter(p => p.id !== product.id),
-                          product
-                      ];
+                    : productsInCart.map(p => ({
+                          ...p,
+                          count:
+                              p.id === product.id
+                                  ? p.count + product.count
+                                  : p.count
+                      }));
+
             localStorage.setItem("cart", JSON.stringify(resultCart));
             callback();
             return {

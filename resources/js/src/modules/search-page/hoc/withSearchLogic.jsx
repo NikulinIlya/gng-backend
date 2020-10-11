@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useStoreon } from "storeon/react";
 
 import useBrands from "@/utils/useBrands";
+import useCart from "@/utils/useCart";
 
 export default WrappedComponent => props => {
     const {
@@ -18,6 +19,7 @@ export default WrappedComponent => props => {
     const { search } = useLocation();
     const { flatBrandNames } = useStoreon("flatBrandNames");
     const extendedProducts = useBrands(products);
+    const { add } = useCart();
     const [filteredProducts, setFilteredProducts] = useState(extendedProducts);
 
     useEffect(_ => handleSearchQuery(search), [search]);
@@ -73,6 +75,10 @@ export default WrappedComponent => props => {
         }
     }
 
+    const onAdd = async (id, count = 1, brandId) => {
+        await add(id, count, brandId);
+    };
+
     return (
         <WrappedComponent
             {...props}
@@ -81,6 +87,7 @@ export default WrappedComponent => props => {
             brandId={brandId}
             category={category}
             brandNames={flatBrandNames}
+            onAdd={onAdd}
         />
     );
 };

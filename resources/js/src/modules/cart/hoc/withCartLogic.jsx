@@ -4,7 +4,7 @@ import { useStoreon } from "storeon/react";
 import useBrands from "@/utils/useBrands";
 
 export default WrappedComponent => props => {
-    const { products, loadProductsInCart } = props;
+    const { products, loadProductsInCart, setIsLoaded } = props;
 
     const [cartSize, setCartSize] = useState(0);
     const [cartSum, setCartSum] = useState(0);
@@ -26,6 +26,7 @@ export default WrappedComponent => props => {
         _ => {
             if (productsInCart.length !== products.length)
                 loadProductsInCart(productsInCart.map(({ id }) => id));
+            else setIsLoaded(true);
 
             setCartSize(
                 productsInCart.reduce(

@@ -2,12 +2,11 @@ import React, { useState, useEffect, useReducer, useContext } from "react";
 import { useStoreon } from "storeon/react";
 import { useLocation } from "react-router-dom";
 
-import { CartNotificationContext as Cart } from "@/components/CartNotification";
 import isEmpty from "@/utils/is-empty";
 import getRandom from "@/utils/get-random-item";
 import { to } from "@/utils/fetch";
 import useTranslate from "@/utils/useTranslate";
-import UNIT from "@/utils/product-unit";
+import useCart from "@/utils/useCart";
 
 import { history } from "@";
 
@@ -25,14 +24,8 @@ function articlesReducer(state, action) {
 }
 
 export default WrappedComponent => props => {
-    const {
-        product,
-        brandArticles,
-        grapeArticles,
-        regionArticles,
-        countIn
-    } = props;
-    const { notify } = useContext(Cart);
+    const { product, brandArticles, grapeArticles, regionArticles } = props;
+
     const location = useLocation();
     const { t } = useTranslate();
     const [productCategory, setProductCategory] = useState({});
@@ -42,6 +35,7 @@ export default WrappedComponent => props => {
     const [schemeIsLoaded, setSchemeIsLoaded] = useState(false);
     const [articleSet, dispatchArticles] = useReducer(articlesReducer, {});
     const [currentArticle, setCurrentArticle] = useState(null);
+    const { add } = useCart();
 
     const [productDetails, dispatchAction] = useReducer(
         productDetailsReducer,
@@ -57,8 +51,7 @@ export default WrappedComponent => props => {
         flatColorNames,
         favoriteProducts,
         productCategories,
-        dictionary,
-        assistantPhrases
+        dictionary
     } = useStoreon(
         "brands",
         "flatBrandNames",
@@ -67,8 +60,7 @@ export default WrappedComponent => props => {
         "flatColorNames",
         "favoriteProducts",
         "productCategories",
-        "dictionary",
-        "assistantPhrases"
+        "dictionary"
     );
 
     // articles
@@ -273,16 +265,8 @@ export default WrappedComponent => props => {
         setIsProductFavorite(state);
     };
 
-    const onAdd = (id, count = 1, brandId) => {
-        if (!id) return;
-
-        dispatch("cart/add", {
-            product: { id, count, unit: countIn },
-            callback: _ =>
-                notify({
-                    text: getRandom(assistantPhrases[brandId])
-                })
-        });
+    const onAdd = async (id, count = 1, brandId) => {
+        await add(id, count, brandId);
     };
 
     const onHideArticle = () => history.push(location.pathname);

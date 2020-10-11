@@ -5,6 +5,7 @@ import expertimage from "@/assets/images/templates/expert.png";
 import marker from "@/assets/images/icons/marker-light.svg";
 import phone from "@/assets/images/icons/phone-light.svg";
 import time from "@/assets/images/icons/time-light.svg";
+import mail from "@/assets/images/icons/mail.svg";
 
 export const discounts = [
     {
@@ -47,7 +48,7 @@ export const contacts = [
         value: "Понедельник – пятница с 9.00 до 18.00"
     },
     {
-        icon: time,
+        icon: mail,
         name: "Email",
         nameSlug: "",
         valueSlug: "",

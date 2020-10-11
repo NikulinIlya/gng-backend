@@ -6,6 +6,7 @@ import { CartNotificationContext } from "@/components/CartNotification";
 import useBrands from "@/utils/useBrands";
 import useFiltersApi from "@/utils/useFiltersApi";
 import useMeasures from "@/utils/useMeasures";
+import useCart from "@/utils/useCart";
 import getRandom from "@/utils/get-random-item";
 
 import champagneReducer from "../champagneReducer";
@@ -20,6 +21,7 @@ export default WrappedComponent => props => {
     const filters = useFiltersApi("champagne");
     const { dispatch, assistantPhrases } = useStoreon("assistantPhrases");
     const extendedProducts = useBrands(products);
+    const { add } = useCart();
 
     useEffect(
         _ => {
@@ -42,18 +44,11 @@ export default WrappedComponent => props => {
         });
     };
 
-    const onAdd = (id, count = 1) => {
+    const onAdd = async (id, count = 1) => {
         if (!id) return;
 
         const brandId = extendedProducts.find(p => p.id === id).brand_id;
-
-        dispatch("cart/add", {
-            product: { id, count },
-            callback: _ =>
-                notify({
-                    text: getRandom(assistantPhrases[brandId])
-                })
-        });
+        await add(id, count, brandId);
     };
 
     const onLoadMore = () => {

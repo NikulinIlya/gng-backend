@@ -24,7 +24,7 @@ function Cart({
     onCountChange
 }) {
     const { t } = useTranslate();
-    console.log("productsInCart!!!", productsInCart);
+
     return (
         <div className="container">
             <section className="cart">
@@ -50,7 +50,7 @@ function Cart({
                                             productsInCart.find(
                                                 p => p.id === id
                                             ) || {};
-                                        console.log("product", product);
+
                                         return (
                                             <CartItem
                                                 price={price}
