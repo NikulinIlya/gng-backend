@@ -11,12 +11,12 @@ const errMessageTemplates = {
 };
 
 const initialState = {
-    name: "Пользователь test",
-    second_name: "Фамилия",
-    phone: "89856497848",
-    email: "some@mail.address",
-    password: "12345678",
-    password_confirmation: "12345678",
+    name: "",
+    second_name: "",
+    phone: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
     discount_agreed: true,
     events_agreed: true,
     terms_agreed: true
