@@ -64,7 +64,7 @@ const App = () => {
     const [isLoginModalVisible, setIsLoginModalVisible] = useState({});
     const { search } = useLocation();
     const { isMobile } = useMeasures();
-    const { appIsPending } = useStoreon("appIsPending");
+    const { dispatch, appIsPending } = useStoreon("appIsPending");
 
     const handleScrollY = useCallback(_ => {
         document.documentElement.style.setProperty(
@@ -75,7 +75,7 @@ const App = () => {
 
     useEffect(_ => {
         (async _ => {
-            const response = await to(
+            const [err, res] = await to(
                 axios({
                     url: "api/user-info",
                     method: "get",
@@ -85,7 +85,11 @@ const App = () => {
                     }
                 })
             );
-            console.log("user response", response);
+            if (res) {
+                console.log("user response", res);
+                dispatch("client/set-user-info", res.data);
+                dispatch("client/set-is-authorized", true);
+            }
         })();
 
         window.addEventListener("scroll", handleScrollY);

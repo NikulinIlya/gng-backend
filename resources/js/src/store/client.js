@@ -25,7 +25,11 @@ export default store => {
         isAuthorized: false,
         favoriteProducts: favoriteProducts || [],
         appIsPending: false,
-        
+        userInfo: {}
+    }));
+
+    store.on("client/set-user-info", (_, userInfo) => ({
+        userInfo
     }));
 
     store.on(
