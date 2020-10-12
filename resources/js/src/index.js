@@ -75,7 +75,6 @@ const App = () => {
 
     useEffect(_ => {
         (async _ => {
-            // await to(redaxios("/sanctum/csrf-cookie"));
             const response = await to(
                 axios({
                     url: "api/user-info",

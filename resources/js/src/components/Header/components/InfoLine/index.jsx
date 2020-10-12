@@ -24,7 +24,7 @@ const InfoLine = _ => {
                                 className="info-item__text"
                                 href="tel:+79826555000"
                             >
-                                <span>8(982)655-50-00</span>
+                                <span>{t('7-982-655-50-00','+7-982-655-50-00')}</span>
                             </a>
                         </div>
                         <div className="info-item">

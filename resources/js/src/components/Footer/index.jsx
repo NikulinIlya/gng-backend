@@ -95,7 +95,7 @@ export default function Footer() {
                                     alt=""
                                 />
                                 <a className="contact-item__value" href="">
-                                    8 (982) 655-50-00
+                                    {t("7-982-655-50-00", "+7-982-655-50-00")}
                                 </a>
                             </div>
                             <div className="contact-item address">

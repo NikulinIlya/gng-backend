@@ -7,7 +7,7 @@ import BrandsSlider from "./components/BrandsSlider";
 import Heading from "@/components/Heading";
 import BottleCard from "@/components/BottleCard";
 import Loading from "@/components/Loading";
-import DetailsCard from "@/components/DetailsPageCard";
+// import DetailsCard from "@/components/DetailsPageCard";
 
 import { status as REQUEST } from "@/utils/request-status";
 import useMeasures from "@/utils/useMeasures";
@@ -24,7 +24,7 @@ import "./home.scss";
 function HomePage() {
     const { isMobile } = useMeasures();
     const { t } = useTranslate();
-    const { products: popular, status } = usePopular();
+    const { products: popular, status, onAdd } = usePopular();
     return (
         <div className="home-page">
             <div className="home-page__slider">
@@ -43,6 +43,7 @@ function HomePage() {
                                 bottle={_.image}
                                 wineglass={_.glass_image}
                                 to={`/catalog/${_.id}`}
+                                onAdd={() => onAdd(_.id)}
                                 key={i}
                             />
                         ))}

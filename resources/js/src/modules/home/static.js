@@ -37,8 +37,8 @@ export const contacts = [
         icon: phone,
         name: "Телефон",
         nameSlug: "mob-number",
-        valueSlug: "8 (982) 655-50-00",
-        value: "8 (982) 655-50-00"
+        valueSlug: "7-982-655-50-00",
+        value: "+7-982-655-50-00"
     },
     {
         icon: time,

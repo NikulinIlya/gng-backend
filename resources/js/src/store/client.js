@@ -24,7 +24,8 @@ export default store => {
         lang: memoizedLang || DEFAULT_LANG,
         isAuthorized: false,
         favoriteProducts: favoriteProducts || [],
-        appIsPending: false
+        appIsPending: false,
+        
     }));
 
     store.on(

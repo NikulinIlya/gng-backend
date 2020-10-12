@@ -1,161 +1,177 @@
 .bottle-card {
-  @include card-styles;
-  height: 100%;
-  display: flex;
-  flex-flow: column nowrap;
-  &:not(.bottle-card--slide-disabled):hover {
-    .bottle-card__bottle {
-      transform: translateX(30px);
-      transition: transform 0.3s ease-in-out;
-    }
-    .bottle-card__wineglass {
-      opacity: 1;
-      transform: translateX(-30px);
-      transition: transform 0.3s ease-in-out, opacity 0.3s;
-    }
-  }
-  &__content {
-    padding: 15px 25px;
-    padding-top: 0;
-    flex: 1;
+    @include card-styles;
+    height: 100%;
     display: flex;
     flex-flow: column nowrap;
-  }
-  &__main {
-    position: relative;
-    height: 326px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    z-index: 1;
-    .backdrop {
-      position: absolute;
-      width: 80%;
-      height: 80%;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%,-50%);
-      object-fit: contain;
-      object-position: center;
-      z-index: -1;
+    &:not(.bottle-card--slide-disabled):hover {
+        .bottle-card__bottle {
+            transform: translateX(30px);
+            transition: transform 0.3s ease-in-out;
+        }
+        .bottle-card__wineglass {
+            opacity: 1;
+            transform: translateX(-30px);
+            transition: transform 0.3s ease-in-out, opacity 0.3s;
+        }
     }
-  }
-  &__bottle {
-    transition: transform 0.3s ease-in-out;
-    height: 275px;
-    display: flex;
-    align-items: flex-end;
-  }
-  &__wineglass {
-    position: absolute;
-    height: 170px;
-    opacity: 0;
-    z-index: -1;
-    transition: transform 0.3s ease-in-out, opacity 0.3s;
-  }
-  &__info {
-    text-align: center;
-    color: black;
-    margin-bottom: 24px;
-    & * {
-      color: inherit;
+    &__content {
+        padding: 15px 25px;
+        padding-top: 0;
+        flex: 1;
+        display: flex;
+        flex-flow: column nowrap;
     }
-  }
-  &__name {
-    font-family: var(--morePro);
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 24px;
-    padding: 12px 0;
-    a {
-      text-decoration: none;
-      cursor: pointer;
-      &:hover {
-        text-decoration: underline;
-      }
+    &__main {
+        position: relative;
+        height: 326px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        z-index: 1;
+        .backdrop {
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: contain;
+            object-position: center;
+            z-index: -1;
+        }
+    }
+    &__bottle {
+        transition: transform 0.3s ease-in-out;
+        height: 275px;
+        display: flex;
+        align-items: flex-end;
+    }
+    &__wineglass {
+        position: absolute;
+        height: 170px;
+        opacity: 0;
+        z-index: -1;
+        transition: transform 0.3s ease-in-out, opacity 0.3s;
+    }
+    &__info {
+        text-align: center;
+        color: black;
+        margin-bottom: 24px;
+        & * {
+            color: inherit;
+        }
+    }
+    &__name {
+        font-family: var(--morePro);
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 24px;
+        padding: 12px 0;
+        a {
+            text-decoration: none;
+            cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+            }
+            z-index: 2;
+            @include contained-link-styles;
+        }
+    }
+    &__details {
+        font-family: var(--proxima);
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 21.6px;
+    }
+    &__footer {
+        position: relative;
+        z-index: 3;
+        margin-top: auto;
+        border-top: var(--cardEdge);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-flow: row wrap;
+        color: var(--defaultGold);
+        &.not-available{
+          &:after{
+            position: absolute;
+            content: '';
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255,255,255,.7);
+          }
+        }
+        & > * {
+            color: inherit;
+        }
+    }
+    &__not-available-message{
+      text-align: center;
       z-index: 2;
-      @include contained-link-styles;
     }
-  }
-  &__details {
-    font-family: var(--proxima);
-    font-size: 18px;
-    font-weight: 300;
-    line-height: 21.6px;
-  }
-  &__footer {
-    position: relative;
-    z-index: 3;
-    margin-top: auto;
-    border-top: var(--cardEdge);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--defaultGold);
-    & > * {
-      color: inherit;
+    &__price {
+        font-family: var(--morePro);
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 24px;
     }
-  }
-  &__price {
-    font-family: var(--morePro);
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 24px;
-  }
 }
 
 @media screen and (max-width: 768px) {
-  .bottle-card {
-    max-width: 100%;
-    border: var(--cardEdge);
-    padding: 20px 28px;
-    min-height: unset;
-    height: auto;
-    &:after,
-    &:before {
-      display: none;
+    .bottle-card {
+        max-width: 100%;
+        border: var(--cardEdge);
+        padding: 20px 28px;
+        min-height: unset;
+        height: auto;
+        &:after,
+        &:before {
+            display: none;
+        }
+        &:hover {
+            .bottle-card__bottle {
+                transform: none;
+            }
+            .bottle-card__wineglass {
+                transform: none;
+            }
+        }
+        &__content {
+            padding: 0;
+            display: grid;
+            grid-template-areas:
+                "bottle details"
+                "footer footer";
+            grid-template-columns: 109px 1fr;
+        }
+        &__main {
+            grid-area: bottle;
+            height: auto;
+        }
+        &__info {
+            grid-area: details;
+            align-self: center;
+        }
+        &__footer {
+            margin-top: 17px;
+            grid-area: footer;
+        }
+        &__name {
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 20px;
+        }
+        &__details {
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 22.4px;
+        }
+        &__bottle {
+            width: 57px;
+            align-items: center;
+        }
     }
-    &:hover {
-      .bottle-card__bottle {
-        transform: none;
-      }
-      .bottle-card__wineglass {
-        transform: none;
-      }
-    }
-    &__content {
-      padding: 0;
-      display: grid;
-      grid-template-areas:
-        "bottle details"
-        "footer footer";
-      grid-template-columns: 109px 1fr;
-    }
-    &__main {
-      grid-area: bottle;
-      height: auto;
-    }
-    &__info {
-      grid-area: details;
-      align-self: center;
-    }
-    &__footer {
-      margin-top: 17px;
-      grid-area: footer;
-    }
-    &__name {
-      font-size: 20px;
-      font-weight: 400;
-      line-height: 20px;
-    }
-    &__details {
-      font-size: 16px;
-      font-weight: 300;
-      line-height: 22.4px;
-    }
-    &__bottle {
-      width: 57px;
-      align-items: center;
-    }
-  }
 }

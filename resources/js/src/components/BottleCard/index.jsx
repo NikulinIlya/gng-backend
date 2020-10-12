@@ -23,6 +23,7 @@ function BottleCard({
     bottle,
     backdrop = "",
     to,
+    available = 1,
     onAdd = Function.prototype
 }) {
     const { isMobile } = useMeasures();
@@ -61,16 +62,29 @@ function BottleCard({
                     </h2>
                     <p className="bottle-card__details">{name}</p>
                 </section>
-                <div className="bottle-card__footer">
+                <div
+                    className={cn("bottle-card__footer", {
+                        "not-available": !available
+                    })}
+                >
                     <div className="bottle-card__price">
                         <strong>{price}</strong> {t("rub", "руб.")}
                     </div>
                     <IconButton
+                        disabled={!available}
                         className="bottle-card__buy"
                         onClick={onAddToCart}
                     >
                         <img src={cartGold} alt="" />
                     </IconButton>
+                    {!available && (
+                        <div className="bottle-card__not-available-message">
+                            {t(
+                                "this-product-is-temporarily-out-of-stock",
+                                "Товара временно нет в наличии"
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
         </article>
