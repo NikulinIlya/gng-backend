@@ -17,6 +17,6 @@ $factory->define(Product::class, function (Faker $faker) {
         'image' => $faker->imageUrl(),
         'glass_image' => $faker->imageUrl(),
         'brand_id' => 1,
-        'product_category_id' => 1,
+        'product_category_id' => factory(App\Models\ProductCategory::class),
     ];
 });

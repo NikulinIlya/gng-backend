@@ -43,6 +43,9 @@ Route::middleware('auth:sanctum')->group(
 
         Route::get('/user-info', 'Api\UserInfoController@show');
         Route::put('/update-user-info', 'Api\UserInfoController@update');
+
+        Route::get('orders', 'Api\OrderController@index');
+        Route::post('orders/create', 'Api\OrderController@store');
     }
 );
 
