@@ -79,7 +79,10 @@ const App = () => {
                 axios({
                     url: "api/user-info",
                     method: "get",
-                    headers: { accept: "json" }
+                    headers: {
+                        accept: "application/json",
+                        "Content-Type": "application/json"
+                    }
                 })
             );
             console.log("user response", response);

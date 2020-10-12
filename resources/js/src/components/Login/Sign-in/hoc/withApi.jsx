@@ -14,7 +14,7 @@ export default WrappedComponent => props => {
             axios({
                 url: "/login",
                 method: "post",
-                headers: { accept: "json", "Content-Type": "application/json" },
+                headers: { accept: "application/json", "Content-Type": "application/json" },
                 data
             })
         );
