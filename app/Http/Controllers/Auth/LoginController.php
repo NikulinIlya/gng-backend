@@ -80,4 +80,14 @@ class LoginController extends Controller
 
         return new JsonResponse([], 204);
     }
+
+    /**
+     * Show the application's login form.
+     *
+     * @return JsonResponse|\Illuminate\View\View
+     */
+    public function showLoginForm()
+    {
+        return new JsonResponse(['Error' => 'Wrong credentials'], 422);
+    }
 }
