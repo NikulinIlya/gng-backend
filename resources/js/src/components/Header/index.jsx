@@ -39,6 +39,7 @@ const Header = () => {
     const onSignOut = e => {
         e.preventDefault();
         dispatch("client/logout", false);
+        history.push('/')
     };
 
     useEffect(
