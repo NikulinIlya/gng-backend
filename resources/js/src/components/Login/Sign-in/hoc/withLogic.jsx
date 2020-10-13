@@ -73,7 +73,7 @@ export default WrappedComponent => props => {
             }
             console.log("LOGIN", "err - ", err, "resoponse - ", response);
             if (response) {
-                dispatch("client/get-user-info");
+                dispatch("client/get-user-info", {});
                 dispatch("client/set-is-authorized", true);
                 pendingRoute && history.push(pendingRoute);
                 onClose();
