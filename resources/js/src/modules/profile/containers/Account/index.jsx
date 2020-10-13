@@ -49,7 +49,7 @@ function Account({ userInfo }) {
                             disabled
                             value={userInfo.email}
                         />
-                        <DateInput
+                        {/* <DateInput
                             // TODO: FIX
                             lang={localStorage.getItem("lang")}
                             label={t("date-of-birth", "Дата Рождения")}
@@ -69,9 +69,9 @@ function Account({ userInfo }) {
                                     label={t("female", "Женский")}
                                 />
                             </div>
-                        </div>
+                        </div> */}
                     </div>
-                    <Button>{t("save", "Сохранить")}</Button>
+                    <Button disabled>{t("save", "Сохранить")}</Button>
                 </form>
             </ProfileSection>
 
@@ -84,15 +84,18 @@ function Account({ userInfo }) {
             >
                 <form className="password">
                     <TextField
+                        disabled
                         label={t("old-password", "Старый пароль")}
                         type="password"
                     />
                     <div className="fields-grid">
                         <TextField
+                            disabled
                             label={t("new-password", "Новый пароль")}
                             type="password"
                         />
                         <TextField
+                            disabled
                             label={t(
                                 "confirm-new-password",
                                 "Подтверждение нового пароля"
@@ -100,7 +103,7 @@ function Account({ userInfo }) {
                             type="password"
                         />
                     </div>
-                    <Button>{t("save", "Сохранить")}</Button>
+                    <Button disabled>{t("save", "Сохранить")}</Button>
                 </form>
             </ProfileSection>
 
@@ -128,7 +131,7 @@ function Account({ userInfo }) {
                             "Получать информацию о предстоящих  мероприятиях"
                         )}
                     />
-                    <Button>{t("save", "Сохранить")}</Button>
+                    <Button disabled>{t("save", "Сохранить")}</Button>
                 </form>
             </ProfileSection>
         </div>
