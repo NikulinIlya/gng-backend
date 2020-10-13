@@ -40,7 +40,7 @@ export default function OrderCard({ status = "process", date, price }) {
                 </span>
             </div>
             {console.log("date", date)}
-            <div className="order-card__date">{date}</div>
+            {/* <div className="order-card__date">{date}</div> */}
             <div className="order-card__sum">
                 {price}
                 {` ${t("rub", "руб.")}`}
