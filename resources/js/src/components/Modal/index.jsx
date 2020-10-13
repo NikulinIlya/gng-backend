@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import IconButton from "@/components/IconButton";
 
 import useMeasures from "@/utils/useMeasures";
+import useTranslate from "@/utils/useTranslate";
 
 import { ReactComponent as CloseIcon } from "@/assets/images/icons/close-gold-icon.svg";
 
@@ -28,6 +29,7 @@ export default function Modal({ children, onClose, closable = true }) {
     const { isMobile } = useMeasures();
     const cardRef = useRef(null);
     const [isContentOverflowing, setIsContentOverflowing] = useState(false);
+    const { t } = useTranslate();
     useEffect(
         _ => {
             const { current: card } = cardRef;
@@ -51,7 +53,9 @@ export default function Modal({ children, onClose, closable = true }) {
                     {closable && (
                         <div className="modal-card__close">
                             {isMobile ? (
-                                <button onClick={onCloseModal}>закрыть</button>
+                                <button onClick={onCloseModal}>
+                                    {t("close", "закрыть")}
+                                </button>
                             ) : (
                                 <IconButton onClick={onCloseModal}>
                                     <CloseIcon />
