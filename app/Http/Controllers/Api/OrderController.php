@@ -56,12 +56,12 @@ class OrderController extends Controller
 
         $userInfo = $request->user()->userInfo()->first();
 
-        $orderInfoText = "";
+        $orderInfoText = '';
 
         foreach ($orderInfo as $key => $item) {
-            $orderInfoText .= ($key + 1) . '. ';
+            $orderInfoText .= ($key + 1).'. ';
             foreach ($item as $itemKey => $value) {
-                $orderInfoText .= ucfirst($itemKey) . ': ' . $value . '; ';
+                $orderInfoText .= ucfirst($itemKey).': '.$value.'; ';
             }
 
             $orderInfoText .= "\n";
