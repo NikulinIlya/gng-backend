@@ -101,10 +101,10 @@ function Order({
                 <Modal closable={false}>
                     <div className="success-modal">
                         <h1 className="success-modal__heading">
-                            Заказ успешно оформлен
+                            {t("order-is-processed", "Заказ успешно оформлен")}
                         </h1>
                         <Button onClick={onOrderComplete}>
-                            Продолжить покупки
+                            {t("continue-shopping", "Продолжить покупки")}
                         </Button>
                     </div>
                 </Modal>
