@@ -74,7 +74,7 @@ function Order({
                         name="comment"
                         multiline
                         onChange={onInputChange}
-                        value={userInfo["comment"] || ""}
+                        value={restProps["comment"]}
                         label={t("comment", "Примечания")}
                     />
                     <Checkbox
