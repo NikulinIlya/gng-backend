@@ -6,13 +6,15 @@ import { useStoreon } from "storeon/react";
 export default function ProtectedRoute({ component: Component, ...restProps }) {
     const { dispatch, isAuthorized } = useStoreon("isAuthorized");
     const { pathname } = useLocation();
-    
+
     useEffect(
         _ => {
             if (!isAuthorized) dispatch("client/set-pending-route", pathname);
         },
         [isAuthorized]
     );
+
+    return <Route {...restProps} component={Component} />
 
     return isAuthorized ? (
         <Route {...restProps} component={Component} />

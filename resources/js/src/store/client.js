@@ -33,6 +33,31 @@ export default store => {
         pendingRoute
     }));
 
+    store.on("client/get-user-info", async (_, { appPending = false }) => {
+        appPending && store.dispatch("client/set-app-pending", true);
+        try {
+            const [err, res] = await to(
+                axios({
+                    url: "api/user-info",
+                    method: "get",
+                    headers: {
+                        accept: "application/json",
+                        "Content-Type": "application/json"
+                    }
+                })
+            );
+            if (err) return { userInfo: {} };
+            if (res) {
+                store.dispatch("client/set-user-info", res.data[0]);
+                store.dispatch("client/set-is-authorized", true);
+            }
+        } catch (err) {
+            return { userInfo: {} };
+        } finally {
+            appPending && store.dispatch("client/set-app-pending", false);
+        }
+    });
+
     store.on("client/set-user-info", (_, userInfo) => ({
         userInfo
     }));
@@ -48,9 +73,11 @@ export default store => {
             return { favoriteProducts };
         }
     );
+
     store.on("client/set-is-authorized", (_, isAuthorized) => ({
         isAuthorized
     }));
+
     store.on("client/set-lang", async (_, langValue) => {
         if (!existingLangs[langValue]) return { lang: DEFAULT_LANG };
         store.dispatch("client/set-app-pending", true);

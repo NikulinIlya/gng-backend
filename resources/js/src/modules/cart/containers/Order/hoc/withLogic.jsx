@@ -4,19 +4,20 @@ import { useStoreon } from "storeon/react";
 import useForm from "@/utils/useForm";
 import { status as REQUEST } from "@/utils/request-status";
 
-const rules = {}
+const rules = {};
 
 export default WrappedComponent => props => {
-    const { createOrder, setStatus } = props;
+    const { createOrder, setStatus, history } = props;
     const [state, formDispatch] = useReducer(orderFieldsReducer, {});
     const [isFormTouched, setIsFormTouched] = useState(false);
     const { isFormValid, errors } = useForm({
         formFields: state,
         fieldRules: rules
     });
-    const { dispatch, isAuthorized, userInfo } = useStoreon(
+    const { dispatch, isAuthorized, userInfo, productsInCart } = useStoreon(
         "isAuthorized",
-        "userInfo"
+        "userInfo",
+        "productsInCart"
     );
 
     const onFieldChange = (field = "", value = "") => {
@@ -59,13 +60,19 @@ export default WrappedComponent => props => {
     );
 
     useEffect(() => {
-        console.log("userinfo", userInfo, state);
         if (userInfo)
             formDispatch({
                 type: "set-state",
                 payload: userInfo
             });
     }, [userInfo]);
+
+    useEffect(
+        _ => {
+            if (!productsInCart.length) history.push("/cart");
+        },
+        [productsInCart]
+    );
 
     return (
         <WrappedComponent

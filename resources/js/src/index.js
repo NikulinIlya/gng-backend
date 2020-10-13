@@ -75,24 +75,7 @@ const App = () => {
     }, []);
 
     useEffect(_ => {
-        (async _ => {
-            dispatch("client/set-app-pending", true);
-            const [err, res] = await to(
-                axios({
-                    url: "api/user-info",
-                    method: "get",
-                    headers: {
-                        accept: "application/json",
-                        "Content-Type": "application/json"
-                    }
-                })
-            );
-            if (res) {
-                dispatch("client/set-user-info", res.data[0]);
-                dispatch("client/set-is-authorized", true);
-            }
-            dispatch("client/set-app-pending", false);
-        })();
+        dispatch("client/get-user-info", { appPending: true });
 
         window.addEventListener("scroll", handleScrollY);
         return _ => window.removeEventListener("scroll", handleScrollY);

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useStoreon } from "storeon/react";
 
 import Button from "@/components/Button";
 import { TextField, Checkbox } from "@/components/Input";
@@ -29,7 +28,7 @@ function Order({
                 <h1 className="order__title">
                     {t("place-an-order", "Оформление заказа")}
                 </h1>
-                <form className="order__form" onSubmit={_ => history.push("/")}>
+                <form className="order__form">
                     <TextField
                         name="name"
                         disabled={isAuthorized}
@@ -64,15 +63,13 @@ function Order({
                     />
                     <TextField
                         name="comment"
-                        disabled={isAuthorized}
                         multiline
                         onChange={onInputChange}
                         value={restProps["comment"] || ""}
                         label={t("comment", "Примечания")}
                     />
-                    {/* <Checkbox
+                    <Checkbox
                         name="terms_agreed"
-                        disabled={isAuthorized}
                         onChange={onInputChange}
                         checked={restProps["terms_agreed"] || ""}
                         variant="square"
@@ -80,7 +77,7 @@ function Order({
                             "i-agree-with-the-site-rules-and-consent-to-the-processing-of-personal-data",
                             "Я согласен с правилами использования сайта"
                         )}
-                    /> */}
+                    />
                     <Button>{t("place-an-order", "Оформление заказа")}</Button>
                 </form>
                 <Disclaimer />
