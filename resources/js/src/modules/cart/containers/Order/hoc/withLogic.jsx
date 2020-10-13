@@ -14,7 +14,8 @@ const initialState = {
 };
 
 const rules = {
-    comment: text => text.length <= 255 || 'Превышена максимальная длина комментария',
+    comment: text =>
+        text.length <= 255 || "Превышена максимальная длина комментария",
     terms_agreed: state =>
         Boolean(state) ||
         `${errMessageTemplates["required"]}: Соглашение на обработку персональных данных`
@@ -64,9 +65,9 @@ export default WrappedComponent => props => {
             if (!isFormValid) return;
             const [err, response] = await createOrder({
                 cart: {
-                    order: productsInCart
+                    order: productsInCart,
+                    promo: null
                 },
-                promo: null,
                 comment: state.comment
             });
 
