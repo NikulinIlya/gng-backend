@@ -56,11 +56,22 @@ class OrderController extends Controller
 
         $userInfo = $request->user()->userInfo()->first();
 
+        $orderInfoText = "";
+
+        foreach ($orderInfo as $key => $item) {
+            $orderInfoText .= ($key + 1) . '. ';
+            foreach ($item as $itemKey => $value) {
+                $orderInfoText .= ucfirst($itemKey) . ': ' . $value . '; ';
+            }
+
+            $orderInfoText .= "\n";
+        }
+
         Order::create([
             'price' => $price,
             'user_id' => $request->user()->id,
             'order_status_id' => 1,
-            'order_info' => json_encode($orderInfo),
+            'order_info' => $orderInfoText,
             'comment' => $request->input('comment'),
             'phone' => ($userInfo) ? $userInfo->phone : null,
         ]);
