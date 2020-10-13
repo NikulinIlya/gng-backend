@@ -88,14 +88,14 @@ export default WrappedComponent => props => {
             const { terms_agreed, ...data } = state;
 
             if (!isFormValid) return;
-            const [err, response] = await submitForm(data);
+            const [err, response] = await submitForm({
+                ...data,
+                remember: true
+            });
 
             setStatus(REQUEST.success);
             if (err) {
-                setClientErrors([
-                    ...clientErrors,
-                    "Что-то пошло не так"
-                ]);
+                setClientErrors([...clientErrors, "Что-то пошло не так"]);
                 return;
             }
             if (response) {
@@ -107,7 +107,12 @@ export default WrappedComponent => props => {
         [isFormValid]
     );
 
-    useEffect(_ => { setClientErrors([]) }, [isFormTouched]);
+    useEffect(
+        _ => {
+            setClientErrors([]);
+        },
+        [isFormTouched]
+    );
 
     return (
         <WrappedComponent
