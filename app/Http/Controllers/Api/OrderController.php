@@ -54,11 +54,15 @@ class OrderController extends Controller
             ];
         }
 
+        $userInfo = $request->user()->userInfo()->first();
+
         Order::create([
             'price' => $price,
             'user_id' => $request->user()->id,
             'order_status_id' => 1,
             'order_info' => json_encode($orderInfo),
+            'comment' => $request->input('comment'),
+            'phone' => ($userInfo) ? $userInfo->phone : null,
         ]);
 
         return response()

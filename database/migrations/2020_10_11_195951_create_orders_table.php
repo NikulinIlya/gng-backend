@@ -19,6 +19,8 @@ class CreateOrdersTable extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->bigInteger('order_status_id');
             $table->text('order_info');
+            $table->string('comment');
+            $table->string('phone');
             $table->timestamps();
         });
     }

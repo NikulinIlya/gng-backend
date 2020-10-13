@@ -4,6 +4,7 @@ namespace Tests\Feature\Api;
 
 use App\Models\Product;
 use App\Models\User;
+use App\Models\UserInfo;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
@@ -26,9 +27,14 @@ class OrderTest extends TestCase
     /** @test */
     public function test_store_order_request()
     {
-        Sanctum::actingAs(
-            factory(User::class)->create()
-        );
+        $user = factory(User::class)->create();
+
+        factory(UserInfo::class)->create([
+            'user_id' => $user->id,
+            'email' => $user->email,
+        ]);
+
+        Sanctum::actingAs($user);
 
         $response = $this->json('POST', '/api/orders/create', [
             'cart' => '',
@@ -56,6 +62,7 @@ class OrderTest extends TestCase
                 ],
                 'promo' => null,
             ],
+            'comment' => 'My comment',
         ]);
 
         $response->assertStatus(201);
