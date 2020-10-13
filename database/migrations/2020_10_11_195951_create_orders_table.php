@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->bigInteger('order_status_id');
             $table->text('order_info');
             $table->string('comment');
+            $table->string('phone');
             $table->timestamps();
         });
     }
