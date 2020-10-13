@@ -23,13 +23,13 @@ export default function useCart() {
                 product: { id: productId, count, unit: UNIT.thing },
                 callback: _ => throwNotification(brandId)
             });
-            
+
             resolve();
         });
 
     const throwNotification = brandId => {
         const text =
-            assistantPhrases && brandId
+            assistantPhrases && assistantPhrases[brandId] && brandId
                 ? getRandom(assistantPhrases[brandId])
                 : "";
         notify({ text });

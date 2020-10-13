@@ -30,6 +30,24 @@ export default store => {
         pendingRoute: ""
     }));
 
+    store.on("client/logout", async () => {
+        try {
+            await to(
+                axios({
+                    url: "api/logout",
+                    method: "post",
+                    headers: {
+                        accept: "application/json",
+                        "Content-Type": "application/json"
+                    },
+                    data: {}
+                })
+            );
+        } finally {
+            store.dispatch("client/set-is-authorized", false);
+        }
+    });
+
     store.on("client/set-pending-route", (_, pendingRoute) => ({
         pendingRoute
     }));

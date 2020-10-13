@@ -6,6 +6,11 @@ export default store => {
         productsInCart: products
     }));
 
+    store.on("cart/clear", () => {
+        localStorage.setItem("cart", JSON.stringify([]));
+        return { productsInCart: [] };
+    });
+
     store.on(
         "cart/add",
         ({ productsInCart }, { product, callback = Function.prototype }) => {

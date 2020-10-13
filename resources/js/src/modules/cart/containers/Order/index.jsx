@@ -2,26 +2,31 @@ import React, { useState, useEffect } from "react";
 
 import Button from "@/components/Button";
 import { TextField, Checkbox } from "@/components/Input";
+import Loading from "@/components/Loading";
 
 import { history } from "@";
 import useTranslate from "@/utils/useTranslate";
 import compose from "@/utils/compose";
+import Modal from "@/components/Modal";
 
 import Disclaimer from "../../components/Disclaimer";
 import { withApi, withLogic } from "./hoc";
+
+import { status as REQUEST } from "@/utils/request-status";
 
 import "./order.scss";
 
 function Order({
     onInputChange,
     onFormSubmit,
+    onOrderComplete,
     status,
     errors,
     isFormTouched,
     isAuthorized,
     isTermsAgreed,
+    isSuccessModalVisible,
     userInfo,
-
     ...restProps
 }) {
     const { t } = useTranslate();
@@ -32,6 +37,7 @@ function Order({
                     {t("place-an-order", "Оформление заказа")}
                 </h1>
                 <form className="order__form" onSubmit={onFormSubmit}>
+                    {status === REQUEST.pending && <Loading fixed />}
                     <TextField
                         name="name"
                         disabled={isAuthorized}
@@ -92,6 +98,16 @@ function Order({
                     )}
                     <Button>{t("place-an-order", "Оформление заказа")}</Button>
                 </form>
+                <Modal closable={false}>
+                    <div className="success-modal">
+                        <h1 className="success-modal__heading">
+                            Заказ успешно оформлен
+                        </h1>
+                        <Button onClick={onOrderComplete}>
+                            Продолжить покупки
+                        </Button>
+                    </div>
+                </Modal>
                 <Disclaimer />
             </div>
         </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useReducer, useCallback } from "react";
 import { useStoreon } from "storeon/react";
 
+import { history } from "@";
 import useForm from "@/utils/useForm";
 import { status as REQUEST } from "@/utils/request-status";
 
@@ -30,6 +31,8 @@ export default WrappedComponent => props => {
         fieldRules: rules
     });
     const [isTermsAgreed, setIsTermsAgreed] = useState(true);
+    const [isSuccessModalVisible, setModalState] = useState(false);
+    const [clientErrors, setClientErrors] = useState([]);
     const { dispatch, isAuthorized, userInfo, productsInCart } = useStoreon(
         "isAuthorized",
         "userInfo",
@@ -46,6 +49,13 @@ export default WrappedComponent => props => {
                 value
             }
         });
+    };
+
+    const onOrderComplete = () => {
+        dispatch("cart/clear");
+        setModalState(false);
+
+        history.push("/");
     };
 
     const onInputChange = e => {
@@ -77,12 +87,23 @@ export default WrappedComponent => props => {
 
             setStatus(REQUEST.success);
 
+            if (err) {
+                setClientErrors([...clientErrors, "Что-то пошло не так"]);
+                return;
+            }
+
             if (response) {
-                dispatch("client/set-is-authorized", true);
-                onClose();
+                setModalState(true);
             }
         },
         [isFormValid]
+    );
+
+    useEffect(
+        _ => {
+            setClientErrors([]);
+        },
+        [isFormTouched]
     );
 
     useEffect(
@@ -96,13 +117,15 @@ export default WrappedComponent => props => {
         <WrappedComponent
             {...props}
             {...state}
+            userInfo={userInfo}
+            errors={[...errors, ...clientErrors]}
             isFormTouched={isFormTouched}
             isAuthorized={isAuthorized}
-            userInfo={userInfo}
-            errors={errors}
             isTermsAgreed={isTermsAgreed}
+            isSuccessModalVisible={isSuccessModalVisible}
             onInputChange={onInputChange}
             onFormSubmit={onFormSubmit}
+            onOrderComplete={onOrderComplete}
         />
     );
 };

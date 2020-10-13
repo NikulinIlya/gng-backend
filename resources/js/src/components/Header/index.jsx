@@ -38,7 +38,7 @@ const Header = () => {
 
     const onSignOut = e => {
         e.preventDefault();
-        dispatch("client/set-is-authorized", false);
+        dispatch("client/logout", false);
     };
 
     useEffect(
