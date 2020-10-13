@@ -57,6 +57,7 @@ export default WrappedComponent => props => {
         fieldRules: rules
     });
     const { dispatch } = useStoreon();
+    const [clientErrors, setClientErrors] = useState([]);
 
     const onFieldChange = (field = "", value = "") => {
         if (!field || !initialState.hasOwnProperty(field))
@@ -90,20 +91,29 @@ export default WrappedComponent => props => {
             const [err, response] = await submitForm(data);
 
             setStatus(REQUEST.success);
-
+            if (err) {
+                setClientErrors([
+                    ...clientErrors,
+                    "Что-то пошло не так"
+                ]);
+                return;
+            }
             if (response) {
+                dispatch("client/get-user-info", {});
                 dispatch("client/set-is-authorized", true);
                 onClose();
             }
         },
         [isFormValid]
     );
-    
+
+    useEffect(_ => { setClientErrors([]) }, [isFormTouched]);
+
     return (
         <WrappedComponent
             {...props}
             {...state}
-            errors={errors}
+            errors={[...errors, ...clientErrors]}
             isFormTouched={isFormTouched}
             onInputChange={onInputChange}
             onFormSubmit={onFormSubmit}

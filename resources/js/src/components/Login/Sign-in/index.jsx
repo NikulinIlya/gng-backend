@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import { TextField } from "@/components/Input";
 import Button from "@/components/Button";
 import IconButton from "@/components/IconButton";
+import Loading from "@/components/Loading";
 
 import useMeasures from "@/utils/useMeasures";
 import useTranslate from "@/utils/useTranslate";
 import compose from "@/utils/compose";
+import { status as REQUEST } from "@/utils/request-status";
 
 import { withApi, withLogic } from "./hoc";
 
@@ -41,6 +43,7 @@ function SingIn({
                 <Link to="?login=sign-up">{t("sign-up", "Регистрация")}</Link>
             </p>
             <form className="login__form" onSubmit={onFormSubmit}>
+                {status === REQUEST.pending && <Loading fixed />}
                 <TextField
                     name="email"
                     onChange={onInputChange}
@@ -65,9 +68,9 @@ function SingIn({
                 )}
                 <Button>{t("sign-in", "Вход")}</Button>
             </form>
-            <Link className="login__forgot" to="/">
+            {/* <Link className="login__forgot" to="/">
                 {t("forgot-your-password", "Забыли пароль?")}
-            </Link>
+            </Link> */}
         </div>
     );
 }

@@ -31,7 +31,7 @@ export default WrappedComponent => props => {
         formFields: state,
         fieldRules: rules
     });
-    const [commonErrors, setCommonErrors] = useState([]);
+    const [clientErrors, setClientErrors] = useState([]);
     const { dispatch, pendingRoute } = useStoreon("pendingRoute");
 
     const onFieldChange = (field = "", value = "") => {
@@ -66,31 +66,33 @@ export default WrappedComponent => props => {
             setStatus(REQUEST.success);
 
             if (err) {
-                setCommonErrors([
-                    ...commonErrors,
-                    "Что-то пошло не так. Проверьте корректность введенных данных"
+                setClientErrors([
+                    ...clientErrors,
+                    "Проверьте корректность введенных данных"
                 ]);
+                return;
             }
-            console.log("LOGIN", "err - ", err, "resoponse - ", response);
+
             if (response) {
                 dispatch("client/get-user-info", {});
                 dispatch("client/set-is-authorized", true);
                 pendingRoute && history.push(pendingRoute);
                 onClose();
             } else {
-                setCommonErrors([...commonErrors, "Что-то пошло не так"]);
+                setClientErrors([...clientErrors, "Что-то пошло не так"]);
             }
         },
         [isFormValid]
     );
 
-    useEffect(() => setCommonErrors([...commonErrors, ...errors]), [errors]);
+    useEffect(_ => { setClientErrors([]) }, [isFormTouched]);
 
     return (
         <WrappedComponent
             {...props}
             {...state}
-            errors={errors}
+            errors={[...errors, ...clientErrors]}
+            clientErrors={clientErrors}
             isFormTouched={isFormTouched}
             onInputChange={onInputChange}
             onFormSubmit={onFormSubmit}
