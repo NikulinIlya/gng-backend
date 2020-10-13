@@ -1,45 +1,53 @@
 .order {
-  padding-top: 30px;
-  &__title {
-    text-align: center;
-    font-size: 42px;
-    font-weight: 400;
-    line-height: 100%;
-    font-family: var(--morePro);
-    margin-bottom: 22px;
-  }
-
-  &__form {
-    width: 100%;
-    max-width: 570px;
-    margin: 0 auto;
-    margin-bottom: 50px;
-
-    .field,
-    .checkbox {
-      margin-bottom: 24px;
-      &:not(:last-child) {
-        margin-bottom: 24px;
-      }
+    padding-top: 30px;
+    &__title {
+        text-align: center;
+        font-size: 42px;
+        font-weight: 400;
+        line-height: 100%;
+        font-family: var(--morePro);
+        margin-bottom: 22px;
     }
-    .checkbox {
-      align-items: center;
-      &__label {
-        color: black;
-      }
+
+    &__form {
+        width: 100%;
+        max-width: 570px;
+        margin: 0 auto;
+        margin-bottom: 50px;
+
+        .field,
+        .checkbox {
+            margin-bottom: 24px;
+            &:not(:last-child) {
+                margin-bottom: 24px;
+            }
+        }
+        .checkbox {
+            align-items: center;
+            &__label {
+                color: black;
+            }
+        }
+        .messages {
+            margin-bottom: 24px;
+            p {
+                color: tomato;
+                font-weight: 600;
+                font-size: 15px;
+            }
+        }
     }
-  }
-  .btn {
-    width: 100%;
-  }
+    .btn {
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 768px) {
-  .order {
-    &__title {
-      font-size: 24px;
-      line-height: 28.8px;
-      margin-bottom: 17px;
+    .order {
+        &__title {
+            font-size: 24px;
+            line-height: 28.8px;
+            margin-bottom: 17px;
+        }
     }
-  }
 }

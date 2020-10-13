@@ -61,7 +61,10 @@ export default WrappedComponent => props => {
             setIsFormTouched(true);
 
             if (!isFormValid) return;
-            const [err, response] = await submitForm(state);
+            const [err, response] = await submitForm({
+                ...state,
+                remember: true
+            });
 
             setStatus(REQUEST.success);
 
@@ -85,7 +88,12 @@ export default WrappedComponent => props => {
         [isFormValid]
     );
 
-    useEffect(_ => { setClientErrors([]) }, [isFormTouched]);
+    useEffect(
+        _ => {
+            setClientErrors([]);
+        },
+        [isFormTouched]
+    );
 
     return (
         <WrappedComponent

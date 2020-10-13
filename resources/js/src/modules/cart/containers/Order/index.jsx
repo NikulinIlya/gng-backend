@@ -19,6 +19,9 @@ function Order({
     errors,
     isFormTouched,
     isAuthorized,
+    isTermsAgreed,
+    userInfo,
+
     ...restProps
 }) {
     const { t } = useTranslate();
@@ -28,56 +31,65 @@ function Order({
                 <h1 className="order__title">
                     {t("place-an-order", "Оформление заказа")}
                 </h1>
-                <form className="order__form">
+                <form className="order__form" onSubmit={onFormSubmit}>
                     <TextField
                         name="name"
                         disabled={isAuthorized}
                         label={t("name", "Имя")}
-                        onChange={onInputChange}
-                        value={restProps["name"] || ""}
+                        readOnly
+                        value={userInfo["name"] || ""}
                         placeholder="Иван"
                     />
                     <TextField
                         name="second_name"
                         disabled={isAuthorized}
                         label={t("second-name", "Фамилия")}
-                        onChange={onInputChange}
-                        value={restProps["second_name"] || ""}
+                        readOnly
+                        value={userInfo["second_name"] || ""}
                         placeholder="Иванов"
                     />
                     <TextField
                         name="phone"
                         disabled={isAuthorized}
                         label={t("mob-number", "Телефон")}
-                        onChange={onInputChange}
-                        value={restProps["phone"] || ""}
+                        readOnly
+                        value={userInfo["phone"] || ""}
                         placeholder="89990000000"
                     />
                     <TextField
                         name="email"
                         disabled={isAuthorized}
                         label={"Email"}
-                        onChange={onInputChange}
-                        value={restProps["email"] || ""}
+                        readOnly
+                        value={userInfo["email"] || ""}
                         placeholder="ivanov@mail.ru"
                     />
                     <TextField
                         name="comment"
                         multiline
                         onChange={onInputChange}
-                        value={restProps["comment"] || ""}
+                        value={userInfo["comment"] || ""}
                         label={t("comment", "Примечания")}
                     />
                     <Checkbox
                         name="terms_agreed"
                         onChange={onInputChange}
-                        checked={restProps["terms_agreed"] || ""}
+                        checked={restProps["terms_agreed"]}
                         variant="square"
                         label={t(
                             "i-agree-with-the-site-rules-and-consent-to-the-processing-of-personal-data",
                             "Я согласен с правилами использования сайта"
                         )}
                     />
+                    {isFormTouched && (
+                        <div className="messages">
+                            {errors.map(err => (
+                                <p className="messages__item" key={err}>
+                                    {err}
+                                </p>
+                            ))}
+                        </div>
+                    )}
                     <Button>{t("place-an-order", "Оформление заказа")}</Button>
                 </form>
                 <Disclaimer />

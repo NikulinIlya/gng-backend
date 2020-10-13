@@ -4,16 +4,31 @@ import { useStoreon } from "storeon/react";
 import useForm from "@/utils/useForm";
 import { status as REQUEST } from "@/utils/request-status";
 
-const rules = {};
+const errMessageTemplates = {
+    required: "Заполните поле"
+};
+
+const initialState = {
+    comment: "",
+    terms_agreed: true
+};
+
+const rules = {
+    comment: text => text.length <= 255 || 'Превышена максимальная длина комментария',
+    terms_agreed: state =>
+        Boolean(state) ||
+        `${errMessageTemplates["required"]}: Соглашение на обработку персональных данных`
+};
 
 export default WrappedComponent => props => {
     const { createOrder, setStatus, history } = props;
-    const [state, formDispatch] = useReducer(orderFieldsReducer, {});
+    const [state, formDispatch] = useReducer(orderFieldsReducer, initialState);
     const [isFormTouched, setIsFormTouched] = useState(false);
     const { isFormValid, errors } = useForm({
         formFields: state,
         fieldRules: rules
     });
+    const [isTermsAgreed, setIsTermsAgreed] = useState(true);
     const { dispatch, isAuthorized, userInfo, productsInCart } = useStoreon(
         "isAuthorized",
         "userInfo",
@@ -47,7 +62,13 @@ export default WrappedComponent => props => {
             setIsFormTouched(true);
 
             if (!isFormValid) return;
-            const [err, response] = await createOrder(state);
+            const [err, response] = await createOrder({
+                cart: {
+                    order: productsInCart
+                },
+                promo: null,
+                comment: state.comment
+            });
 
             setStatus(REQUEST.success);
 
@@ -58,14 +79,6 @@ export default WrappedComponent => props => {
         },
         [isFormValid]
     );
-
-    useEffect(() => {
-        if (userInfo)
-            formDispatch({
-                type: "set-state",
-                payload: userInfo
-            });
-    }, [userInfo]);
 
     useEffect(
         _ => {
@@ -80,7 +93,9 @@ export default WrappedComponent => props => {
             {...state}
             isFormTouched={isFormTouched}
             isAuthorized={isAuthorized}
+            userInfo={userInfo}
             errors={errors}
+            isTermsAgreed={isTermsAgreed}
             onInputChange={onInputChange}
             onFormSubmit={onFormSubmit}
         />

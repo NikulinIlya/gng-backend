@@ -50,12 +50,7 @@ const Header = () => {
         },
         [mobileNavVisibility, isMobile]
     );
-    useEffect(
-        _ => {
-            console.log("productsInCart", productsInCart);
-        },
-        [productsInCart]
-    );
+
     return (
         <header
             className={`header ${mobileNavVisibility ? "header--opened" : ""}`}
