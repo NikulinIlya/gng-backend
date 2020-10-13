@@ -56,6 +56,7 @@ class OrderTest extends TestCase
                 ],
                 'promo' => null,
             ],
+            'comment' => 'My comment',
         ]);
 
         $response->assertStatus(201);
