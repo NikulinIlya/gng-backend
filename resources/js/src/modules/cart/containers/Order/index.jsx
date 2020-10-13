@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useStoreon } from "storeon/react";
 
 import Button from "@/components/Button";
 import { TextField, Checkbox } from "@/components/Input";
@@ -11,34 +12,15 @@ import { history } from "@";
 
 import "./order.scss";
 
-const fields = [
-    {
-        label: "Имя",
-        labelSlug: "name",
-        placeholder: "Иван"
-    },
-    {
-        label: "Фамилия",
-        labelSlug: "second-name",
-        placeholder: "Иванов"
-    },
-    {
-        label: "Телефон",
-        labelSlug: "mob-number",
-        placeholder: "+7 (000) 000-00-00"
-    },
-    {
-        label: "Email",
-        placeholder: "ivanov@mail.ru"
-    },
-    {
-        label: "Примечания",
-        placeholder: "Комментарий к заказу...",
-        multiline: true
-    }
-];
-
-export default function Order() {
+export default function Order({
+    onInputChange,
+    onFormSubmit,
+    status,
+    errors,
+    isFormTouched,
+    isAuthorized,
+    ...restProps
+}) {
     const { t } = useTranslate();
     return (
         <div className="container">
@@ -47,31 +29,51 @@ export default function Order() {
                     {t("place-an-order", "Оформление заказа")}
                 </h1>
                 <form className="order__form" onSubmit={_ => history.push("/")}>
-                    {fields.map((f, i) => (
-                        <TextField
-                            {...f}
-                            label={t(f.labelSlug, f.label)}
-                            key={i}
-                        />
-                    ))}
+                    <TextField
+                        name="name"
+                        disabled={isAuthorized}
+                        label={t("name", "Имя")}
+                        onChange={onInputChange}
+                        value={restProps["name"] || ""}
+                        placeholder="Иван"
+                    />
+                    <TextField
+                        name="second_name"
+                        disabled={isAuthorized}
+                        label={t("second-name", "Фамилия")}
+                        onChange={onInputChange}
+                        value={restProps["second_name"] || ""}
+                        placeholder="Иванов"
+                    />
+                    <TextField
+                        name="phone"
+                        disabled={isAuthorized}
+                        label={t("mob-number", "Телефон")}
+                        onChange={onInputChange}
+                        value={restProps["phone"] || ""}
+                        placeholder="89990000000"
+                    />
+                    <TextField
+                        name="email"
+                        disabled={isAuthorized}
+                        label={"Email"}
+                        onChange={onInputChange}
+                        value={restProps["email"] || ""}
+                        placeholder="ivanov@mail.ru"
+                    />
+                    <TextField
+                        name="comment"
+                        disabled={isAuthorized}
+                        multiline
+                        onChange={onInputChange}
+                        value={restProps["comment"] || ""}
+                        label={t("comment", "Примечания")}
+                    />
                     {/* <Checkbox
-                        defaultChecked
-                        variant="square"
-                        label={t(
-                            "receive-news-and-offers-by-e-mail",
-                            "Получать новости и выгодные предложения на e-mail"
-                        )}
-                    />
-                    <Checkbox
-                        defaultChecked
-                        variant="square"
-                        label={t(
-                            "receive-information-about-upcoming-events",
-                            "Получать информацию о предстоящих  мероприятиях"
-                        )}
-                    />
-                    <Checkbox
-                        defaultChecked
+                        name="terms_agreed"
+                        disabled={isAuthorized}
+                        onChange={onInputChange}
+                        checked={restProps["terms_agreed"] || ""}
                         variant="square"
                         label={t(
                             "i-agree-with-the-site-rules-and-consent-to-the-processing-of-personal-data",

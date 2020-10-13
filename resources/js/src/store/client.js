@@ -47,7 +47,6 @@ export default store => {
         isAuthorized
     }));
     store.on("client/set-lang", async (_, langValue) => {
-        console.log("langvalue", langValue);
         if (!existingLangs[langValue]) return { lang: DEFAULT_LANG };
         store.dispatch("client/set-app-pending", true);
         try {

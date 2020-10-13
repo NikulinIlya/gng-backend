@@ -24,6 +24,9 @@
       border-bottom: 2px solid var(--defaultGold);
       font-family: var(--proxima);
       display: block;
+      &:disabled{
+        opacity: 0.7;
+      }
       &::placeholder {
         color: #e2d9cf;
       }
