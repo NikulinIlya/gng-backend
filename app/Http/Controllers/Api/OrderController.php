@@ -59,7 +59,7 @@ class OrderController extends Controller
             'user_id' => $request->user()->id,
             'order_status_id' => 1,
             'order_info' => json_encode($orderInfo),
-            'comment' => $request->input('comment')
+            'comment' => $request->input('comment'),
         ]);
 
         return response()
