@@ -98,16 +98,22 @@ function Order({
                     )}
                     <Button>{t("place-an-order", "Оформление заказа")}</Button>
                 </form>
-                <Modal closable={false}>
-                    <div className="success-modal">
-                        <h1 className="success-modal__heading">
-                            {t("order-is-processed", "Заказ успешно оформлен")}
-                        </h1>
-                        <Button onClick={onOrderComplete}>
-                            {t("continue-shopping", "Продолжить покупки")}
-                        </Button>
-                    </div>
-                </Modal>
+                {isSuccessModalVisible && (
+                    <Modal closable={false}>
+                        <div className="success-modal">
+                            <h1 className="success-modal__heading">
+                                {t(
+                                    "order-is-processed",
+                                    "Заказ успешно оформлен"
+                                )}
+                            </h1>
+                            <Button onClick={onOrderComplete}>
+                                {t("continue-shopping", "Продолжить покупки")}
+                            </Button>
+                        </div>
+                    </Modal>
+                )}
+
                 <Disclaimer />
             </div>
         </div>
