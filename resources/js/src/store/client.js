@@ -1,4 +1,5 @@
 import redaxios, { to } from "@/utils/fetch";
+import axios from "axios";
 
 export const RU_LANG = "ru";
 export const ENG_LANG = "en";
