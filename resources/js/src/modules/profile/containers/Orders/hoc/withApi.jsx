@@ -4,7 +4,15 @@ import axios from "axios";
 
 import { status as REQUEST } from "@/utils/request-status";
 
+const statuses = {
+    1: "process",
+    2: "success",
+    3: "canceled"
+};
+
 export default WrappedComponent => props => {
+    const [status, setStatus] = useState(REQUEST.pending);
+    const [orders, setOrders] = useState([]);
     useEffect(_ => {
         (async _ => {
             const [err, res] = await to(
@@ -17,9 +25,24 @@ export default WrappedComponent => props => {
                     }
                 })
             );
+
+            if (res) {
+                setOrders(
+                    res.data.map(ord => ({
+                        ...ord,
+                        date: new Date(ord.created_at),
+                        status: statuses[order_status_id]
+                            ? statuses[order_status_id]
+                            : statuses[1]
+                    }))
+                );
+            }
+
+            setStatus(REQUEST.success);
+
             console.log("orders", res);
         })();
     });
 
-    return <WrappedComponent {...props} />;
+    return <WrappedComponent {...props} orders={orders} status={status} />;
 };

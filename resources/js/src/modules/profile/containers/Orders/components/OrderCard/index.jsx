@@ -26,7 +26,7 @@ const statuses = {
     }
 };
 
-export default function OrderCard({ status = "process" }) {
+export default function OrderCard({ status = "process", date, price }) {
     const { t } = useTranslate();
     return (
         <div className={`order-card ${status}`}>
@@ -34,13 +34,17 @@ export default function OrderCard({ status = "process" }) {
                 <img src={statuses[status].icon} alt="" />
             </div>
             <div className="order-card__common">
-                <p className="order-card__no">№ 324524</p>
+                <p className="order-card__no">№ {}</p>
                 <span className="order-card__status-text">
                     {t(statuses[status].labelSlug, statuses[status].label)}
                 </span>
             </div>
-            <div className="order-card__date">15.04 2020</div>
-    <div className="order-card__sum">11 300{` ${t('rub','руб.')}`}</div>
+            {console.log("date", date)}
+            <div className="order-card__date">{date}</div>
+            <div className="order-card__sum">
+                {price}
+                {` ${t("rub", "руб.")}`}
+            </div>
         </div>
     );
 }

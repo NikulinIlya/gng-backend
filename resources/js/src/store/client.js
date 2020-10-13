@@ -34,7 +34,7 @@ export default store => {
         try {
             await to(
                 axios({
-                    url: "api/logout",
+                    url: "/logout",
                     method: "post",
                     headers: {
                         accept: "application/json",
