@@ -17,11 +17,12 @@ export default function AsideFiltering({
 }) {
     const onClose = _ => visibilityHandler(false);
     const onOpen = _ => visibilityHandler(true);
+    const {t} = useTranslate()
 
     if (!filtersVisibility)
         return (
             <Button className="filters-handler" onClick={onOpen}>
-                Фильтры
+                {t('filters','Фильтры')}
             </Button>
         );
 

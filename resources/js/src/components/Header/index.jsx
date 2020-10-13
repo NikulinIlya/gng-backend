@@ -42,6 +42,10 @@ const Header = () => {
         history.push("/");
     };
 
+    const onMobileLinkClick = () => {
+        setMobileNavVisibility(false);
+    };
+
     useEffect(
         _ => {
             if (isMobile)
@@ -175,7 +179,7 @@ const Header = () => {
                         history.push(`/search?query=${target.value}`)
                     }
                     iconVisibility={false}
-                    placeholder="Поиск"
+                    placeholder={t("search", "Поиск")}
                 />
             )}
 
@@ -184,19 +188,25 @@ const Header = () => {
                     <div className="container">
                         <div className="mobile-nav__section">
                             <div className="mobile-nav__item">
-                                <Link to="/about">
+                                <Link to="/about" onClick={onMobileLinkClick}>
                                     {t("about-us", "О компании")}
                                 </Link>
                             </div>
                             <div className="mobile-nav__item">
-                                <Link to="/static">
+                                <Link
+                                    to="/static?doc=4"
+                                    onClick={onMobileLinkClick}
+                                >
                                     {t(
                                         "responsible-consumption",
                                         "Ответственное потребление"
                                     )}
                                 </Link>
                             </div>
-                            <div className="mobile-nav__item">
+                            <div
+                                className="mobile-nav__item"
+                                onClick={onMobileLinkClick}
+                            >
                                 <Link to="/contacts">
                                     {t("contacts", "Контакты")}
                                 </Link>
@@ -206,33 +216,51 @@ const Header = () => {
                     <div className="container">
                         <div className="mobile-nav__section">
                             <div className="mobile-nav__item">
-                                <Link to="/profile#favorite">
+                                <Link
+                                    to="/profile#favorite"
+                                    onClick={onMobileLinkClick}
+                                >
                                     {t("favorite", "Избранное")}
                                 </Link>
                             </div>
-                            <div className="mobile-nav__item">
-                                <Link
-                                    to="?login=sign-in"
-                                    onClick={_ =>
-                                        setMobileNavVisibility(
-                                            !mobileNavVisibility
-                                        )
-                                    }
-                                >
-                                    {t("sign-in", "Вход")}
-                                </Link>
-                                /
-                                <Link
-                                    to="?login=sign-up"
-                                    onClick={_ =>
-                                        setMobileNavVisibility(
-                                            !mobileNavVisibility
-                                        )
-                                    }
-                                >
-                                    {t("sign-up", "Регистрация")}
-                                </Link>
-                            </div>
+                            {isAuthorized ? (
+                                <div className="mobile-nav__item">
+                                    <Link
+                                        to="/"
+                                        onClick={_ =>
+                                            setMobileNavVisibility(
+                                                !mobileNavVisibility
+                                            )
+                                        }
+                                    >
+                                        {t("sign-out", "Выйти")}
+                                    </Link>
+                                </div>
+                            ) : (
+                                <div className="mobile-nav__item">
+                                    <Link
+                                        to="?login=sign-in"
+                                        onClick={_ =>
+                                            setMobileNavVisibility(
+                                                !mobileNavVisibility
+                                            )
+                                        }
+                                    >
+                                        {t("sign-in", "Вход")}
+                                    </Link>
+                                    /
+                                    <Link
+                                        to="?login=sign-up"
+                                        onClick={_ =>
+                                            setMobileNavVisibility(
+                                                !mobileNavVisibility
+                                            )
+                                        }
+                                    >
+                                        {t("sign-up", "Регистрация")}
+                                    </Link>
+                                </div>
+                            )}
                         </div>
                     </div>
                     <Info />

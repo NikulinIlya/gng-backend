@@ -20,7 +20,7 @@ export default WrappedComponent => props => {
                     setStatus(REQUEST.error);
                     return;
                 }
-
+                window.scrollTo({ top: 0 });
                 setText(await loadText(`/${urlParams.get("doc")}`));
             })();
         },

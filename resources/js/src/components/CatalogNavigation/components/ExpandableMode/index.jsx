@@ -12,7 +12,9 @@ function ExpandableMode({ items }) {
     return (
         <div className={`catalog-expandable ${isExpanded ? "expanded" : ""}`}>
             <div className="catalog-expandable__head">
-                <h2 className="catalog-expandable__title">Каталог</h2>
+                <h2 className="catalog-expandable__title">
+                    {t("catalog", "Каталог")}
+                </h2>
                 <div className="catalog-expandable__burger">
                     <Burger
                         onClick={_ => setIsExpanded(!isExpanded)}

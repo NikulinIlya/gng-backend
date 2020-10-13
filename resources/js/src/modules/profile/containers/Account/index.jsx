@@ -10,10 +10,13 @@ import {
 } from "@/modules/events/components/CalendarView/calendar-helpers";
 
 import useTranslate from "@/utils/useTranslate";
+import compose from "@/utils/compose";
+
+import { withApi, withLogic } from "./hoc";
 
 import "./account.scss";
 
-export default function Account() {
+function Account({ userInfo }) {
     const { t } = useTranslate();
     return (
         <div className="account">
@@ -25,11 +28,27 @@ export default function Account() {
                 )}
             >
                 <form className="personal-info">
-                    <TextField label={t("name", "Имя")} />
-                    <TextField label={t("second-name", "Фамилия")} />
+                    <TextField
+                        label={t("name", "Имя")}
+                        disabled
+                        value={userInfo.name}
+                    />
+                    <TextField
+                        label={t("second-name", "Фамилия")}
+                        value={userInfo.second_name}
+                        disabled
+                    />
                     <div className="fields-grid">
-                        <TextField label={t("mob-number", "Телефон")} />
-                        <TextField label="Email" />
+                        <TextField
+                            label={t("mob-number", "Телефон")}
+                            value={userInfo.phone}
+                            disabled
+                        />
+                        <TextField
+                            label="Email"
+                            disabled
+                            value={userInfo.email}
+                        />
                         <DateInput
                             // TODO: FIX
                             lang={localStorage.getItem("lang")}
@@ -99,15 +118,15 @@ export default function Account() {
                             "receive-news-and-offers-by-e-mail",
                             "Получать новости и выгодные предложения на e-mail"
                         )}
-                        defaultChecked
+                        checked={userInfo.discount_agreed}
                     />
                     <Checkbox
                         variant="square"
+                        checked={userInfo.events_agreed}
                         label={t(
                             "receive-information-about-upcoming-events",
                             "Получать информацию о предстоящих  мероприятиях"
                         )}
-                        defaultChecked
                     />
                     <Button>{t("save", "Сохранить")}</Button>
                 </form>
@@ -156,3 +175,5 @@ function DateInput({ label = "Дата", lang = "ru" }) {
         </div>
     );
 }
+
+export default compose(withApi, withLogic)(Account);

@@ -14,6 +14,7 @@ function Filtering({ onClose, onSubmit, onReset, renderFiltersBody }) {
     const onSubmitFilters = e => {
         e.preventDefault();
         onSubmit();
+        onClose();
     };
     const onResetFilters = e => {
         e.preventDefault();
@@ -21,6 +22,7 @@ function Filtering({ onClose, onSubmit, onReset, renderFiltersBody }) {
             el => el.checked && (el.checked = false)
         );
         onReset();
+        onClose();
     };
     return (
         <article className="filters">
@@ -32,7 +34,7 @@ function Filtering({ onClose, onSubmit, onReset, renderFiltersBody }) {
                             type="button"
                             onClick={onClose}
                         >
-                            Скрыть фильтр
+                            {t("hide-filters", "Скрыть фильтр")}
                         </button>
                     </div>
                 )}
