@@ -31,8 +31,8 @@ export default WrappedComponent => props => {
                     res.data.map(ord => ({
                         ...ord,
                         date: new Date(ord.created_at),
-                        status: statuses[order_status_id]
-                            ? statuses[order_status_id]
+                        status: statuses[ord.order_status_id]
+                            ? statuses[ord.order_status_id]
                             : statuses[1]
                     }))
                 );
