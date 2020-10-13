@@ -39,7 +39,7 @@ const Header = () => {
     const onSignOut = e => {
         e.preventDefault();
         dispatch("client/logout", false);
-        history.push('/')
+        history.push("/");
     };
 
     useEffect(
@@ -184,22 +184,31 @@ const Header = () => {
                     <div className="container">
                         <div className="mobile-nav__section">
                             <div className="mobile-nav__item">
-                                <Link to="/about">О компании</Link>
-                            </div>
-                            <div className="mobile-nav__item">
-                                <Link to="/static">
-                                    Ответственное потребление
+                                <Link to="/about">
+                                    {t("about-us", "О компании")}
                                 </Link>
                             </div>
                             <div className="mobile-nav__item">
-                                <Link to="/contacts">Контакты</Link>
+                                <Link to="/static">
+                                    {t(
+                                        "responsible-consumption",
+                                        "Ответственное потребление"
+                                    )}
+                                </Link>
+                            </div>
+                            <div className="mobile-nav__item">
+                                <Link to="/contacts">
+                                    {t("contacts", "Контакты")}
+                                </Link>
                             </div>
                         </div>
                     </div>
                     <div className="container">
                         <div className="mobile-nav__section">
                             <div className="mobile-nav__item">
-                                <Link to="/profile#favorite">Избранное</Link>
+                                <Link to="/profile#favorite">
+                                    {t("favorite", "Избранное")}
+                                </Link>
                             </div>
                             <div className="mobile-nav__item">
                                 <Link
