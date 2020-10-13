@@ -12,7 +12,10 @@ class UserInfoController
 {
     public function show(Request $request)
     {
-        return $request->user()->userInfo()->get();
+        $userInfo = $request->user()->userInfo()->first();
+        $userInfo['name'] = $request->user()->name;
+
+        return $userInfo;
     }
 
     public function update(Request $request)
