@@ -1,7 +1,10 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect, useReducer, useCallback } from "react";
 import { useStoreon } from "storeon/react";
 
 import useForm from "@/utils/useForm";
+import { status as REQUEST } from "@/utils/request-status";
+
+const rules = {}
 
 export default WrappedComponent => props => {
     const { createOrder, setStatus } = props;

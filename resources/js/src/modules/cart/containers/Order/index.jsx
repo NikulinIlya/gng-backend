@@ -4,15 +4,16 @@ import { useStoreon } from "storeon/react";
 import Button from "@/components/Button";
 import { TextField, Checkbox } from "@/components/Input";
 
+import { history } from "@";
 import useTranslate from "@/utils/useTranslate";
+import compose from "@/utils/compose";
 
 import Disclaimer from "../../components/Disclaimer";
-
-import { history } from "@";
+import { withApi, withLogic } from "./hoc";
 
 import "./order.scss";
 
-export default function Order({
+function Order({
     onInputChange,
     onFormSubmit,
     status,
@@ -87,3 +88,5 @@ export default function Order({
         </div>
     );
 }
+
+export default compose(withApi, withLogic)(Order);
