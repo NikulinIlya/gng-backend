@@ -12,7 +12,7 @@ export default WrappedComponent => props => {
         await to(redaxios("/sanctum/csrf-cookie"));
         return await to(
             axios({
-                url: "/orders/create",
+                url: "/api/orders/create",
                 method: "post",
                 headers: {
                     accept: "application/json",
