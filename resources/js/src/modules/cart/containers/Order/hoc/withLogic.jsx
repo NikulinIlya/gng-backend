@@ -96,7 +96,7 @@ export default WrappedComponent => props => {
                 setModalState(true);
             }
         },
-        [isFormValid]
+        [isFormValid, state]
     );
 
     useEffect(
