@@ -65,7 +65,10 @@ export default WrappedComponent => props => {
             if (!isFormValid) return;
             const [err, response] = await createOrder({
                 cart: {
-                    order: productsInCart,
+                    order: productsInCart.map(p => ({
+                        id: p.id,
+                        quantity: p.count
+                    })),
                     promo: null
                 },
                 comment: state.comment
