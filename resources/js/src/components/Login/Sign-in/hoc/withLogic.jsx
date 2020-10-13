@@ -63,6 +63,13 @@ export default WrappedComponent => props => {
             const [err, response] = await submitForm(state);
 
             setStatus(REQUEST.success);
+
+            if (err) {
+                setCommonErrors([
+                    ...commonErrors,
+                    "Что-то пошло не так. Проверьте корректность введенных данных"
+                ]);
+            }
             console.log("LOGIN", "err - ", err, "resoponse - ", response);
             if (response) {
                 dispatch("client/set-is-authorized", true);
