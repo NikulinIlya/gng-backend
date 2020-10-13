@@ -30,6 +30,7 @@ export default WrappedComponent => props => {
         formFields: state,
         fieldRules: rules
     });
+    const [commonErrors, setCommonErrors] = useState([]);
     const { dispatch } = useStoreon();
 
     const onFieldChange = (field = "", value = "") => {
@@ -62,14 +63,18 @@ export default WrappedComponent => props => {
             const [err, response] = await submitForm(state);
 
             setStatus(REQUEST.success);
-
+            console.log("LOGIN", "err - ", err, "resoponse - ", response);
             if (response) {
                 dispatch("client/set-is-authorized", true);
                 onClose();
+            } else {
+                setCommonErrors([...commonErrors, "Что-то пошло не так"]);
             }
         },
         [isFormValid]
     );
+
+    useEffect(() => setCommonErrors([...commonErrors, ...errors]), [errors]);
 
     return (
         <WrappedComponent

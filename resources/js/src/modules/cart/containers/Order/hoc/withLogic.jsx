@@ -56,6 +56,7 @@ export default WrappedComponent => props => {
     );
 
     useEffect(() => {
+        console.log("userinfo", userInfo, state);
         if (userInfo)
             formDispatch({
                 type: "set-state",
