@@ -67,7 +67,8 @@ export default WrappedComponent => props => {
                 cart: {
                     order: productsInCart.map(p => ({
                         id: p.id,
-                        quantity: p.count
+                        quantity: p.count,
+                        unit: "thing"
                     })),
                     promo: null
                 },
