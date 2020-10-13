@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useReducer, useCallback } from "react";
 import { useStoreon } from "storeon/react";
 
+import { history } from "@";
 import useForm from "@/utils/useForm";
 import { status as REQUEST } from "@/utils/request-status";
 
@@ -31,7 +32,7 @@ export default WrappedComponent => props => {
         fieldRules: rules
     });
     const [commonErrors, setCommonErrors] = useState([]);
-    const { dispatch } = useStoreon();
+    const { dispatch, pendingRoute } = useStoreon("pendingRoute");
 
     const onFieldChange = (field = "", value = "") => {
         if (!field || !initialState.hasOwnProperty(field))
@@ -54,6 +55,8 @@ export default WrappedComponent => props => {
         setIsFormTouched(false);
     };
 
+    console.log("history", history);
+
     const onFormSubmit = useCallback(
         async e => {
             e.preventDefault();
@@ -73,6 +76,7 @@ export default WrappedComponent => props => {
             console.log("LOGIN", "err - ", err, "resoponse - ", response);
             if (response) {
                 dispatch("client/set-is-authorized", true);
+                pendingRoute && history.push(pendingRoute);
                 onClose();
             } else {
                 setCommonErrors([...commonErrors, "Что-то пошло не так"]);

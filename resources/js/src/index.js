@@ -21,6 +21,7 @@ import Modal from "@/components/Modal";
 import NotFound from "@/components/NotFound";
 import { CartNotificationProvider } from "@/components/CartNotification";
 import Loading from "@/components/Loading";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 import { HeaderContext } from "@/context/header";
 import useMeasures from "@/utils/useMeasures";
@@ -138,7 +139,7 @@ const App = () => {
                                         component={Contacts}
                                     />
                                     <Route path="/about" component={About} />
-                                    <Route
+                                    <ProtectedRoute
                                         exact
                                         path="/profile"
                                         component={Profile}
@@ -148,7 +149,7 @@ const App = () => {
                                         path="/cart"
                                         component={Cart}
                                     />
-                                    <Route
+                                    <ProtectedRoute
                                         path="/cart/order"
                                         component={Order}
                                     />

@@ -25,7 +25,12 @@ export default store => {
         isAuthorized: false,
         favoriteProducts: favoriteProducts || [],
         appIsPending: false,
-        userInfo: {}
+        userInfo: {},
+        pendingRoute: ""
+    }));
+
+    store.on("client/set-pending-route", (_, pendingRoute) => ({
+        pendingRoute
     }));
 
     store.on("client/set-user-info", (_, userInfo) => ({
