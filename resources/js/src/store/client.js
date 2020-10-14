@@ -39,8 +39,7 @@ export default store => {
                     headers: {
                         accept: "application/json",
                         "Content-Type": "application/json"
-                    },
-                    data: {}
+                    }
                 })
             );
         } finally {
