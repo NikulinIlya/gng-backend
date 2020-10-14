@@ -76,7 +76,11 @@ const App = () => {
     }, []);
 
     useEffect(_ => {
-        dispatch("client/get-user-info", { appPending: true });
+        (async () => {
+            await to(redaxios("/sanctum/csrf-cookie"));
+            dispatch("client/get-user-info", { appPending: true });
+        })();
+
         window.addEventListener("scroll", handleScrollY);
         return _ => window.removeEventListener("scroll", handleScrollY);
     }, []);
