@@ -3,6 +3,7 @@
     height: 100%;
     display: flex;
     flex-flow: column nowrap;
+    
     @media (hover: hover) {
         &:not(.bottle-card--slide-disabled):hover {
             .bottle-card__bottle {
