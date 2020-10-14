@@ -1,13 +1,14 @@
 // import redaxios from "redaxios";
 import axios from "axios";
 
+const getToken = () => {
+    const token = document.head.querySelector('meta[name="csrf-token"]');
+    return token.content;
+};
+
+axios.defaults.withCredentials = true;
 axios.interceptors.request.use(function(config) {
-    // config.headers["X-CSRF-TOKEN"] =
-    // () => {
-        console.log('!!!')
-        const token = document.head.querySelector('meta[name="csrf-token"]');
-        console.log("token", token.content);
-    // };
+    config.headers["X-CSRF-TOKEN"] = getToken();
     return config;
 });
 
@@ -15,8 +16,14 @@ const instance = axios.create({
     headers: {
         "Content-Type": "application/json"
     },
+    transformRequest: [
+        function(data, headers) {
+            headers["X-CSRF-TOKEN"] = getToken();
+            return data;
+        }
+    ],
     responseType: "json",
-    withCredentials: true,
+    withCredentials: true
 });
 
 export const to = async promise => {
