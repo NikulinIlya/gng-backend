@@ -95,7 +95,8 @@ function ProductDetails({
         price,
         case_price,
         id,
-        brand_id
+        brand_id,
+        available
     } = product;
     const { t } = useTranslate();
     if (!isLoaded) return <Loading />;
@@ -154,8 +155,17 @@ function ProductDetails({
                             )
                         )}
                     </div>
-                    <div className="product__calc">
+                    <div className={cn("product__calc")}>
+                        {!available && (
+                            <h2 className="not-available-message">
+                                {t(
+                                    "this-product-is-temporarily-out-of-stock",
+                                    "Товара временно нет в наличии"
+                                )}
+                            </h2>
+                        )}
                         <Counter
+                            available={available}
                             defaultCount={1}
                             price={
                                 countIn === UNIT.thing

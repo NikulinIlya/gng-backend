@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
 
 import DetailsCard from "@/components/DetailsPageCard";
+import Post from "@/modules/news/components/Post";
+import Modal from "@/components/Modal";
 
+import { history } from "@";
 import useTranslate from "@/utils/useTranslate";
+import isEmpty from "@/utils/is-empty";
+
+import withApi from "./hoc/withApi";
 
 import banner from "@/assets/images/templates/about-banner.png";
 import logo from "@/assets/images/about-logo.svg";
@@ -15,7 +21,7 @@ import grape from "@/assets/images/bg_grape.svg";
 
 import "./about.scss";
 
-export default function About() {
+function About({ articles, currentArticle }) {
     const { t } = useTranslate();
     const [numberKeys, setNumberKeys] = useState("");
     const [numberValues, setNumberValues] = useState("");
@@ -113,17 +119,31 @@ export default function About() {
             <div className="about-page__cards">
                 <div className="container">
                     <div className="cards">
-                        {Array.from({ length: 3 }).map((_, i) => (
-                            <DetailsCard
-                                image={wineSet}
-                                title={"Aute occaecat"}
-                                description={`An important white grape in Bordeaux and the Loire Valley that has now found fame in New Zealand and now Chile. `}
-                                key={i}
-                            />
-                        ))}
+                        {articles &&
+                            articles.length &&
+                            articles.map(({ main_image, name, text, id }) => (
+                                <DetailsCard
+                                    image={main_image}
+                                    title={name}
+                                    description={text}
+                                    link={`?article=${id}`}
+                                    key={id}
+                                />
+                            ))}
                     </div>
                 </div>
             </div>
+            {!isEmpty(currentArticle) && (
+                <Modal onClose={_ => history.push(location.pathname)}>
+                    <Post
+                        title={currentArticle.name}
+                        descr={currentArticle.text}
+                        mainImage={currentArticle.main_image}
+                    />
+                </Modal>
+            )}
         </div>
     );
 }
+
+export default withApi(About);

@@ -227,11 +227,10 @@ const Header = () => {
                                 <div className="mobile-nav__item">
                                     <Link
                                         to="/"
-                                        onClick={_ =>
-                                            setMobileNavVisibility(
-                                                !mobileNavVisibility
-                                            )
-                                        }
+                                        onClick={_ => {
+                                            onMobileLinkClick();
+                                            onSignOut();
+                                        }}
                                     >
                                         {t("sign-out", "Выйти")}
                                     </Link>
