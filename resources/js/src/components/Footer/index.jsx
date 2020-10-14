@@ -68,11 +68,11 @@ const footerGridData = [
                 labelSlug: "contacts",
                 path: "/contacts"
             },
-            {
-                label: "Гарантии",
-                labelSlug: "guarantee",
-                path: "/static"
-            }
+            // {
+            //     label: "Гарантии",
+            //     labelSlug: "guarantee",
+            //     path: "/static"
+            // }
         ]
     }
 ];

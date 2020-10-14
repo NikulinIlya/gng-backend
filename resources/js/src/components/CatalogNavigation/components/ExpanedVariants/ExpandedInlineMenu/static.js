@@ -9,11 +9,11 @@ export default [
         labelSlug: "responsible-consumption",
         to: "/static?doc=4"
     },
-    {
-        label: "Гарантии",
-        labelSlug: "guarantee",
-        to: "/static"
-    },
+    // {
+    //     label: "Гарантии",
+    //     labelSlug: "guarantee",
+    //     to: "/static"
+    // },
     {
         label: "Контакты",
         labelSlug: "contacts",
