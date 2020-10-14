@@ -8,6 +8,7 @@ const getToken = () => {
 
 axios.defaults.withCredentials = true;
 axios.interceptors.request.use(function(config) {
+    console.log("intercept", config.url);
     config.headers["X-CSRF-TOKEN"] = getToken();
     return config;
 });
@@ -18,6 +19,7 @@ const instance = axios.create({
     },
     transformRequest: [
         function(data, headers) {
+            console.log("transform", headers);
             headers["X-CSRF-TOKEN"] = getToken();
             return data;
         }
