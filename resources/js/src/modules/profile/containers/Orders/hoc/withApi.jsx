@@ -42,7 +42,7 @@ export default WrappedComponent => props => {
 
             console.log("orders", res);
         })();
-    });
+    }, []);
 
     return <WrappedComponent {...props} orders={orders} status={status} />;
 };
