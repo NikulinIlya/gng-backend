@@ -39,6 +39,7 @@ const Header = () => {
     const onSignOut = e => {
         e.preventDefault();
         dispatch("client/logout", false);
+        isMobile && setMobileNavVisibility(false);
         history.push("/");
     };
 
@@ -225,13 +226,7 @@ const Header = () => {
                             </div>
                             {isAuthorized ? (
                                 <div className="mobile-nav__item">
-                                    <Link
-                                        to="/"
-                                        onClick={_ => {
-                                            onMobileLinkClick();
-                                            onSignOut();
-                                        }}
-                                    >
+                                    <Link to="/" onClick={onSignOut}>
                                         {t("sign-out", "Выйти")}
                                     </Link>
                                 </div>
