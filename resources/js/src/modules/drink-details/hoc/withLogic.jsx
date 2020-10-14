@@ -31,7 +31,6 @@ export default WrappedComponent => props => {
     const [productCategory, setProductCategory] = useState({});
     const [productRegion, setProductRegion] = useState({});
     const [isProductFavorite, setIsProductFavorite] = useState(false);
-    const [isSpiritDrink, setIsSpiritDrink] = useState(false);
     const [schemeIsLoaded, setSchemeIsLoaded] = useState(false);
     const [articleSet, dispatchArticles] = useReducer(articlesReducer, {});
     const [currentArticle, setCurrentArticle] = useState(null);
@@ -194,7 +193,6 @@ export default WrappedComponent => props => {
                     if (slug === "whiskey")
                         props["type"] = product[slug]["type"];
                     applyProps(props);
-                    setIsSpiritDrink(true);
                 }
 
                 if (slug === "cognac")
@@ -282,7 +280,6 @@ export default WrappedComponent => props => {
             currentArticle={currentArticle}
             flatRegionImages={flatRegionImages}
             isProductFavorite={isProductFavorite}
-            isSpiritDrink={isSpiritDrink}
             onFavoriteStateChange={onFavoriteStateChange}
             onAdd={onAdd}
             onHideArticle={onHideArticle}

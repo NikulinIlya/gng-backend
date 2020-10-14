@@ -14,7 +14,7 @@ function Filtering({ onClose, onSubmit, onReset, renderFiltersBody }) {
     const onSubmitFilters = e => {
         e.preventDefault();
         onSubmit();
-        onClose();
+        isMobile && onClose();
     };
     const onResetFilters = e => {
         e.preventDefault();
@@ -22,7 +22,7 @@ function Filtering({ onClose, onSubmit, onReset, renderFiltersBody }) {
             el => el.checked && (el.checked = false)
         );
         onReset();
-        onClose();
+        isMobile && onClose();
     };
     return (
         <article className="filters">

@@ -83,7 +83,6 @@ function ProductDetails({
     setCountIn,
     isLoaded,
     isProductFavorite,
-    isSpiritDrink,
     onFavoriteStateChange,
     onAdd,
     onHideArticle
@@ -113,12 +112,7 @@ function ProductDetails({
                     <div className="backdrop">
                         <img src={flatRegionImages[productRegion]} alt="" />
                     </div>
-                    <div
-                        className={cn(
-                            "product-details__bottle-img",
-                            isSpiritDrink ? "strong" : ""
-                        )}
-                    >
+                    <div className={cn("product-details__bottle-img")}>
                         <img src={image ? image : bottleImage} alt="" />
                     </div>
                 </div>
