@@ -66,7 +66,6 @@ export default store => {
             );
             if (err) return { userInfo: {} };
             if (res && res.data && res.data.id) {
-                console.log("user-response", res, res.data);
                 store.dispatch("client/set-is-authorized", true);
                 store.dispatch("client/set-user-info", res.data);
                 return { userInfo: res.data };
