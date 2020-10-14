@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import useTranslate from "@/utils/useTranslate";
 
@@ -29,9 +30,12 @@ export default function BannerCard() {
                             "«Wee» – это прилагательное в шотландском языке, которое означает «маленький». «Beastie» – это существо, обычно маленькое и часто с «повадками», превосходящими его размеры. В данном случае «Wee Beastie» – это фактически воплощение самого виски. При возрасте всего 5 лет он уже проявляет невероятно мощный характер с внушительным «укусом»."
                         )}
                     </p>
-                    <a href="" className="banner-card__details-link">
+                    <Link
+                        to="/catalog/64"
+                        className="banner-card__details-link"
+                    >
                         {t("learn-more", "подробнее")}
-                    </a>
+                    </Link>
                 </section>
             </div>
         </article>
