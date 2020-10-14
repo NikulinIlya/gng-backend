@@ -25,7 +25,7 @@ export default store => {
         lang: memoizedLang || DEFAULT_LANG,
         isAuthorized: false,
         favoriteProducts: favoriteProducts || [],
-        appIsPending: false,
+        appIsPending: true,
         userInfo: {},
         pendingRoute: ""
     }));
@@ -67,13 +67,13 @@ export default store => {
             );
             if (err) return { userInfo: {} };
             if (res) {
-                store.dispatch("client/set-user-info", res.data);
                 store.dispatch("client/set-is-authorized", true);
+                store.dispatch("client/set-user-info", res.data);
             }
         } catch (err) {
             return { userInfo: {} };
         } finally {
-            appPending && store.dispatch("client/set-app-pending", false);
+            store.dispatch("client/set-app-pending", false);
         }
     });
 
@@ -93,9 +93,12 @@ export default store => {
         }
     );
 
-    store.on("client/set-is-authorized", (_, isAuthorized) => ({
-        isAuthorized
-    }));
+    store.on("client/set-is-authorized", (_, isAuthorized) => {
+        console.log("set-auth", isAuthorized);
+        return {
+            isAuthorized
+        };
+    });
 
     store.on("client/set-lang", async (_, langValue) => {
         if (!existingLangs[langValue]) return { lang: DEFAULT_LANG };

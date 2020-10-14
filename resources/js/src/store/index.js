@@ -10,6 +10,6 @@ export const store = createStoreon([
     client,
     dictionary,
     showcase,
-    cart
+    cart,
     // process.env.NODE_ENV !== "production" && storeonLogger
 ]);

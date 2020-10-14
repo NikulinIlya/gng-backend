@@ -50,7 +50,7 @@ export default WrappedComponent => props => {
         const { name, value, checked, type } = e.target;
         const inputValue = type === "checkbox" ? checked : value;
         if (!name) throw new Error("Name should be passed");
-
+        
         onFieldChange(name, inputValue);
         setIsFormTouched(false);
     };

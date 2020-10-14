@@ -21,6 +21,7 @@ import Modal from "@/components/Modal";
 import NotFound from "@/components/NotFound";
 import { CartNotificationProvider } from "@/components/CartNotification";
 import Loading from "@/components/Loading";
+import Button from "@/components/Button";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
 import { HeaderContext } from "@/context/header";
@@ -76,7 +77,6 @@ const App = () => {
 
     useEffect(_ => {
         dispatch("client/get-user-info", { appPending: true });
-
         window.addEventListener("scroll", handleScrollY);
         return _ => window.removeEventListener("scroll", handleScrollY);
     }, []);
