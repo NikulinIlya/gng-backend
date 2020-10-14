@@ -66,9 +66,12 @@ export default store => {
                 })
             );
             if (err) return { userInfo: {} };
-            if (res) {
+            if (res && res.data) {
                 store.dispatch("client/set-is-authorized", true);
                 store.dispatch("client/set-user-info", res.data);
+                return { userInfo: res.data };
+            } else {
+                return { userInfo: {} };
             }
         } catch (err) {
             return { userInfo: {} };
