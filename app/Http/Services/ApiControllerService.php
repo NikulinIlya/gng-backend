@@ -371,26 +371,46 @@ class ApiControllerService
                            )
                            ->where(
                                function ($query) use ($filters, $productCategoriesSlug) {
-                                   if (! empty($productCategoriesSlug)
+                                   if (
+                                       ! empty($productCategoriesSlug)
                                        && $productCategoriesSlug[0] === 'wine'
-                                       && ($filters['sweetness']
-                                           || $filters['body']
-                                           || $filters['acidity'])
+                                       && $filters['sweetness']
                                    ) {
-                                       $queryArray = [];
-                                       if ($filters['sweetness']) {
-                                           $queryArray[] = ['sweetness', $filters['sweetness']];
-                                       }
+                                       $productIds = Vine::whereIn('sweetness', $filters['sweetness'])->get()->map(
+                                           function ($entity) {
+                                               return $entity->product_id;
+                                           }
+                                       );
 
-                                       if ($filters['body']) {
-                                           $queryArray[] = ['body', $filters['body']];
-                                       }
+                                       $query->whereIn('id', $productIds);
+                                   }
+                               }
+                           )
+                           ->where(
+                               function ($query) use ($filters, $productCategoriesSlug) {
+                                   if (
+                                       ! empty($productCategoriesSlug)
+                                       && $productCategoriesSlug[0] === 'wine'
+                                       && $filters['body']
+                                   ) {
+                                       $productIds = Vine::whereIn('body', $filters['body'])->get()->map(
+                                           function ($entity) {
+                                               return $entity->product_id;
+                                           }
+                                       );
 
-                                       if ($filters['acidity']) {
-                                           $queryArray[] = ['acidity', $filters['acidity']];
-                                       }
-
-                                       $productIds = Vine::where($queryArray)->get()->map(
+                                       $query->whereIn('id', $productIds);
+                                   }
+                               }
+                           )
+                           ->where(
+                               function ($query) use ($filters, $productCategoriesSlug) {
+                                   if (
+                                       ! empty($productCategoriesSlug)
+                                       && $productCategoriesSlug[0] === 'wine'
+                                       && $filters['acidity']
+                                   ) {
+                                       $productIds = Vine::whereIn('acidity', $filters['acidity'])->get()->map(
                                            function ($entity) {
                                                return $entity->product_id;
                                            }
@@ -420,9 +440,11 @@ class ApiControllerService
             'price_max'   => $request->input('price_max') ?? 1000000,
             'colours'     => $request->input('colours'),
             'grape_sorts' => $request->input('grape_sorts'),
-            'sweetness'   => $request->input('sweetness'),
-            'body'        => $request->input('body'),
-            'acidity'     => $request->input('acidity'),
+            'sweetness'   => $request->input('sweetness') ? $this->setNumFilterInterval($request->input('sweetness'), 1, 5)
+                : null,
+            'body'        => $request->input('body') ? $this->setNumFilterInterval($request->input('body'), 1, 5) : null,
+            'acidity'     => $request->input('acidity') ? $this->setNumFilterInterval($request->input('acidity'), 1, 5)
+                : null,
         ];
     }
 
@@ -434,26 +456,26 @@ class ApiControllerService
     public function setImageField(&$entity)
     {
         if (isset($entity['main_image'])) {
-            $entity['main_image'] = str_replace('\\', '/', '/storage/'.$entity['main_image']);
+            $entity['main_image'] = str_replace('\\', '/', '/storage/' . $entity['main_image']);
         }
 
         if (isset($entity['image'])) {
-            $entity['image'] = str_replace('\\', '/', '/storage/'.$entity['image']);
+            $entity['image'] = str_replace('\\', '/', '/storage/' . $entity['image']);
         }
 
         if (isset($entity['glass_image'])) {
-            $entity['glass_image'] = str_replace('\\', '/', '/storage/'.$entity['glass_image']);
+            $entity['glass_image'] = str_replace('\\', '/', '/storage/' . $entity['glass_image']);
         }
 
         if (isset($entity['map_image'])) {
-            $entity['map_image'] = str_replace('\\', '/', '/storage/'.$entity['map_image']);
+            $entity['map_image'] = str_replace('\\', '/', '/storage/' . $entity['map_image']);
         }
 
         if (isset($entity['images'])) {
             $images = explode(',', str_replace('\\\\', '/', str_replace(['[', ']', '"'], '', $entity['images'])));
 
             foreach ($images as &$image) {
-                $image = '/storage/'.$image;
+                $image = '/storage/' . $image;
             }
 
             $entity['images'] = $images;
@@ -477,5 +499,20 @@ class ApiControllerService
         }
 
         return $productsCollection->paginate($perPage);
+    }
+
+    /**
+     * @param int $filterValue
+     * @param int $minValue
+     * @param int $maxValue
+     *
+     * @return array
+     */
+    public function setNumFilterInterval($filterValue, $minValue, $maxValue)
+    {
+        return range(
+            $filterValue == $minValue ? $filterValue : $filterValue - 1,
+            $filterValue == $maxValue ? $filterValue : $filterValue + 1
+        );
     }
 }
