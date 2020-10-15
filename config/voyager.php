@@ -151,7 +151,7 @@ return [
             'App\\Widgets\\BrandDimmer',
             'App\\Widgets\\LocationDimmer',
             'App\\Widgets\\PhraseDimmer',
-//            'App\\Widgets\\AssistantPhraseDimmer',
+            //            'App\\Widgets\\AssistantPhraseDimmer',
         ],
     ],
 
