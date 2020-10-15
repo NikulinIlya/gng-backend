@@ -145,8 +145,8 @@ return [
 
         'widgets' => [
             'App\\Widgets\\ProductDimmer',
-//            'App\\Widgets\\OrderDimmer',
-//            'App\\Widgets\\UserDimmer',
+            //            'App\\Widgets\\OrderDimmer',
+            //            'App\\Widgets\\UserDimmer',
             'App\\Widgets\\GrapeSortDimmer',
             'App\\Widgets\\BrandDimmer',
             'App\\Widgets\\LocationDimmer',
