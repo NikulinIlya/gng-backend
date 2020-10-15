@@ -15,6 +15,7 @@ import { history } from "@";
 import logo from "@/assets/images/logo.svg";
 import logoText from "@/assets/images/logo-text.svg";
 import favoriteIcon from "@/assets/images/icons/heart.svg";
+import profileIcon from "@/assets/images/icons/profile.svg";
 import cartIcon from "@/assets/images/icons/cart.svg";
 import searchIcon from "@/assets/images/icons/search.svg";
 import detailsIcon from "@/assets/images/icons/details.svg";
@@ -138,9 +139,9 @@ const Header = () => {
                             {!isMobile && (
                                 <div className="header__nav-item nav-item favorite">
                                     <div className="nav-item__icon">
-                                        <img src={favoriteIcon} alt="" />
+                                        <img src={profileIcon} alt="" />
                                     </div>
-                                    <Link to="/profile#favorite"></Link>
+                                    <Link to="/profile#account"></Link>
                                 </div>
                             )}
                             <div className="header__nav-item nav-item">
@@ -218,10 +219,10 @@ const Header = () => {
                         <div className="mobile-nav__section">
                             <div className="mobile-nav__item">
                                 <Link
-                                    to="/profile#favorite"
+                                    to="/profile#account"
                                     onClick={onMobileLinkClick}
                                 >
-                                    {t("favorite", "Избранное")}
+                                    {t("my-account", "Личный кабинет")}
                                 </Link>
                             </div>
                             {isAuthorized ? (
