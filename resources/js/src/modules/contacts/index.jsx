@@ -23,7 +23,10 @@ export default function Contacts() {
                     <div className="contacts-page__content">
                         <ul className="contacts-page__info">
                             {contacts.map((item, i) => (
-                                <li key={i} className="contacts-page__info-item info-item">
+                                <li
+                                    key={i}
+                                    className="contacts-page__info-item info-item"
+                                >
                                     <div className="info-item__icon">
                                         <img src={item.icon} alt={item.name} />
                                     </div>
@@ -32,6 +35,22 @@ export default function Contacts() {
                                     </h2>
                                     <p className="info-item__value">
                                         {t(item.valueSlug, item.value)}
+                                        {!i && (
+                                            <p>
+                                                {t(
+                                                    "cokolnyj-etazh-vhod-v-arku",
+                                                    "Цокольный этаж, вход в арку"
+                                                )}
+                                            </p>
+                                        )}
+                                        {i === 2 && (
+                                            <p>
+                                                {t(
+                                                    "sat-10-00-17-00",
+                                                    "Сб 10:00 - 17:00"
+                                                )}
+                                            </p>
+                                        )}
                                     </p>
                                 </li>
                             ))}

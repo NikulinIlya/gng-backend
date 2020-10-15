@@ -76,9 +76,25 @@ function HomePage() {
                             <h3 className="contact-item__name">
                                 {t(item.nameSlug, item.name)}
                             </h3>
-                            <p className="contact-item__value">
-                                {t(item.valueSlug, item.value)}
-                            </p>
+                            <div className="contact-item__value">
+                                <p>{t(item.valueSlug, item.value)}</p>
+                                {!i && (
+                                    <p>
+                                        {t(
+                                            "cokolnyj-etazh-vhod-v-arku",
+                                            "Цокольный этаж, вход в арку"
+                                        )}
+                                    </p>
+                                )}
+                                {i === 2 && (
+                                    <p>
+                                        {t(
+                                            "sat-10-00-17-00",
+                                            "Сб 10:00 - 17:00"
+                                        )}
+                                    </p>
+                                )}
+                            </div>
                         </div>
                     ))}
                 </div>
