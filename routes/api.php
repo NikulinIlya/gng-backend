@@ -65,6 +65,10 @@ Route::get(
     }
 );
 
+Route::post('register', 'Api\Auth\RegisterController@register');
+Route::post('login', 'Api\Auth\LoginController@login');
+Route::post('logout', 'Api\Auth\LoginController@logout');
+
 Route::get('phrases', 'Api\MainPhraseController@index');
 Route::get('phrases/{id}', 'Api\MainPhraseController@show');
 
