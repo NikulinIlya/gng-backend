@@ -28,7 +28,10 @@ export default WrappedComponent => props => {
         });
         if (err) return setStatus(REQUEST.error);
         // console.log("searchResponse", searchResponse);
-        dispatch({ type: "set-products", payload: searchResponse.data });
+        dispatch({
+            type: "set-products",
+            payload: searchResponse.data
+        });
         setStatus(REQUEST.success);
     }
 
@@ -69,6 +72,7 @@ export default WrappedComponent => props => {
             fetchSearchResults={fetchSearchResults}
             fetchProducts={fetchProducts}
             fetchProductsByCategory={fetchProductsByCategory}
+            setStatus={setStatus}
         />
     );
 };

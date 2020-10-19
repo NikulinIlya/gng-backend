@@ -4,6 +4,7 @@ import { useStoreon } from "storeon/react";
 
 import useBrands from "@/utils/useBrands";
 import useCart from "@/utils/useCart";
+import { status as REQUEST } from "@/utils/request-status";
 
 export default WrappedComponent => props => {
     const {
@@ -11,7 +12,8 @@ export default WrappedComponent => props => {
         productIds,
         fetchSearchResults,
         fetchProducts,
-        fetchProductsByCategory
+        fetchProductsByCategory,
+        setStatus
     } = props;
     const [query, setQuery] = useState("");
     const [brandId, setBrandId] = useState("");
@@ -69,10 +71,13 @@ export default WrappedComponent => props => {
         }
         if (params.has("brand_id") && params.get("brand_id")) {
             setBrandId(params.get("brand_id"));
+            return;
         }
         if (params.has("category") && params.get("category")) {
             setCategory(params.get("category"));
+            return;
         }
+        setStatus(REQUEST.success);
     }
 
     const onAdd = async (id, count = 1, brandId) => {

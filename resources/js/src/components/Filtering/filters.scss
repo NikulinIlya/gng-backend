@@ -27,6 +27,9 @@
         }
     }
     &__footer {
+        position: sticky;
+        bottom: 0;
+        background-color: rgba(38, 82, 74,.6);
         display: grid;
         row-gap: 15px;
     }
@@ -106,4 +109,3 @@
         }
     }
 }
-

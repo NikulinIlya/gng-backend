@@ -60,6 +60,7 @@ function SingIn({
                 <div className="field-grid">
                     <TextField
                         name="phone"
+                        type="phone"
                         onChange={onInputChange}
                         value={restProps["phone"]}
                         label={t("mob-number", "Телефон")}

@@ -6,7 +6,7 @@ import { status as REQUEST } from "@/utils/request-status";
 
 const errMessageTemplates = {
     required: "Заполните поле",
-    phone: "Введите номер телефона в формате +79998888888 или 89998888888",
+    phone: "Введите номер телефона в формате +7-(xxx)-xxx-xx-xx",
     format: "Неверный формат"
 };
 
@@ -28,7 +28,7 @@ const rules = {
     second_name: sName =>
         Boolean(sName.length) || `${errMessageTemplates["required"]}: Фамилия`,
     phone: phone =>
-        (phone.length >= 11 && phone.length <= 12) ||
+        (phone.length >= 16 && phone.indexOf("_") === -1) ||
         errMessageTemplates["phone"],
     email: email =>
         /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
