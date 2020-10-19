@@ -29,12 +29,12 @@ class LoginController extends Controller
         );
 
         if ($validator->fails()) {
-            return new JsonResponse([$validator->errors(),], 422);
+            return new JsonResponse([$validator->errors()], 422);
         }
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             return new JsonResponse(['error' => 'The provided credentials are incorrect.'], 401);
         }
 
