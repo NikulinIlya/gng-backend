@@ -88,23 +88,35 @@ export default WrappedComponent => props => {
             const { terms_agreed, ...data } = state;
 
             if (!isFormValid) return;
+
             const [err, response] = await submitForm({
                 ...data,
+                phone: data.phone.replace(/-/g, ""),
                 remember: true
             });
 
             setStatus(REQUEST.success);
+
             if (err) {
+                if (err.response.status === 422) {
+                    setClientErrors([
+                        ...clientErrors,
+                        "Проверьте корректность введенных данных"
+                    ]);
+                    return;
+                }
                 setClientErrors([...clientErrors, "Что-то пошло не так"]);
                 return;
             }
+
             if (response) {
+                dispatch("client/set-token", response.data.token);
                 dispatch("client/get-user-info", {});
                 dispatch("client/set-is-authorized", true);
                 onClose();
             }
         },
-        [isFormValid]
+        [isFormValid, state]
     );
 
     useEffect(

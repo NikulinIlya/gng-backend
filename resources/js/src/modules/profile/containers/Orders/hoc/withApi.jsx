@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import redaxios, { to } from "@/utils/fetch";
-import axios from "axios";
+import fetch, { to } from "@/utils/fetch";
 
 import { status as REQUEST } from "@/utils/request-status";
 
@@ -15,16 +14,7 @@ export default WrappedComponent => props => {
     const [orders, setOrders] = useState([]);
     useEffect(_ => {
         (async _ => {
-            const [err, res] = await to(
-                axios({
-                    url: "/api/orders",
-                    method: "get",
-                    headers: {
-                        accept: "application/json",
-                        "Content-Type": "application/json"
-                    }
-                })
-            );
+            const [err, res] = await to(fetch.get("/api/orders"));
 
             if (res) {
                 setOrders(

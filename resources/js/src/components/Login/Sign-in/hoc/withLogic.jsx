@@ -50,7 +50,7 @@ export default WrappedComponent => props => {
         const { name, value, checked, type } = e.target;
         const inputValue = type === "checkbox" ? checked : value;
         if (!name) throw new Error("Name should be passed");
-        
+
         onFieldChange(name, inputValue);
         setIsFormTouched(false);
     };
@@ -66,26 +66,27 @@ export default WrappedComponent => props => {
                 remember: true
             });
 
-            setStatus(REQUEST.success);
-
             if (err) {
                 setClientErrors([
                     ...clientErrors,
                     "Проверьте корректность введенных данных"
                 ]);
+                setStatus(REQUEST.success);
                 return;
             }
 
             if (response) {
+                dispatch("client/set-token", response.data.token);
                 dispatch("client/get-user-info", {});
                 dispatch("client/set-is-authorized", true);
                 pendingRoute && history.push(pendingRoute);
                 onClose();
+                setStatus(REQUEST.success);
             } else {
                 setClientErrors([...clientErrors, "Что-то пошло не так"]);
             }
         },
-        [isFormValid]
+        [isFormValid, state]
     );
 
     useEffect(
@@ -94,6 +95,8 @@ export default WrappedComponent => props => {
         },
         [isFormTouched]
     );
+
+    useEffect(_ => console.log("state", state), [state]);
 
     return (
         <WrappedComponent

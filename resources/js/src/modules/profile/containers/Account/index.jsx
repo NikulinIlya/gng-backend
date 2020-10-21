@@ -16,7 +16,7 @@ import { withApi, withLogic } from "./hoc";
 
 import "./account.scss";
 
-function Account({ userInfo }) {
+function Account({ userInfo, updateInfo }) {
     const { t } = useTranslate();
     return (
         <div className="account">
@@ -71,7 +71,9 @@ function Account({ userInfo }) {
                             </div>
                         </div> */}
                     </div>
-                    <Button disabled>{t("save", "Сохранить")}</Button>
+                    <Button type="button" onClick={updateInfo}>
+                        {t("save", "Сохранить")}
+                    </Button>
                 </form>
             </ProfileSection>
 

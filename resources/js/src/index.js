@@ -77,7 +77,6 @@ const App = () => {
 
     useEffect(_ => {
         (async () => {
-            await to(redaxios("/sanctum/csrf-cookie"));
             dispatch("client/get-user-info", { appPending: true });
         })();
 

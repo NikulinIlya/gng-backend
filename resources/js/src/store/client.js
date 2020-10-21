@@ -1,5 +1,4 @@
-import redaxios, { to } from "@/utils/fetch";
-import axios from "axios";
+import fetch, { to } from "@/utils/fetch";
 
 export const RU_LANG = "ru";
 export const ENG_LANG = "en";
@@ -20,6 +19,7 @@ export default store => {
         (localStorage.getItem("favorite-products") &&
             JSON.parse(localStorage.getItem("favorite-products"))) ||
         null;
+    const token = localStorage.getItem("token") || "";
 
     store.on("@init", () => ({
         lang: memoizedLang || DEFAULT_LANG,
@@ -27,24 +27,20 @@ export default store => {
         favoriteProducts: favoriteProducts || [],
         appIsPending: true,
         userInfo: {},
-        pendingRoute: ""
+        pendingRoute: "",
+        token
     }));
 
+    store.on("client/set-token", (_, token) => {
+        localStorage.setItem("token", token);
+        return { token };
+    });
+
     store.on("client/logout", async () => {
-        try {
-            await to(
-                axios({
-                    url: "/logout",
-                    method: "post",
-                    headers: {
-                        accept: "application/json",
-                        "Content-Type": "application/json"
-                    }
-                })
-            );
-        } finally {
-            store.dispatch("client/set-is-authorized", false);
-        }
+        await to(fetch.post("/api/logout"));
+        store.dispatch("client/set-user-info", {});
+        store.dispatch("client/set-is-authorized", false);
+        localStorage.removeItem("token");
     });
 
     store.on("client/set-pending-route", (_, pendingRoute) => ({
@@ -54,17 +50,10 @@ export default store => {
     store.on("client/get-user-info", async (_, { appPending = false }) => {
         appPending && store.dispatch("client/set-app-pending", true);
         try {
-            const [err, res] = await to(
-                axios({
-                    url: "api/user-info",
-                    method: "get",
-                    headers: {
-                        accept: "application/json",
-                        "Content-Type": "application/json"
-                    }
-                })
-            );
+            const [err, res] = await to(fetch.get("/api/user-info"));
+
             if (err) return { userInfo: {} };
+
             if (res && res.data && res.data.id) {
                 store.dispatch("client/set-is-authorized", true);
                 store.dispatch("client/set-user-info", res.data);
@@ -95,18 +84,15 @@ export default store => {
         }
     );
 
-    store.on("client/set-is-authorized", (_, isAuthorized) => {
-        console.log("set-auth", isAuthorized);
-        return {
-            isAuthorized
-        };
-    });
+    store.on("client/set-is-authorized", (_, isAuthorized) => ({
+        isAuthorized
+    }));
 
     store.on("client/set-lang", async (_, langValue) => {
         if (!existingLangs[langValue]) return { lang: DEFAULT_LANG };
         store.dispatch("client/set-app-pending", true);
         try {
-            await to(redaxios(`/api/lang/${langValue}`));
+            await to(fetch.get(`/api/lang/${langValue}`));
             localStorage.setItem("lang", langValue);
 
             return { ..._, lang: langValue };

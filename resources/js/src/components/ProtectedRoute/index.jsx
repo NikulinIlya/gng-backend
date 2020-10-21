@@ -18,8 +18,6 @@ export default function ProtectedRoute({ component: Component, ...restProps }) {
         isAuthorized
     ]);
 
-    return <Route {...restProps} component={Component} />
-
     return isAuthorized ? (
         <Route {...restProps} component={Component} />
     ) : (

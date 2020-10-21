@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import redaxios, { to } from "@/utils/fetch";
-import axios from "axios";
+import fetch, { to } from "@/utils/fetch";
 
 import { status as REQUEST } from "@/utils/request-status";
 
@@ -9,17 +8,9 @@ export default WrappedComponent => props => {
 
     const submitForm = async data => {
         setStatus(REQUEST.pending);
-        await to(redaxios("/sanctum/csrf-cookie"));
-        return await to(
-            axios({
-                url: "/login",
-                method: "post",
-                headers: { accept: "application/json", "Content-Type": "application/json" },
-                data
-            })
-        );
+        return await to(fetch.post("/api/login", data));
     };
-    
+
     return (
         <WrappedComponent
             {...props}
