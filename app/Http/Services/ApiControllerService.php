@@ -420,7 +420,9 @@ class ApiControllerService
                                    }
                                }
                            )
-                           ->orderBy('brand_id')
+                           ->where('stored', 1)
+                           ->orderBy('available', 'desc')
+                           ->orderBy('brand_id', 'asc')
                            ->get();
 
         return $this->makeEntityCollection($products, app()->getLocale());

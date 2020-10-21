@@ -24,12 +24,12 @@ class LoginController extends Controller
             $request->all(),
             [
                 'email'    => ['required', 'string', 'email:rfc,dns', 'max:255'],
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'password' => ['required', 'string', 'min:8'],
             ]
         );
 
         if ($validator->fails()) {
-            return new JsonResponse([$validator->errors()], 422);
+            return new JsonResponse(['error' => 'Wrong data'], 422);
         }
 
         $user = User::where('email', $request->email)->first();
@@ -43,8 +43,14 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
+        $user = $request->user();
 
-        return new JsonResponse(['Message' => 'The user logged out']);
+        if ($user) {
+            $user->currentAccessToken()->delete();
+
+            return new JsonResponse(['Message' => 'The user logged out']);
+        } else {
+            return new JsonResponse(['error' => 'The provided credentials are incorrect.'], 401);
+        }
     }
 }
