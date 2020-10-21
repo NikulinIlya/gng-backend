@@ -50,7 +50,7 @@ class LoginController extends Controller
 
             return new JsonResponse(['Message' => 'The user logged out']);
         } else {
-            return new JsonResponse(['error' => 'The provided credentials are incorrect.']);
+            return new JsonResponse(['error' => 'The provided credentials are incorrect.'], 401);
         }
     }
 }
