@@ -420,6 +420,7 @@ class ApiControllerService
                                    }
                                }
                            )
+                           ->where('stored', 1)
                            ->orderBy('available', 'desc')
                            ->orderBy('brand_id', 'asc')
                            ->get();
