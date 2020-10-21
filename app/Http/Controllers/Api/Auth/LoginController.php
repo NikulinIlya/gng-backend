@@ -29,7 +29,7 @@ class LoginController extends Controller
         );
 
         if ($validator->fails()) {
-            return new JsonResponse([$validator->errors()], 422);
+            return new JsonResponse(['error' => 'Wrong data'], 422);
         }
 
         $user = User::where('email', $request->email)->first();
