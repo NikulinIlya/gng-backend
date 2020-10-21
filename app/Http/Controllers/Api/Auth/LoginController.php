@@ -43,8 +43,14 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
+        $user = $request->user();
 
-        return new JsonResponse(['Message' => 'The user logged out']);
+        if ($user) {
+            $user->currentAccessToken()->delete();
+
+            return new JsonResponse(['Message' => 'The user logged out']);
+        } else {
+            return new JsonResponse(['error' => 'The provided credentials are incorrect.']);
+        }
     }
 }
