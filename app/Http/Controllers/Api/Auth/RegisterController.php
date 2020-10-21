@@ -38,7 +38,7 @@ class RegisterController extends Controller
             return response()
                 ->json(
                     [
-                        $validator->errors(),
+                        'error' => 'wrong data',
                     ],
                     422
                 );
