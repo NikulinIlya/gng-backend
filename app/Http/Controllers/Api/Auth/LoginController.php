@@ -24,7 +24,7 @@ class LoginController extends Controller
             $request->all(),
             [
                 'email'    => ['required', 'string', 'email:rfc,dns', 'max:255'],
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'password' => ['required', 'string', 'min:8'],
             ]
         );
 
