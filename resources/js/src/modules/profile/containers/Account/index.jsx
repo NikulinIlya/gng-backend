@@ -71,7 +71,7 @@ function Account({ userInfo, updateInfo }) {
                             </div>
                         </div> */}
                     </div>
-                    <Button type="button" onClick={updateInfo}>
+                    <Button disabled type="button" onClick={updateInfo}>
                         {t("save", "Сохранить")}
                     </Button>
                 </form>

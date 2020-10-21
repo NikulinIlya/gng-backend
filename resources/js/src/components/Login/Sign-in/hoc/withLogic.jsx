@@ -96,8 +96,6 @@ export default WrappedComponent => props => {
         [isFormTouched]
     );
 
-    useEffect(_ => console.log("state", state), [state]);
-
     return (
         <WrappedComponent
             {...props}
