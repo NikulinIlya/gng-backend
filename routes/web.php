@@ -30,4 +30,4 @@ Route::get('/{uri?}', function (Request $request) {
     } else {
         abort(404);
     }
-})->where('uri', '(.*)');
+})->where('uri', '(.*)')->name('index');
