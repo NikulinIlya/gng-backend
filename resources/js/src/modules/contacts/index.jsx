@@ -35,16 +35,24 @@ export default function Contacts() {
                                     </h2>
                                     <p className="info-item__value">
                                         {t(item.valueSlug, item.value)}
-                                        {!i &&
-                                            t(
-                                                "cokolnyj-etazh-vhod-v-arku",
-                                                "Цокольный этаж, вход в арку"
-                                            )}
-                                        {i === 2 &&
-                                            t(
-                                                "sat-10-00-17-00",
-                                                "Сб 10:00 - 17:00"
-                                            )}
+                                        {!i && (
+                                            <>
+                                                <br />
+                                                {t(
+                                                    "cokolnyj-etazh-vhod-v-arku",
+                                                    "Цокольный этаж, вход в арку"
+                                                )}
+                                            </>
+                                        )}
+                                        {i === 2 && (
+                                            <>
+                                                <br />
+                                                {t(
+                                                    "sat-10-00-17-00",
+                                                    "Сб 10:00 - 17:00"
+                                                )}
+                                            </>
+                                        )}
                                     </p>
                                 </li>
                             ))}
