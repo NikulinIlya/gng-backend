@@ -1,61 +1,70 @@
 * {
-  font-family: var(--morePro);
-  font-weight: 400;
-  margin: 0;
-  padding: 0;
+    font-family: var(--morePro);
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  min-width: var(--containerWidth);
+    min-width: var(--containerWidth);
 }
 
 a {
-  color: inherit;
+    color: inherit;
 }
 
 img {
-  max-width: 100%;
-  max-height: 100%;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .container {
-  max-width: var(--containerWidth);
-  
-  padding: 0 30px;
-  margin: 0 auto;
-  box-sizing: border-box;
+    max-width: var(--containerWidth);
+
+    padding: 0 30px;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
 
 .card {
-  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
-  background-color: white;
-  opacity: 0.95;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    background-color: white;
+    opacity: 0.95;
 }
 
 .background-white {
-  background-color: white;
+    background-color: white;
 }
 
-.visually-hidden{
-  @include visually-hidden;
+.visually-hidden {
+    @include visually-hidden;
 }
 
-.fixed{
-  position: fixed!important;
-  padding-right: 15px;
-  box-sizing: border-box;
-  width: 100%;
+.fixed {
+    position: fixed !important;
+    padding-right: 15px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.messages-inspector{
+  padding: 12px 0;
+}
+
+.form-message {
+    color: tomato;
+    font-family: var(--proxima);
 }
 
 @media screen and (max-width: 768px) {
-  body{
-    min-width: unset;
-  }
-  .container{
-    padding: 14px;
-  }
-  .fixed{
-    padding-right: 0;
-  }
+    body {
+        min-width: unset;
+    }
+    .container {
+        padding: 14px;
+    }
+    .fixed {
+        padding-right: 0;
+    }
 }

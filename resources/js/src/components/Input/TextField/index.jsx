@@ -14,6 +14,7 @@ export default function TextField({
     ...restProps
 }) {
     const [isPassVisible, setIsPassVisible] = useState(false);
+
     const toggleContentVisibility = e => {
         const { parentNode } = e.currentTarget;
         const input = parentNode.querySelector("input");
@@ -22,6 +23,7 @@ export default function TextField({
         setIsPassVisible(type === "password");
         input.setAttribute("type", type === "password" ? "text" : "password");
     };
+
     return (
         <label className="field">
             {label && <span className="field__label">{label}</span>}
@@ -33,6 +35,7 @@ export default function TextField({
                 )}
                 {restProps.type === "password" && (
                     <IconBtn
+                        disabled={restProps.disabled}
                         onClick={toggleContentVisibility}
                         type="button"
                         className="field__show-hide"

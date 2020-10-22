@@ -4,6 +4,8 @@ import { useStoreon } from "storeon/react";
 import Heading from "@/components/Heading";
 import Button from "@/components/Button";
 import { TextField, Checkbox, Select } from "@/components/Input";
+import Loading from "@/components/Loading";
+import Modal from "@/components/Modal";
 import {
     monthNames,
     monthNamesEn
@@ -11,15 +13,24 @@ import {
 
 import useTranslate from "@/utils/useTranslate";
 import compose from "@/utils/compose";
+import { status as REQUEST } from "@/utils/request-status";
 
 import { withApi, withLogic } from "./hoc";
 
 import "./account.scss";
 
-function Account({ userInfo, updateInfo }) {
+function Account({
+    formFields,
+    inspector: Inspector,
+    onFormSubmit,
+    onInputChange,
+    isFormTouched,
+    status
+}) {
     const { t } = useTranslate();
     return (
         <div className="account">
+            {status === REQUEST.pending && <Loading fixed />}
             <ProfileSection
                 title={_ => (
                     <Heading className="account-section-heading">
@@ -27,27 +38,35 @@ function Account({ userInfo, updateInfo }) {
                     </Heading>
                 )}
             >
-                <form className="personal-info">
+                {isFormTouched && <Inspector />}
+                <form
+                    className="personal-info"
+                    onSubmit={e => onFormSubmit(e, "common")}
+                >
                     <TextField
                         label={t("name", "Имя")}
                         disabled
-                        value={userInfo.name}
+                        value={formFields.name}
                     />
                     <TextField
+                        name="second_name"
                         label={t("second-name", "Фамилия")}
-                        value={userInfo.second_name}
-                        disabled
+                        value={formFields.second_name}
+                        onChange={onInputChange}
                     />
                     <div className="fields-grid">
                         <TextField
+                            name="phone"
+                            type="phone"
                             label={t("mob-number", "Телефон")}
-                            value={userInfo.phone}
-                            disabled
+                            value={formFields.phone}
+                            onChange={onInputChange}
                         />
                         <TextField
+                            name="email"
                             label="Email"
                             disabled
-                            value={userInfo.email}
+                            value={formFields.email}
                         />
                         {/* <DateInput
                             // TODO: FIX
@@ -71,9 +90,7 @@ function Account({ userInfo, updateInfo }) {
                             </div>
                         </div> */}
                     </div>
-                    <Button disabled type="button" onClick={updateInfo}>
-                        {t("save", "Сохранить")}
-                    </Button>
+                    <Button>{t("save", "Сохранить")}</Button>
                 </form>
             </ProfileSection>
 
@@ -84,7 +101,10 @@ function Account({ userInfo, updateInfo }) {
                     </Heading>
                 )}
             >
-                <form className="password">
+                <form
+                    className="password"
+                    onSubmit={e => onFormSubmit(e, "pass")}
+                >
                     <TextField
                         disabled
                         label={t("old-password", "Старый пароль")}
@@ -105,7 +125,7 @@ function Account({ userInfo, updateInfo }) {
                             type="password"
                         />
                     </div>
-                    <Button disabled>{t("save", "Сохранить")}</Button>
+                    <Button>{t("save", "Сохранить")}</Button>
                 </form>
             </ProfileSection>
 
@@ -116,24 +136,31 @@ function Account({ userInfo, updateInfo }) {
                     </Heading>
                 )}
             >
-                <form className="notifications">
+                <form
+                    className="notifications"
+                    onSubmit={e => onFormSubmit(e, "agreements")}
+                >
                     <Checkbox
                         variant="square"
+                        name="discount_agreed"
                         label={t(
                             "receive-news-and-offers-by-e-mail",
                             "Получать новости и выгодные предложения на e-mail"
                         )}
-                        checked={userInfo.discount_agreed}
+                        onChange={onInputChange}
+                        checked={formFields.discount_agreed}
                     />
                     <Checkbox
                         variant="square"
-                        checked={userInfo.events_agreed}
+                        name="events_agreed"
+                        onChange={onInputChange}
+                        checked={formFields.events_agreed}
                         label={t(
                             "receive-information-about-upcoming-events",
                             "Получать информацию о предстоящих  мероприятиях"
                         )}
                     />
-                    <Button disabled>{t("save", "Сохранить")}</Button>
+                    <Button>{t("save", "Сохранить")}</Button>
                 </form>
             </ProfileSection>
         </div>

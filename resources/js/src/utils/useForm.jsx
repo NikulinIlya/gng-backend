@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 
 import isEmpty from "@/utils/is-empty";
 
@@ -36,5 +36,17 @@ export default function useForm({ formFields, fieldRules }) {
         [formFields, fieldRules]
     );
 
-    return { isFormValid, errors };
+    const Inspector = useCallback(() => {
+        return (
+            <div className="messages-inspector">
+                {errors.map((message, i) => (
+                    <p className="form-message" key={i}>
+                        {message}
+                    </p>
+                ))}
+            </div>
+        );
+    }, [errors]);
+
+    return { isFormValid, errors, Inspector };
 }
