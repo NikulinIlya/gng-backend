@@ -51,6 +51,7 @@ Route::middleware('auth:sanctum')->group(
         Route::post('orders/create', 'Api\OrderController@store');
 
         Route::post('logout', 'Api\Auth\LoginController@logout');
+        Route::post('password/reset', 'Api\Auth\ResetPasswordController@reset');
     }
 );
 
