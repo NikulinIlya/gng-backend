@@ -60,7 +60,10 @@ class ProductController
             return $this->service->index();
         }
 
-        $products = Product::search($query)->get();
+        $products = Product::search($query)
+            ->orderBy('available', 'desc')
+            ->orderBy('brand_id', 'asc')
+            ->get();
 
         return $this->service->makeEntityCollection($products, app()->getLocale());
     }
