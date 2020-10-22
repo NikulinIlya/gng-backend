@@ -24,7 +24,9 @@ export default WrappedComponent => props => {
     };
 
     const onLoadMore = () => {
-        const url = applyParam(location.search, "page", page + 1);
+        const newPage = page + 1;
+        const url = applyParam(location.search, "page", newPage);
+        wineStateDispatcher({ type: "set-cur-page", payload: newPage });
         history.push(url);
     };
 

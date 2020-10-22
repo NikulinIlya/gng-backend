@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useContext, useReducer } from "react";
-import { useStoreon } from "storeon/react";
-
-import { CartNotificationContext } from "@/components/CartNotification";
 
 import useBrands from "@/utils/useBrands";
 import useFiltersApi from "@/utils/useFiltersApi";
 import useMeasures from "@/utils/useMeasures";
 import useCart from "@/utils/useCart";
-import getRandom from "@/utils/get-random-item";
+import useQueryParams from "@/utils/useQueryParams";
 
 import champagneReducer from "../champagneReducer";
 
@@ -16,12 +13,11 @@ export default WrappedComponent => props => {
     const [state, champagneDispatcher] = useReducer(champagneReducer, {
         filtersVisibility: false
     });
-    const { notify } = useContext(CartNotificationContext);
     const { isMobile } = useMeasures();
     const filters = useFiltersApi("champagne");
-    const { dispatch, assistantPhrases } = useStoreon("assistantPhrases");
     const extendedProducts = useBrands(products);
     const { add } = useCart();
+    const { applyParam, search } = useQueryParams();
 
     useEffect(
         _ => {
@@ -54,7 +50,9 @@ export default WrappedComponent => props => {
     const onLoadMore = () => {
         const newPage = page + 1;
         champagneDispatch({ type: "set-cur-page", payload: newPage });
-        history.push(`${history.location.pathname}?page=${newPage}`);
+        history.push(
+            `${history.location.pathname}${applyParam(search, "page", newPage)}`
+        );
     };
 
     return (

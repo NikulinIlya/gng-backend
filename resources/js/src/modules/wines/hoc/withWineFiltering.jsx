@@ -51,16 +51,6 @@ export default WrappedComponent => props => {
         [params]
     );
 
-    useEffect(
-        _ => {
-            console.log("state.activeFilters", activeFilters);
-            // console.log(buildQuery(state.activeFilters));
-        },
-        [activeFilters]
-    );
-
-    useEffect(_ => console.log("params", params), [params]);
-
     const onFiltersChange = (...args) => {
         const [, category] = args;
 
@@ -107,13 +97,21 @@ export default WrappedComponent => props => {
     };
 
     const onFiltersSubmit = () => {
-        console.log("submit");
-        history.push(buildQuery(activeFilters));
+        const { page, ...active } = activeFilters;
+        wineStateDispatcher({
+            type: "set-cur-page",
+            payload: 1
+        });
+        history.push(buildQuery(active));
     };
 
     const onFiltersReset = () => {
         console.log("reset");
         history.push(location.pathname);
+        wineStateDispatcher({
+            type: "set-cur-page",
+            payload: 1
+        });
         setActiveFilters({});
     };
 

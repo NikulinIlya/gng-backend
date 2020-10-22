@@ -7,7 +7,7 @@ import useQueryParams from "@/utils/useQueryParams";
 import useCart from "@/utils/useCart";
 
 export default WrappedComponent => props => {
-    const { products = [], page, history } = props;
+    const { products = [], page, history, strongDispatcher } = props;
     const { applyParam } = useQueryParams();
     const { isMobile } = useMeasures();
     const [filtersVisibility, setFiltersVisibility] = useState(false);
@@ -24,7 +24,9 @@ export default WrappedComponent => props => {
     };
 
     const onLoadMore = () => {
-        const url = applyParam(location.search, "page", page + 1);
+        const newPage = page + 1;
+        const url = applyParam(location.search, "page", newPage);
+        strongDispatcher({ type: "set-cur-page", payload: newPage });
         history.push(url);
     };
 
