@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\UserInfo;
 use Auth;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Validator;
@@ -40,9 +41,6 @@ class UserInfoController
         UserInfo::where('user_id', Auth::id())
             ->update($request->input());
 
-        return response()
-            ->json([
-                'message' => 'Update completed successfully',
-            ], 200);
+        return new JsonResponse(['message' => 'Update completed.']);
     }
 }

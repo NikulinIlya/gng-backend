@@ -32,6 +32,9 @@ Route::get(
     }
 );
 
+Route::post('register', 'Api\Auth\RegisterController@register');
+Route::post('login', 'Api\Auth\LoginController@login');
+
 Route::middleware('auth:sanctum')->group(
     function () {
         Route::get(
@@ -46,6 +49,9 @@ Route::middleware('auth:sanctum')->group(
 
         Route::get('orders', 'Api\OrderController@index');
         Route::post('orders/create', 'Api\OrderController@store');
+
+        Route::post('logout', 'Api\Auth\LoginController@logout');
+        Route::post('password/reset', 'Api\Auth\ResetPasswordController@reset');
     }
 );
 
@@ -64,10 +70,6 @@ Route::get(
         return (new Illuminate\Auth\Notifications\VerifyEmail())->toMail($user);
     }
 );
-
-Route::post('register', 'Api\Auth\RegisterController@register');
-Route::post('login', 'Api\Auth\LoginController@login');
-Route::post('logout', 'Api\Auth\LoginController@logout');
 
 Route::get('phrases', 'Api\MainPhraseController@index');
 Route::get('phrases/{id}', 'Api\MainPhraseController@show');
