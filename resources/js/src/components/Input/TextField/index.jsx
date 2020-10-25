@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import InputMask from "react-input-mask";
 
 import IconBtn from "@/components/IconButton";
@@ -53,10 +53,11 @@ function Input({ placeholder, type = "text", ...restProps }) {
     return <input type={type} placeholder={placeholder} {...restProps} />;
 }
 
-function InputPhone({ ...restProps }) {
+function InputPhone({ value, ...restProps }) {
     return (
         <InputMask
             {...restProps}
+            value={value}
             mask="+7-999-999-99-99"
             placeholder="+7-999-999-99-99"
         />

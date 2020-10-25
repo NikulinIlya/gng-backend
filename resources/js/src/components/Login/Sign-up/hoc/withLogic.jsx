@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useStoreon } from "storeon/react";
 
 import useForm from "@/utils/useForm";
@@ -50,25 +50,18 @@ const rules = {
 
 export default WrappedComponent => props => {
     const { submitForm, setStatus, onClose } = props;
-    const [state, formDispatch] = useReducer(formReducer, initialState);
     const [isFormTouched, setIsFormTouched] = useState(false);
-    const { isFormValid, errors } = useForm({
-        formFields: state,
+    const { isFormValid, errors, data, setFieldValue } = useForm({
+        formFields: initialState,
         fieldRules: rules
     });
     const { dispatch } = useStoreon();
     const [clientErrors, setClientErrors] = useState([]);
 
     const onFieldChange = (field = "", value = "") => {
-        if (!field || !initialState.hasOwnProperty(field))
+        if (!field || !data.hasOwnProperty(field))
             throw new Error("Field name is invalid");
-        formDispatch({
-            type: "set-field-value",
-            payload: {
-                field,
-                value
-            }
-        });
+        setFieldValue(field, value);
     };
 
     const onInputChange = e => {
@@ -85,12 +78,12 @@ export default WrappedComponent => props => {
             e.preventDefault();
             setIsFormTouched(true);
 
-            const { terms_agreed, ...data } = state;
+            const { terms_agreed, ...reqData } = data;
 
             if (!isFormValid) return;
 
             const [err, response] = await submitForm({
-                ...data,
+                ...reqData,
                 phone: data.phone.replace(/-/g, ""),
                 remember: true
             });
@@ -116,7 +109,7 @@ export default WrappedComponent => props => {
                 onClose();
             }
         },
-        [isFormValid, state]
+        [isFormValid, data]
     );
 
     useEffect(
@@ -129,7 +122,7 @@ export default WrappedComponent => props => {
     return (
         <WrappedComponent
             {...props}
-            {...state}
+            data={data}
             errors={[...errors, ...clientErrors]}
             isFormTouched={isFormTouched}
             onInputChange={onInputChange}
@@ -137,12 +130,3 @@ export default WrappedComponent => props => {
         />
     );
 };
-
-function formReducer(state, action) {
-    switch (action.type) {
-        case "set-field-value":
-            return { ...state, [action.payload.field]: action.payload.value };
-        default:
-            return state;
-    }
-}

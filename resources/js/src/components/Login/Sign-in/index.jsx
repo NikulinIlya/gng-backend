@@ -24,7 +24,7 @@ function SingIn({
     status,
     errors,
     isFormTouched,
-    ...restProps
+    data
 }) {
     const { isMobile } = useMeasures();
     const { t } = useTranslate();
@@ -47,13 +47,13 @@ function SingIn({
                 <TextField
                     name="email"
                     onChange={onInputChange}
-                    value={restProps["email"]}
+                    value={data["email"]}
                     label={t("email", "Email")}
                 />
                 <TextField
                     name="password"
                     onChange={onInputChange}
-                    value={restProps["password"]}
+                    value={data["password"]}
                     label={t("password", "Пароль")}
                     type="password"
                 />

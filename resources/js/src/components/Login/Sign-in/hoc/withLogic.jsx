@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useStoreon } from "storeon/react";
 
 import { history } from "@";
@@ -25,25 +25,19 @@ const rules = {
 
 export default WrappedComponent => props => {
     const { submitForm, setStatus, onClose } = props;
-    const [state, formDispatch] = useReducer(formReducer, initialState);
     const [isFormTouched, setIsFormTouched] = useState(false);
-    const { isFormValid, errors } = useForm({
-        formFields: state,
+    const { isFormValid, errors, data, setFieldValue } = useForm({
+        formFields: initialState,
         fieldRules: rules
     });
     const [clientErrors, setClientErrors] = useState([]);
     const { dispatch, pendingRoute } = useStoreon("pendingRoute");
 
     const onFieldChange = (field = "", value = "") => {
-        if (!field || !initialState.hasOwnProperty(field))
+        if (!field || !data.hasOwnProperty(field))
             throw new Error("Field name is invalid");
-        formDispatch({
-            type: "set-field-value",
-            payload: {
-                field,
-                value
-            }
-        });
+
+        setFieldValue(field, value);
     };
 
     const onInputChange = e => {
@@ -62,7 +56,7 @@ export default WrappedComponent => props => {
 
             if (!isFormValid) return;
             const [err, response] = await submitForm({
-                ...state,
+                ...data,
                 remember: true
             });
 
@@ -86,7 +80,7 @@ export default WrappedComponent => props => {
                 setClientErrors([...clientErrors, "Что-то пошло не так"]);
             }
         },
-        [isFormValid, state]
+        [isFormValid, data]
     );
 
     useEffect(
@@ -99,21 +93,11 @@ export default WrappedComponent => props => {
     return (
         <WrappedComponent
             {...props}
-            {...state}
+            data={data}
             errors={[...errors, ...clientErrors]}
-            clientErrors={clientErrors}
             isFormTouched={isFormTouched}
             onInputChange={onInputChange}
             onFormSubmit={onFormSubmit}
         />
     );
 };
-
-function formReducer(state, action) {
-    switch (action.type) {
-        case "set-field-value":
-            return { ...state, [action.payload.field]: action.payload.value };
-        default:
-            return state;
-    }
-}

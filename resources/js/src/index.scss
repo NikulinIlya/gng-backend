@@ -48,6 +48,29 @@ img {
     width: 100%;
 }
 
+.success-modal {
+    padding: 40px;
+    box-sizing: border-box;
+    background-color: white;
+    position: relative;
+    &:after {
+        --offset: 14px;
+        position: absolute;
+        content: "";
+        top: calc(var(--offset) * -1);
+        left: calc(var(--offset) * -1);
+        width: calc(100% + calc(var(--offset) * 2));
+        height: calc(100% + calc(var(--offset) * 2));
+        border: 1px solid #e2d9cf;
+        z-index: -1;
+    }
+    &__heading {
+        font-size: 28px;
+        margin-bottom: 12px;
+        color: var(--defaultGold);
+    }
+}
+
 .messages-inspector{
   padding: 12px 0;
 }

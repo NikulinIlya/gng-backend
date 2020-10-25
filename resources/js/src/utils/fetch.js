@@ -5,7 +5,8 @@ const protectedUrls = [
     "/api/update-user-info",
     "/api/logout",
     "/api/orders",
-    "/api/orders/create"
+    "/api/orders/create",
+    "/api/password/reset"
 ];
 
 const instance = axios.create({
@@ -19,7 +20,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(function(config) {
     if (protectedUrls.includes(config.url)) {
-        console.log(config.url);
+        
         const token = localStorage.getItem("token");
         config.headers["Authorization"] = `Bearer ${token}`;
     }

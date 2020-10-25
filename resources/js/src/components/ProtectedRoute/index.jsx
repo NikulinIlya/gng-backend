@@ -14,10 +14,6 @@ export default function ProtectedRoute({ component: Component, ...restProps }) {
         [isAuthorized]
     );
 
-    useEffect(_ => console.log("route isAuthorized", isAuthorized), [
-        isAuthorized
-    ]);
-
     return isAuthorized ? (
         <Route {...restProps} component={Component} />
     ) : (
