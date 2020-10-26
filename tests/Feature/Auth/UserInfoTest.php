@@ -5,9 +5,9 @@ namespace Tests\Feature\Auth;
 use App\Models\User;
 use App\Models\UserInfo;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 
 class UserInfoTest extends TestCase
 {
