@@ -7,10 +7,11 @@ use App\Models\UserInfo;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
 
 class UserInfoTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DatabaseMigrations, WithFaker;
 
     /** @test */
     public function user_can_be_retrieved()
@@ -50,6 +51,8 @@ class UserInfoTest extends TestCase
     {
         $user = factory(User::class)->create();
 
+        $username = $user->name;
+
         factory(UserInfo::class)->create([
             'user_id' => $user->id,
             'email' => $user->email,
@@ -58,11 +61,18 @@ class UserInfoTest extends TestCase
         Sanctum::actingAs($user);
 
         $response = $this->json('PUT', '/api/update-user-info', [
-            'second_name' => 'Jones',
-            'patronymic' => 'Jonsovich',
+            'second_name' => $this->faker->lastName(),
+            'patronymic' => $this->faker->lastName(),
             'phone' => (string) rand(70000000000, 89999999999),
         ]);
 
-        $response->assertOk()->assertJson(['message' => 'Update completed successfully']);
+        $response->assertOk()->assertJson(['message' => 'Update completed.']);
+
+        $response = $this->json('PUT', '/api/update-user-info', [
+            'name' => $this->faker->userName(),
+        ]);
+
+        $response->assertOk()->assertJson(['message' => 'Update completed.']);
+        $this->assertNotEquals($username, $user->name);
     }
 }

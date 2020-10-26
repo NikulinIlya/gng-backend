@@ -12,7 +12,7 @@ $factory->define(UserInfo::class, function (Faker $faker) {
         'email' => null,
         'second_name' => $faker->lastName,
         'patronymic' => $faker->lastName,
-        'phone' => rand(70000000000, 89999999999),
+        'phone' => (string) rand(70000000000, 89999999999),
         'gender' => $genders[array_rand($genders, 1)],
         'birthday' => $faker->date(),
         'discount_agreed' => rand(0, 1),
