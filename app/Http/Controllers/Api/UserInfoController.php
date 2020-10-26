@@ -11,6 +11,11 @@ use Validator;
 
 class UserInfoController
 {
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
     public function show(Request $request)
     {
         $userInfo = $request->user()->userInfo()->first();
@@ -19,6 +24,11 @@ class UserInfoController
         return $userInfo;
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -29,6 +39,7 @@ class UserInfoController
             'discount_agreed' => ['boolean', 'nullable'],
             'events_agreed' => ['boolean', 'nullable'],
             'birthday' => ['integer', 'nullable'],
+            'name' => ['string', 'max:255'],
         ]);
 
         if ($validator->fails()) {
@@ -38,9 +49,28 @@ class UserInfoController
                 ], 422);
         }
 
-        UserInfo::where('user_id', Auth::id())
-            ->update($request->input());
+        $userInfo = UserInfo::where('user_id', Auth::id())->first();
 
-        return new JsonResponse(['message' => 'Update completed.']);
+        if ($userInfo) {
+            if ($request->filled('second_name')) $userInfo->second_name = $request->second_name;
+            if ($request->filled('patronymic')) $userInfo->patronymic = $request->patronymic;
+            if ($request->filled('phone')) $userInfo->phone = $request->phone;
+            if ($request->filled('gender')) $userInfo->gender = $request->gender;
+            if ($request->filled('discount_agreed')) $userInfo->discount_agreed = $request->discount_agreed;
+            if ($request->filled('events_agreed')) $userInfo->events_agreed = $request->events_agreed;
+            if ($request->filled('birthday')) $userInfo->birthday = $request->birthday;
+
+            if ($request->filled('name')) {
+                $user = $request->user();
+                $user->name = $request->name;
+                $user->save();
+            }
+
+            $userInfo->save();
+
+            return new JsonResponse(['message' => 'Update completed.']);
+        } else {
+            return new JsonResponse(['error' => 'wrong data'], 401);
+        }
     }
 }
