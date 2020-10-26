@@ -52,13 +52,27 @@ class UserInfoController
         $userInfo = UserInfo::where('user_id', Auth::id())->first();
 
         if ($userInfo) {
-            if ($request->filled('second_name')) $userInfo->second_name = $request->second_name;
-            if ($request->filled('patronymic')) $userInfo->patronymic = $request->patronymic;
-            if ($request->filled('phone')) $userInfo->phone = $request->phone;
-            if ($request->filled('gender')) $userInfo->gender = $request->gender;
-            if ($request->filled('discount_agreed')) $userInfo->discount_agreed = $request->discount_agreed;
-            if ($request->filled('events_agreed')) $userInfo->events_agreed = $request->events_agreed;
-            if ($request->filled('birthday')) $userInfo->birthday = $request->birthday;
+            if ($request->filled('second_name')) {
+                $userInfo->second_name = $request->second_name;
+            }
+            if ($request->filled('patronymic')) {
+                $userInfo->patronymic = $request->patronymic;
+            }
+            if ($request->filled('phone')) {
+                $userInfo->phone = $request->phone;
+            }
+            if ($request->filled('gender')) {
+                $userInfo->gender = $request->gender;
+            }
+            if ($request->filled('discount_agreed')) {
+                $userInfo->discount_agreed = $request->discount_agreed;
+            }
+            if ($request->filled('events_agreed')) {
+                $userInfo->events_agreed = $request->events_agreed;
+            }
+            if ($request->filled('birthday')) {
+                $userInfo->birthday = $request->birthday;
+            }
 
             if ($request->filled('name')) {
                 $user = $request->user();
