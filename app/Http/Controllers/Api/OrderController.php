@@ -79,6 +79,7 @@ class OrderController extends Controller
         ]);
 
         Mail::send(new OrderPlaced());
+
         return response()
             ->json([
                 'Message' => 'Order created',
