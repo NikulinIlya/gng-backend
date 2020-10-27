@@ -32,6 +32,7 @@ class UserWelcome extends Mailable
     public function build()
     {
         $lang = app()->getLocale();
+
         return $this->from(env('MAIL_FROM_ADDRESS'))
                     ->to($this->user->email, $this->user->name)
                     ->subject('Welcome')
