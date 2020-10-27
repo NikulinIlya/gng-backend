@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrderPlaced;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use Cart;
 use Illuminate\Http\Request;
+use Mail;
 
 class OrderController extends Controller
 {
@@ -76,6 +78,7 @@ class OrderController extends Controller
             'phone' => ($userInfo) ? $userInfo->phone : null,
         ]);
 
+        Mail::send(new OrderPlaced());
         return response()
             ->json([
                 'Message' => 'Order created',
