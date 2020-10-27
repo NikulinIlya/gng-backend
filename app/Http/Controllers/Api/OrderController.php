@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Mail\OrderPlaced;
+use App\Mail\UserOrderPlaced;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
@@ -17,93 +18,82 @@ class OrderController extends Controller
      * Get all orders of the current logged-in user.
      *
      * @param Request $request
+     *
      * @return mixed
      */
     public function index(Request $request)
     {
-        return Order::where('user_id', $request->user()->id)->get();
+        return $request->user()->orders()->with('products')->get();
     }
 
     /**
      * Store an order of a current logged-in user.
      *
      * @param Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
         if (! $request->filled('cart')) {
             return response()
-                ->json([
-                    'Error' => 'Empty cart',
-                ], 400);
+                ->json(
+                    [
+                        'Error' => 'Empty cart',
+                    ],
+                    400
+                );
         }
 
+        // {"cart":{"order":[{"id":10,"quantity":1,"unit":"thing"},{"id":20,"quantity":1,"unit":"thing"}],"promo":"TEST"}}
         $cart = $request->input('cart');
 
-        $orderInfo = [];
         $price = 0;
         foreach ($cart['order'] as $key => $cartItem) {
-            $product = Product::find($cartItem['id']);
+            $productPrice = ($cartItem['unit'] === 'thing')
+                ? Product::find($cartItem['id'])->price
+                : Product::find($cartItem['id'])->case_price;
 
-            $productPrice = ($cartItem['unit'] === 'thing') ? $product->price : $product->case_price;
             $price += $productPrice;
-            $orderInfo[$key] = [
-                'vendor_code' => $product->vendor_code,
-                'price' => $productPrice,
-                'quantity' => $cartItem['quantity'],
-                'type' => ($cartItem['unit'] === 'thing') ? 'single' : 'case',
-            ];
         }
 
-        $userInfo = $request->user()->userInfo()->first();
-
-        $orderInfoText = '';
-
-        foreach ($orderInfo as $key => $item) {
-            $orderInfoText .= ($key + 1).'. ';
-            foreach ($item as $itemKey => $value) {
-                $orderInfoText .= ucfirst($itemKey).': '.$value.'; ';
-            }
-
-            $orderInfoText .= "\n";
+        if (array_key_exists('promo', $cart) && $cart['promo'] !== null) {
+            // TODO:
         }
 
-        Order::create([
-            'price' => $price,
-            'user_id' => $request->user()->id,
-            'order_status_id' => 1,
-            'order_info' => $orderInfoText,
-            'comment' => $request->input('comment'),
-            'phone' => ($userInfo) ? $userInfo->phone : null,
-        ]);
+        $order = Order::create(
+            [
+                'price'           => $price,
+                'user_id'         => $request->user()->id,
+                'username'        => $request->user()->name,
+                'email'           => $request->user()->email,
+                'order_status_id' => 1,
+                'comment'         => $request->input('comment'),
+                'phone'           => $request->user()->userInfo()->first()->phone,
+            ]
+        );
 
-        Mail::send(new OrderPlaced());
+        foreach ($cart['order'] as $key => $cartItem) {
+            OrderProduct::create(
+                [
+                    'order_id'   => $order->id,
+                    'product_id' => $cartItem['id'],
+                    'quantity'   => $cartItem['quantity'],
+                    'type'       => ($cartItem['unit'] === 'thing') ? 'single' : 'case',
+                ]
+            );
+        }
+
+//        Mail::send(new OrderPlaced($order));
+//        Mail::send(new UserOrderPlaced($order));
 
         return response()
-            ->json([
-                'Message' => 'Order created',
-            ], 201);
-    }
-
-    protected function addToOrdersTables($request, $error)
-    {
-        // Insert into orders table
-        $order = Order::create([
-            'user_id' => auth()->user() ? auth()->user()->id : null,
-            'error' => $error,
-        ]);
-
-        // Insert into order_product table
-        foreach (Cart::content() as $item) {
-            OrderProduct::create([
-                'order_id' => $order->id,
-                'product_id' => $item->model->id,
-                'quantity' => $item->qty,
-            ]);
-        }
-
-        return $order;
+            ->json(
+                [
+                    'Message' => 'Order created',
+                ],
+                201
+            );
     }
 
     protected function decreaseQuantities()
