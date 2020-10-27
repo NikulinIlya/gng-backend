@@ -1,22 +1,19 @@
 @component('mail::message')
     # Order Received
 
-    Thank you for your order.
+    Thank you for your order in G&G shop.
+    Our manager will contact you soon.
+    Your application number: {{ $order->id }}
 
-    **Order ID:** {{ $order->id }}
-
-    **Order Email:** {{ $order->billing_email }}
-
-    **Order Name:** {{ $order->billing_name }}
-
-    **Order Total:** ${{ round($order->billing_total / 100, 2) }}
+    **Order Total:** {{ $order->price }}
 
     **Items Ordered**
 
     @foreach ($order->products as $product)
         Name: {{ $product->name }} <br>
-        Price: ${{ round($product->price / 100, 2)}} <br>
         Quantity: {{ $product->pivot->quantity }} <br>
+        Price: {{ $product->price }} rubles<br>
+        Case Price: {{ $product->case_price }} rubles<br>
     @endforeach
 
     You can get further details about your order by logging into our website.

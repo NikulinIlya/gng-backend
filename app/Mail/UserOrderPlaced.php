@@ -8,16 +8,16 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class OrderPlaced extends Mailable
+class UserOrderPlaced extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $order;
+    protected $order;
 
     /**
      * Create a new message instance.
      *
-     * @param Order $order
+     * @param Order  $order
      */
     public function __construct(Order $order)
     {
@@ -31,9 +31,10 @@ class OrderPlaced extends Mailable
      */
     public function build()
     {
+        $lang = app()->getLocale();
         return $this->from(env('MAIL_FROM_ADDRESS'))
-            ->to(env('MAIL_ORDERS_ADDRESS'), 'G&G manager')
-            ->subject('A new order')
-            ->view('emails.en.orders.order-info');
+                    ->to($this->order->email, $this->order->name)
+                    ->subject('A new order')
+                    ->view("emails.$lang.orders.placed");
     }
 }
