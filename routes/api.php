@@ -55,22 +55,6 @@ Route::middleware('auth:sanctum')->group(
     }
 );
 
-Route::get(
-    '/welcome-email-testing',
-    function () {
-        return new App\Mail\UserWelcome();
-    }
-);
-
-Route::get(
-    '/reg-email-testing',
-    function () {
-        $user = User::find(1);
-
-        return (new Illuminate\Auth\Notifications\VerifyEmail())->toMail($user);
-    }
-);
-
 Route::get('phrases', 'Api\MainPhraseController@index');
 Route::get('phrases/{id}', 'Api\MainPhraseController@show');
 
@@ -185,3 +169,9 @@ Route::prefix('cart')->group(
         Route::patch('/{rowId}', 'Api\CartController@update')->name('cart.update');
     }
 );
+
+Route::prefix('test')->group(function () {
+    Route::get('/welcome-email', 'Api\Test\CheckEmailController@checkWelcome');
+    Route::get('/validate-email', 'Api\Test\CheckEmailController@checkValidateEmail');
+    Route::get('/order-email', 'Api\Test\CheckEmailController@checkPlacedOrderEmail');
+});
