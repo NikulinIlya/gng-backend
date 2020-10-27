@@ -32,6 +32,7 @@ class UserOrderPlaced extends Mailable
     public function build()
     {
         $lang = app()->getLocale();
+
         return $this->from(env('MAIL_FROM_ADDRESS'))
                     ->to($this->order->email, $this->order->name)
                     ->subject('A new order')
