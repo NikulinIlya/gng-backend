@@ -36,6 +36,6 @@ class UserWelcome extends Mailable
         return $this->from(env('MAIL_FROM_ADDRESS'))
                     ->to($this->user->email, $this->user->name)
                     ->subject('Welcome')
-                    ->view("emails.$lang.user.welcome");
+                    ->markdown("emails.$lang.user.welcome");
     }
 }

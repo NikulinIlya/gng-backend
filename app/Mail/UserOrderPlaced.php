@@ -36,6 +36,6 @@ class UserOrderPlaced extends Mailable
         return $this->from(env('MAIL_FROM_ADDRESS'))
                     ->to($this->order->email, $this->order->name)
                     ->subject('A new order')
-                    ->view("emails.$lang.orders.placed");
+                    ->markdown("emails.$lang.orders.placed");
     }
 }
