@@ -2,27 +2,36 @@
 
 namespace App\Http\Controllers\Api\Test;
 
-use App\Mail\UserOrderPlaced;
-use App\Mail\UserWelcome;
-use App\Models\User;
-use Illuminate\Auth\Notifications\VerifyEmail;
-
 class CheckEmailController
 {
-    public function checkWelcomeEmail()
+    public function checkWelcomeEmailEn()
     {
-//        return new UserWelcome();
+        return view('emails.test.en.user.welcome');
+    }
+
+    public function checkWelcomeEmailRu()
+    {
+        return view('emails.test.ru.user.welcome');
+    }
+
+    public function checkPlacedOrderEmailEn()
+    {
+        app('view')->addNamespace('mail', resource_path('views') . '/vendor/mail/html');
+        return view('emails.test.en.orders.placed');
+    }
+
+    public function checkPlacedOrderEmailRu()
+    {
+        return view('emails.test.ru.orders.placed');
+    }
+
+    public function checkOrderInfoEmail()
+    {
+        return view('emails.test.en.orders.order-info');
     }
 
     public function checkValidateEmail()
     {
-        $user = User::find(3);
 
-        return (new VerifyEmail())->toMail($user);
-    }
-
-    public function checkPlacedOrderEmail()
-    {
-//        return new UserOrderPlaced();
     }
 }

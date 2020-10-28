@@ -171,7 +171,10 @@ Route::prefix('cart')->group(
 );
 
 Route::prefix('test')->group(function () {
-    Route::get('/welcome-email', 'Api\Test\CheckEmailController@checkWelcome');
-    Route::get('/validate-email', 'Api\Test\CheckEmailController@checkValidateEmail');
-    Route::get('/order-email', 'Api\Test\CheckEmailController@checkPlacedOrderEmail');
+    Route::get('/welcome-email-en', 'Api\Test\CheckEmailController@checkWelcomeEn');
+    Route::get('/welcome-email-ru', 'Api\Test\CheckEmailController@checkWelcomeRu');
+    Route::get('/order-placed-email-en', 'Api\Test\CheckEmailController@checkPlacedOrderEmailEn');
+    Route::get('/order-placed-email-ru', 'Api\Test\CheckEmailController@checkPlacedOrderEmailRu');
+    Route::get('/order-info-email', 'Api\Test\CheckEmailController@checkOrderInfoEmail');
+//    Route::get('/validate-email', 'Api\Test\CheckEmailController@checkValidateEmail');
 });
