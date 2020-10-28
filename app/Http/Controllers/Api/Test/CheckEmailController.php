@@ -16,7 +16,8 @@ class CheckEmailController
 
     public function checkPlacedOrderEmailEn()
     {
-        app('view')->addNamespace('mail', resource_path('views') . '/vendor/mail/html');
+        app('view')->addNamespace('mail', resource_path('views').'/vendor/mail/html');
+
         return view('emails.test.en.orders.placed');
     }
 
@@ -32,6 +33,5 @@ class CheckEmailController
 
     public function checkValidateEmail()
     {
-
     }
 }
