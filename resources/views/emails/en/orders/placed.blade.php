@@ -1,7 +1,7 @@
 @component('mail::message')
     # Order Received
 
-    Thank you for your order in G&G shop.
+    Thank you for your order in Grapes & Grains shop.
     Our manager will contact you soon.
     Your application number: {{ $order->id }}
 
@@ -12,8 +12,8 @@
     @foreach ($order->products as $product)
         Name: {{ $product->name }} <br>
         Quantity: {{ $product->pivot->quantity }} <br>
-        Price: {{ $product->price }} rubles<br>
-        Case Price: {{ $product->case_price }} rubles<br>
+        Type: {{ $product->pivot->type === 'single' ? 'Single bottle' : 'A case of bottles' }} <br>
+        Price: {{ $product->pivot->type === 'single' ? $product->price : $product->case_price }} rubles<br>
     @endforeach
 
     You can get further details about your order by logging into our website.
@@ -22,7 +22,7 @@
         Go to Website
     @endcomponent
 
-    Thank you again for choosing us.
+    Thank you again for choosing us!
 
     Regards,<br>
     {{ config('app.name') }}

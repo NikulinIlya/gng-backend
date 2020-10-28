@@ -17,9 +17,11 @@
 
     @foreach ($order->products as $product)
         Name: {{ $product->name }} <br>
+        Vendor Code: {{ $product->vendor_code }} <br>
         Quantity: {{ $product->pivot->quantity }} <br>
-        Price: {{ $product->price }} rubles<br>
-        Case Price: {{ $product->case_price }} rubles<br>
+        Type: {{ $product->pivot->type }} <br>
+        Price: {{ $product->price }} rubles <br>
+        Case Price: {{ $product->case_price }} rubles <br>
     @endforeach
 
 @endcomponent
