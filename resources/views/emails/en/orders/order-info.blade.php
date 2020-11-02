@@ -7,21 +7,21 @@
 
     **User Email:** {{ $order->email }}
 
-    **User Name:** {{ $order->username }}
+    **User Name:** {{ $order->username ?? '--' }}
 
-    **User Phone:** {{ $order->phone }}
+    **User Phone:** {{ $order->phone ?? '--' }}
 
-    **Order Comment:** {{ $order->comment }}
+    **Order Comment:** {{ $order->comment ?? '--' }}
 
-    **Items Ordered**
+    **Items Ordered:**
 
-    @foreach ($order->products as $product)
-        Name: {{ $product->name }} <br>
-        Vendor Code: {{ $product->vendor_code }} <br>
-        Quantity: {{ $product->pivot->quantity }} <br>
-        Type: {{ $product->pivot->type }} <br>
-        Price: {{ $product->price }} rubles <br>
-        Case Price: {{ $product->case_price }} rubles <br>
+    @foreach ($order->products as $key => $product)
+    **{{$key+1}}.**
+    Name: {{ $product->name }}
+    Vendor Code: {{ $product->vendor_code }}
+    Quantity: {{ $product->pivot->quantity }}
+    Type: {{ $product->pivot->type }}
+    Price: {{ $product->price }} rubles
+    Case Price: {{ $product->case_price }} rubles
     @endforeach
-
 @endcomponent

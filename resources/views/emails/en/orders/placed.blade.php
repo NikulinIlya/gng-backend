@@ -5,15 +5,16 @@
     Our manager will contact you soon.
     Your application number: {{ $order->id }}
 
-    **Order Total:** {{ $order->price }}
+    **Order Total:** {{ $order->price }} rubles
 
     **Items Ordered**
 
-    @foreach ($order->products as $product)
-        Name: {{ $product->name }} <br>
-        Quantity: {{ $product->pivot->quantity }} <br>
-        Type: {{ $product->pivot->type === 'single' ? 'Single bottle' : 'A case of bottles' }} <br>
-        Price: {{ $product->pivot->type === 'single' ? $product->price : $product->case_price }} rubles<br>
+    @foreach ($order->products as $key => $product)
+    **{{$key+1}}.**
+    Name: {{ $product->name }}
+    Quantity: {{ $product->pivot->quantity }}
+    Type: {{ $product->pivot->type === 'single' ? 'single bottle' : 'a case of bottles' }}
+    Price: {{ ($product->pivot->type === 'single' ? $product->price : $product->case_price) * $product->pivot->quantity }} rubles
     @endforeach
 
     You can get further details about your order by logging into our website.

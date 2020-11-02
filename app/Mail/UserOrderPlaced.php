@@ -12,12 +12,12 @@ class UserOrderPlaced extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $order;
+    public $order;
 
     /**
      * Create a new message instance.
      *
-     * @param Order  $order
+     * @param Order $order
      */
     public function __construct(Order $order)
     {
