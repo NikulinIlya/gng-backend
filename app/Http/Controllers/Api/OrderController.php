@@ -84,8 +84,8 @@ class OrderController extends Controller
             );
         }
 
-        Mail::send(new OrderPlaced($order));
-        Mail::send(new UserOrderPlaced($order));
+//        Mail::send(new OrderPlaced($order));
+//        Mail::send(new UserOrderPlaced($order));
 
         return response()
             ->json(
