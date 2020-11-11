@@ -170,6 +170,7 @@ function ProductDetails({
                             }
                             countIn={countIn}
                             setCountIn={setCountIn}
+                            labelVisibility={!!productCategory.slug}
                             onAdd={val => onAdd(id, val, brand_id)}
                         />
                     </div>

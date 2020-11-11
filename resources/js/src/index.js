@@ -16,7 +16,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CatalogNavigation from "@/components/CatalogNavigation";
 import AgeLimitation from "@/components/AgeLimitation";
-import { SignIn, SignUp } from "@/components/Login";
+import { SignIn, SignUp, RestorePass } from "@/components/Login";
 import Modal from "@/components/Modal";
 import NotFound from "@/components/NotFound";
 import { CartNotificationProvider } from "@/components/CartNotification";
@@ -55,7 +55,8 @@ const Profile = lazy(_ => import("@/modules/profile"));
 
 const LoginVariants = {
     "sign-in": SignIn,
-    "sign-up": SignUp
+    "sign-up": SignUp,
+    restore: RestorePass
 };
 
 const App = () => {

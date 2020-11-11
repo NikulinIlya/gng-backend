@@ -11,20 +11,17 @@ import useTranslate from "@/utils/useTranslate";
 import compose from "@/utils/compose";
 import { status as REQUEST } from "@/utils/request-status";
 
-import { withApi, withLogic } from "./hoc";
+// import { withApi, withLogic } from "./hoc";
 
 import { ReactComponent as CloseIcon } from "@/assets/images/icons/close-gold-icon.svg";
 
-import "../login.scss";
-
-function SingIn({
+export default function RestorePass({
     onClose,
-    onInputChange,
     onFormSubmit,
+    onInputChange,
+    data = {},
     status,
-    errors,
-    isFormTouched,
-    data
+    isFormTouched
 }) {
     const { isMobile } = useMeasures();
     const { t } = useTranslate();
@@ -37,7 +34,9 @@ function SingIn({
                     </IconButton>
                 </div>
             )}
-            <h1 className="login__title">{t("sign-in", "Вход")}</h1>
+            <h1 className="login__title">
+                {t("restore-password", "Восстановление пароля")}
+            </h1>
             <p className="login__prediction">
                 {t("don-t-have-an-account-yet", "Еще нет аккаунта?")}{" "}
                 <Link to="?login=sign-up">{t("sign-up", "Регистрация")}</Link>
@@ -50,13 +49,6 @@ function SingIn({
                     value={data["email"]}
                     label={t("email", "Email")}
                 />
-                <TextField
-                    name="password"
-                    onChange={onInputChange}
-                    value={data["password"]}
-                    label={t("password", "Пароль")}
-                    type="password"
-                />
                 {isFormTouched && (
                     <div className="messages">
                         {errors.map(err => (
@@ -66,13 +58,8 @@ function SingIn({
                         ))}
                     </div>
                 )}
-                <Button>{t("sign-in", "Вход")}</Button>
+                <Button>{t("vosstanovit", "Восстановить")}</Button>
             </form>
-            <Link className="login__forgot" to="/?login=restore">
-                {t("forgot-your-password", "Забыли пароль?")}
-            </Link>
         </div>
     );
 }
-
-export default compose(withApi, withLogic)(SingIn);

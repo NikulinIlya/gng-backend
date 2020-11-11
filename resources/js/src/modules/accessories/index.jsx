@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 
-// import ExclusiveCard from "@/components/ExclusiveCard";
+import ExclusiveCard from "@/components/ExclusiveCard";
 import { Noop } from "@/components/NotFound";
-// import useTranslate from "@/utils/useTranslate";
+import useTranslate from "@/utils/useTranslate";
 
 import "./accessories.scss";
 
-// import data from "./static";
+import data from "./static";
 
 export default function Exclusive() {
-    // const { t } = useTranslate();
+    const { t } = useTranslate();
     return (
         <div className="container">
-            <Noop />
-            {/* <div className="exclusive">
+            {/* <Noop /> */}
+            <div className="exclusive">
                 {data.map(d => (
                     <ExclusiveCard
                         key={d.name}
@@ -21,7 +21,7 @@ export default function Exclusive() {
                         description={t(d.descrSlug, d.description)}
                     />
                 ))}
-            </div> */}
+            </div>
         </div>
     );
 }

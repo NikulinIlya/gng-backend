@@ -10,8 +10,9 @@ export default function Counter({
     defaultCount,
     countIn,
     available = 1,
+    labelVisibility = true,
     setCountIn,
-    onAdd
+    onAdd,
 }) {
     const { t } = useTranslate();
     return (
@@ -21,7 +22,7 @@ export default function Counter({
                 defaultCount={defaultCount}
                 onAdd={onAdd}
                 title={t("purchasing-options", "Варианты покупки")}
-                label={_ => (
+                label={_ => labelVisibility && (
                     <div className="product__calc-tabs tabs">
                         <label className="tabs__item">
                             <input

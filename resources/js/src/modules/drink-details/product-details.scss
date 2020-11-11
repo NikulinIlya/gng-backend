@@ -26,6 +26,9 @@
                 height: 100%;
                 object-fit: cover;
                 object-position: center;
+                &:not([src]) {
+                    display: none;
+                }
             }
         }
     }
@@ -81,6 +84,9 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         column-gap: 30px;
+        &:empty ~ .product__calc {
+            margin-top: 15px;
+        }
     }
     &__about {
         grid-area: about;
@@ -137,7 +143,7 @@
         grid-template-columns: repeat(3, minmax(0, 1fr));
         column-gap: 30px;
     }
-    .not-available-message{
+    .not-available-message {
         font-size: 18px;
         font-weight: 600;
         margin-bottom: 12px;
