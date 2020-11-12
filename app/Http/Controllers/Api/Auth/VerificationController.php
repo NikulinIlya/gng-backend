@@ -46,7 +46,7 @@ class VerificationController extends Controller
         try {
             Mail::send(new UserWelcome($user));
         } catch (\Exception $exception) {
-            Log::error('Error sending UserWelcome mail: ' . $exception->getMessage());
+            Log::error('Error sending UserWelcome mail: '.$exception->getMessage());
         }
 
         return response()->json(['token' => $user->createToken('authToken')->plainTextToken], 201);
