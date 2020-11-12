@@ -108,7 +108,11 @@ function ProductDetails({
                         onChange={onFavoriteStateChange}
                     />
                 </div>
-                <div className="product-details__thumb">
+                <div
+                    className={cn("product-details__thumb", {
+                        glass: product.glass
+                    })}
+                >
                     <div className="backdrop">
                         <img src={flatRegionImages[productRegion]} alt="" />
                     </div>
@@ -149,6 +153,11 @@ function ProductDetails({
                             )
                         )}
                     </div>
+                    {product.glass && (
+                        <p className="product-details__description">
+                            {product.glass.description}
+                        </p>
+                    )}
                     <div className={cn("product__calc")}>
                         {!available && (
                             <h2 className="not-available-message">
