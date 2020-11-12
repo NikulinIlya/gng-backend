@@ -1,5 +1,5 @@
 import bags from "@/assets/images/templates/_bags.png";
-import glasses from "@/assets/images/templates/_glasses.png";
+import glasses from "@/assets/images/templates/_glasses.jpg";
 export default [
     // {
     //     name: "Сумки",
