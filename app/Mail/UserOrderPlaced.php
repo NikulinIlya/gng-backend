@@ -12,7 +12,7 @@ class UserOrderPlaced extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $order;
+    protected $order;
 
     /**
      * Create a new message instance.
@@ -33,9 +33,14 @@ class UserOrderPlaced extends Mailable
     {
         $lang = app()->getLocale();
 
-        return $this->from(env('MAIL_FROM_ADDRESS'))
+        $fromName = ($lang === 'ru') ? 'Менеджеры магазина gng.wine' : 'Gng.wine store managers';
+        $subject = (($lang === 'ru') ? 'Заказ товаров на сайте gng.wine #' : 'Ordering goods on the website gng.wine #') . $this->order->id;
+
+        return $this->from(env('MAIL_FROM_ADDRESS'), $fromName)
                     ->to($this->order->email, $this->order->name)
-                    ->subject('A new order')
-                    ->markdown("emails.$lang.orders.placed");
+                    ->replyTo(env('MAIL_FROM_ADDRESS'), $fromName)
+                    ->subject($subject)
+                    ->markdown("emails.$lang.orders.placed")
+                    ->with('order', $this->order);
     }
 }
