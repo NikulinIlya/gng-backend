@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Auth\UserVerify;
 use App\Models\User;
 use App\Models\UserInfo;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Log;
+use Mail;
 
 class RegisterController extends Controller
 {
@@ -17,7 +20,7 @@ class RegisterController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function register(Request $request)
     {
@@ -46,7 +49,13 @@ class RegisterController extends Controller
 
         $user = $this->create($request->all());
 
-        return new JsonResponse(['token' => $user->createToken('authToken')->plainTextToken], 201);
+        try {
+            Mail::send(new UserVerify($user));
+        } catch (\Exception $exception) {
+            Log::error('Error sending UserWelcome mail: ' . $exception->getMessage());
+        }
+
+        return response()->json(['token' => $user->createToken('authToken')->plainTextToken], 201);
     }
 
     /**

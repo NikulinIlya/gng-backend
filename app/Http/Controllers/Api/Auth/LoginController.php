@@ -29,16 +29,20 @@ class LoginController extends Controller
         );
 
         if ($validator->fails()) {
-            return new JsonResponse(['error' => 'Wrong data'], 422);
+            return response()->json(['error' => 'Wrong data'], 422);
         }
 
         $user = User::where('email', $request->email)->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
-            return new JsonResponse(['error' => 'The provided credentials are incorrect.'], 401);
+            return response()->json(['error' => 'The provided credentials are incorrect.'], 401);
         }
 
-        return new JsonResponse(['token' => $user->createToken('authToken')->plainTextToken]);
+        if (! $user->email_verified_at) {
+            return response()->json(['error' => 'The user is not verified.'], 401);
+        }
+
+        return response()->json(['token' => $user->createToken('authToken')->plainTextToken]);
     }
 
     public function logout(Request $request)
@@ -48,9 +52,9 @@ class LoginController extends Controller
         if ($user && $user->currentAccessToken()) {
             $user->currentAccessToken()->delete();
 
-            return new JsonResponse(['message' => 'The user logged out.']);
+            return response()->json(['message' => 'The user logged out.']);
         } else {
-            return new JsonResponse(['error' => 'The provided credentials are incorrect.'], 401);
+            return response()->json(['error' => 'The provided credentials are incorrect.'], 401);
         }
     }
 }
