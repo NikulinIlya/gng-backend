@@ -12,7 +12,7 @@ class OrderPlaced extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $order;
+    protected $order;
 
     /**
      * Create a new message instance.
@@ -34,6 +34,7 @@ class OrderPlaced extends Mailable
         return $this->from(env('MAIL_FROM_ADDRESS'))
             ->to(env('MAIL_ORDERS_ADDRESS'), 'G&G manager')
             ->subject('A new order')
-            ->view('emails.en.orders.order-info');
+            ->view('emails.en.orders.order-info')
+            ->with('order', $this->order);
     }
 }
