@@ -34,7 +34,7 @@ class UserOrderPlaced extends Mailable
         $lang = app()->getLocale();
 
         $fromName = ($lang === 'ru') ? 'Менеджеры магазина gng.wine' : 'Gng.wine store managers';
-        $subject = (($lang === 'ru') ? 'Заказ товаров на сайте gng.wine #' : 'Ordering goods on the website gng.wine #') . $this->order->id;
+        $subject = (($lang === 'ru') ? 'Заказ товаров на сайте gng.wine #' : 'Ordering goods on the website gng.wine #').$this->order->id;
 
         return $this->from(env('MAIL_FROM_ADDRESS'), $fromName)
                     ->to($this->order->email, $this->order->name)

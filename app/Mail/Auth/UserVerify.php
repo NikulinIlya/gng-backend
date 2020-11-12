@@ -40,7 +40,7 @@ class UserVerify extends Mailable
                     ->to($this->user->email, $this->user->name)
                     ->replyTo(env('MAIL_FROM_ADDRESS'), $fromName)
                     ->subject($subject)
-                    ->markdown("emails.auth.registration")
+                    ->markdown('emails.auth.registration')
                     ->with('verify_code', '');
     }
 }
