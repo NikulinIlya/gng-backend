@@ -33,6 +33,7 @@ Route::get(
 );
 
 Route::post('register', 'Api\Auth\RegisterController@register');
+Route::post('resend-verify', 'Api\Auth\RegisterController@resendVerificationEmail');
 Route::post('verify', 'Api\Auth\VerificationController@verify');
 Route::post('login', 'Api\Auth\LoginController@login');
 
