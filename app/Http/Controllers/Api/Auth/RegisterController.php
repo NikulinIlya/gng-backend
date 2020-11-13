@@ -18,7 +18,7 @@ class RegisterController extends Controller
     /**
      * Handle a registration request for the application.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      *
      * @return JsonResponse
      */
@@ -38,24 +38,47 @@ class RegisterController extends Controller
         );
 
         if ($validator->fails()) {
-            return response()
-                ->json(
-                    [
-                        'error' => 'wrong data',
-                    ],
-                    422
-                );
+            return response()->json(['error' => 'wrong data',], 422);
         }
 
-        $user = $this->create($request->all());
+        $user = $this->createUser($request->all());
+
+        if (! $user) {
+            return response()->json(['error' => 'wrong data'], 401);
+        }
+
+        $user->verify_code = $this->makeVerifyCode($user->id, $user->name);
+        $user->save();
+
+        $this->createUserInfo($user->id, $request->all());
 
         try {
             Mail::send(new UserVerify($user));
         } catch (\Exception $exception) {
-            Log::error('Error sending UserWelcome mail: '.$exception->getMessage());
+            Log::error('Error sending UserVerify mail: ' . $exception->getMessage());
         }
 
-        return response()->json(['token' => $user->createToken('authToken')->plainTextToken], 201);
+        return response()->json(['message' => 'verify email has sent']);
+    }
+
+    public function resendVerificationEmail($userEmail)
+    {
+        $user = User::where('email', $userEmail)->first();
+
+        if (! $user) {
+            return response()->json(['error' => 'wrong data'], 401);
+        }
+
+        $user->verify_code = $this->makeVerifyCode($user->id, $user->name);
+        $user->save();
+
+        try {
+            Mail::send(new UserVerify($user));
+        } catch (\Exception $exception) {
+            Log::error('Error sending UserVerify mail: ' . $exception->getMessage());
+        }
+
+        return response()->json(['message' => 'verify email has sent']);
     }
 
     /**
@@ -65,29 +88,45 @@ class RegisterController extends Controller
      *
      * @return User
      */
-    protected function create(array $data)
+    protected function createUser(array $data)
     {
-        $user = User::create(
+        return User::create(
             [
                 'name'     => $data['name'],
                 'email'    => $data['email'],
                 'password' => Hash::make($data['password']),
             ]
         );
+    }
 
-        if ($user) {
-            UserInfo::create(
-                [
-                    'user_id'         => $user->id,
-                    'email'           => $data['email'],
-                    'second_name'     => $data['second_name'],
-                    'phone'           => $data['phone'],
-                    'discount_agreed' => (int) $data['discount_agreed'],
-                    'events_agreed'   => (int) $data['events_agreed'],
-                ]
-            );
-        }
+    /**
+     * Create an info for the created user.
+     *
+     * @param int   $userId
+     * @param array $data
+     */
+    protected function createUserInfo($userId, $data)
+    {
+        UserInfo::create(
+            [
+                'user_id'         => $userId,
+                'email'           => $data['email'],
+                'second_name'     => $data['second_name'],
+                'phone'           => $data['phone'],
+                'discount_agreed' => (int)$data['discount_agreed'],
+                'events_agreed'   => (int)$data['events_agreed'],
+            ]
+        );
+    }
 
-        return $user;
+    /**
+     * @param int    $id
+     * @param string $name
+     *
+     * @return string
+     */
+    protected function makeVerifyCode($id, $name)
+    {
+        return Hash::make($id . $name . time() . env('OTP_SALT'));
     }
 }
