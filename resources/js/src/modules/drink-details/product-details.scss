@@ -214,7 +214,7 @@
         &__features {
             grid-template-columns: 1fr;
         }
-        &__thumb {
+        &__thumb, &__thumb.glass {
             height: 292px;
             margin-bottom: 24px;
             .backdrop {
