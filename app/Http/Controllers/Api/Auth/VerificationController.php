@@ -5,10 +5,7 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use App\Mail\UserWelcome;
 use App\Models\User;
-use App\Models\UserInfo;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Log;
 use Mail;
@@ -32,22 +29,31 @@ class VerificationController extends Controller
         );
 
         if ($validator->fails()) {
-            return response()
-                ->json(
-                    [
-                        'error' => 'wrong data',
-                    ],
-                    422
-                );
+            return response()->json(['error' => 'wrong data',], 422);
         }
 
-        $user = User::where('verify_hash_code', $request->verify_code)->firstOrFail();
+        $user = User::where('verify_code', $request->verify_code)->first();
+
+        if (! $user) {
+            return response()->json(['error' => 'wrong data'], 422);
+        }
+
+        if ($user->email_verified_at) {
+            return response()->json(['error' => 'user is verified'], 400);
+        }
+
+        if (time() - $user->updated_at > 86400) {
+            return response()->json(['error' => 'the link is outdated'], 400);
+        }
 
         try {
             Mail::send(new UserWelcome($user));
         } catch (\Exception $exception) {
-            Log::error('Error sending UserWelcome mail: '.$exception->getMessage());
+            Log::error('Error sending UserWelcome mail: ' . $exception->getMessage());
         }
+
+        $user->email_verified_at = time();
+        $user->save();
 
         return response()->json(['token' => $user->createToken('authToken')->plainTextToken], 201);
     }
