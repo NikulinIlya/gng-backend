@@ -34,13 +34,12 @@ class UserVerify extends Mailable
         $lang = app()->getLocale();
 
         $fromName = ($lang === 'ru') ? 'Менеджеры магазина gng.wine' : 'Gng.wine store managers';
-        $subject = (($lang === 'ru') ? 'Пожалуйста, подтвердите ваш Email!' : 'Please confirm your Email!');
 
         return $this->from(env('MAIL_FROM_ADDRESS'), $fromName)
                     ->to($this->user->email, $this->user->name)
                     ->replyTo(env('MAIL_FROM_ADDRESS'), $fromName)
-                    ->subject($subject)
-                    ->markdown('emails.auth.registration')
-                    ->with('verify_code', '');
+                    ->subject(($lang === 'ru') ? 'Пожалуйста, подтвердите ваш Email!' : 'Please confirm your Email!')
+                    ->markdown("emails.$lang.auth.registration")
+                    ->with('verifyUrl', env('APP_URL') . '?verify_code=' . $this->user->verify_code);
     }
 }
