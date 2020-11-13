@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,16 +17,6 @@ Route::group(['prefix' => 'admin-panel'], function () {
     Voyager::routes();
 });
 
-Route::get('/{uri?}', function (Request $request) {
-    if (isset($_COOKIE['vi'])) {
-        return view('index');
-    }
-
-    if ($request->query('visit') == '37693cfc748049e45' || $request->query('dev-access') == '1') {
-        setcookie('vi', '1', time() + 86400 * 7, '/', $_SERVER['HTTP_HOST'], false, false);
-
-        return view('index');
-    } else {
-        abort(404);
-    }
+Route::get('/{uri?}', function () {
+    return view('index');
 })->where('uri', '(.*)')->name('index');
