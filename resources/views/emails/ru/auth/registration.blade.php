@@ -1,12 +1,15 @@
 @component('mail::message')
-# Introduction
+    # Здравствуйте!
+    Спасибо за заполнение формы подписки на нашем сайте {{ env('APP_URL') }}
 
-The body of your message.
+    <a href="{{ $this->verifyUrl }}">Подтвердите</a>, пожалуйста, свой адрес электронной почты!
+    @component('mail::button', ['url' => $this->verifyUrl])
+        Подтвердить
+    @endcomponent
 
-@component('mail::button', ['url' => ''])
-Button Text
-@endcomponent
+    <hr>
 
-Thanks,<br>
-{{ config('app.name') }}
+    Подтверждая свой email, вы даете согласие на <a href="{{ env('APP_URL') . '/static?doc=3' }}">обработку и хранение персональных данных.</a>
+
+    GNG.WINE
 @endcomponent

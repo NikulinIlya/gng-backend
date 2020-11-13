@@ -1,10 +1,10 @@
 @component('mail::message')
-# Introduction
+# Здравствуйте!
 
-The body of your message.
+Ваш email успешно подтвержден.
 
 @component('mail::button', ['url' => '/'])
-Button Text
+Перейти к покупкам
 @endcomponent
 
 Thanks,<br>
