@@ -651,32 +651,7 @@
         }
       }
     </style>
-    <!--[if gte mso 9]>
-      <xml>
-        <o:OfficeDocumentSettings>
-          <o:AllowPNG />
-          <o:PixelsPerInch>96</o:PixelsPerInch>
-        </o:OfficeDocumentSettings>
-      </xml>
-      <style type="text/css">
-        .mm15 {
-          padding: 0px !important;
-          margin-left: 15px !important;
-          margin-right: 15px !important;
-        }
-        .ml10 {
-          padding: 0px !important;
-          margin-left: 10px !important;
-        }
-        .mr10 {
-          padding: 0px !important;
-          margin-right: 10px !important;
-        }
-        img {
-          display: block;
-        }
-      </style>
-    <![endif]-->
+
   </head>
 
   <body
@@ -785,11 +760,9 @@
                                         font-family: Arial, sans-serif;
                                       "
                                     >
-                                      <!--[if gte mso 9]>
-                                        <a href="https://www.amazon.com/gp/r.html?C=2RS7YIAVSYG1P&K=2YJXP5NZGLX6K&M=urn:rtn:msg:20200625145028f39e1b03d069497598a78cac3800p0na&R=2Z8WMDPS2ZE4B&T=C&U=https%3A%2F%2Fwww.amazon.com%3Fref_%3Dpe_2640190_414750960&H=QAVDZBI1KQJ3XWNPANLSIQ49YDQA&ref_=pe_2640190_414750960">
-                                        <![endif]-->
+                                      
                                       <img
-                                        src="https://gng.wine/build/images/logo.svg"
+                                        src="{{ asset('storage/mail/logo.png') }}"
                                         alt="Amazon"
                                         title="Amazon"
                                         class="brandImage"
@@ -797,9 +770,7 @@
                                         width="130"
                                         style="width: 130px"
                                       />
-                                      <!--[if gte mso 9]>
-                                        </a>
-                                      <![endif]-->
+                                      
                                     </td>
                                   </tr>
                                 </tbody>
@@ -868,20 +839,7 @@
                                         </tr>
                                       </tbody>
                                     </table>
-                                    <!--[if (mso)|(IE)]>
-                                      <table class="msoInformationTable">
-                                        <tr>
-                                          <td>
-                                            <span
-                                              >Your package has been delivered
-                                              to your preferred safe
-                                              place.</span
-                                            >
-                                          </td>
-                                        </tr>
-                                      </table>
-                                    <![endif]-->
-                                    <!--[if !mso & !IE]><!-- -->
+                                   
                                     <table
                                       class="informationTable"
                                       style="
@@ -947,40 +905,9 @@
                                         </tr>
                                       </tbody>
                                     </table>
-                                    <!--<![endif]-->
+                                    
                                     <br />
 
-                                    <!--[if gte mso 9]>
-                                      <table
-                                        class="trackPackageButtonContainer"
-                                      >
-                                        <tr>
-                                          <td>
-                                            <table
-                                              class="trackPackageButtonTable"
-                                            >
-                                              <tr>
-                                                <td
-                                                  align="center"
-                                                  valign="middle"
-                                                  class="trackPackageButtonTextForOutlook"
-                                                  height="45"
-                                                  bgcolor="ffa723"
-                                                >
-                                                  <a
-                                                    class="trackPackageLinkForOutlook"
-                                                    href="https://www.amazon.com/gp/r.html?C=2RS7YIAVSYG1P&K=2YJXP5NZGLX6K&M=urn:rtn:msg:20200625145028f39e1b03d069497598a78cac3800p0na&R=3O2K6KVOLBOS4&T=C&U=https%3A%2F%2Fwww.amazon.com%2Fgp%2Fcss%2Fshiptrack%2Fview.html%3Fie%3DUTF8%26orderID%3D111-3515395-8853823%26orderingShipmentId%3D28693278691301%26packageId%3D1%26ref_%3Dpe_2640190_414750960_pdc_pt_track&H=AGA0UV6ECEFDUX8WFTX9WF5GST0A&ref_=pe_2640190_414750960_pdc_pt_track"
-                                                    >Track your package</a
-                                                  >
-                                                </td>
-                                              </tr>
-                                            </table>
-                                          </td>
-                                        </tr>
-                                      </table>
-                                    <![endif]-->
-                                    <!--[if !gte mso 9]>
-                                      <!-- -->
                                     <table
                                       class="trackPackageButtonContainer"
                                       style="
@@ -1124,14 +1051,6 @@
                                         </tr>
                                       </tbody>
                                     </table>
-                                    <!--[if (mso)|(IE)]>
-                                      <table class="msoInformationTable">
-                                        <tr>
-                                          <td><span>2 items</span></td>
-                                        </tr>
-                                      </table>
-                                    <![endif]-->
-                                    <!--[if !mso & !IE]><!-- -->
                                     
 @foreach ($order->products as $key => $product)
 <table
@@ -1236,20 +1155,7 @@
                                     </table>
 @endforeach
                                     
-                                    
-                                    <!--<![endif]-->
-                                    <!--[if (mso)|(IE)]>
-                                      <table class="msoInstructionTable">
-                                        <tr>
-                                          <td>
-                                            <span
-                                              >Order #111-3515395-8853823</span
-                                            >
-                                          </td>
-                                        </tr>
-                                      </table>
-                                    <![endif]-->
-                                    <!--[if !mso & !IE]><!-- -->
+                                
                                     <table
                                       class="instructionTable"
                                       style="
@@ -1281,27 +1187,7 @@
                                         </tr>
                                       </tbody>
                                     </table>
-                                    <!--<![endif]-->
-                                    <!--[if (mso)|(IE)]>
-                                      <table
-                                        class="msoInstructionTableReducedPadding"
-                                      >
-                                        <tr>
-                                          <td>
-                                            <span
-                                              >Return or replace items in
-                                              <a
-                                                class="returnOrReplaceInstructionLink"
-                                                style=""
-                                                href="https://www.amazon.com/gp/r.html?C=2RS7YIAVSYG1P&K=2YJXP5NZGLX6K&M=urn:rtn:msg:20200625145028f39e1b03d069497598a78cac3800p0na&R=3EA3DOIR6TDP7&T=C&U=https%3A%2F%2Fwww.amazon.com%2Fgp%2Fcss%2Forder-history%3Fie%3DUTF8%26ref_%3Dpe_2640190_414750960_pdc_yo&H=4NWL1QCUSR84OMGQTIEWVQ6IY1CA&ref_=pe_2640190_414750960_pdc_yo"
-                                                >Your Orders</a
-                                              >.
-                                            </span>
-                                          </td>
-                                        </tr>
-                                      </table>
-                                    <![endif]-->
-                                    <!--[if !mso & !IE]><!-- -->
+                                    
                                     <table
                                       class="instructionTableReducedPadding"
                                       style="
@@ -2079,32 +1965,7 @@
         }
       }
     </style>
-    <!--[if gte mso 9]>
-      <xml>
-        <o:OfficeDocumentSettings>
-          <o:AllowPNG />
-          <o:PixelsPerInch>96</o:PixelsPerInch>
-        </o:OfficeDocumentSettings>
-      </xml>
-      <style type="text/css">
-        .mm15 {
-          padding: 0px !important;
-          margin-left: 15px !important;
-          margin-right: 15px !important;
-        }
-        .ml10 {
-          padding: 0px !important;
-          margin-left: 10px !important;
-        }
-        .mr10 {
-          padding: 0px !important;
-          margin-right: 10px !important;
-        }
-        img {
-          display: block;
-        }
-      </style>
-    <![endif]-->
+    
   </body>
 </html>
 

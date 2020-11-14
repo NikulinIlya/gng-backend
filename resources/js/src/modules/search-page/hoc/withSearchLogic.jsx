@@ -13,7 +13,8 @@ export default WrappedComponent => props => {
         fetchSearchResults,
         fetchProducts,
         fetchProductsByCategory,
-        setStatus
+        setStatus,
+        status
     } = props;
     const [query, setQuery] = useState("");
     const [brandId, setBrandId] = useState("");
@@ -21,10 +22,12 @@ export default WrappedComponent => props => {
     const { search } = useLocation();
     const { flatBrandNames } = useStoreon("flatBrandNames");
     const extendedProducts = useBrands(products);
+    // const [extendedStatus, setExtendedStatus] = useState(REQUEST.pending);
     const { add } = useCart();
     const [filteredProducts, setFilteredProducts] = useState(extendedProducts);
 
     useEffect(_ => handleSearchQuery(search), [search]);
+
     useEffect(
         _ => {
             brandId && fetchProducts();
@@ -46,15 +49,18 @@ export default WrappedComponent => props => {
                 setFilteredProducts(
                     extendedProducts.filter(p => p.brand_id === +brandId)
                 );
+                setStatus(REQUEST.success);
                 return;
             }
             if (productIds.length && extendedProducts.length) {
                 setFilteredProducts(
                     extendedProducts.filter(p => productIds.includes(p.id))
                 );
+                setStatus(REQUEST.success);
                 return;
             }
             setFilteredProducts(extendedProducts);
+            setStatus(REQUEST.success);
         },
         [extendedProducts, productIds, brandId]
     );
@@ -77,7 +83,6 @@ export default WrappedComponent => props => {
             setCategory(params.get("category"));
             return;
         }
-        setStatus(REQUEST.success);
     }
 
     const onAdd = async (id, count = 1, brandId) => {
@@ -93,6 +98,7 @@ export default WrappedComponent => props => {
             category={category}
             brandNames={flatBrandNames}
             onAdd={onAdd}
+            
         />
     );
 };

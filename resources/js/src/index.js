@@ -114,7 +114,13 @@ const App = () => {
                         {appIsPending ? (
                             <Loading />
                         ) : (
-                            <Suspense fallback="Loading...">
+                            <Suspense
+                                fallback={
+                                    <div style={{ height: 200 }}>
+                                        <Loading />
+                                    </div>
+                                }
+                            >
                                 <Switch>
                                     <Route
                                         path="/brands"

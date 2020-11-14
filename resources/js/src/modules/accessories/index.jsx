@@ -16,7 +16,7 @@ export default function Exclusive() {
             <div className="exclusive">
                 {data.map(d => (
                     <ExclusiveCard
-                        key={d.name}
+                        key={d.nameSlug}
                         {...d}
                         name={t(d.nameSlug, d.name)}
                         description={t(d.descrSlug, d.description)}
