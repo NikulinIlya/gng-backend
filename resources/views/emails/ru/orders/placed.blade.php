@@ -1,4 +1,3 @@
-@component('mail::message')
 <!DOCTYPE html>
 <html>
   <head>
@@ -760,7 +759,7 @@
                                         font-family: Arial, sans-serif;
                                       "
                                     >
-                                      
+
                                       <img
                                         src="{{ asset('storage/mail/logo.png') }}"
                                         alt="Amazon"
@@ -770,7 +769,7 @@
                                         width="130"
                                         style="width: 130px"
                                       />
-                                      
+
                                     </td>
                                   </tr>
                                 </tbody>
@@ -839,7 +838,7 @@
                                         </tr>
                                       </tbody>
                                     </table>
-                                   
+
                                     <table
                                       class="informationTable"
                                       style="
@@ -905,7 +904,7 @@
                                         </tr>
                                       </tbody>
                                     </table>
-                                    
+
                                     <br />
 
                                     <table
@@ -1051,7 +1050,7 @@
                                         </tr>
                                       </tbody>
                                     </table>
-                                    
+
 @foreach ($order->products as $key => $product)
 <table
                                       class="informationTable"
@@ -1154,8 +1153,8 @@
                                       </tbody>
                                     </table>
 @endforeach
-                                    
-                                
+
+
                                     <table
                                       class="instructionTable"
                                       style="
@@ -1187,7 +1186,7 @@
                                         </tr>
                                       </tbody>
                                     </table>
-                                    
+
                                     <table
                                       class="instructionTableReducedPadding"
                                       style="
@@ -1965,8 +1964,6 @@
         }
       }
     </style>
-    
+
   </body>
 </html>
-
-@endcomponent
