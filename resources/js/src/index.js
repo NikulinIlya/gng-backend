@@ -26,7 +26,8 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 
 import { HeaderContext } from "@/context/header";
 import useMeasures from "@/utils/useMeasures";
-import redaxios, { to } from "@/utils/fetch";
+import useQueryParams from "@/utils/useQueryParams";
+import fetch, { to } from "@/utils/fetch";
 
 import { store } from "@/store";
 
@@ -67,6 +68,7 @@ const App = () => {
     const [isLoginModalVisible, setIsLoginModalVisible] = useState({});
     const { search } = useLocation();
     const { isMobile } = useMeasures();
+    const { params } = useQueryParams();
     const { dispatch, appIsPending } = useStoreon("appIsPending");
 
     const handleScrollY = useCallback(_ => {
@@ -75,6 +77,29 @@ const App = () => {
             `${window.scrollY}px`
         );
     }, []);
+
+    useEffect(
+        _ => {
+            if (params && params["verify_code"]) {
+                (async _ => {
+                    dispatch("client/set-app-pending", true);
+                    const [err, response] = await to(
+                        fetch.post("/api/verify", {
+                            verify_code: params["verify_code"]
+                        })
+                    );
+                    if (response) {
+                        dispatch("client/set-is-authorized", true);
+                        dispatch("client/set-user-info", response.data);
+                        console.log("response", response);
+                    }
+                    console.log("err", err);
+                    dispatch("client/set-app-pending", false);
+                })();
+            }
+        },
+        [params]
+    );
 
     useEffect(_ => {
         (async () => {
