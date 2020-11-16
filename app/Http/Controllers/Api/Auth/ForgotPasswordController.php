@@ -72,7 +72,7 @@ class ForgotPasswordController extends Controller
             return response()->json(['error' => 'wrong data'], 422);
         }
 
-        $user = User::where('reset_code', $request->reset_code)->first();
+        $user = User::where('reset_password_code', $request->reset_code)->first();
 
         if (! $user) {
             return response()->json(['error' => 'wrong data'], 422);
