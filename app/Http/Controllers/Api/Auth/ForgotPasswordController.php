@@ -78,7 +78,7 @@ class ForgotPasswordController extends Controller
             return response()->json(['error' => 'wrong data'], 422);
         }
 
-        if (time() - $user->updated_at > 3600) {
+        if (time() - strtotime($user->updated_at->toDateTimeString()) > 3600) {
             return response()->json(['error' => 'the link is outdated'], 422);
         }
 

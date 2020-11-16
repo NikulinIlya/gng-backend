@@ -42,7 +42,7 @@ class VerificationController extends Controller
             return response()->json(['error' => 'user is verified'], 400);
         }
 
-        if (time() - $user->updated_at > 86400) {
+        if (time() - strtotime($user->updated_at->toDateTimeString()) > 86400) {
             return response()->json(['error' => 'the link is outdated'], 400);
         }
 
