@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +35,8 @@ Route::post('register', 'Api\Auth\RegisterController@register');
 Route::post('resend-verify', 'Api\Auth\RegisterController@resendVerificationEmail');
 Route::post('verify', 'Api\Auth\VerificationController@verify');
 Route::post('login', 'Api\Auth\LoginController@login');
+Route::post('forgot-password', 'Api\Auth\ForgotPasswordController@forgot');
+Route::post('forgot-password/reset', 'Api\Auth\ForgotPasswordController@reset');
 
 Route::middleware('auth:sanctum')->group(
     function () {
