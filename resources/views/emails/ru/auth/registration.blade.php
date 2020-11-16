@@ -876,7 +876,7 @@
                                             "
                                           >
                                             <span>
-                                              <a href="{{ $this->verifyUrl }}"
+                                              <a href="{{ $verifyUrl }}"
                                                 >Подтвердите</a
                                               >, пожалуйста, свой адрес
                                               электронной почты!</span
@@ -923,7 +923,7 @@
                                             "
                                           >
                                             <a
-                                              href="{{ $this->verifyUrl }}"
+                                              href="{{ $verifyUrl }}"
                                               style="
                                                 color: rgb(0, 46, 54);
                                                 text-decoration: none;

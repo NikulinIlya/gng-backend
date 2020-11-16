@@ -141,7 +141,7 @@ class RegisterController extends Controller
         } catch (\Exception $exception) {
             Log::error('Error sending UserVerify mail: ' . $exception->getMessage());
 
-            return response()->json(['error' => 'wrong data'], 401);
+            return response()->json(['error' => 'email has not sent'], 401);
         }
     }
 }
