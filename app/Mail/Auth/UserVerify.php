@@ -2,7 +2,6 @@
 
 namespace App\Mail\Auth;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -12,16 +11,22 @@ class UserVerify extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $user;
+    protected $username;
+    protected $email;
+    protected $verifyCode;
 
     /**
      * Create a new message instance.
      *
-     * @param User $user
+     * @param string $username
+     * @param string $email
+     * @param string $verifyCode
      */
-    public function __construct(User $user)
+    public function __construct($username, $email, $verifyCode)
     {
-        $this->user = $user;
+        $this->username = $username;
+        $this->email = $email;
+        $this->verifyCode = $verifyCode;
     }
 
     /**
@@ -33,13 +38,11 @@ class UserVerify extends Mailable
     {
         $lang = app()->getLocale();
 
-        $fromName = ($lang === 'ru') ? 'Менеджеры магазина gng.wine' : 'Gng.wine store managers';
-
-        return $this->from(env('MAIL_FROM_ADDRESS'), $fromName)
-                    ->to($this->user->email, $this->user->name)
-                    ->replyTo(env('MAIL_FROM_ADDRESS'), $fromName)
+        return $this->from(env('MAIL_FROM_ADDRESS'), 'GnG.wine')
+                    ->to($this->email, $this->username)
+                    ->replyTo(env('MAIL_FROM_ADDRESS'), 'GnG.wine')
                     ->subject(($lang === 'ru') ? 'Пожалуйста, подтвердите ваш Email!' : 'Please confirm your Email!')
                     ->markdown("emails.$lang.auth.registration")
-                    ->with('verifyUrl', env('APP_URL') . '?verify_code=' . $this->user->verify_code);
+                    ->with('verifyUrl', env('APP_URL') . '?verify_code=' . $this->verifyCode);
     }
 }
