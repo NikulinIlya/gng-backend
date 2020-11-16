@@ -4,7 +4,7 @@ Hello!
 
 Click on the button to reset your password.
 
-<a href="{{ $this->resetUrl }}"><button>Reset Password</button></a>
+<a href="{{ $resetUrl }}"><button>Reset Password</button></a>
 
 This password link will expire in 60 minutes.
 If you have not requested a password reset, please ignore this email.

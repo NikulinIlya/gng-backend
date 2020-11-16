@@ -2,8 +2,8 @@
     # Hello!
     Thank you for filling out the subscription form on our website {{ env('APP_URL') }}
 
-    Please <a href="{{ $this->verifyUrl }}">confirm</a> your email address!
-    @component('mail::button', ['url' => $this->verifyUrl])
+    Please <a href="{{ $verifyUrl }}">confirm</a> your email address!
+    @component('mail::button', ['url' => $verifyUrl])
         Confirm
     @endcomponent
 
