@@ -18,6 +18,7 @@ export default WrappedComponent => props => {
             const [err, productResponse] = await to(
                 redaxios(`/api/product-with-settings/${match.params.productId}`)
             );
+            
             const [brandArticlesErr, brandArticlesResponse] = await to(
                 redaxios(`/api/articles/brands`)
             );
