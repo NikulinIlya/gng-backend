@@ -43,6 +43,7 @@ function Cart({
                                         price,
                                         image,
                                         vendor_code,
+                                        product_category_id,
                                         brand,
                                         id
                                     }) => {
@@ -56,7 +57,14 @@ function Cart({
                                                 price={price}
                                                 vendorCode={vendor_code}
                                                 name={name}
-                                                brand={brand}
+                                                brand={
+                                                    product_category_id === 13
+                                                        ? t(
+                                                              "promotion",
+                                                              "Специальное предложение"
+                                                          )
+                                                        : brand
+                                                }
                                                 image={image}
                                                 onRemove={_ => onRemove(id)}
                                                 unit={product.unit}

@@ -158,6 +158,11 @@ function ProductDetails({
                             {product.glass.description}
                         </p>
                     )}
+                    {product.explanation && (
+                        <p className="product-details__description">
+                            {product.explanation}
+                        </p>
+                    )}
                     <div className={cn("product__calc")}>
                         {!available && (
                             <h2 className="not-available-message">
