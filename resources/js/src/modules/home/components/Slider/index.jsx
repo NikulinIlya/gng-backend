@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Button from "@/components/Button";
 import useTranslate from "@/utils/useTranslate";
 
-import slideTemplate from "@/assets/images/templates/xo.jpg";
+import slideTemplate from "@/assets/images/templates/promo.png";
 
 import "./slider.scss";
 
@@ -32,16 +32,16 @@ function SliderCard() {
         <section className="slider-card">
             <div className="slider-card__content">
                 <h2 className="slider-card__title">
-                    {t("hennessy-x-o-150-anniversary", "Hennessy X.O 150 лет")}
+                    {t("hennessy-x-o-150-anniversary", "Специальное предложение")}
                 </h2>
                 <p className="slider-card__descr">
                     {t(
                         "the-odyssey-has-just-begun",
-                        "Одиссея только начинается"
+                        "Только этой осенью"
                     )}
                 </p>
 
-                <Button to="/catalog/56">{t("learn-more", "подробнее")}</Button>
+                <Button to="/catalog/197?_view=promotion">{t("learn-more", "подробнее")}</Button>
             </div>
         </section>
     );

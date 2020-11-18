@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useStoreon } from "storeon/react";
 
 import redaxios, { to } from "@/utils/fetch";
 import UNIT from "@/utils/product-unit";
 
 export default WrappedComponent => props => {
-    const { match } = props;
+    const { match, location } = props;
     const [isLoaded, setIsLoaded] = useState(false);
     const [product, setProduct] = useState({});
     const [brandArticles, setBrandArticles] = useState([]);
@@ -15,10 +14,15 @@ export default WrappedComponent => props => {
 
     useEffect(_ => {
         (async _ => {
+            const isPromotion = location.search.includes("_view=promotion");
+            const targetPath = isPromotion
+                ? "products"
+                : "product-with-settings";
+
             const [err, productResponse] = await to(
-                redaxios(`/api/product-with-settings/${match.params.productId}`)
+                redaxios(`/api/${targetPath}/${match.params.productId}`)
             );
-            
+
             const [brandArticlesErr, brandArticlesResponse] = await to(
                 redaxios(`/api/articles/brands`)
             );
@@ -32,7 +36,9 @@ export default WrappedComponent => props => {
             setRegionArticles(regionArticlesResponse.data);
             setGrapeArticles(grapeArticlesResponse.data);
             setBrandArticles(brandArticlesResponse.data);
-            setProduct(productResponse.data);
+            setProduct(
+                isPromotion ? productResponse.data[0] : productResponse.data
+            );
             setIsLoaded(true);
         })();
     }, []);

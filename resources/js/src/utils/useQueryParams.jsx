@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from "react";
 import { useLocation } from "react-router-dom";
 
-const commonProductFilters = ["price_max", "price_max"];
+const commonProductFilters = ["price_min", "price_max"];
 
 export default function useQueryParams() {
     const [state, dispatch] = useReducer(queryReducer, { params: null });
@@ -42,6 +42,7 @@ function normalizeQueryParams(params = {}, allowedParamNames = []) {
             acc[cur] = params[cur];
             return acc;
         }, {});
+    
     return normalized;
 }
 
@@ -52,8 +53,6 @@ function applyParam(search = "", key = "", value = "") {
 
     if (!key.includes("[]")) searchParams.set(key, value);
     else searchParams.append(key, value);
-
-    console.log("s", `?${searchParams.toString()}`);
 
     return `?${searchParams.toString()}`;
 }
