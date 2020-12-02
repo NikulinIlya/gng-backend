@@ -155,6 +155,16 @@ class Product extends Model
     }
 
     /**
+     * Get the promotion associated with the product.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function promotion()
+    {
+        return $this->hasOne('App\Models\Promotion');
+    }
+
+    /**
      * @return array
      */
     public function toSearchableArray()
