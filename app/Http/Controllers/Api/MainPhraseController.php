@@ -27,7 +27,7 @@ class MainPhraseController
      */
     public function index()
     {
-        return $this->service->index();
+        return $this->service->getEntitiesCollection();
     }
 
     /**
@@ -38,6 +38,6 @@ class MainPhraseController
      */
     public function show($id)
     {
-        return $this->service->show($id);
+        return $this->service->getEntitiesCollection($id);
     }
 }

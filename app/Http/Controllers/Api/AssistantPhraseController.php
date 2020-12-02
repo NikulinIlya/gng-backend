@@ -27,7 +27,7 @@ class AssistantPhraseController
      */
     public function index()
     {
-        return $this->service->index();
+        return $this->service->getEntitiesCollection();
     }
 
     /**
@@ -38,7 +38,7 @@ class AssistantPhraseController
      */
     public function show($id)
     {
-        return $this->service->show($id);
+        return $this->service->getEntitiesCollection($id);
     }
 
     /**
@@ -49,6 +49,6 @@ class AssistantPhraseController
      */
     public function getByBrand($brandId)
     {
-        return $this->service->index()->where('brand_id', $brandId);
+        return $this->service->getEntitiesCollection()->where('brand_id', $brandId);
     }
 }

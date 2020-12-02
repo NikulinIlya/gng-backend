@@ -27,7 +27,7 @@ class WhiskeyController
      */
     public function index()
     {
-        return $this->service->index();
+        return $this->service->getProductsEntitiesCollection();
     }
 
     /**
@@ -38,6 +38,6 @@ class WhiskeyController
      */
     public function show($id)
     {
-        return $this->service->show($id);
+        return $this->service->getProductsEntitiesCollection($id);
     }
 }

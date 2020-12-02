@@ -28,7 +28,7 @@ class ProductController
      */
     public function index()
     {
-        return $this->service->index();
+        return $this->service->getProductsEntitiesCollection();
     }
 
     /**
@@ -39,7 +39,7 @@ class ProductController
      */
     public function show($id)
     {
-        return $this->service->show($id);
+        return $this->service->getProductsEntitiesCollection($id);
     }
 
     /**
@@ -57,10 +57,11 @@ class ProductController
         $query = $request->input('query');
 
         if (strlen($query) < 3) {
-            return $this->service->index();
+            return $this->service->getProductsEntitiesCollection();
         }
 
         $products = Product::search($query)
+            ->where('stored', 1)
             ->orderBy('available', 'desc')
             ->orderBy('brand_id', 'asc')
             ->get();

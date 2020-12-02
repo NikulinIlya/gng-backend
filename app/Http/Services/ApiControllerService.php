@@ -31,28 +31,6 @@ class ApiControllerService
     }
 
     /**
-     * Display a listing of entities.
-     *
-     * @return mixed
-     */
-    public function index()
-    {
-        return $this->getEntitiesCollection($this->model);
-    }
-
-    /**
-     * Display the specified entity with set content fields.
-     *
-     * @param int $id
-     *
-     * @return mixed
-     */
-    public function show($id)
-    {
-        return $this->getEntitiesCollection($this->model, $id);
-    }
-
-    /**
      * Get drink entities with set grape sorts field.
      *
      * @param Model    $grapesPivotModel
@@ -63,7 +41,7 @@ class ApiControllerService
      */
     public function getWithGrapeSorts($grapesPivotModel, $idName, $drinkId = null)
     {
-        $entities = $this->getEntitiesCollection($this->model, $drinkId);
+        $entities = $this->getEntitiesCollection($drinkId);
 
         $newEntities = [];
         foreach ($entities as $entity) {
@@ -87,21 +65,20 @@ class ApiControllerService
     }
 
     /**
-     * Display the specified entity with set content fields.
+     * Display specified entities with set content fields.
      *
-     * @param Model    $model
      * @param int|null $id
      *
      * @return mixed
      */
-    protected function getEntitiesCollection($model, $id = null)
+    public function getEntitiesCollection($id = null)
     {
         $locale = app()->getLocale();
 
         if (isset($id)) {
             $entity = ($locale === 'ru')
-                ? $model::findOrFail($id)
-                : $model::withTranslations($locale)->findOrFail($id);
+                ? $this->model::findOrFail($id)
+                : $this->model::withTranslations($locale)->findOrFail($id);
 
             $entities = [$entity];
         } else {
@@ -111,6 +88,73 @@ class ApiControllerService
         }
 
         return $this->makeEntityCollection($entities, $locale);
+    }
+
+    /**
+     * Display specified products entities with set content fields.
+     *
+     * @param int|null $id
+     *
+     * @return mixed
+     */
+    public function getProductsEntitiesCollection($id = null)
+    {
+        $locale = app()->getLocale();
+
+        if (isset($id)) {
+            $entity = ($locale === 'ru')
+                ? $this->model::findOrFail($id)
+                : $this->model::withTranslations($locale)->findOrFail($id);
+
+            $entities = [$entity];
+        } else {
+            if (class_basename($this->model) != 'Product') {
+                $tableName = $this->getTableNameOfModel();
+                $entities = ($locale === 'ru')
+                    ? $this->model::join('products', $tableName . '.product_id', '=', 'products.id')
+                        ->where('products.stored', 1)
+                        ->orderBy('products.available', 'desc')
+                        ->orderBy('products.brand_id', 'desc')
+                        ->select($tableName . '.*')
+                        ->get()
+                    //TODO: add select 'products.*'
+                    : $this->model::withTranslations($locale)
+                        ->join('products', $tableName . '.product_id', '=', 'products.id')
+                        ->where('products.stored', 1)
+                        ->orderBy('products.available', 'desc')
+                        ->orderBy('products.brand_id', 'desc')
+                        ->select($tableName . '.*')
+                        ->get();
+            } else {
+                $entities = ($locale === 'ru')
+                    ? $this->model::where('stored', 1)
+                        ->orderBy('available', 'desc')
+                        ->orderBy('brand_id', 'desc')
+                        ->get()
+                    : $this->model::withTranslations($locale)
+                        ->where('stored', 1)
+                        ->orderBy('available', 'desc')
+                        ->orderBy('brand_id', 'desc')
+                        ->get();
+            }
+
+        }
+
+        return $this->makeEntityCollection($entities, $locale);
+    }
+
+    /**
+     * Get the table name from the model class.
+     *
+     * @return string
+     */
+    private function getTableNameOfModel()
+    {
+        if (class_basename($this->model) === 'Glass') {
+            return 'glasses';
+        }
+
+        return strtolower(class_basename($this->model)) . 's';
     }
 
     /**
@@ -166,7 +210,7 @@ class ApiControllerService
             $this->setImageField($entity);
 
             // добавляется доп поле quantity пока нет данных
-            if (get_class($this->model) == 'App\Models\Product') {
+            if (class_basename($this->model) === 'Product') {
                 $service = new ProductStockService();
                 $entity['quantity'] = $service->getProductAvailableQuantity($entity->id);
             }

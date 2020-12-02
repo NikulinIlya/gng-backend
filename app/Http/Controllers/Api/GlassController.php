@@ -27,7 +27,7 @@ class GlassController
      */
     public function index()
     {
-        return $this->service->index();
+        return $this->service->getProductsEntitiesCollection();
     }
 
     /**
@@ -38,6 +38,6 @@ class GlassController
      */
     public function show($id)
     {
-        return $this->service->show($id);
+        return $this->service->getProductsEntitiesCollection($id);
     }
 }
