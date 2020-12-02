@@ -51,6 +51,6 @@ class VineController
     {
         $vines = $this->service->getWithProducts();
 
-        return $this->service->paginate($vines, 10);
+        return $this->service->paginate($vines, 12);
     }
 }
