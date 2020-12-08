@@ -11,15 +11,15 @@ function ExpandableMode({ items }) {
     const [isExpanded, setIsExpanded] = useState(false);
     return (
         <div className={`catalog-expandable ${isExpanded ? "expanded" : ""}`}>
-            <div className="catalog-expandable__head">
+            <div
+                className="catalog-expandable__head"
+                onClick={_ => setIsExpanded(!isExpanded)}
+            >
                 <h2 className="catalog-expandable__title">
                     {t("catalog", "Каталог")}
                 </h2>
                 <div className="catalog-expandable__burger">
-                    <Burger
-                        onClick={_ => setIsExpanded(!isExpanded)}
-                        state={isExpanded}
-                    />
+                    <Burger state={isExpanded} />
                 </div>
             </div>
             <div className="catalog-expandable__body" hidden>
