@@ -22,13 +22,10 @@ class ProductTest extends TestCase
 
     protected function createProductCategoriesWithProducts()
     {
-        $productCategories = factory(ProductCategory::class, $this->count)
-            ->create()
-            ->each(
-                function ($productCategory) {
-                    $productCategory->products()->save(factory(Product::class)->make());
-                }
-            );
+
+        ProductCategory::factory()
+                       ->has(Product::factory()->count($this->count))
+                       ->create($this->count);
     }
 
     /** @test */
@@ -66,12 +63,11 @@ class ProductTest extends TestCase
     {
         $firstProductCategory = ProductCategory::first();
 
-        factory(Product::class)
-            ->create(
-                [
-                    'product_category_id' => $firstProductCategory->id,
-                ]
-            );
+        Product::factory()->create(
+            [
+                'product_category_id' => $firstProductCategory->id,
+            ]
+        );
 
         $response = $this->get('/api/products-by-category/'.$firstProductCategory->slug);
 
@@ -101,7 +97,7 @@ class ProductTest extends TestCase
 
         $this->assertCount(10, $response['data'][0]);
 
-        $newProductCategory = factory(ProductCategory::class)->create();
+        $newProductCategory = ProductCategory::factory()->create();
 
         $response = $this->get('/api/products-by-category/'.$newProductCategory->slug);
 

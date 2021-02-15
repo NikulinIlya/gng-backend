@@ -27,12 +27,15 @@ class OrderTest extends TestCase
     /** @test */
     public function test_store_order_request()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        factory(UserInfo::class)->create([
-            'user_id' => $user->id,
-            'email' => $user->email,
-        ]);
+        UserInfo::factory()->create(
+            [
+                'user_id' => $user->id,
+                'email'   => $user->email,
+            ]
+        );
+
 
         Sanctum::actingAs($user);
 
@@ -43,8 +46,7 @@ class OrderTest extends TestCase
         $response->assertStatus(400)
             ->assertJson(['Error' => 'Empty cart']);
 
-        factory(Product::class, 3)
-            ->create();
+        Product::factory()->count(3)->create();
 
         $response = $this->json('POST', '/api/orders/create', [
             'cart' => [
