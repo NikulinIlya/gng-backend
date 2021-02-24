@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'admin-panel'], function () {
+    Route::get('orders/export', 'Api\OrderController@export')->name('orders.export');
     Voyager::routes();
 });
 

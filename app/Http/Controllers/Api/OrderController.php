@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exports\OrdersExport;
 use App\Http\Controllers\Controller;
-use App\Mail\OrderPlaced;
-use App\Mail\UserOrderPlaced;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use Cart;
 use Illuminate\Http\Request;
-use Mail;
 
 class OrderController extends Controller
 {
@@ -45,7 +43,6 @@ class OrderController extends Controller
                 );
         }
 
-        // {"cart":{"order":[{"id":10,"quantity":1,"unit":"thing"},{"id":20,"quantity":1,"unit":"thing"}],"promo":"TEST"}}
         $cart = $request->input('cart');
 
         $price = 0;
@@ -55,10 +52,6 @@ class OrderController extends Controller
                 : Product::find($cartItem['id'])->case_price;
 
             $price += $productPrice;
-        }
-
-        if (array_key_exists('promo', $cart) && $cart['promo'] !== null) {
-            // TODO:
         }
 
         $order = Order::create(
@@ -83,9 +76,6 @@ class OrderController extends Controller
                 ]
             );
         }
-
-//        Mail::send(new OrderPlaced($order));
-//        Mail::send(new UserOrderPlaced($order));
 
         return response()
             ->json(
@@ -116,5 +106,10 @@ class OrderController extends Controller
         }
 
         return false;
+    }
+
+    public function export()
+    {
+        return new OrdersExport();
     }
 }
