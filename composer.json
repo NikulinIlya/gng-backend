@@ -10,6 +10,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.0",
+        "ext-json": "*",
         "bumbummen99/shoppingcart": "^2.9",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
@@ -19,9 +20,9 @@
         "laravel/scout": "^8.1",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
+        "maatwebsite/excel": "^3.1",
         "tcg/voyager": "^1.4",
-        "teamtnt/laravel-scout-tntsearch-driver": "^11.0",
-        "ext-json": "*"
+        "teamtnt/laravel-scout-tntsearch-driver": "^11.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.8",
