@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Button from "@/components/Button";
 import useTranslate from "@/utils/useTranslate";
 
-import slideTemplate from "@/assets/images/templates/christmas.png";
+import slideTemplate from "@/assets/images/templates/banner.jpg";
 
 import "./slider.scss";
 
