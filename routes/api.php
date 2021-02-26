@@ -26,9 +26,16 @@ Route::get(
 
         $request->session()->put('locale', $locale);
 
-        setcookie('locale', $locale, time() + 86400 * 365, '/; SameSite=None; Secure', $_SERVER['HTTP_HOST'], false, false);
+        setcookie('locale', $locale, [
+            'expires' => time() + 86400 * 365,
+            'path' => '/',
+            'domain' => $_SERVER['HTTP_HOST'],
+            'secure' => false,
+            'httponly' => false,
+            'samesite' => 'None'
+        ]);
 
-        return response()->json($locale, 200);
+        return response()->json($locale);
     }
 );
 
