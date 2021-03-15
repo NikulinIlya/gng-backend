@@ -1,12 +1,12 @@
 @component('mail::message')
-# Introduction
+    # Hello!
 
-The body of your message.
+    Your email has been successfully verified.
 
-@component('mail::button', ['url' => '/'])
-Button Text
-@endcomponent
+    @component('mail::button', ['url' => '/'])
+        Go to shopping
+    @endcomponent
 
-Thanks,<br>
-{{ config('app.name') }}
+    Thanks,<br>
+    {{ config('app.name') }}
 @endcomponent

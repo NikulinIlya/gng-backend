@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from "react";
+import React, { useReducer } from "react";
 
 import { status as REQUEST } from "@/utils/request-status";
 import { createApiService } from "@/utils/api-services";
@@ -15,13 +15,21 @@ export default WrappedComponent => props => {
     const [state, dispatch] = useReducer(searchReducer, {
         products: [],
         productIds: [],
-        status: REQUEST.pending
+        status: REQUEST.pending,
+        mode: ""
     });
 
     const setStatus = useRequestStatus(dispatch);
 
     async function fetchSearchResults(query) {
-        if (!query) return;
+        if (!query) {
+            dispatch({
+                type: "set-products",
+                payload: []
+            });
+            setStatus(REQUEST.success);
+            return;
+        }
         setStatus(REQUEST.pending);
         const [err, searchResponse] = await searchFetcher({
             search: `?query=${query}`

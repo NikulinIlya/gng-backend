@@ -28,24 +28,18 @@ class ResetPasswordController extends Controller
         );
 
         if ($validator->fails()) {
-            return response()
-                ->json(
-                    [
-                        'error' => 'wrong data',
-                    ],
-                    422
-                );
+            return response()->json(['error' => 'wrong data'], 422);
         }
 
         $user = $request->user();
 
         if (! $user || ! Hash::check($request->old_password, $user->password)) {
-            return new JsonResponse(['error' => 'The provided credentials are incorrect.'], 401);
+            return response()->json(['error' => 'The provided credentials are incorrect.', 401]);
         }
 
         $user->password = Hash::make($request->password);
         $user->save();
 
-        return new JsonResponse(['message' => 'Update completed.']);
+        return response()->json(['message' => 'Update completed.']);
     }
 }

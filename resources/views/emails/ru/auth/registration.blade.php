@@ -859,11 +859,45 @@
                                             "
                                           >
                                             <span
-                                              >Ваш email успешно подтвержден</span
+                                              >Спасибо за заполнение формы
+                                              подписки на нашем сайте {{
+                                              env('APP_URL') }}</span
                                             >
                                           </td>
                                         </tr>
-                                        
+                                        <tr>
+                                          <td
+                                            style="
+                                              padding-bottom: 6px;
+                                              border-collapse: collapse !important;
+                                              -webkit-text-size-adjust: 100%;
+                                              -ms-text-size-adjust: 100%;
+                                              font-family: Arial, sans-serif;
+                                            "
+                                          >
+                                            <span>
+                                              <a href="{{ $verifyUrl }}"
+                                                >Подтвердите</a
+                                              >, пожалуйста, свой адрес
+                                              электронной почты!</span
+                                            >
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td
+                                            style="
+                                              padding-bottom: 6px;
+                                              border-collapse: collapse !important;
+                                              -webkit-text-size-adjust: 100%;
+                                              -ms-text-size-adjust: 100%;
+                                              font-family: Arial, sans-serif;
+                                            "
+                                          >
+                                            <span>
+                                              Подтверждая свой email, вы даете согласие на <a href="{{ env('APP_URL') . '/static?doc=3' }}">обработку и хранение персональных данных.</a></span
+                                            >
+                                          </td>
+                                        </tr>
                                       </tbody>
                                     </table>
 
@@ -889,7 +923,7 @@
                                             "
                                           >
                                             <a
-                                              href="https://gng.wine/wines"
+                                              href="{{ $verifyUrl }}"
                                               style="
                                                 color: rgb(0, 46, 54);
                                                 text-decoration: none;
@@ -935,7 +969,7 @@
                                                           sans-serif;
                                                       "
                                                     >
-                                                      Перейти к покупкам
+                                                      Подтвердить
                                                     </td>
                                                   </tr>
                                                 </tbody>

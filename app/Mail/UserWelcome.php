@@ -33,9 +33,15 @@ class UserWelcome extends Mailable
     {
         $lang = app()->getLocale();
 
-        return $this->from(env('MAIL_FROM_ADDRESS'))
+        $fromName = ($lang === 'ru') ? 'Менеджеры магазина gng.wine' : 'Gng.wine store managers';
+        $subject = ($lang === 'ru') ? 'Регистрация на сайте gng.wine прошла успешно!' : 'Registration on the gng.wine website was successful!';
+
+        return $this->from(env('MAIL_FROM_ADDRESS'), $fromName)
                     ->to($this->user->email, $this->user->name)
                     ->subject('Welcome')
-                    ->view("emails.$lang.user.welcome");
+                    ->replyTo(env('MAIL_FROM_ADDRESS'), $fromName)
+                    ->subject($subject)
+                    ->view("emails.$lang.user.welcome")
+                    ->with('user', $this->user);
     }
 }
