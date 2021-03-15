@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\Auth\UserVerify;
+use App\Mail\UserWelcome;
 use App\Models\User;
 use App\Models\UserInfo;
 use Illuminate\Http\JsonResponse;
@@ -50,11 +51,22 @@ class RegisterController extends Controller
         }
 
         $user->verify_code = $this->makeVerifyCode($user->id, $user->name);
+
+        // Временно для мгновенной регистрации без верификации
+        $user->email_verified_at = time();
         $user->save();
 
         $this->createUserInfo($user->id, $request->all());
 
-        return $this->sendVerifyEmail($user->name, $user->email, $user->verify_code);
+        try {
+            Mail::send(new UserWelcome($user));
+        } catch (\Exception $exception) {
+            Log::error('Error sending UserWelcome mail: ' . $exception->getMessage());
+        }
+
+        return new JsonResponse(['token' => $user->createToken('authToken')->plainTextToken], 201);
+
+//        return $this->sendVerifyEmail($user->name, $user->email, $user->verify_code);
     }
 
     /**
