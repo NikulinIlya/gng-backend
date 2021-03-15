@@ -863,7 +863,7 @@
                                             >
                                           </td>
                                         </tr>
-                                        
+
                                       </tbody>
                                     </table>
 
@@ -1018,7 +1018,7 @@
                                               Please do not reply to this
                                               message. <br />
                                               <br />
-                                              &copy; 2020 gng.wine All rights
+                                              &copy; 2021 gng.wine All rights
                                               reserved</span
                                             >
                                           </td>

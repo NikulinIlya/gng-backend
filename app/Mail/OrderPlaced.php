@@ -33,8 +33,8 @@ class OrderPlaced extends Mailable
     {
         return $this->from(env('MAIL_FROM_ADDRESS'))
             ->to(env('MAIL_ORDERS_ADDRESS'), 'G&G manager')
-            ->subject('A new order')
-            ->view('emails.en.orders.order-info')
+            ->subject('A new order #' . $this->order->id)
+            ->markdown('emails.en.orders.order-info')
             ->with('order', $this->order);
     }
 }

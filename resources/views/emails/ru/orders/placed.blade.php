@@ -1220,7 +1220,7 @@
                                                   -ms-text-size-adjust: 100%;
                                                 "
                                                 href="https://gng.wine/profile#orders"
-                                                >на наш сайт.</a
+                                                >на наш сайт</a
                                               >.
                                             </span>
                                           </td>
@@ -1299,7 +1299,7 @@
                                               Please do not reply to this
                                               message. <br />
                                               <br />
-                                              &copy; 2020 gng.wine All rights
+                                              &copy; 2021 gng.wine All rights
                                               reserved</span
                                             >
                                           </td>
