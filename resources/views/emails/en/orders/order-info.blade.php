@@ -21,9 +21,10 @@
     Vendor Code: {{ $product->vendor_code }}
     Quantity: {{ $product->pivot->quantity }}
     Type: {{ $product->pivot->type }}
-    Price: {{ $product->price }} rubles
     @if($product->case_price > 0)
-        Case Price: {{ $product->case_price }} rubles
+Case Price: {{ $product->case_price * $product->pivot->quantity}} rubles
+    @else
+Price: {{ $product->price * $product->pivot->quantity }} rubles
     @endif
 @endforeach
 
