@@ -85,7 +85,7 @@ class OrderController extends Controller
             );
         }
 
-        try {
+        /*try {
             Mail::send(new OrderPlaced($order));
         } catch (\Exception $exception) {
             Log::error('Error sending OrderPlaced mail: ' . $exception->getMessage());
@@ -95,7 +95,7 @@ class OrderController extends Controller
             Mail::send(new UserOrderPlaced($order));
         } catch (\Exception $exception) {
             Log::error('Error sending UserOrderPlaced mail: ' . $exception->getMessage());
-        }
+        }*/
 
         return response()
             ->json(
