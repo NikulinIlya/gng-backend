@@ -23,7 +23,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        return $request->user()->orders()->with('products')->get();
+        return $request->user()->orders()->with('products')->orderBy('updated_at', 'desc')->get();
     }
 
     /**
