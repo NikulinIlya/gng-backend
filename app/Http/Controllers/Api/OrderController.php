@@ -54,7 +54,7 @@ class OrderController extends Controller
                 ? Product::find($cartItem['id'])->price
                 : Product::find($cartItem['id'])->case_price;
 
-            $price += $productPrice;
+            $price += $productPrice * $cartItem['quantity'];
         }
 
         if (array_key_exists('promo', $cart) && $cart['promo'] !== null) {
