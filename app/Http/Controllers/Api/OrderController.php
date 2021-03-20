@@ -10,6 +10,7 @@ use App\Models\OrderProduct;
 use App\Models\Product;
 use Cart;
 use Illuminate\Http\Request;
+use Log;
 use Mail;
 
 class OrderController extends Controller
@@ -84,8 +85,17 @@ class OrderController extends Controller
             );
         }
 
-        Mail::send(new OrderPlaced($order));
-        Mail::send(new UserOrderPlaced($order));
+        try {
+            Mail::send(new OrderPlaced($order));
+        } catch (\Exception $exception) {
+            Log::error('Error sending OrderPlaced mail: ' . $exception->getMessage());
+        }
+
+        try {
+            Mail::send(new UserOrderPlaced($order));
+        } catch (\Exception $exception) {
+            Log::error('Error sending UserOrderPlaced mail: ' . $exception->getMessage());
+        }
 
         return response()
             ->json(
