@@ -762,8 +762,8 @@
 
                                       <img
                                         src="{{ asset('storage/mail/logo.png') }}"
-                                        alt="Amazon"
-                                        title="Amazon"
+                                        alt="GNG.WINE"
+                                        title="GNG.WINE"
                                         class="brandImage"
                                         border="0"
                                         width="130"
