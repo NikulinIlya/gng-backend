@@ -1,4 +1,4 @@
-<html>
+<html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="format-detection" content="telephone=no" />
@@ -7,6 +7,7 @@
         content="width=device-width, initial-scale=1.0; user-scalable=no;"
     />
     <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+    <title>Email</title>
     <style>
         body {
             width: 100% !important;
