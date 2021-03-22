@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="format-detection" content="telephone=no" />
@@ -8,6 +8,7 @@
         content="width=device-width, initial-scale=1.0; user-scalable=no;"
     />
     <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+    <title>Email</title>
     <style>
         body {
             width: 100% !important;
@@ -650,7 +651,6 @@
             }
         }
     </style>
-
 </head>
 
 <body
@@ -1179,7 +1179,7 @@
                                                         >
                                             <span
                                             >Thanks again for choosing us! Respectfully,
-                                                {{ config('app.name') }}</span
+                                                Grapes & Grains</span
                                             >
                                                         </td>
                                                     </tr>
@@ -1219,6 +1219,104 @@
                                                   href="https://gng.wine/profile#orders"
                                                   >to our website</a
                                               >.
+                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <!--<![endif]-->
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <table
+                                        class="card orderAdditionalInfo"
+                                        style="
+                                background-color: rgb(255, 255, 255);
+                                width: 100%;
+                                padding-left: 20px;
+                                padding-right: 21px;
+                                padding-top: 30px;
+                                padding-bottom: 30px;
+                                border: 0;
+                                margin-bottom: 5px;
+                                border-collapse: collapse !important;
+                                -webkit-text-size-adjust: 100%;
+                                -ms-text-size-adjust: 100%;
+                              "
+                                    >
+                                        <tbody>
+                                        <tr>
+                                            <td
+                                                class="cardTD orderAdditionalInfoTD"
+                                                align="left"
+                                                style="
+                                      width: 100%;
+                                      padding-left: 20px;
+                                      padding-right: 20px;
+                                      padding-top: 30px;
+                                      padding-bottom: 30px;
+                                      border-collapse: collapse !important;
+                                      -webkit-text-size-adjust: 100%;
+                                      -ms-text-size-adjust: 100%;
+                                      font-family: Arial, sans-serif;
+                                    "
+                                            >
+                                                <table
+                                                    class="instructionTable"
+                                                    style="
+                                        font-size: 18px;
+                                        line-height: 18px;
+                                        color: rgb(135, 149, 150);
+                                        border-collapse: collapse !important;
+                                        -webkit-text-size-adjust: 100%;
+                                        -ms-text-size-adjust: 100%;
+                                      "
+                                                >
+                                                    <tbody>
+                                                    <tr>
+                                                        <td
+                                                            style="
+                                              padding-bottom: 18px;
+                                              border-collapse: collapse !important;
+                                              -webkit-text-size-adjust: 100%;
+                                              -ms-text-size-adjust: 100%;
+                                              font-family: Arial, sans-serif;
+                                            "
+                                                        >
+                                            <span>
+                                                In accordance with the Decree of the Government of the Russian Federation of September 27, 2007 N 612 (as amended of November 30, 2019) "On approval of the Rules for the sale of goods by remote means", we do not sell alcoholic beverages online.
+                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <table
+                                                    class="instructionTableReducedPadding"
+                                                    style="
+                                        font-size: 18px;
+                                        line-height: 18px;
+                                        color: rgb(135, 149, 150);
+                                        border-collapse: collapse !important;
+                                        -webkit-text-size-adjust: 100%;
+                                        -ms-text-size-adjust: 100%;
+                                      "
+                                                >
+                                                    <tbody>
+                                                    <tr>
+                                                        <td
+                                                            style="
+                                              padding-bottom: 2px;
+                                              border-collapse: collapse !important;
+                                              -webkit-text-size-adjust: 100%;
+                                              -ms-text-size-adjust: 100%;
+                                              font-family: Arial, sans-serif;
+                                            "
+                                                        >
+                                            <span>
+                                                You can pick up your order at the address: Moscow, st. Seleznevskaya, house 19/2.
+                                                For questions about ordering, you can contact us by phone: +7 982 655 5000
                                             </span>
                                                         </td>
                                                     </tr>

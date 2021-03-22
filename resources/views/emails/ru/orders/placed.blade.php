@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="format-detection" content="telephone=no" />
@@ -8,6 +8,7 @@
       content="width=device-width, initial-scale=1.0; user-scalable=no;"
     />
     <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+    <title>Email</title>
     <style>
       body {
         width: 100% !important;
@@ -650,7 +651,6 @@
         }
       }
     </style>
-
   </head>
 
   <body
@@ -1051,8 +1051,8 @@
                                       </tbody>
                                     </table>
 
-@foreach ($order->products as $key => $product)
-<table
+                                @foreach ($order->products as $key => $product)
+                                    <table
                                       class="informationTable"
                                       style="
                                         font-size: 18px;
@@ -1152,7 +1152,7 @@
                                         </tr>
                                       </tbody>
                                     </table>
-@endforeach
+                                @endforeach
 
 
                                     <table
@@ -1179,8 +1179,7 @@
                                           >
                                             <span
                                               >Еще раз спасибо за то, что
-                                              выбрали нас! С уважением, {{
-                                              config('app.name') }}</span
+                                              выбрали нас! С уважением, Grapes & Grains</span
                                             >
                                           </td>
                                         </tr>
@@ -1231,6 +1230,106 @@
                                   </td>
                                 </tr>
                               </tbody>
+                            </table>
+
+                            <table
+                                  class="card orderAdditionalInfo"
+                                  style="
+                                background-color: rgb(255, 255, 255);
+                                width: 100%;
+                                padding-left: 20px;
+                                padding-right: 21px;
+                                padding-top: 30px;
+                                padding-bottom: 30px;
+                                border: 0;
+                                margin-bottom: 5px;
+                                border-collapse: collapse !important;
+                                -webkit-text-size-adjust: 100%;
+                                -ms-text-size-adjust: 100%;
+                              "
+                              >
+                                  <tbody>
+                                  <tr>
+                                      <td
+                                          class="cardTD orderAdditionalInfoTD"
+                                          align="left"
+                                          style="
+                                      width: 100%;
+                                      padding-left: 20px;
+                                      padding-right: 20px;
+                                      padding-top: 30px;
+                                      padding-bottom: 30px;
+                                      border-collapse: collapse !important;
+                                      -webkit-text-size-adjust: 100%;
+                                      -ms-text-size-adjust: 100%;
+                                      font-family: Arial, sans-serif;
+                                    "
+                                      >
+                                          <table
+                                              class="instructionTable"
+                                              style="
+                                        font-size: 18px;
+                                        line-height: 18px;
+                                        color: rgb(135, 149, 150);
+                                        border-collapse: collapse !important;
+                                        -webkit-text-size-adjust: 100%;
+                                        -ms-text-size-adjust: 100%;
+                                      "
+                                          >
+                                              <tbody>
+                                              <tr>
+                                                  <td
+                                                      style="
+                                              padding-bottom: 18px;
+                                              border-collapse: collapse !important;
+                                              -webkit-text-size-adjust: 100%;
+                                              -ms-text-size-adjust: 100%;
+                                              font-family: Arial, sans-serif;
+                                            "
+                                                  >
+                                            <span>
+                                                В соответствии с Постановлением Правительства РФ от 27.09.2007 N 612 (ред. от 30.11.2019)
+                                                «Об утверждении Правил продажи товаров дистанционным способом» мы не продаем алкогольную продукцию онлайн.
+                                            </span>
+                                                  </td>
+                                              </tr>
+                                              </tbody>
+                                          </table>
+
+                                          <table
+                                              class="instructionTableReducedPadding"
+                                              style="
+                                        font-size: 18px;
+                                        line-height: 18px;
+                                        color: rgb(135, 149, 150);
+                                        border-collapse: collapse !important;
+                                        -webkit-text-size-adjust: 100%;
+                                        -ms-text-size-adjust: 100%;
+                                      "
+                                          >
+                                              <tbody>
+                                              <tr>
+                                                  <td
+                                                      style="
+                                              padding-bottom: 2px;
+                                              border-collapse: collapse !important;
+                                              -webkit-text-size-adjust: 100%;
+                                              -ms-text-size-adjust: 100%;
+                                              font-family: Arial, sans-serif;
+                                            "
+                                                  >
+                                            <span>
+                                                Ваш заказ вы можете забрать по адресу: г. Москва, ул. Селезневская, дом 19/2.
+                                                По вопросам оформления заказа вы можете связаться с нами по телефону: +7 982 655 5000
+                                            </span>
+                                                  </td>
+                                              </tr>
+                                              </tbody>
+                                          </table>
+                                          <!--<![endif]-->
+                                      </td>
+                                  </tr>
+                                  </tbody>
                             </table>
                             <table
                               class="card footer"
