@@ -1,27 +1,31 @@
 @component('mail::message')
-    # An Order Has Been Made
+# An Order Has Been Made
 
-    **Order ID:** {{ $order->id }}
+**Order ID:** {{ $order->id }}
 
-    **Order Total:** {{ $order->price }}
+**Order Total:** {{ $order->price }}
 
-    **User Email:** {{ $order->email }}
+**User Email:** {{ $order->email }}
 
-    **User Name:** {{ $order->username ?? '--' }}
+**User Name:** {{ $order->username ?? '--' }}
 
-    **User Phone:** {{ $order->phone ?? '--' }}
+**User Phone:** {{ $order->phone ?? '--' }}
 
-    **Order Comment:** {{ $order->comment ?? '--' }}
+**Order Comment:** {{ $order->comment ?? '--' }}
 
-    **Items Ordered:**
+**Items Ordered:**
 
-    @foreach ($order->products as $key => $product)
-    **{{$key+1}}.**
+@foreach ($order->products as $key => $product)
+    {{$key+1}}.
     Name: {{ $product->name }}
     Vendor Code: {{ $product->vendor_code }}
     Quantity: {{ $product->pivot->quantity }}
     Type: {{ $product->pivot->type }}
-    Price: {{ $product->price }} rubles
-    Case Price: {{ $product->case_price }} rubles
-    @endforeach
+    @if($product->case_price > 0)
+Case Price: {{ $product->case_price * $product->pivot->quantity}} rubles
+    @else
+Price: {{ $product->price * $product->pivot->quantity }} rubles
+    @endif
+@endforeach
+
 @endcomponent

@@ -1,21 +1,38 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Models\UserInfo;
 use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(UserInfo::class, function (Faker $faker) {
-    $genders = ['male', 'female'];
+class UserInfoFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = UserInfo::class;
 
-    return [
-        'email' => null,
-        'second_name' => $faker->lastName,
-        'patronymic' => $faker->lastName,
-        'phone' => (string) rand(70000000000, 89999999999),
-        'gender' => $genders[array_rand($genders, 1)],
-        'birthday' => $faker->date(),
-        'discount_agreed' => rand(0, 1),
-        'events_agreed' => rand(0, 1),
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $genders = ['male', 'female'];
+
+        return [
+            'email'           => null,
+            'second_name'     => $this->faker->lastName,
+            'patronymic'      => $this->faker->lastName,
+            'phone'           => (string)rand(70000000000, 89999999999),
+            'gender'          => $genders[array_rand($genders, 1)],
+            'birthday'        => $this->faker->date(),
+            'discount_agreed' => rand(0, 1),
+            'events_agreed'   => rand(0, 1),
+        ];
+    }
+}

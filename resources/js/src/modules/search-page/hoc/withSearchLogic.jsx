@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { useStoreon } from "storeon/react";
 
 import useBrands from "@/utils/useBrands";
 import useCart from "@/utils/useCart";
+import useQueryParams from "@/utils/useQueryParams";
 import { status as REQUEST } from "@/utils/request-status";
 
 export default WrappedComponent => props => {
@@ -13,27 +13,55 @@ export default WrappedComponent => props => {
         fetchSearchResults,
         fetchProducts,
         fetchProductsByCategory,
-        setStatus,
-        status
+        status: loadingStatus
     } = props;
     const [query, setQuery] = useState("");
     const [brandId, setBrandId] = useState("");
     const [category, setCategory] = useState("");
-    const { search } = useLocation();
-    const { flatBrandNames } = useStoreon("flatBrandNames");
-    const extendedProducts = useBrands(products);
-    // const [extendedStatus, setExtendedStatus] = useState(REQUEST.pending);
-    const { add } = useCart();
-    const [filteredProducts, setFilteredProducts] = useState(extendedProducts);
+    const [isSearchMode, setIsSearchMode] = useState(false);
+    const [normalizingStatus, setNormalizingStatus] = useState(REQUEST.pending);
 
-    useEffect(_ => handleSearchQuery(search), [search]);
+    const { params } = useQueryParams();
+    const { flatBrandNames } = useStoreon("flatBrandNames");
+    const { add } = useCart();
+    const extendedProducts = useBrands(products);
+    const [filteredProducts, setFilteredProducts] = useState(extendedProducts);
 
     useEffect(
         _ => {
-            brandId && fetchProducts();
+            if (!params) return;
+            
+            if (params["query"] !== undefined) {
+                setQuery(params["query"]);
+                setBrandId("");
+                setCategory("");
+                setIsSearchMode(true);
+                return;
+            }
+
+            if (params["brand_id"]) {
+                setBrandId(params["brand_id"]);
+                setIsSearchMode(false);
+                return;
+            }
+
+            if (params["category"]) {
+                setCategory(params["category"]);
+                setIsSearchMode(false);
+            }
+        },
+        [params]
+    );
+
+    useEffect(
+        _ => {
+            if (brandId) {
+                fetchProducts();
+            }
         },
         [brandId]
     );
+
     useEffect(
         _ => {
             if (category) {
@@ -43,51 +71,38 @@ export default WrappedComponent => props => {
         },
         [category]
     );
-    useEffect(
-        _ => {
-            if (extendedProducts.length && brandId) {
-                setFilteredProducts(
-                    extendedProducts.filter(p => p.brand_id === +brandId)
-                );
-                setStatus(REQUEST.success);
-                return;
-            }
-            if (productIds.length && extendedProducts.length) {
-                setFilteredProducts(
-                    extendedProducts.filter(p => productIds.includes(p.id))
-                );
-                setStatus(REQUEST.success);
-                return;
-            }
-            setFilteredProducts(extendedProducts);
-            setStatus(REQUEST.success);
-        },
-        [extendedProducts, productIds, brandId]
-    );
 
     useEffect(_ => (fetchSearchResults(query), Function.prototype), [query]);
 
-    function handleSearchQuery(search) {
-        if (!search) return;
-        const params = new URLSearchParams(search);
-        if (params.has("query") && params.get("query")) {
-            setQuery(params.get("query"));
-            setBrandId("");
-            return;
-        }
-        if (params.has("brand_id") && params.get("brand_id")) {
-            setBrandId(params.get("brand_id"));
-            return;
-        }
-        if (params.has("category") && params.get("category")) {
-            setCategory(params.get("category"));
-            return;
-        }
-    }
+    useEffect(
+        _ => {
+            if (loadingStatus === REQUEST.pending) return;
 
-    const onAdd = async (id, count = 1, brandId) => {
+            if (isSearchMode) {
+                setFilteredProducts(extendedProducts);
+                setNormalizingStatus(REQUEST.success);
+            } else {
+                if (extendedProducts.length && brandId) {
+                    setFilteredProducts(
+                        extendedProducts.filter(p => p.brand_id === +brandId)
+                    );
+                    setNormalizingStatus(REQUEST.success);
+                    return;
+                }
+                if (extendedProducts.length && productIds.length) {
+                    setFilteredProducts(
+                        extendedProducts.filter(p => productIds.includes(p.id))
+                    );
+                    setNormalizingStatus(REQUEST.success);
+                    return;
+                }
+            }
+        },
+        [extendedProducts, productIds, brandId, loadingStatus, isSearchMode]
+    );
+
+    const onAdd = async (id, count = 1, brandId) =>
         await add(id, count, brandId);
-    };
 
     return (
         <WrappedComponent
@@ -97,8 +112,8 @@ export default WrappedComponent => props => {
             brandId={brandId}
             category={category}
             brandNames={flatBrandNames}
+            normalizingStatus={normalizingStatus}
             onAdd={onAdd}
-            
         />
     );
 };

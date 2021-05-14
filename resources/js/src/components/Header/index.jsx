@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useStoreon } from "storeon/react";
 
 import Info from "./components/InfoLine";
 
-import { HeaderContext } from "@/context/header";
 import SearchInput from "@/components/SearchInput";
 import IconButton from "@/components/IconButton";
 import useMeasures from "@/utils/useMeasures";
@@ -14,7 +13,6 @@ import { history } from "@";
 
 import logo from "@/assets/images/logo.svg";
 import logoText from "@/assets/images/logo-text.svg";
-import favoriteIcon from "@/assets/images/icons/heart.svg";
 import profileIcon from "@/assets/images/icons/profile.svg";
 import cartIcon from "@/assets/images/icons/cart.svg";
 import searchIcon from "@/assets/images/icons/search.svg";
@@ -25,7 +23,6 @@ import "./header.scss";
 const Header = () => {
     const [mobileNavVisibility, setMobileNavVisibility] = useState(false);
     const [mobileSearchVisibility, setMobileSearchVisibility] = useState(false);
-    const { renderingComponent } = useContext(HeaderContext);
     const { isMobile } = useMeasures();
     const { dispatch, productsInCart, isAuthorized } = useStoreon(
         "productsInCart",
@@ -79,18 +76,13 @@ const Header = () => {
                         </div>
                         {!isMobile && (
                             <div className="header__render-container">
-                                {/* Modules can render self components here */}
-                                {renderingComponent ? (
-                                    renderingComponent
-                                ) : (
-                                    <SearchInput
-                                        onChange={({ target }) =>
-                                            history.push(
-                                                `/search?query=${target.value}`
-                                            )
-                                        }
-                                    />
-                                )}
+                                <SearchInput
+                                    onChange={({ target }) =>
+                                        history.push(
+                                            `/search?query=${target.value}`
+                                        )
+                                    }
+                                />
                             </div>
                         )}
                         <div className="header__nav">

@@ -28,6 +28,7 @@ const categoryLabels = {
 
 function SearchPage({
     status,
+    normalizingStatus,
     products,
     query,
     brandId,
@@ -70,7 +71,9 @@ function SearchPage({
                 )}
                 <div className="search-page__results">
                     {status === REQUEST.pending && <Loading />}
-                    {status === REQUEST.success &&
+                    {[status, normalizingStatus].every(
+                        s => s === REQUEST.success
+                    ) &&
                         (products.length ? (
                             <div className="search-page__grid">
                                 {products.map(

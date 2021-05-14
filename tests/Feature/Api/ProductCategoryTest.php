@@ -21,8 +21,7 @@ class ProductCategoryTest extends TestCase
 
     protected function createProductCategories()
     {
-        $productCategories = factory(ProductCategory::class, $this->count)
-            ->create();
+        ProductCategory::factory()->count($this->count)->create();
     }
 
     /** @test */

@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="ru">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -759,7 +758,6 @@
                                         font-family: Arial, sans-serif;
                                       "
                                     >
-
                                       <img
                                         src="{{ asset('storage/mail/logo.png') }}"
                                         alt="GNG.WINE"
@@ -769,7 +767,6 @@
                                         width="130"
                                         style="width: 130px"
                                       />
-
                                     </td>
                                   </tr>
                                 </tbody>
@@ -833,7 +830,7 @@
                                               font-family: Arial, sans-serif;
                                             "
                                           >
-                                            <span>Заказ получен</span>
+                                            <span>Здравствуйте!</span>
                                           </td>
                                         </tr>
                                       </tbody>
@@ -863,10 +860,9 @@
                                             "
                                           >
                                             <span
-                                              >Благодарим за заказ в магазине
-                                              Grapes & Grains. Наш менеджер
-                                              свяжется с Вами в ближайшее
-                                              время.</span
+                                              >Спасибо за заполнение формы
+                                              подписки на нашем сайте {{
+                                              env('APP_URL') }}</span
                                             >
                                           </td>
                                         </tr>
@@ -881,8 +877,10 @@
                                             "
                                           >
                                             <span>
-                                              Номер Вашей заявки: {{ $order->id
-                                              }}</span
+                                              <a href="{{ $verifyUrl }}"
+                                                >Подтвердите</a
+                                              >, пожалуйста, свой адрес
+                                              электронной почты!</span
                                             >
                                           </td>
                                         </tr>
@@ -897,8 +895,7 @@
                                             "
                                           >
                                             <span>
-                                              Стоимость всего заказа: {{
-                                              $order->price }}р</span
+                                              Подтверждая свой email, вы даете согласие на <a href="{{ env('APP_URL') . '/static?doc=3' }}">обработку и хранение персональных данных.</a></span
                                             >
                                           </td>
                                         </tr>
@@ -927,7 +924,7 @@
                                             "
                                           >
                                             <a
-                                              href="https://gng.wine"
+                                              href="{{ $verifyUrl }}"
                                               style="
                                                 color: rgb(0, 46, 54);
                                                 text-decoration: none;
@@ -973,7 +970,7 @@
                                                           sans-serif;
                                                       "
                                                     >
-                                                      Перейти на сайт
+                                                      Подтвердить
                                                     </td>
                                                   </tr>
                                                 </tbody>
@@ -988,349 +985,7 @@
                                 </tr>
                               </tbody>
                             </table>
-                            <table
-                              class="card orderSummaryModule"
-                              style="
-                                background-color: rgb(255, 255, 255);
-                                width: 100%;
-                                padding-left: 20px;
-                                padding-right: 21px;
-                                padding-top: 30px;
-                                padding-bottom: 30px;
-                                border: 0;
-                                margin-bottom: 5px;
-                                border-collapse: collapse !important;
-                                -webkit-text-size-adjust: 100%;
-                                -ms-text-size-adjust: 100%;
-                              "
-                            >
-                              <tbody>
-                                <tr>
-                                  <td
-                                    class="cardTD orderSummaryModuleTD"
-                                    align="left"
-                                    style="
-                                      width: 100%;
-                                      padding-left: 20px;
-                                      padding-right: 20px;
-                                      padding-top: 30px;
-                                      padding-bottom: 30px;
-                                      border-collapse: collapse !important;
-                                      -webkit-text-size-adjust: 100%;
-                                      -ms-text-size-adjust: 100%;
-                                      font-family: Arial, sans-serif;
-                                    "
-                                  >
-                                    <table
-                                      class="greetingTable"
-                                      style="
-                                        font-size: 18px;
-                                        font-weight: bold;
-                                        line-height: 24px;
-                                        color: rgb(0, 46, 54);
-                                        margin-bottom: 4px;
-                                        width: 100%;
-                                        border-collapse: collapse !important;
-                                        -webkit-text-size-adjust: 100%;
-                                        -ms-text-size-adjust: 100%;
-                                      "
-                                    >
-                                      <tbody>
-                                        <tr>
-                                          <td
-                                            style="
-                                              border-collapse: collapse !important;
-                                              -webkit-text-size-adjust: 100%;
-                                              -ms-text-size-adjust: 100%;
-                                              font-family: Arial, sans-serif;
-                                            "
-                                          >
-                                            <span>Заказанные товары</span>
-                                          </td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
 
-                                @foreach ($order->products as $key => $product)
-                                    <table
-                                      class="informationTable"
-                                      style="
-                                        font-size: 18px;
-                                        line-height: 24px;
-                                        color: rgb(0, 46, 54);
-                                        width: 100%;
-                                        border-collapse: collapse !important;
-                                        -webkit-text-size-adjust: 100%;
-                                        -ms-text-size-adjust: 100%;
-                                      "
-                                    >
-                                      <tbody>
-                                        <tr>
-                                          <td
-                                            style="
-                                              padding-bottom: 6px;
-                                              border-collapse: collapse !important;
-                                              -webkit-text-size-adjust: 100%;
-                                              -ms-text-size-adjust: 100%;
-                                              font-family: Arial, sans-serif;
-                                            "
-                                          >
-                                            <span>{{$key+1}}.</span>
-                                          </td>
-                                        </tr>
-                                        <tr>
-                                          <td
-                                            style="
-                                              padding-bottom: 6px;
-                                              border-collapse: collapse !important;
-                                              -webkit-text-size-adjust: 100%;
-                                              -ms-text-size-adjust: 100%;
-                                              font-family: Arial, sans-serif;
-                                            "
-                                          >
-                                            <span>Название:</span>
-                                          </td>
-                                          <td
-                                            style="
-                                              padding-bottom: 6px;
-                                              border-collapse: collapse !important;
-                                              -webkit-text-size-adjust: 100%;
-                                              -ms-text-size-adjust: 100%;
-                                              font-family: Arial, sans-serif;
-                                            "
-                                          >
-                                            <span>{{ $product->name }}</span>
-                                          </td>
-                                        </tr>
-                                        <tr>
-                                          <td
-                                            style="
-                                              padding-bottom: 6px;
-                                              border-collapse: collapse !important;
-                                              -webkit-text-size-adjust: 100%;
-                                              -ms-text-size-adjust: 100%;
-                                              font-family: Arial, sans-serif;
-                                            "
-                                          >
-                                            <span>Количество:</span>
-                                          </td>
-                                          <td
-                                            style="
-                                              padding-bottom: 6px;
-                                              border-collapse: collapse !important;
-                                              -webkit-text-size-adjust: 100%;
-                                              -ms-text-size-adjust: 100%;
-                                              font-family: Arial, sans-serif;
-                                            "
-                                          >
-                                            <span>{{ $product->pivot->quantity }}</span>
-                                          </td>
-                                        </tr>
-                                        <tr>
-                                          <td
-                                            style="
-                                              padding-bottom: 6px;
-                                              border-collapse: collapse !important;
-                                              -webkit-text-size-adjust: 100%;
-                                              -ms-text-size-adjust: 100%;
-                                              font-family: Arial, sans-serif;
-                                            "
-                                          >
-                                            <span>Цена:</span>
-                                          </td>
-                                          <td
-                                            style="
-                                              padding-bottom: 6px;
-                                              border-collapse: collapse !important;
-                                              -webkit-text-size-adjust: 100%;
-                                              -ms-text-size-adjust: 100%;
-                                              font-family: Arial, sans-serif;
-                                            "
-                                          >
-                                            <span>{{ ($product->pivot->type === 'single' ? $product->price : $product->case_price) * $product->pivot->quantity }}р</span>
-                                          </td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                @endforeach
-
-
-                                    <table
-                                      class="instructionTable"
-                                      style="
-                                        font-size: 18px;
-                                        line-height: 18px;
-                                        color: rgb(135, 149, 150);
-                                        border-collapse: collapse !important;
-                                        -webkit-text-size-adjust: 100%;
-                                        -ms-text-size-adjust: 100%;
-                                      "
-                                    >
-                                      <tbody>
-                                        <tr>
-                                          <td
-                                            style="
-                                              padding-bottom: 18px;
-                                              border-collapse: collapse !important;
-                                              -webkit-text-size-adjust: 100%;
-                                              -ms-text-size-adjust: 100%;
-                                              font-family: Arial, sans-serif;
-                                            "
-                                          >
-                                            <span
-                                              >Еще раз спасибо за то, что
-                                              выбрали нас! С уважением, Grapes & Grains</span
-                                            >
-                                          </td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
-
-                                    <table
-                                      class="instructionTableReducedPadding"
-                                      style="
-                                        font-size: 18px;
-                                        line-height: 18px;
-                                        color: rgb(135, 149, 150);
-                                        border-collapse: collapse !important;
-                                        -webkit-text-size-adjust: 100%;
-                                        -ms-text-size-adjust: 100%;
-                                      "
-                                    >
-                                      <tbody>
-                                        <tr>
-                                          <td
-                                            style="
-                                              padding-bottom: 2px;
-                                              border-collapse: collapse !important;
-                                              -webkit-text-size-adjust: 100%;
-                                              -ms-text-size-adjust: 100%;
-                                              font-family: Arial, sans-serif;
-                                            "
-                                          >
-                                            <span
-                                              >Вы можете получить более
-                                              подробную информацию о своем
-                                              заказе, зайдя
-                                              <a
-                                                class="returnOrReplaceInstructionLink"
-                                                style="
-                                                  -webkit-text-size-adjust: 100%;
-                                                  -ms-text-size-adjust: 100%;
-                                                "
-                                                href="https://gng.wine/profile#orders"
-                                                >на наш сайт</a
-                                              >.
-                                            </span>
-                                          </td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                    <!--<![endif]-->
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-
-                            <table
-                                  class="card orderAdditionalInfo"
-                                  style="
-                                background-color: rgb(255, 255, 255);
-                                width: 100%;
-                                padding-left: 20px;
-                                padding-right: 21px;
-                                padding-top: 30px;
-                                padding-bottom: 30px;
-                                border: 0;
-                                margin-bottom: 5px;
-                                border-collapse: collapse !important;
-                                -webkit-text-size-adjust: 100%;
-                                -ms-text-size-adjust: 100%;
-                              "
-                              >
-                                  <tbody>
-                                  <tr>
-                                      <td
-                                          class="cardTD orderAdditionalInfoTD"
-                                          align="left"
-                                          style="
-                                      width: 100%;
-                                      padding-left: 20px;
-                                      padding-right: 20px;
-                                      padding-top: 30px;
-                                      padding-bottom: 30px;
-                                      border-collapse: collapse !important;
-                                      -webkit-text-size-adjust: 100%;
-                                      -ms-text-size-adjust: 100%;
-                                      font-family: Arial, sans-serif;
-                                    "
-                                      >
-                                          <table
-                                              class="instructionTable"
-                                              style="
-                                        font-size: 18px;
-                                        line-height: 18px;
-                                        color: rgb(135, 149, 150);
-                                        border-collapse: collapse !important;
-                                        -webkit-text-size-adjust: 100%;
-                                        -ms-text-size-adjust: 100%;
-                                      "
-                                          >
-                                              <tbody>
-                                              <tr>
-                                                  <td
-                                                      style="
-                                              padding-bottom: 18px;
-                                              border-collapse: collapse !important;
-                                              -webkit-text-size-adjust: 100%;
-                                              -ms-text-size-adjust: 100%;
-                                              font-family: Arial, sans-serif;
-                                            "
-                                                  >
-                                            <span>
-                                                В соответствии с Постановлением Правительства РФ от 27.09.2007 N 612 (ред. от 30.11.2019)
-                                                «Об утверждении Правил продажи товаров дистанционным способом» мы не продаем алкогольную продукцию онлайн.
-                                            </span>
-                                                  </td>
-                                              </tr>
-                                              </tbody>
-                                          </table>
-
-                                          <table
-                                              class="instructionTableReducedPadding"
-                                              style="
-                                        font-size: 18px;
-                                        line-height: 18px;
-                                        color: rgb(135, 149, 150);
-                                        border-collapse: collapse !important;
-                                        -webkit-text-size-adjust: 100%;
-                                        -ms-text-size-adjust: 100%;
-                                      "
-                                          >
-                                              <tbody>
-                                              <tr>
-                                                  <td
-                                                      style="
-                                              padding-bottom: 2px;
-                                              border-collapse: collapse !important;
-                                              -webkit-text-size-adjust: 100%;
-                                              -ms-text-size-adjust: 100%;
-                                              font-family: Arial, sans-serif;
-                                            "
-                                                  >
-                                            <span>
-                                                Ваш заказ вы можете забрать по адресу: г. Москва, ул. Селезневская, дом 19/2.
-                                                По вопросам оформления заказа вы можете связаться с нами по телефону: +7 982 655 5000
-                                            </span>
-                                                  </td>
-                                              </tr>
-                                              </tbody>
-                                          </table>
-                                          <!--<![endif]-->
-                                      </td>
-                                  </tr>
-                                  </tbody>
-                            </table>
                             <table
                               class="card footer"
                               style="
@@ -2063,6 +1718,5 @@
         }
       }
     </style>
-
   </body>
 </html>

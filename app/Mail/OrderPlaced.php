@@ -12,7 +12,7 @@ class OrderPlaced extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $order;
+    protected $order;
 
     /**
      * Create a new message instance.
@@ -31,9 +31,10 @@ class OrderPlaced extends Mailable
      */
     public function build()
     {
-        return $this->from(env('MAIL_FROM_ADDRESS'))
+        return $this->from(env('MAIL_FROM_ADDRESS'), 'Gng.wine notification service')
             ->to(env('MAIL_ORDERS_ADDRESS'), 'G&G manager')
-            ->subject('A new order')
-            ->view('emails.en.orders.order-info');
+            ->subject('A new order #' . $this->order->id)
+            ->markdown('emails.en.orders.order-info')
+            ->with('order', $this->order);
     }
 }

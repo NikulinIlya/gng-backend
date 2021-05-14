@@ -10,6 +10,7 @@ use App\Models\OrderProduct;
 use App\Models\Product;
 use Cart;
 use Illuminate\Http\Request;
+use Log;
 use Mail;
 
 class OrderController extends Controller
@@ -23,7 +24,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        return $request->user()->orders()->with('products')->get();
+        return $request->user()->orders()->with('products')->orderBy('updated_at', 'desc')->get();
     }
 
     /**
@@ -54,7 +55,7 @@ class OrderController extends Controller
                 ? Product::find($cartItem['id'])->price
                 : Product::find($cartItem['id'])->case_price;
 
-            $price += $productPrice;
+            $price += $productPrice * $cartItem['quantity'];
         }
 
         if (array_key_exists('promo', $cart) && $cart['promo'] !== null) {
@@ -84,8 +85,17 @@ class OrderController extends Controller
             );
         }
 
-//        Mail::send(new OrderPlaced($order));
-//        Mail::send(new UserOrderPlaced($order));
+        try {
+            Mail::send(new OrderPlaced($order));
+        } catch (\Exception $exception) {
+            Log::error('Error sending OrderPlaced mail: ' . $exception->getMessage());
+        }
+
+        try {
+            Mail::send(new UserOrderPlaced($order));
+        } catch (\Exception $exception) {
+            Log::error('Error sending UserOrderPlaced mail: ' . $exception->getMessage());
+        }
 
         return response()
             ->json(

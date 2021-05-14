@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,14 +25,25 @@ Route::get(
 
         $request->session()->put('locale', $locale);
 
-        setcookie('locale', $locale, time() + 86400 * 365, '/; SameSite=None; Secure', $_SERVER['HTTP_HOST'], false, false);
+        setcookie('locale', $locale, [
+            'expires' => time() + 86400 * 365,
+            'path' => '/',
+            'domain' => $_SERVER['HTTP_HOST'],
+            'secure' => false,
+            'httponly' => false,
+            'samesite' => 'None'
+        ]);
 
-        return response()->json($locale, 200);
+        return response()->json($locale);
     }
 );
 
 Route::post('register', 'Api\Auth\RegisterController@register');
+Route::post('resend-verify', 'Api\Auth\RegisterController@resendVerificationEmail');
+Route::post('verify', 'Api\Auth\VerificationController@verify');
 Route::post('login', 'Api\Auth\LoginController@login');
+Route::post('forgot-password', 'Api\Auth\ForgotPasswordController@forgot');
+Route::post('forgot-password/reset', 'Api\Auth\ForgotPasswordController@reset');
 
 Route::middleware('auth:sanctum')->group(
     function () {

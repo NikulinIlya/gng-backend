@@ -24,13 +24,9 @@ class CartTest extends TestCase
     {
         $count = $count ?? $this->count;
 
-        $productCategories = factory(ProductCategory::class, $count)
-            ->create()
-            ->each(
-                function ($productCategory) {
-                    $productCategory->products()->save(factory(Product::class)->make());
-                }
-            );
+        ProductCategory::factory()
+                       ->has(Product::factory()->count($count))
+                       ->create($count);
     }
 
     /** @test */

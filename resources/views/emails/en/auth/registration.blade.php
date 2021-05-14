@@ -860,11 +860,43 @@
                                             "
                                                         >
                                             <span
-                                            >Your email has been successfully confirmed </span
+                                            >Thank you for filling out the subscription form on our website {{
+                                              env('APP_URL') }}</span
                                             >
                                                         </td>
                                                     </tr>
-
+                                                    <tr>
+                                                        <td
+                                                            style="
+                                              padding-bottom: 6px;
+                                              border-collapse: collapse !important;
+                                              -webkit-text-size-adjust: 100%;
+                                              -ms-text-size-adjust: 100%;
+                                              font-family: Arial, sans-serif;
+                                            "
+                                                        >
+                                            <span>
+                                              Please <a href="{{ $verifyUrl }}"
+                                              >confirm</a
+                                              > your email address!
+                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td
+                                                            style="
+                                              padding-bottom: 6px;
+                                              border-collapse: collapse !important;
+                                              -webkit-text-size-adjust: 100%;
+                                              -ms-text-size-adjust: 100%;
+                                              font-family: Arial, sans-serif;
+                                            "
+                                                        >
+                                            <span>
+                                              By confirming your email, you consent to <a href="{{ env('APP_URL') . '/static?doc=3' }}">processing and storage of personal data.</a></span
+                                            >
+                                                        </td>
+                                                    </tr>
                                                     </tbody>
                                                 </table>
 
@@ -890,7 +922,7 @@
                                             "
                                                         >
                                                             <a
-                                                                href="https://gng.wine/wines"
+                                                                href="{{ $verifyUrl }}"
                                                                 style="
                                                 color: rgb(0, 46, 54);
                                                 text-decoration: none;
@@ -936,7 +968,7 @@
                                                           sans-serif;
                                                       "
                                                                         >
-                                                                            Go to shopping
+                                                                            Confirm
                                                                         </td>
                                                                     </tr>
                                                                     </tbody>
