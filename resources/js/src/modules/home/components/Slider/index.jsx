@@ -41,7 +41,7 @@ function SliderCard() {
                     )}
                 </p>
 
-                <Button to="/catalog/223">{t("learn-more", "подробнее")}</Button>
+                <Button to="/catalog/234">{t("learn-more", "подробнее")}</Button>
             </div>
         </section>
     );
