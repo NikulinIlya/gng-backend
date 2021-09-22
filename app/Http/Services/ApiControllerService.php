@@ -153,8 +153,12 @@ class ApiControllerService
         if (class_basename($this->model) === 'Glass') {
             return 'glasses';
         }
+        $tableName = strtolower(class_basename($this->model));
+        if (in_array(class_basename($this->model), ['Bag', 'Kit', 'Liquor', 'Rare', 'Vintage'])) {
+            $tableName .= 's';
+        }
 
-        return strtolower(class_basename($this->model)) . 's';
+        return $tableName;
     }
 
     /**
