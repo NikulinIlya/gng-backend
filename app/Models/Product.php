@@ -156,6 +156,26 @@ class Product extends Model
     }
 
     /**
+     * Get the gin associated with the product.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function gin()
+    {
+        return $this->hasOne('App\Models\Gin');
+    }
+
+    /**
+     * Get the tequila associated with the product.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function tequila()
+    {
+        return $this->hasOne('App\Models\Tequila');
+    }
+
+    /**
      * Get the promotion associated with the product.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

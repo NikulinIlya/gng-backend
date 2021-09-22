@@ -152,6 +152,12 @@ Route::get('bags/{id}', 'Api\BagController@show');
 Route::get('glasses', 'Api\GlassController@index');
 Route::get('glasses/{id}', 'Api\GlassController@show');
 
+Route::get('tequila', 'Api\TequilaController@index');
+Route::get('tequila/{id}', 'Api\TequilaController@show');
+
+Route::get('gin', 'Api\GinController@index');
+Route::get('gin/{id}', 'Api\GinController@show');
+
 Route::prefix('articles')->group(
     function () {
         Route::get('/brands', 'Api\BrandArticleController@index');
